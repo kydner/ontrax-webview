@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  ontrax:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ontrax/${DOCKER_APP_VERSION}/${DOCKER_APP_NAME}:${DOCKER_VERSION:-latest}
+    container_name: ontrax-${DOCKER_APP_NAME}
+    ports:
+      - ${DOCKER_PORT}
+    networks:
+      - ontrax-network
+
+networks:
+  ontrax-network:
+    driver: bridge
