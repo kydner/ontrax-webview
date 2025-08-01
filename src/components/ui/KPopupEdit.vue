@@ -3,7 +3,7 @@
     v-bind="{ ...props }"
     :for="currentFor"
     :required="isRequired"
-    :class="`target-section-${props.name || snakeCase(props.tLabel)}`"
+    :class="`target-section-${props.name || snakeCase(props.tLabel)} tw-relative`"
   >
     <template #additional:prefix-label>
       <slot name="additional:prefix-label" />
@@ -50,9 +50,10 @@
           :title="tLabel"
           buttons
           v-slot="scope"
-          :cover="false"
           :color="props.color"
-          content-style="width: 500px;"
+          cover
+          fit
+          style="width: 100%"
         >
           <slot v-bind="scope" />
         </q-popup-edit>
