@@ -67,7 +67,7 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form/:id',
+            path: 'form/:inventoryId',
             component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-form-update`,
             meta: {
@@ -102,7 +102,7 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form/:id',
+            path: 'form/:inventoryId',
             component: () => import('pages/transfer-item/FormPage.vue'),
             name: `${Meta.TransferItem.name}-form-update`,
             meta: {
@@ -137,7 +137,7 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form/:id',
+            path: 'form/:inventoryId',
             component: () => import('pages/receive-item/FormPage.vue'),
             name: `${Meta.ReceiveItem.name}-form-update`,
             meta: {

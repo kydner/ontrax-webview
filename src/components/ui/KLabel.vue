@@ -3,7 +3,7 @@
     <div
       :class="`label-wrapper padding-${labelPadding} ${horizontalLabel ? 'horizontal' : ''} ${
         dark ? 'tw-text-white' : ''
-      }`"
+      } ${labelClass}`"
     >
       <div
         v-if="showLabel"
@@ -13,7 +13,7 @@
         <div :class="`title-wrapper label-size ${labelWeight} size-${labelSize}`">
           <span :class="`tw-text-[0.85rem] ${dark ? 'tw-text-white' : ''}`">
             <slot name="additional:prefix-label" />
-            {{ currentLabel }}
+            <slot name="label" :label="currentLabel">{{ currentLabel }}</slot>
             <slot name="additional:suffix-label" />
             <span v-if="required" class="tw-text-red-600"><sup>* </sup>&nbsp;</span>
           </span>
@@ -47,6 +47,7 @@ interface Slots {
 export interface KLabelSlots {
   'additional:suffix-label': () => VNode
   'additional:prefix-label': () => VNode
+  label: (data: { label: string }) => VNode
   default: (data: Slots) => VNode
 }
 
@@ -77,6 +78,7 @@ export interface KLabelProps {
   /** Fill with string number and dimension. ex 20px or 5rem, etc */
   labelWidth?: string
   dark?: boolean | null | undefined
+  labelClass?: string
 }
 
 const props = withDefaults(defineProps<KLabelProps>(), {
@@ -88,8 +90,9 @@ const props = withDefaults(defineProps<KLabelProps>(), {
   labelSize: 'normal',
   required: false,
   forceShowLabel: false,
-  labelWidth: '250px',
+  labelWidth: '40vw',
   dark: true,
+  labelClass: '',
 })
 
 defineSlots<KLabelSlots>()
@@ -142,7 +145,7 @@ const currentHorizontalAlign = computed<KLabelHorizontalAlign>(() => {
   @apply tw-text-lg;
 }
 .horizontal {
-  @apply tw-flex tw-flex-col md:tw-flex-row md:tw-items-start;
+  @apply tw-flex tw-flex-row tw-items-start;
 }
 .horizontal-align {
   @apply tw-w-auto md:tw-w-[200px];

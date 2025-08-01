@@ -8,18 +8,13 @@ import KLabel from './components/ui/KLabel.vue'
 import KSelect from './components/ui/KSelect.vue'
 import KSelectModule from './components/ui/KSelectModule.vue'
 import KSelectParameter from './components/ui/KSelectParameter.vue'
-import KLabelFilter from './components/ui/KLabelFilter.vue'
-import KMetaOptionGroupFilter from './components/ui/KMetaOptionGroupFilter.vue'
-import KOptionGroupFilter from './components/ui/KOptionGroupFilter.vue'
 import KOptionGroup from './components/ui/KOptionGroup.vue'
-import KOptionGroupParameter from './components/ui/KOptionGroupParameter.vue'
 import KToggle from './components/ui/KToggle.vue'
 import KSeparator from './components/ui/KSeparator.vue'
 import KRadio from './components/ui/KRadio.vue'
 import KEditor from './components/ui/KEditor.vue'
 import KInnerLoading from './components/ui/KInnerLoading.vue'
 import KCheckbox from './components/ui/KCheckbox.vue'
-import KInputTax from './components/ui/KInputTax.vue'
 import KFieldWrapper from './components/ui/KFieldWrapper.vue'
 import KNumber from './components/ui/KNumber.vue'
 import KSwitch from './components/ui/KSwitch.vue'
@@ -27,6 +22,7 @@ import KMenu from './components/ui/KMenu.vue'
 import KInputPhone from './components/ui/KInputPhone.vue'
 import KInputMobilePhone from './components/ui/KInputMobilePhone.vue'
 import KTextArea from './components/ui/KTextArea.vue'
+import KStatusBadge from './components/ui/KStatusBadge.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     KInput: typeof KInput
@@ -38,18 +34,13 @@ declare module 'vue' {
     KSelect: typeof KSelect
     KSelectModule: typeof KSelectModule
     KSelectParameter: typeof KSelectParameter
-    KLabelFilter: typeof KLabelFilter
-    KMetaOptionGroupFilter: typeof KMetaOptionGroupFilter
-    KOptionGroupFilter: typeof KOptionGroupFilter
     KToggle: typeof KToggle
     KSeparator: typeof KSeparator
     KOptionGroup: typeof KOptionGroup
-    KOptionGroupParameter: typeof KOptionGroupParameter
     KRadio: typeof KRadio
     KEditor: typeof KEditor
     KInnerLoading: typeof KInnerLoading
     KCheckbox: typeof KCheckbox
-    KInputTax: typeof KInputTax
     KFieldWrapper: typeof KFieldWrapper
     KNumber: typeof KNumber
     KSwitch: typeof KSwitch
@@ -57,5 +48,6 @@ declare module 'vue' {
     KInputPhone: typeof KInputPhone
     KInputMobilePhone: typeof KInputMobilePhone
     KTextArea: typeof KTextArea
+    KStatusBadge: typeof KStatusBadge
   }
 }

@@ -1,33 +1,29 @@
-import { IMetaModule } from '../interfaces/meta.interface'
+import { IMetaListModule } from '../interfaces/meta.interface'
 import { InventoryStockResponsePage } from '../model/inventory-stock.model'
 import { ReceiveItemResponsePage } from '../model/receive-item.model'
 import { TransferItemResponsePage } from '../model/transfer-item.model'
 import { VendorShipmentResponsePage } from '../model/vendor-shipment.model'
 
-export const VendorShipment: IMetaModule<VendorShipmentResponsePage> = {
-  id: 1,
+export const VendorShipment: IMetaListModule<VendorShipmentResponsePage> = {
   title: 'Vendor Shipment',
   name: 'vendor-shipment',
-  columns: [],
+  items: [],
 }
 
-export const TransferItem: IMetaModule<TransferItemResponsePage> = {
-  id: 2,
+export const TransferItem: IMetaListModule<TransferItemResponsePage> = {
   title: 'Transfer Item',
   name: 'transfer-item',
-  columns: [],
+  items: [],
 }
 
-export const ReceiveItem: IMetaModule<ReceiveItemResponsePage> = {
-  id: 3,
+export const ReceiveItem: IMetaListModule<ReceiveItemResponsePage> = {
   title: 'Receive Item',
   name: 'receive-item',
-  columns: [],
+  items: [],
 }
 
-export const InventoryStock: IMetaModule<InventoryStockResponsePage> = {
-  id: 4,
+export const InventoryStock: IMetaListModule<InventoryStockResponsePage> = {
   title: 'Inventory Stock',
   name: 'inventory-stock',
-  columns: [],
+  items: [],
 }

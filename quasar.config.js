@@ -148,8 +148,9 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
+        dark: true,
         loading: {
-          boxClass: 'bg-grey-5 text-grey-1',
+          boxClass: 'bg-blue-grey-10 text-grey-1',
           spinnerColor: 'primary',
           spinnerSize: 60,
         },

@@ -49,14 +49,8 @@ const menu = [
 <style scoped lang="scss">
 .k-index-page {
   &::before {
-    content: '';
-    position: absolute;
     background: url('~assets/images/home-background.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    color: rgb(var(--color-surface));
-    inset: 0;
-    top: 0;
+    @apply tw-content-['-'] tw-absolute tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain tw-text-surface tw-inset-0 tw-top-0;
   }
 }
 </style>

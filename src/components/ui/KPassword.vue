@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   horizontalAlign: 'center',
   required: false,
   labelPadding: 'small',
-  color: 'primary',
+  color: 'secondary',
   dark: true,
 })
 

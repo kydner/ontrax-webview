@@ -13,6 +13,18 @@ export interface IMetaModule<T = unknown> {
   visibleColumns?: T[]
 }
 
+export interface IMetaListModule<T = unknown> {
+  title: string
+  name: string
+  items: IQItems<T>[]
+}
+
+export interface IQItems<T = unknown> {
+  name: keyof T
+  field: keyof T | ((row: any) => any)
+  visible?: boolean
+}
+
 export interface IQColumns<T = unknown> extends Omit<QTableColumn, 'name' | 'field'> {
   fieldType?: TFieldType
   t?: keyof MessageSchema
@@ -35,7 +47,7 @@ export interface IMetaEndpoint {
    * @param params model
    * @param id
    */
-  getAll?(params?: unknown, id?: unknown): Promise<{ id?: number; name: string }[]>
+  getAll?(params?: unknown, id?: unknown): Promise<unknown[]>
 
   /**
    * Get pagination from api

@@ -14,11 +14,10 @@
 import { onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { idleTime, isIdle, refreshidleTime } from 'src/common/utils/auth.utils'
-import { Loading, useQuasar } from 'quasar'
-import { $confirm, $showNotif, Notify } from 'src/common/utils/plugin.utils'
-import { useI18n } from 'vue-i18n'
+import { Loading } from 'quasar'
+import { $showNotif, Notify } from 'src/common/utils/plugin.utils'
 import { ERROR_SESSION_TIMEOUT } from 'src/common/constants/error.constant'
-import { useAppStore } from 'src/stores/app.store'
+// import { useAppStore } from 'src/stores/app.store'
 import { debounce } from 'lodash'
 import { useCancelTokenStore } from 'src/stores/cancel-token.store'
 import { useAuthenticationRepository } from 'src/common/repository/authentication.repository'
@@ -32,34 +31,34 @@ const debouncedEvents = new Set<EventName>(['scroll'])
 // eslint-disable-next-line no-undef
 const listeners: [string, EventListenerOrEventListenerObject][] = []
 
-const appStore = useAppStore()
+// const appStore = useAppStore()
 
 const authRepo = useAuthenticationRepository()
 
 const cancelTokenStore = useCancelTokenStore()
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
-const $q = useQuasar()
+// const $q = useQuasar()
 
 const router = useRouter()
 
-const onLogout = () => {
-  $confirm({
-    title: t('message'),
-    message: t('notification.logoutFromThisPage'),
-    button: {
-      submit: {
-        label: t('logout'),
-      },
-    },
-    callback: (confirm) => {
-      if (confirm) {
-        logout()
-      }
-    },
-  })
-}
+// const onLogout = () => {
+//   $confirm({
+//     title: t('message'),
+//     message: t('notification.logoutFromThisPage'),
+//     button: {
+//       submit: {
+//         label: t('logout'),
+//       },
+//     },
+//     callback: (confirm) => {
+//       if (confirm) {
+//         logout()
+//       }
+//     },
+//   })
+// }
 
 const logout = async () => {
   try {
@@ -131,8 +130,8 @@ onUnmounted(() => {
 
 <style lang="scss">
 .main-layout {
+  @apply tw-container tw-mx-auto tw-w-full tw-max-w-[600px];
 }
-
 .list__logo {
   height: $toolbar-min-height;
   display: flex;

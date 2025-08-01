@@ -1,11 +1,15 @@
 <template>
-  <meta-form-page :meta="metaVendorShipment"></meta-form-page>
+  <inventory-form-page v-model="form" :meta="metaVendorShipment"></inventory-form-page>
 </template>
 <script setup lang="ts">
 import { VendorShipment } from 'src/common/constants/meta.constant'
-import { IMetaModule } from 'src/common/interfaces/meta.interface'
-import MetaFormPage from 'src/components/lib/MetaFormPage.vue'
-import { computed } from 'vue'
+import { IMetaListModule } from 'src/common/interfaces/meta.interface'
+import { InventoryDataRequest } from 'src/common/model/inventory.model'
+import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
+import InventoryFormPage from 'src/components/lib/InventoryFormPage.vue'
+import { ref } from 'vue'
 
-const metaVendorShipment = computed(() => VendorShipment as IMetaModule)
+const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorShipment
+
+const form = ref({} as InventoryDataRequest)
 </script>

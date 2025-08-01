@@ -154,7 +154,7 @@ export interface KSelectEmits {
   (event: 'selected:init', value: any): void
 }
 
-export interface KSelectSlots extends KLabelSlots, Omit<QSelectSlots, 'default'> {}
+export interface KSelectSlots extends KLabelSlots, Omit<QSelectSlots, 'default' | 'label'> {}
 
 const props = withDefaults(defineProps<KSelectProps>(), {
   outlined: true,
@@ -169,7 +169,7 @@ const props = withDefaults(defineProps<KSelectProps>(), {
   mapOptions: true,
   clearable: true,
   clearIcon: 'highlight_off',
-  color: 'primary',
+  color: 'secondary',
   dark: true,
 })
 

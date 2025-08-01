@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="currentValue" no-backdrop-dismiss no-esc-dismiss persistent>
-    <q-card style="width: 420px; max-width: 80vw" class="tw-rounded-base tw-bg-surface" dark>
+    <q-card style="width: 420px; max-width: 80vw" class="tw-rounded-base tw-bg-overlay" dark flat bordered>
       <q-card-section class="tw-pt-10">
         <div class="tw-text-lg tw-font-medium tw-text-center">
           <q-icon :name="icon" :class="`notification-icon ${params.type}`" />

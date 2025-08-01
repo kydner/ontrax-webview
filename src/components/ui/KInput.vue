@@ -9,6 +9,10 @@
       <slot name="additional:prefix-label" />
     </template>
 
+    <template #label="{ label }">
+      <slot name="label" :label="label" />
+    </template>
+
     <template #additional:suffix-label>
       <slot name="additional:suffix-label" />
     </template>
@@ -82,7 +86,7 @@ const props = withDefaults(defineProps<KInputProps>(), {
   clearable: true,
   unmaskedValue: true,
   clearIcon: 'highlight_off',
-  color: 'primary',
+  color: 'secondary',
   dark: true,
 })
 
