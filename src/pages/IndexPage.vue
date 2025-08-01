@@ -1,6 +1,6 @@
 <template>
   <k-page padding="none" class="k-index-page">
-    <q-header class="k-main-header tw-bg-transparent" :bordered="false" :elevated="false">
+    <div class="k-main-header tw-bg-transparent">
       <q-toolbar class="k-main-toolbar tw-p-4 tw-pt-8 tw-pb-4">
         <div
           class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-2 md:tw-space-y-0 tw-space-x-0 md:tw-space-x-4 md:tw-items-center"
@@ -12,7 +12,7 @@
           <div class="tw-text-3xl tw-font-semibold tw-text-primary">Jhon Doe</div>
         </div>
       </q-toolbar>
-    </q-header>
+    </div>
     <home-menu :menu="menu" />
   </k-page>
 </template>

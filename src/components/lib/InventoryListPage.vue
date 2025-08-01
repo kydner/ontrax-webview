@@ -75,7 +75,7 @@
       </q-card>
     </slot>
 
-    <div class="tw-absolute tw-right-0 tw-pr-12" :style="{ top: `calc(100vh - 80px)` }">
+    <div class="tw-absolute tw-right-0 tw-pr-6" :style="{ top: `calc(100vh - 80px)` }">
       <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
     </div>
   </meta-list-page>
