@@ -130,7 +130,8 @@ onUnmounted(() => {
 
 <style lang="scss">
 .main-layout {
-  @apply tw-container tw-mx-auto tw-w-full tw-max-w-[600px];
+  max-width: $max-page-width;
+  @apply tw-container tw-mx-auto tw-w-full;
 }
 .list__logo {
   height: $toolbar-min-height;
