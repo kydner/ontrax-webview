@@ -32,7 +32,7 @@
         </template>
       </k-password>
     </div>
-    <div class="tw-basis-full tw-my-3">
+    <div class="tw-basis-full tw-my-3 tw-mb-8">
       <k-btn
         :label="t('button.enter')"
         color="secondary"
