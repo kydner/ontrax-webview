@@ -1365,6 +1365,7 @@ export default {
   stock: 'Stok',
   item: 'Item',
   items: 'Item',
+  myProfile: 'Profil Saya',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

@@ -5,7 +5,12 @@
         <div
           class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-2 md:tw-space-y-0 tw-space-x-0 md:tw-space-x-4 md:tw-items-center"
         >
-          <q-avatar size="60px" class="overlapping">
+          <q-avatar
+            size="60px"
+            class="overlapping tw-cursor-pointer"
+            v-ripple
+            @click="router.push({ name: 'profile' })"
+          >
             <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
           </q-avatar>
           <div class="tw-text-3xl tw-font-semibold">Welcome Back,</div>
@@ -23,8 +28,11 @@ import HomeMenu from 'src/components/lib/HomeMenu.vue'
 // import * as Meta from 'src/common/constants/meta.constant'
 import { computed } from 'vue'
 import { useAppStore } from 'src/stores/app.store'
+import { useRouter } from 'vue-router'
 
 const appStore = useAppStore()
+
+const router = useRouter()
 
 const profile = computed(() => appStore.$state?.profile)
 

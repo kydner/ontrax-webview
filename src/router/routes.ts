@@ -27,6 +27,12 @@ const routes: RouteRecordRaw[] = [
         meta: { middlewares: [auth], title: '' },
       },
       {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('pages/ProfilePage.vue'),
+        meta: { middlewares: [auth], title: '' },
+      },
+      {
         path: '/dashboard',
         children: [
           {

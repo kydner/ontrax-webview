@@ -1365,6 +1365,7 @@ export default {
   stock: 'Stock',
   item: 'Item',
   items: 'Items',
+  myProfile: 'My Profile',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',
