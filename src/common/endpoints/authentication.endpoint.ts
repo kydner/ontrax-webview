@@ -13,7 +13,8 @@ export const useAuthenticationEndpoint = defineEndpoint({
 
   login: (data: LoginDataRequest) => Post<LoginDataResponse, LoginDataRequest>('v3/auth/login', data),
 
-  profile: () => Get<ProfileResponse>('user/profile'),
+  // profile: () => Get<ProfileResponse>('user/profile'),
+  profile: () => Get<ProfileResponse>('v3/auth/profile'),
 
   logout: () => Delete<unknown>('v3/auth/logout'),
 
