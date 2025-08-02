@@ -43,23 +43,6 @@ const cancelTokenStore = useCancelTokenStore()
 
 const router = useRouter()
 
-// const onLogout = () => {
-//   $confirm({
-//     title: t('message'),
-//     message: t('notification.logoutFromThisPage'),
-//     button: {
-//       submit: {
-//         label: t('logout'),
-//       },
-//     },
-//     callback: (confirm) => {
-//       if (confirm) {
-//         logout()
-//       }
-//     },
-//   })
-// }
-
 const logout = async () => {
   try {
     Loading.show()

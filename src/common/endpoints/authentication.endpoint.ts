@@ -16,7 +16,7 @@ export const useAuthenticationEndpoint = defineEndpoint({
   profile: () => Get<ProfileResponse>('user/profile'),
   // profile: () => Get<ProfileResponse>('v3/auth/profile'),
 
-  logout: () => Delete<unknown>('v3/auth/logout'),
+  logout: () => Delete<unknown>('auth/logout'),
 
-  changeRole: (data: ChangeRoleRequest) => Post<ChangeRoleResponse>('v3/auth/change-role', data),
+  changeRole: (data: ChangeRoleRequest) => Post<ChangeRoleResponse>('auth/change-role', data),
 })

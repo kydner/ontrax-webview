@@ -1,5 +1,5 @@
 <template>
-  <q-card v-bind="{ ...props }" class="k-card" :flat="props.flat">
+  <q-card v-bind="{ ...props }" class="k-card" dark :flat="props.flat">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName] :key="slotName">
       <slot :name="slotName" />
@@ -22,8 +22,7 @@ defineSlots<QCardSlots>()
 </script>
 <style scoped lang="scss">
 .k-card {
-  @apply tw-rounded-lg
-  tw-shadow-base;
+  @apply tw-bg-overlay tw-rounded-base tw-my-1;
 }
 </style>
 true

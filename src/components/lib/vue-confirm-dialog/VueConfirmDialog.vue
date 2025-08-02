@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="currentValue" no-backdrop-dismiss :no-esc-dismiss="false">
-    <q-card style="width: 360px; max-width: 80vw" class="tw-rounded-base">
+    <q-card style="width: 360px; max-width: 80vw" bordered flat class="tw-rounded-base">
       <q-card-section class="tw-py-4">
         <div class="tw-text-lg tw-font-medium tw-text-center">
           {{ optionConfirm.title || t('message') }}
@@ -8,7 +8,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <div class="tw-my-2 tw-mb-3 tw-text-center tw-text-gray-600">
+        <div class="tw-my-2 tw-mb-3 tw-text-center tw-text-secondary-text">
           {{ optionConfirm.message }}
         </div>
       </q-card-section>

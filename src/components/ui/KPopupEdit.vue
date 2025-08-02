@@ -27,12 +27,12 @@
         :model-value="props.modelValue"
         v-slot="{ errorMessage, field }"
       >
-        <div v-if="!currentValue" class="tw-flex tw-items-center tw-space-x-2 tw-text-disable-text tw-cursor-pointer">
+        <div v-if="!currentValue" class="preview-label tw-text-disable-text">
           <slot name="preview:prefix"></slot>
           <span class="tw-text-disable-text">{{ currentPlaceholder }}</span>
         </div>
 
-        <div v-else class="tw-flex tw-items-center tw-space-x-2 tw-text-white tw-cursor-pointer">
+        <div v-else class="preview-label tw-text-white">
           <slot name="preview:prefix"></slot>
           <span>{{ previewValue || currentValue }}</span>
           <k-btn
@@ -53,6 +53,9 @@
           :color="props.color"
           cover
           fit
+          flat
+          bordered
+          dark
           style="width: 100%"
         >
           <slot v-bind="scope" />
@@ -126,3 +129,9 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped lang="scss">
+.preview-label {
+  @apply tw-flex tw-items-center tw-space-x-2 tw-cursor-pointer tw-my-[0.115rem];
+}
+</style>
