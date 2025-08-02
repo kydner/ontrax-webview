@@ -140,6 +140,7 @@ module.exports = configure(function (ctx) {
         [`/${process.env.APP_SERVICE_PREFIX}`]: {
           target: process.env.APP_SERVICE,
           changeOrigin: true,
+          secure: false,
           ws: true,
         },
       },
