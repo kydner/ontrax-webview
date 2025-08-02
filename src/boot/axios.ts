@@ -55,10 +55,10 @@ api.interceptors.request.use(function (config) {
   const appStore = useAppStore()
   const authStore = useAuthenticationStore()
   const cancelTokenStore = useCancelTokenStore()
-  const accessToken = authStore.$state.accessToken
+  const token = authStore.$state.token
 
-  if (accessToken) {
-    config.headers.Authorization = 'Bearer ' + accessToken
+  if (token) {
+    config.headers.Authorization = 'Bearer ' + token
   }
 
   if (requestCount === 0) {

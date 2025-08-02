@@ -16,7 +16,7 @@ export const useAuthenticationStore = defineStore('authentication', {
   actions: {
     reset() {
       this.$state.isLoggedIn = false
-      this.$state.accessToken = null
+      this.$state.token = null
       this.$state.idle = 0
       this.$state.accessTokenExpired = 0
       LocalStorage.clear()

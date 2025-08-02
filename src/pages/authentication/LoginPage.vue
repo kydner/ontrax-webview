@@ -81,8 +81,7 @@ const validSubmit = () => {
       router.push('/')
     })
     .catch((error) => {
-      const errorResponse = (error as AxiosError<BaseResponse<{ accessToken: string; accessTokenExpired: string }>>)
-        ?.response
+      const errorResponse = (error as AxiosError<BaseResponse<{ token: string; accessTokenExpired: string }>>)?.response
       if (errorResponse?.status === HttpStatusCode.Unauthorized) {
         /**
          * Redirect to change page if error code is
@@ -90,7 +89,7 @@ const validSubmit = () => {
          * 58 = password expired
          */
         if (['54', '58'].includes(errorResponse?.data?.code)) {
-          const token = kSecurity.encrypt(String(errorResponse?.data?.data?.accessToken))
+          const token = kSecurity.encrypt(String(errorResponse?.data?.data?.token))
           router?.push({ name: 'change-password', params: { token } })
         }
       }

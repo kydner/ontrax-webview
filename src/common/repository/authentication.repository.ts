@@ -24,7 +24,7 @@ export const actionProfile = () => {
         const isValidAll = responses.every(({ status }) => status === 'fulfilled')
         if (!isValidAll) {
           authStore.$state.isLoggedIn = false
-          authStore.$state.accessToken = null
+          authStore.$state.token = null
 
           const rejected = responses?.find(({ status }) => status === 'rejected')
           throw new Error(getErrorMessage((rejected as { reason: AxiosError })?.reason))
@@ -57,16 +57,16 @@ export const useAuthenticationRepository = defineRepository({
         .login(params)
         .then(({ data }) => {
           const authStore = useAuthenticationStore()
-          const accessToken = data.accessToken
+          const token = data.token
           const accessTokenExpired = 60 * 15 /// data.accessTokenExpired || 0
 
-          authStore.$state.accessToken = accessToken
+          authStore.$state.token = token
 
           /** access token from backend is millisecond then convert to second */
           authStore.$state.accessTokenExpired = accessTokenExpired /// 1000
           actionProfile()
             .then(() => {
-              resolve(accessToken)
+              resolve(token)
             })
             .catch(reject)
         })

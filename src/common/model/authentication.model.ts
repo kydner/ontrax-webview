@@ -9,12 +9,12 @@ export interface ChangeRoleRequest {
 }
 
 export interface LoginDataResponse {
-  accessToken: string | null
+  token: string | null
 
   /** value as seconds */
   accessTokenExpired: number
 
-  autoSaveDuration: number
+  // autoSaveDuration: number
 }
 
 export interface ChangeRoleResponse extends LoginDataResponse {}

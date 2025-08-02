@@ -9,41 +9,53 @@
             <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
           </q-avatar>
           <div class="tw-text-3xl tw-font-semibold">Welcome Back,</div>
-          <div class="tw-text-3xl tw-font-semibold tw-text-primary">Jhon Doe</div>
+          <div class="tw-text-3xl tw-font-semibold tw-text-primary">{{ fullName }}</div>
         </div>
       </q-toolbar>
     </div>
-    <home-menu :menu="menu" />
+    <home-menu :items="menus" />
   </k-page>
 </template>
 
 <script setup lang="ts">
 import KPage from 'src/components/lib/KPage.vue'
 import HomeMenu from 'src/components/lib/HomeMenu.vue'
-import * as Meta from 'src/common/constants/meta.constant'
+// import * as Meta from 'src/common/constants/meta.constant'
+import { computed } from 'vue'
+import { useAppStore } from 'src/stores/app.store'
 
-const menu = [
-  {
-    name: 'Vendor Shipment',
-    icon: 'home',
-    to: `/${Meta.VendorShipment.name}`,
-  },
-  {
-    name: 'Transfer Item',
-    icon: 'person',
-    to: `/${Meta.TransferItem.name}`,
-  },
-  {
-    name: 'Receive Item',
-    icon: 'settings',
-    to: `/${Meta.ReceiveItem.name}`,
-  },
-  {
-    name: 'Inventory Stock',
-    icon: 'logout',
-    to: `/${Meta.InventoryStock.name}`,
-  },
-]
+const appStore = useAppStore()
+
+const profile = computed(() => appStore.$state?.profile)
+
+const fullName = computed(() => profile.value?.fullName)
+
+const menus = computed(() => {
+  return profile.value?.menus || []
+})
+
+// const menu = [
+//   {
+//     name: 'Vendor Shipment',
+//     icon: 'home',
+//     to: `/${Meta.VendorShipment.name}`,
+//   },
+//   {
+//     name: 'Transfer Item',
+//     icon: 'person',
+//     to: `/${Meta.TransferItem.name}`,
+//   },
+//   {
+//     name: 'Receive Item',
+//     icon: 'settings',
+//     to: `/${Meta.ReceiveItem.name}`,
+//   },
+//   {
+//     name: 'Inventory Stock',
+//     icon: 'logout',
+//     to: `/${Meta.InventoryStock.name}`,
+//   },
+// ]
 </script>
 
 <style scoped lang="scss">
