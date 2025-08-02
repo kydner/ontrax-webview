@@ -8,7 +8,7 @@
       @click="router.push(item.page)"
     >
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
-        <q-avatar text-color="white" size="60px" class="tw-bg-surface"></q-avatar>
+        <q-avatar text-color="secondary" size="60px" class="tw-bg-surface" :icon="item.icon"></q-avatar>
         <div class="tw-text-xs tw-text-center">{{ item.name }}</div>
       </div>
     </div>
