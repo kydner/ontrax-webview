@@ -1521,7 +1521,7 @@ export default {
     reject: 'Reject',
     approve: 'Approve',
     duplicate: 'Duplikat',
-    login: 'Login',
+    login: 'Masuk',
     enter: 'Masuk',
     next: 'Berikutnya',
     back: 'Kembali',

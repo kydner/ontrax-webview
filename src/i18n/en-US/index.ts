@@ -1522,7 +1522,7 @@ export default {
     approve: 'Approve',
     duplicate: 'Duplicate',
     login: 'Login',
-    enter: 'Masuk',
+    enter: 'Login',
     next: 'Next',
     back: 'Back',
     check: 'Check',
