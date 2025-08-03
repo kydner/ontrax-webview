@@ -23,9 +23,9 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
 
-COPY --from=builder /app/dist/spa /usr/share/nginx/html/bakamla
+COPY --from=builder /app/dist/spa /usr/share/nginx/html/ontrax
 
-COPY nginx.d.conf /etc/nginx/conf.d/bakamla.d.conf
+COPY nginx.d.conf /etc/nginx/conf.d/ontrax.d.conf
 
 # copy folder dist to docker nginx folder
-# COPY ./dist/spa/ /usr/share/nginx/html/bakamla
+# COPY ./dist/spa/ /usr/share/nginx/html/ontrax
