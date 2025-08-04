@@ -16,8 +16,12 @@
           <k-select-module model-value="" t-label="warehouse" :meta="metaLocationWarehouse" />
         </div>
 
-        <div class="tw-col-span-12">
+        <div class="tw-col-span-12 tw-my-2">
           <k-btn color="secondary" :label="t('search')" class="fit" />
+        </div>
+
+        <div class="tw-col-span-12">
+          <all-filtering />
         </div>
       </div>
     </slot>
@@ -30,6 +34,7 @@ import { VNode } from 'vue'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { LocationWarehouse } from 'src/common/constants/meta.constant'
 import { useI18n } from 'vue-i18n'
+import AllFiltering from '../page/inventory-stock/AllFiltering.vue'
 
 interface Props {
   meta: IMetaListModule<T>

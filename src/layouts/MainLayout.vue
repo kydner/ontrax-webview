@@ -113,7 +113,7 @@ onUnmounted(() => {
 
 <style lang="scss">
 .main-layout {
-  max-width: $max-page-width;
+  max-width: $max-page-width !important;
   @apply tw-container tw-mx-auto tw-w-full;
 }
 .list__logo {

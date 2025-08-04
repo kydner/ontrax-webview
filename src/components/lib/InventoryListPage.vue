@@ -12,8 +12,8 @@
           <div class="tw-basis-6/12">
             <slot name="filter:left">
               <div class="tw-flex tw-items-center tw-space-x-2">
-                <q-icon name="search" class="tw-text-secondary-text"></q-icon>
-                <k-btn icon="list" outline :label="t('status')" size="xs" class="tw-p-1 tw-py-0" />
+                <q-icon name="search" class="tw-text-secondary-text" size="sm"></q-icon>
+                <k-btn icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0" />
               </div>
             </slot>
           </div>

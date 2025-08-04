@@ -99,5 +99,22 @@ $list-table-content-height: calc(100vh - 120px);
 .list-table__content {
   max-height: $list-table-content-height;
   @apply tw-overflow-y-auto;
+  overflow: hidden;
+
+  &:hover {
+    overflow: auto;
+  }
+
+  &::-webkit-scrollbar {
+    @apply tw-w-2;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply tw-bg-base;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply tw-rounded-full tw-bg-disable-text tw-shadow-lg;
+  }
 }
 </style>

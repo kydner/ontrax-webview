@@ -106,7 +106,7 @@
 
           <template #no-option="data">
             <slot name="no-option" v-bind="data">
-              <q-item>
+              <q-item dark>
                 <q-item-section class="text-italic text-grey">{{ t('noOption') }} </q-item-section>
               </q-item>
             </slot>
