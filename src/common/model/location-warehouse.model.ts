@@ -22,4 +22,8 @@ export interface LocationWarehouseResponse {
 
 export interface LocationWarehouseResponsePage extends LocationWarehouseResponse {}
 
-export interface LocationWarehouseDataRequest extends LocationWarehouseResponse {}
+export interface LocationWarehouseDataRequest
+  extends Pick<
+    LocationWarehouseResponse,
+    'locationSiteId' | 'warehouseName' | 'warehouseCode' | 'capacity' | 'isActive'
+  > {}

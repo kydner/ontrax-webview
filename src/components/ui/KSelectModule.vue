@@ -21,20 +21,19 @@
     <!-- end-prettier-ignore -->
   </k-select>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends unknown">
 import KSelect, { KSelectEmits, KSelectProps, KSelectSlots } from 'src/components/ui/KSelect.vue'
 import { computed, ref, watch } from 'vue'
 import { RuleExpression } from 'vee-validate'
-import { IMetaModule } from 'src/common/interfaces/meta.interface'
 import { MetaService } from 'src/common/services/meta.service'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { ERROR_SERVICE_USE_CASE } from 'src/common/constants/error.constant'
 import { id } from 'src/common/interfaces/response.interface'
-import { orderBy } from 'lodash'
+import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 
 interface Props extends Omit<KSelectProps, 'options' | 'loading'> {
   optionLabel?: string
-  meta: IMetaModule
+  meta: IMetaListModule<T>
   payload?: object
   rules?: RuleExpression<unknown>
   parentId?: id
@@ -54,6 +53,9 @@ const props = withDefaults(defineProps<Props>(), {
   useInput: true,
   showLabel: true,
   clearable: true,
+  color: 'secondary',
+  dark: true,
+  hideDropdownIcon: true,
 })
 
 defineSlots<KSelectSlots>()
@@ -84,20 +86,15 @@ const loadData = async (callback: (result: unknown) => void = () => null) => {
   try {
     loading.value = true
     errorMessage.value = undefined
-    const useCase = await metaService.useCase()
+    const useCase = await metaService.repository()
 
     if (useCase.getAll) {
       const data = await useCase.getAll(props.payload || {})
       /// add logic business here
-      const currentData = orderBy(
-        data?.filter(({ id }) => id !== props.parentId) || [],
-        ['sequence', 'name'], // iteratee paths
-        ['asc', 'asc'], // sort orders
-      )
-      // if (data.length > 0)
+
       hasLoadData.value = true
 
-      const results = props.optionMapper ? props.optionMapper(currentData) : [...currentData]
+      const results = props.optionMapper ? props.optionMapper(data) : [...data]
 
       currentOptions.value = results
       if (typeof callback === 'function') {
@@ -116,7 +113,7 @@ const loadSingle = async () => {
   try {
     loading.value = true
     errorMessage.value = undefined
-    const useCase = await metaService.useCase()
+    const useCase = await metaService.repository()
     if (!props.multiple) {
       if (useCase.getOne) {
         if (props.modelValue) {

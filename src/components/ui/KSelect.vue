@@ -52,6 +52,10 @@
           </template>
           <!-- end-prettier-ignore -->
 
+          <template #prepend>
+            <q-icon name="img:/icons/chevron-down.svg" />
+          </template>
+
           <template #before-options>
             <slot name="before-options">
               <q-item v-if="props.multiple">
@@ -171,6 +175,7 @@ const props = withDefaults(defineProps<KSelectProps>(), {
   clearIcon: 'highlight_off',
   color: 'secondary',
   dark: true,
+  hideDropdownIcon: true,
 })
 
 const emit = defineEmits<KSelectEmits>()

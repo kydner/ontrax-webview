@@ -20,4 +20,5 @@ export interface LocationSiteResponse {
 
 export interface LocationSiteResponsePage extends LocationSiteResponse {}
 
-export interface LocationSiteDataRequest extends LocationSiteResponse {}
+export interface LocationSiteDataRequest
+  extends Pick<LocationSiteResponse, 'siteName' | 'siteCode' | 'address' | 'isActive'> {}
