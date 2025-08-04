@@ -54,16 +54,11 @@ import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } f
 import { useI18n } from 'vue-i18n'
 import { LoginDataRequest } from 'src/common/model/authentication.model'
 import { Notify } from 'src/common/utils/plugin.utils'
-import { AxiosError, HttpStatusCode } from 'axios'
-import { BaseResponse } from 'src/common/interfaces/response.interface'
-import { useKSecurity } from 'src/common/utils/encryption.utils'
 import { useAuthenticationRepository } from 'src/common/repository/authentication.repository'
 
 const router = useRouter()
 
 const authRepo = useAuthenticationRepository()
-
-const kSecurity = useKSecurity()
 
 const { t } = useI18n()
 
@@ -81,18 +76,6 @@ const validSubmit = () => {
       router.push('/')
     })
     .catch((error) => {
-      const errorResponse = (error as AxiosError<BaseResponse<{ token: string; accessTokenExpired: string }>>)?.response
-      if (errorResponse?.status === HttpStatusCode.Unauthorized) {
-        /**
-         * Redirect to change page if error code is
-         * 54 = account disable
-         * 58 = password expired
-         */
-        if (['54', '58'].includes(errorResponse?.data?.code)) {
-          const token = kSecurity.encrypt(String(errorResponse?.data?.data?.token))
-          router?.push({ name: 'change-password', params: { token } })
-        }
-      }
       Notify.error({
         message: error,
       })
