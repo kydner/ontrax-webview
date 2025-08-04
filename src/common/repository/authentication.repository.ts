@@ -58,7 +58,7 @@ export const useAuthenticationRepository = defineRepository({
         .then(({ data }) => {
           const authStore = useAuthenticationStore()
           const token = data.token
-          const accessTokenExpired = 60 * 15 /// data.accessTokenExpired || 0
+          const accessTokenExpired = 60 * 60 * 8 /// set jadi 8 jam,  data.accessTokenExpired || 0
 
           authStore.$state.token = token
 
