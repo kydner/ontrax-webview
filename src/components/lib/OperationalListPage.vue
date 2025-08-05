@@ -1,5 +1,5 @@
 <template>
-  <meta-list-page v-bind="{ ...props }">
+  <meta-list-page v-bind="{ ...props }" class="bg-body-base">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />

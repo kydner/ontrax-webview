@@ -6,7 +6,7 @@
     </div>
 
     <div class="tw-col-span-12">
-      <k-card v-for="i in 5" :key="i" v-ripple>
+      <k-card v-for="i in 5" :key="i" v-ripple @click="handleDetailPage">
         <q-card-section class="tw-p-2 tw-py-3">
           <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-space-x-2">
@@ -62,6 +62,16 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import KCard from 'src/components/ui/KCard.vue'
+import { useRouter } from 'vue-router'
+import { InventoryStock } from 'src/common/constants/meta.constant'
 
 const { t } = useI18n()
+
+const router = useRouter()
+
+const handleDetailPage = () => {
+  router.push({
+    name: `${InventoryStock.name}-filter-detail`,
+  })
+}
 </script>

@@ -163,24 +163,15 @@ const routes: RouteRecordRaw[] = [
           {
             path: '',
             component: () => import('pages/inventory-stock/ListPage.vue'),
-            name: `${Meta.InventoryStock.name}-list`,
+            name: `${Meta.InventoryStock.name}-filter`,
             meta: {
               middlewares: [auth],
             },
           },
           {
-            path: 'form',
-            component: () => import('pages/inventory-stock/FormPage.vue'),
-            name: `${Meta.InventoryStock.name}-form-create`,
-            meta: {
-              middlewares: [auth],
-              t: 'form',
-            },
-          },
-          {
-            path: 'form/:id',
-            component: () => import('pages/inventory-stock/FormPage.vue'),
-            name: `${Meta.InventoryStock.name}-form-update`,
+            path: 'detail',
+            component: () => import('pages/inventory-stock/DetailPage.vue'),
+            name: `${Meta.InventoryStock.name}-filter-detail`,
             meta: {
               middlewares: [auth],
               t: 'form',

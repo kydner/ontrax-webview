@@ -1,6 +1,6 @@
 <template>
   <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-my-4">
-    <div v-for="i in 5" :key="i" class="tw-col-span-12">
+    <div v-for="i in 5" :key="i" class="tw-col-span-12" @click="handleDetailPage">
       <div class="tw-grid tw-grid-cols-12 tw-gap-2">
         <div class="tw-col-span-12">
           <div class="tw-flex tw-items-center tw-justify-between tw-px-2">
@@ -40,5 +40,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import { InventoryStock } from 'src/common/constants/meta.constant'
 import KCard from 'src/components/ui/KCard.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const handleDetailPage = () => {
+  router.push({
+    name: `${InventoryStock.name}-filter-detail`,
+  })
+}
 </script>

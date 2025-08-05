@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" class="tw-bg-transparent">
+  <k-page padding="normal" :class="props.class">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
         <k-toolbar :header-title="props.meta?.title" @back="handleBack" />
@@ -19,6 +19,7 @@ import KToolbar from '../ui/KToolbar.vue'
 
 interface Props<T> {
   meta: IMetaListModule<T>
+  class?: string
 }
 
 interface Slots<T> {
