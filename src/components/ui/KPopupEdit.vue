@@ -23,9 +23,9 @@
       <Field
         :name="tLabel"
         :label="tLabel"
+        v-slot="{ errorMessage, field }"
         :rules="currentRules"
         :model-value="props.modelValue"
-        v-slot="{ errorMessage, field }"
       >
         <div v-if="!currentValue" class="preview-label tw-text-disable-text">
           <slot name="preview:prefix"></slot>
@@ -50,7 +50,6 @@
           :title="tLabel"
           buttons
           v-slot="scope"
-          :color="props.color"
           cover
           fit
           flat

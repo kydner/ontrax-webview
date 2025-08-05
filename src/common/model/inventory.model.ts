@@ -11,6 +11,7 @@ export interface InventoryResponse {
   itemCount: number
   status: string
   date: isoDate
+  test?: string
 }
 
 export interface InventoryResponsePage extends InventoryResponse {}

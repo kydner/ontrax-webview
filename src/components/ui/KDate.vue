@@ -4,6 +4,18 @@
     :required="isRequired"
     :class="`target-section-${props.name || snakeCase(props.tLabel)}`"
   >
+    <template #additional:prefix-label>
+      <slot name="additional:prefix-label" />
+    </template>
+
+    <template #label="{ label }">
+      <slot name="label" :label="label" />
+    </template>
+
+    <template #additional:suffix-label>
+      <slot name="additional:suffix-label" />
+    </template>
+
     <template #default="{ tLabel }">
       <Field
         :name="props.name || tLabel"
@@ -24,7 +36,7 @@
           class="k-date__q-input"
           :error="!!errorMessage"
           :error-message="errorMessage"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
           :placeholder="props.stackLabel ? undefined : currentPlaceholder"
           :disable="disable"
           :outlined="borderless ? false : props.outlined"
@@ -37,18 +49,7 @@
             <span v-if="required" class="tw-text-red-600">* &nbsp;</span>
           </template>
 
-          <template #append>
-            <div v-if="isClearable" class="tw-flex-auto tw-mb-1">
-              <k-btn
-                icon="highlight_off"
-                dense
-                size="0.85rem"
-                flat
-                rounded
-                color="grey-13"
-                @click="emit('update:model-value', null)"
-              />
-            </div>
+          <template #prepend>
             <div class="tw-flex tw-items-center tw-pb-[0.45rem]">
               <div class="tw-flex-auto">
                 <q-icon
@@ -56,7 +57,7 @@
                   name="img:/icons/calendar.svg"
                   class="cursor-pointer"
                   color="grey-5"
-                  size="20px"
+                  :size="calendarIconSize"
                 >
                   <q-popup-proxy ref="popupProxyRef" cover transition-show="scale" transition-hide="scale" for>
                     <q-date
@@ -79,6 +80,20 @@
                   </q-popup-proxy>
                 </q-icon>
               </div>
+            </div>
+          </template>
+
+          <template #append>
+            <div v-if="isClearable" class="tw-flex-auto tw-mb-1">
+              <k-btn
+                icon="highlight_off"
+                dense
+                size="0.85rem"
+                flat
+                rounded
+                color="grey-13"
+                @click="emit('update:model-value', null)"
+              />
             </div>
           </template>
         </q-input>
@@ -108,6 +123,8 @@ export interface KDateProps extends Omit<QDateProps, 'rules' | 'clearable' | 'mo
   rules?: RuleExpression<unknown>
   borderless?: boolean
   hint?: QInputProps['hint']
+  inputClass?: string
+  calendarIconSize?: string
 }
 
 export type KDateEmits = (e: 'update:model-value', value: KDateProps['modelValue']) => void
@@ -120,6 +137,8 @@ const props = withDefaults(defineProps<KDateProps>(), {
   outlined: true,
   dense: true,
   borderless: false,
+  dark: true,
+  calendarIconSize: '20px',
 })
 
 const emit = defineEmits<KDateEmits>()

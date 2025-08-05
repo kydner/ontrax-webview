@@ -8,7 +8,7 @@
       <div
         v-if="showLabel"
         :class="`basis-auto ${horizontalLabel ? 'horizontal-align' : ''} ${currentHorizontalAlign}`"
-        :style="`width: ${horizontalLabel ? labelWidth : 'auto'};`"
+        :style="`width: ${horizontalLabel ? labelWidth : 'auto'}; max-width: 40vw;`"
       >
         <div :class="`title-wrapper label-size ${labelWeight} size-${labelSize}`">
           <span :class="`tw-text-[0.85rem] ${dark ? 'tw-text-white' : ''}`">
@@ -90,7 +90,7 @@ const props = withDefaults(defineProps<KLabelProps>(), {
   labelSize: 'normal',
   required: false,
   forceShowLabel: false,
-  labelWidth: '40vw',
+  labelWidth: '180px',
   dark: true,
   labelClass: '',
 })

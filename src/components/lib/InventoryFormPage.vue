@@ -1,13 +1,8 @@
 <template>
-  <meta-form-page
-    ref="metaFormPageRef"
-    v-bind="{ ...props }"
-    class="bg-body-base"
-    @form:submit="handleSubmitByComponent"
-  >
+  <meta-form-page ref="metaFormPageRef" v-bind="{ ...props }" class="bg-body-base">
     <form-page v-model="currentValue"></form-page>
     <template #footer>
-      <k-btn type="submit" :label="t('button.submit')" color="secondary" class="fit" />
+      <k-btn :label="t('button.submit')" color="secondary" class="fit" @click="handleSubmitByComponent" />
     </template>
   </meta-form-page>
 </template>

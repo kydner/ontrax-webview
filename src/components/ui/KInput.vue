@@ -34,7 +34,7 @@
           :rules="undefined"
           :error-message="errorMessage"
           :clearable="isRequired ? false : props.clearable"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
           :placeholder="currentPlaceholder"
           :outlined="borderless ? false : props.outlined"
         >
@@ -67,6 +67,7 @@ export interface KInputProps extends Omit<QInputProps, 'rules'>, KLabelProps {
   placeholder?: string
   rules?: RuleExpression<unknown>
   defaultValue?: QInputProps['modelValue']
+  inputClass?: string
 }
 
 export type KInputEmits = (e: 'update:model-value', value: KInputProps['modelValue']) => void

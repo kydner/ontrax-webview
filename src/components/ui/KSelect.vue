@@ -14,6 +14,10 @@
       <slot name="additional:prefix-label" />
     </template>
 
+    <template #label="{ label }">
+      <slot name="label" :label="label" />
+    </template>
+
     <template #additional:suffix-label>
       <slot name="additional:suffix-label" />
     </template>
@@ -41,7 +45,7 @@
           :error="props.error || !!errorMessage"
           :error-message="props.errorMessage || errorMessage"
           :placeholder="props.stackLabel ? undefined : currentPlaceholder"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
           :disable="props.loading || props.disable"
           @filter="filterFn"
           @update:model-value="onUpdateValue"
@@ -138,6 +142,7 @@ export interface KSelectProps extends Omit<QSelectProps, 'rules'>, KLabelProps {
   placeholder?: string
   rules?: RuleExpression<unknown>
   defaultValue?: QSelectProps['modelValue']
+  inputClass?: string
 }
 
 export interface KSelectEmits {
@@ -161,7 +166,6 @@ export interface KSelectEmits {
 export interface KSelectSlots extends KLabelSlots, Omit<QSelectSlots, 'default' | 'label'> {}
 
 const props = withDefaults(defineProps<KSelectProps>(), {
-  outlined: true,
   dense: true,
   showLabel: true,
   horizontalLabel: false,
@@ -176,6 +180,7 @@ const props = withDefaults(defineProps<KSelectProps>(), {
   color: 'secondary',
   dark: true,
   hideDropdownIcon: true,
+  borderless: false,
 })
 
 const emit = defineEmits<KSelectEmits>()
@@ -204,8 +209,8 @@ const currentFor = computed(() => props.for || props.label)
 const currentOptions = ref<KSelectProps['options']>([])
 
 const currentPlaceholder = computed(() => {
-  if (props.placeholder) return props.placeholder
   if (!isEmpty(props.modelValue) || props.modelValue) return ''
+  if (props.placeholder) return props.placeholder
   if (props.tLabel) return `${t('select')} ${t(props.tLabel)}`
   return `${t('select')} ${props.label}`
 })

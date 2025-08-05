@@ -1354,6 +1354,7 @@ export default {
   shippingDate: 'Tanggal Pengiriman',
   targetReceiveDate: 'Tanggal Target Penerimaan',
   client: 'Klien',
+  vendor: 'Vendor',
   warehouse: 'Gudang',
   refNumber: 'No. Ref',
   attachFile: 'Lampiran Berkas',

@@ -1,18 +1,18 @@
 <template>
-  <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
-    <k-page padding="normal" class="tw-bg-transparent tw-flex tw-flex-col tw-min-h-screen tw-justify-between">
-      <div class="tw-flex tw-flex-col tw-space-y-4">
-        <slot name="toolbar">
-          <div class="tw-flex tw-items-center tw-space-x-4 tw-py-4">
-            <k-btn icon="img:/icons/arrow-left.svg" flat rounded size="xs" padding="none" @click="handleBack" />
-            <div class="tw-font-semibold">{{ t('create') }} {{ props.meta?.title }}</div>
-          </div>
-        </slot>
+  <k-page padding="normal" class="tw-bg-transparent tw-flex tw-flex-col tw-min-h-screen tw-justify-between">
+    <div class="tw-flex tw-flex-col tw-space-y-4">
+      <slot name="toolbar">
+        <div class="tw-flex tw-items-center tw-space-x-4 tw-py-4">
+          <k-btn icon="img:/icons/arrow-left.svg" flat rounded size="xs" padding="none" @click="handleBack" />
+          <div class="tw-font-semibold">{{ t('create') }} {{ props.meta?.title }}</div>
+        </div>
+      </slot>
+      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
         <slot></slot>
-      </div>
-      <slot name="footer"></slot>
-    </k-page>
-  </Form>
+      </Form>
+    </div>
+    <slot name="footer"></slot>
+  </k-page>
 </template>
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
