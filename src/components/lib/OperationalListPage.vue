@@ -17,11 +17,13 @@
         </div>
 
         <div class="tw-col-span-12 tw-my-2">
-          <k-btn color="secondary" :label="t('search')" class="fit" />
+          <k-btn color="secondary" :label="t('search')" class="fit" @click="handleFilter" />
         </div>
 
-        <div class="tw-col-span-12">
+        <div class="target-section-operational__list tw-col-span-12">
           <all-filtering />
+
+          <product-warehouse-filtering />
         </div>
       </div>
     </slot>
@@ -35,6 +37,8 @@ import { LocationWarehouseResponsePage } from 'src/common/model/location-warehou
 import { LocationWarehouse } from 'src/common/constants/meta.constant'
 import { useI18n } from 'vue-i18n'
 import AllFiltering from '../page/inventory-stock/AllFiltering.vue'
+import ProductWarehouseFiltering from '../page/inventory-stock/ProductWarehouseFiltering.vue'
+import { scrollToClass } from 'src/common/utils/plugin.utils'
 
 interface Props {
   meta: IMetaListModule<T>
@@ -56,4 +60,8 @@ const { t } = useI18n()
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 defineSlots<Slots<T>>()
+
+const handleFilter = () => {
+  scrollToClass('.target-section-operational__list')
+}
 </script>

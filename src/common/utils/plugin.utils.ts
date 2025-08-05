@@ -170,3 +170,21 @@ export function copyToClipboard(value: string | undefined): void {
     })
   }
 }
+
+/**
+ *
+ * @param targetClass class with dot. ex: .target-section
+ * @param headerOffset distance from top. default 0
+ */
+export const scrollToClass = (targetClass: string, headerOffset = 0) => {
+  const target = document.querySelector<HTMLElement>(targetClass)
+  if (target) {
+    const elementPosition = target.getBoundingClientRect().top + window.scrollY
+    const offsetPosition = elementPosition - headerOffset
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    })
+  }
+}

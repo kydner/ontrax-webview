@@ -1,12 +1,12 @@
 <template>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-my-2">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-my-4">
     <div class="tw-col-span-12">
       <h3>{{ t('allWarehouse') }}</h3>
       <q-separator></q-separator>
     </div>
 
     <div class="tw-col-span-12">
-      <k-card v-for="i in 5" :key="i">
+      <k-card v-for="i in 5" :key="i" v-ripple>
         <q-card-section class="tw-p-2 tw-py-3">
           <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-space-x-2">
@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div>
-                  <q-icon name="img:/icons/chevron-right.svg" size="1.25rem" />
+                  <q-icon name="img:/icons/chevron-right.svg" size="1.35rem" />
                 </div>
               </div>
             </div>
