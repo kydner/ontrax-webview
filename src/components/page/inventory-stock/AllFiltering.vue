@@ -1,11 +1,11 @@
 <template>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-my-4">
-    <div class="tw-col-span-12">
+  <div class="tw-flex tw-flex-col tw-space-y-4 tw-my-4 tw-min-h-screen">
+    <div class="tw-basis-full">
       <h3>{{ t('allWarehouse') }}</h3>
       <q-separator></q-separator>
     </div>
 
-    <div class="tw-col-span-12">
+    <div class="tw-basis-full">
       <k-card v-for="i in 5" :key="i" v-ripple @click="handleDetailPage">
         <q-card-section class="tw-p-2 tw-py-3">
           <div class="tw-flex tw-items-center tw-justify-between">

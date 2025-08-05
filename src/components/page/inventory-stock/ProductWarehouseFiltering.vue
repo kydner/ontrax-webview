@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-my-4">
-    <div v-for="i in 5" :key="i" class="tw-col-span-12" @click="handleDetailPage">
+  <div class="tw-flex tw-flex-col tw-space-y-4 tw-my-4 tw-min-h-screen">
+    <div v-for="i in 5" :key="i" class="tw-basis-full" @click="handleDetailPage">
       <div class="tw-grid tw-grid-cols-12 tw-gap-2">
         <div class="tw-col-span-12">
           <div class="tw-flex tw-items-center tw-justify-between tw-px-2">
