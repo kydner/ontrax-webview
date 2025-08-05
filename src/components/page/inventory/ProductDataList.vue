@@ -2,7 +2,7 @@
   <k-btn color="secondary" label="Add Product" />
 
   <div class="tw-my-2">
-    <k-card v-for="i in 5" :key="i">
+    <k-card v-for="i in 5" :key="i" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-space-x-2">
