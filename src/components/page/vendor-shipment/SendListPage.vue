@@ -1,14 +1,11 @@
 <template>
-  <inventory-top-filter v-model="search" @search="handleSearch">
-    <template #other-left>
-      <k-btn icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0" />
-    </template>
-    <template #right>
-      <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-        <span class="tw-text-xs tw-text-secondary-text">{{ t('sortBy') }}</span>
-        <q-icon name="img:/icons/sort-by.svg"></q-icon>
-      </div>
-    </template>
+  <inventory-top-filter
+    v-model:search-value="search"
+    v-model:status-value="currentStatus"
+    :statuses="statuses"
+    @search="handleSearch"
+    @item:selected="(value) => handleStatus(value)"
+  >
   </inventory-top-filter>
   <!-- end filtering -->
 
@@ -34,6 +31,7 @@ import InventoryTopFilter from 'src/components/page/inventory/InventoryTopFilter
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
+import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 
 interface ListItem {
   item: VendorShipmentResponsePage
@@ -65,11 +63,24 @@ const search = ref()
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 
+const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED']
+
+const currentStatus = ref<TStatus | undefined>()
+const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
+  page: 1,
+  receiveNumber: search.value || undefined,
+  status: currentStatus.value,
+  ...extra,
+})
+
 const handleSearch = () => {
-  payload.value = {
-    page: 1,
-    receiveNumber: search.value || undefined,
-  }
+  payload.value = buildPayload()
+  metaListTableRef.value?.loadMore()
+}
+
+const handleStatus = (value?: TStatus) => {
+  currentStatus.value = currentStatus.value === value ? undefined : value
+  payload.value = buildPayload()
   metaListTableRef.value?.loadMore()
 }
 </script>

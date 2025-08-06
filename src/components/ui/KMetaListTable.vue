@@ -60,8 +60,6 @@ const loadMore = async <T extends any[]>() => {
       if (state.totalPages === state.page) {
         state.hasMore = false
       }
-
-      state.loading = false
     }
   } catch (error) {
     const currentErrorMessage = getErrorMessage(error as Error)
@@ -69,6 +67,8 @@ const loadMore = async <T extends any[]>() => {
     Notify.error({
       message: error as Error,
     })
+  } finally {
+    state.loading = false
   }
 }
 

@@ -149,6 +149,7 @@ const fetchSingle = async () => {
     console.log(route.params, 'params')
     const repository = await metaService.repository()
     if (repository.getOne) {
+      Loading.show()
       const response = await repository.getOne(formId.value)
       form.value = response as T
     } else {
@@ -158,6 +159,8 @@ const fetchSingle = async () => {
     Notify.error({
       message: error as Error,
     })
+  } finally {
+    Loading.hide()
   }
 }
 

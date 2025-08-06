@@ -18,7 +18,28 @@
       />
 
       <!-- Other left component -->
-      <slot name="other-left"></slot>
+      <slot name="other-left">
+        <q-btn-dropdown icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0">
+          <q-list dark bordered>
+            <q-item
+              v-for="status in statuses"
+              :key="status"
+              clickable
+              v-close-popup
+              @click="emit('item:selected', status)"
+            >
+              <q-item-section>
+                <q-item-label
+                  class="tw-flex space tw-items-center tw-justify-between"
+                  :class="{ 'tw-text-secondary': status === currentStatus }"
+                >
+                  <span>{{ status }}</span>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+      </slot>
     </div>
 
     <!-- Right: right component -->
@@ -26,7 +47,12 @@
       class="tw-flex tw-items-center tw-gap-2 tw-transition-all tw-duration-300 z-10"
       :class="{ 'tw-opacity-0 tw-pointer-events-none': showInput }"
     >
-      <slot name="right"></slot>
+      <slot name="right">
+        <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
+          <span class="tw-text-xs tw-text-secondary-text">{{ t('sortBy') }}</span>
+          <q-icon name="img:/icons/sort-by.svg"></q-icon>
+        </div>
+      </slot>
     </div>
 
     <!-- Flexible Q-Input  -->
@@ -56,24 +82,37 @@
 
 <script setup lang="ts">
 import { QInputProps } from 'quasar'
+import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 import { ref, nextTick, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
-  modelValue: QInputProps['modelValue']
+  searchValue: QInputProps['modelValue']
+  statusValue?: TStatus
+  statuses: TStatus[]
 }
 
 interface Emits {
   (event: 'search'): void
-  (event: 'update:model-value', value: QInputProps['modelValue']): void
+  (event: 'item:selected', value: Props['statusValue']): void
+  (event: 'update:search-value', value: QInputProps['modelValue']): void
+  (event: 'update:status-value', value: Props['statusValue']): void
 }
 
 const props = withDefaults(defineProps<Props>(), {})
 
 const emit = defineEmits<Emits>()
 
+const { t } = useI18n()
+
 const search = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:model-value', value),
+  get: () => props.searchValue,
+  set: (value) => emit('update:search-value', value),
+})
+
+const currentStatus = computed({
+  get: () => props.statusValue,
+  set: (value) => emit('update:status-value', value),
 })
 
 const showInput = ref(false)
