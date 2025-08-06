@@ -1,5 +1,5 @@
 <template>
-  <k-btn color="secondary" label="Add Product" />
+  <k-btn color="secondary" label="Add Product" @click="handleProductPick" />
 
   <div class="tw-my-2">
     <k-card v-for="i in 5" :key="i" class="tw-my-2">
@@ -20,5 +20,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { bus } from 'src/common/event-bus'
 import KCard from 'src/components/ui/KCard.vue'
+
+const handleProductPick = () => {
+  bus.emit('product:pick')
+}
 </script>
