@@ -142,7 +142,7 @@ const handleCreate = () => {
 const handleUpdate = async (data: { item: T }) => {
   try {
     const { item } = data
-    const formId = item[props.formId] || '123'
+    const formId = item[props.formId]
     await router.push({
       name: `${props.meta.name}-form-update`,
       params: {

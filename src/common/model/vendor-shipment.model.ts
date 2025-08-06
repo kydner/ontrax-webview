@@ -1,6 +1,7 @@
-import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { InventoryResponse } from './inventory.model'
 import { IStatus } from '../enum/vendor-shipment.enum'
+import { ReceiveItem } from '../constants/meta.constant'
 
 export interface VendorShipmentRequest extends IListSortingRequest {
   status?: IStatus
@@ -10,7 +11,17 @@ export interface VendorShipmentRequest extends IListSortingRequest {
 
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
-export interface VendorShipmentResponse extends InventoryResponse {}
+export interface VendorShipmentResponse extends InventoryResponse {
+  vendorId: string
+  warehouseId: string
+  referenceNumber: string
+  shippingDate: isoDate
+  targetReceiveDate: isoDate
+  referenceDocument: string
+  attachmentUrl: string
+  notes: string
+  receiveItems: ReceiveItem[]
+}
 
 export interface VendorShipmentResponsePage extends VendorShipmentResponse {
   goodsReceiveId: string
@@ -18,16 +29,19 @@ export interface VendorShipmentResponsePage extends VendorShipmentResponse {
   purchaseOrderNumber: string
   locationWarehouseId: string
   locationWarehouseName: string
-  vendorId: string
   vendorName: string
   receiveNumber: string
-  shippingDate: string
-  targetReceiveDate: string
   actualReceiveDate: string
-  referenceDocument: string
   attachmentUrl: string
   status: IStatus
   notes: string
 }
 
 export interface VendorShipmentDataRequest extends VendorShipmentResponse {}
+
+export interface ReceiveItem {
+  goodsReceiveId: string
+  itemId: string
+  qtyOrdered: 0
+  notes: string
+}

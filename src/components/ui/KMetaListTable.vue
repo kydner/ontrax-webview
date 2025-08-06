@@ -44,6 +44,9 @@ const state = reactive({
   loading: false,
   hasMore: true,
   errorMessage: null as string | null,
+  size: 10,
+  page: 1,
+  totalPages: 1,
 })
 
 const loadMore = async <T extends any[]>() => {
@@ -54,11 +57,14 @@ const loadMore = async <T extends any[]>() => {
     state.items = []
     const repository = await metaService.repository()
     if (repository.getPage) {
-      const newItems = await repository.getPage()
-      console.log(newItems.content)
-      state.items.push(...(newItems.content as T))
+      const data = await repository.getPage({ page: state.page, size: state.size })
+      console.log(data)
+      const content = data.content
+      state.items.push(...(content as T))
 
-      if (state.items.length >= 100) {
+      state.page++
+
+      if (state.totalPages === state.page) {
         state.hasMore = false
       }
 
