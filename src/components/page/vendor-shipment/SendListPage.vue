@@ -34,7 +34,6 @@ import InventoryTopFilter from 'src/components/page/inventory/InventoryTopFilter
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
-import { Notify } from 'src/common/utils/plugin.utils'
 
 interface ListItem {
   item: VendorShipmentResponsePage
@@ -60,16 +59,17 @@ const ListContentPage = computed(() => {
   })
 })
 
-const payload = computed(() => {
-  return { receiveNumber: search.value, page: 1, size: 10 } as VendorShipmentRequestPage
-})
+const payload = ref({} as VendorShipmentRequestPage)
 
 const search = ref()
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 
 const handleSearch = () => {
-  console.log(metaListTableRef.value)
+  payload.value = {
+    page: 1,
+    receiveNumber: search.value || undefined,
+  }
   metaListTableRef.value?.loadMore()
 }
 </script>

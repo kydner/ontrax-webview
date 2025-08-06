@@ -39,9 +39,11 @@
         color="secondary"
         autofocus
         clearable
+        :debounce="200"
         placeholder="Search..."
         class="tw-absolute tw-left-0 tw-top-0 tw-h-full tw-w-full z-20"
         @keyup.enter="emit('search')"
+        @update:model-value="handleUpdateModel"
       >
         <template #append>
           <q-icon name="search" class="tw-cursor-pointer" @click="emit('search')" />
@@ -87,6 +89,10 @@ function toggleInput(show: boolean) {
   } else {
     inputVisible.value = false
   }
+}
+
+const handleUpdateModel = (value: QInputProps['modelValue']) => {
+  if (!value) emit('search')
 }
 </script>
 
