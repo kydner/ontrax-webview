@@ -41,9 +41,7 @@
         </div>
 
         <div class="target-section-operational__list tw-col-span-12">
-          <all-filtering />
-
-          <product-warehouse-filtering />
+          <component :is="component" />
         </div>
       </div>
     </slot>
@@ -52,12 +50,10 @@
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
-import { ref, VNode } from 'vue'
+import { defineAsyncComponent, ref, VNode, type Component } from 'vue'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { LocationWarehouse, Product } from 'src/common/constants/meta.constant'
 import { useI18n } from 'vue-i18n'
-import AllFiltering from '../page/inventory-stock/AllFiltering.vue'
-import ProductWarehouseFiltering from '../page/inventory-stock/ProductWarehouseFiltering.vue'
 import { scrollToClass } from 'src/common/utils/plugin.utils'
 import { InventoryStockRequest } from 'src/common/model/inventory-stock.model'
 import { ProductResponsePage } from 'src/common/model/product.model'
@@ -79,6 +75,8 @@ const props = withDefaults(defineProps<Props>(), {})
 
 const { t } = useI18n()
 
+const component = ref<Component | null>(null)
+
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
@@ -91,6 +89,16 @@ const request = ref({
 defineSlots<Slots<T>>()
 
 const handleFilter = () => {
+  component.value = null
+  if (!request.value.itemId && !request.value.locationWarehouseId) {
+    component.value = defineAsyncComponent({
+      loader: () => import('../page/inventory-stock/AllFiltering.vue'),
+    })
+  } else {
+    component.value = defineAsyncComponent({
+      loader: () => import('../page/inventory-stock/ProductWarehouseFiltering.vue'),
+    })
+  }
   scrollToClass('.target-section-operational__list')
 }
 </script>
