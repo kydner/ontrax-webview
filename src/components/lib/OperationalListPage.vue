@@ -14,6 +14,7 @@
             :filled="false"
             outlined
             t-label="product"
+            behavior="menu"
             option-label="itemName"
             option-value="itemId"
             :meta="metaProduct"
@@ -28,6 +29,7 @@
             :filled="false"
             outlined
             t-label="warehouse"
+            behavior="menu"
             option-label="warehouseName"
             option-value="locationWarehouseId"
             :meta="metaLocationWarehouse"
