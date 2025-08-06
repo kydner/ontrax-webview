@@ -4,7 +4,7 @@
       v-for="item in props.items"
       :key="item.name"
       v-ripple
-      class="tw-relative tw-rounded-base tw-bg-overlay tw-col-span-6 md:tw-col-span-4 tw-py-4 tw-px-1 tw-cursor-pointer"
+      class="tw-relative tw-rounded-base tw-bg-overlay tw-col-span-6 tw-py-4 tw-px-1 tw-cursor-pointer"
       @click="router.push(item.page)"
     >
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
