@@ -13,7 +13,14 @@ export const useVendorShipmentRepository = defineRepository({
     withRepository(
       () => shipmentEndpoint.getOne(id),
       (response) => {
-        const receiveItems = [...response.goodsReceiveItems]
+        const receiveItems = [...response.goodsReceiveItems]?.map((item) => {
+          return {
+            goodsReceiveId: item.goodsReceiveItemId,
+            itemId: item.itemId,
+            qtyOrdered: item.qtyOrdered,
+            notes: item.notes,
+          }
+        })
         return { ...response, receiveItems }
       },
     ),

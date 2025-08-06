@@ -34,7 +34,7 @@
           :rules="undefined"
           :error-message="errorMessage"
           :clearable="isRequired ? false : props.clearable"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${!!errorMessage ? 'show-error' : ''} ${inputClass}`"
           :placeholder="currentPlaceholder"
           :outlined="borderless ? false : props.outlined"
         >

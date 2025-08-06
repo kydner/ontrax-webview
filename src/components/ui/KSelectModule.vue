@@ -44,7 +44,7 @@ interface Props extends Omit<KSelectProps, 'options' | 'loading'> {
 interface Emits extends KSelectEmits {}
 
 const props = withDefaults(defineProps<Props>(), {
-  outlined: true,
+  outlined: false,
   dense: true,
   optionLabel: 'name',
   optionValue: 'id',

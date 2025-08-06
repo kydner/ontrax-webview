@@ -45,7 +45,7 @@
           :error="props.error || !!errorMessage"
           :error-message="props.errorMessage || errorMessage"
           :placeholder="props.stackLabel ? undefined : currentPlaceholder"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${!!errorMessage ? 'show-error' : ''} ${inputClass}`"
           :disable="props.loading || props.disable"
           @filter="filterFn"
           @update:model-value="onUpdateValue"
@@ -181,6 +181,7 @@ export interface KSelectEmits {
 export interface KSelectSlots extends KLabelSlots, Omit<QSelectSlots, 'default' | 'label'> {}
 
 const props = withDefaults(defineProps<KSelectProps>(), {
+  hideSelected: true,
   dense: true,
   showLabel: true,
   horizontalLabel: false,

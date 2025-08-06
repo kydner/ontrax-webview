@@ -36,7 +36,7 @@
           class="k-date__q-input"
           :error="!!errorMessage"
           :error-message="errorMessage"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${inputClass}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${!!errorMessage ? 'show-error' : ''} ${inputClass}`"
           :placeholder="props.stackLabel ? undefined : currentPlaceholder"
           :disable="disable"
           :outlined="borderless ? false : props.outlined"
@@ -89,10 +89,11 @@
               <k-btn
                 icon="highlight_off"
                 dense
-                size="0.85rem"
+                size="0.6rem"
                 flat
                 rounded
-                color="grey-13"
+                padding="none"
+                class="tw-text-secondary-text/60"
                 @click="emit('update:model-value', null)"
               />
             </div>

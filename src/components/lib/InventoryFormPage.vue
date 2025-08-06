@@ -2,7 +2,7 @@
   <meta-form-page ref="metaFormPageRef" v-bind="{ ...props }" :show-toolbar="false" class="bg-body-base">
     <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
       <q-tab-panel :name="PANEL_FORM" class="tw-p-0">
-        <k-toolbar :header-title="`${t('create')} ${meta.title}`" @back="handleBack" />
+        <k-toolbar :header-title="currentTitle" @back="handleBack" />
         <component :is="FormPage" v-model="form"></component>
       </q-tab-panel>
 
@@ -69,6 +69,11 @@ const { t } = useI18n()
 const metaService = new MetaService(props.meta)
 
 const formId = computed(() => route.params?.id)
+
+const currentTitle = computed(() => {
+  if (formId.value) return form.value?.receiveNumber
+  return `${t('create')} ${props.meta.title}`
+})
 
 const panel = ref(PANEL_FORM)
 

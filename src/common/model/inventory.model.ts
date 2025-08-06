@@ -6,6 +6,7 @@ export type InventoryRequestPage = IPaginationRequest & InventoryRequest
 
 export interface InventoryResponse {
   id: id
+  receiveNumber: string
 }
 
 export interface InventoryResponsePage extends InventoryResponse {}

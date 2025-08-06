@@ -1,7 +1,10 @@
 <template>
-  <span class="tw-inline-flex tw-p-1 tw-px-3 tw-rounded-base tw-text-sm" :class="`${currentColor}`">{{
-    props.label
-  }}</span>
+  <span
+    v-if="props.label"
+    class="tw-inline-flex tw-p-1 tw-px-3 tw-rounded-base tw-text-sm"
+    :class="`${currentColor}`"
+    >{{ props.label }}</span
+  >
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'

@@ -22,7 +22,7 @@ export interface VendorShipmentResponse extends InventoryResponse {
   notes: string
   status: TStatus
   receiveItems: ReceiveItem[]
-  goodsReceiveItems: VendorShipmentResponse['receiveItems']
+  goodsReceiveItems: GoodReceiveItem[]
 }
 
 export interface VendorShipmentResponsePage extends VendorShipmentResponse {
@@ -44,5 +44,16 @@ export interface ReceiveItem {
   goodsReceiveId: string
   itemId: string
   qtyOrdered: 0
+  notes: string
+}
+
+export interface GoodReceiveItem {
+  goodsReceiveItemId: id
+  itemId: id
+  itemCode: string
+  itemName: string
+  qtyOrdered: number
+  qtyReceived: number
+  unitPrice: number
   notes: string
 }
