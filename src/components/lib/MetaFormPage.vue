@@ -2,10 +2,7 @@
   <k-page padding="normal" class="tw-bg-transparent tw-flex tw-flex-col tw-min-h-screen tw-justify-between">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
-        <div class="tw-flex tw-items-center tw-space-x-4 tw-py-4">
-          <k-btn icon="img:/icons/arrow-left.svg" flat rounded size="xs" padding="none" @click="handleBack" />
-          <div class="tw-font-semibold">{{ t('create') }} {{ props.meta?.title }}</div>
-        </div>
+        <k-toolbar :header-title="`${t('create')} ${props.meta?.title}`" @back="handleBack" />
       </slot>
       <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
         <slot></slot>
@@ -23,6 +20,7 @@ import { ref, VNode } from 'vue'
 import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { snakeCase } from 'lodash'
+import KToolbar from '../ui/KToolbar.vue'
 
 interface Props<T> {
   meta: IMetaListModule<T>
