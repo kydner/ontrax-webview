@@ -27,17 +27,7 @@
           </q-tab-panel>
 
           <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
-            <k-meta-list-table :meta="props.meta">
-              <!-- prettier-ignore -->
-              <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
-                <slot :name="slotName" v-bind="(data as any)" />
-              </template>
-              <!-- end-prettier-ignore -->
-
-              <template #list:content="{ item }">
-                <component :is="ListContentPage" :item="item" @click="handleUpdate" />
-              </template>
-            </k-meta-list-table>
+            <component :is="QualityControlListPage" @click:item="handleUpdate" />
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -54,7 +44,6 @@ import MetaListPage from './MetaListPage.vue'
 import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import KMetaListTable from '../ui/KMetaListTable.vue'
 import { ref } from 'vue'
 import { InventoryResponse } from 'src/common/model/inventory.model'
 import { Notify } from 'src/common/utils/plugin.utils'
@@ -82,20 +71,15 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
-const ListContentPage = computed(() => {
-  if (props.meta) {
-    return defineAsyncComponent({
-      loader: () => import(`../page/${props.meta.name}/ListContent.vue`),
-    })
-  }
-  return defineAsyncComponent({
-    loader: () => import('../page/inventory/ListContent.vue'),
-  })
-})
-
 const SendListPage = computed(() =>
   defineAsyncComponent({
     loader: () => import(`src/components/page/${props.meta.name}/SendListPage.vue`),
+  }),
+)
+
+const QualityControlListPage = computed(() =>
+  defineAsyncComponent({
+    loader: () => import(`src/components/page/${props.meta.name}/QualityControlListPage.vue`),
   }),
 )
 

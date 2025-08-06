@@ -1,5 +1,11 @@
 <template>
-  <k-list-table :items="state.items" :loading="state.loading" :hasMore="state.hasMore" :on-scroll-bottom="loadMore">
+  <k-list-table
+    :items="state.items"
+    :loading="state.loading"
+    :error="state.errorMessage"
+    :hasMore="state.hasMore"
+    :on-scroll-bottom="loadMore"
+  >
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="data" />

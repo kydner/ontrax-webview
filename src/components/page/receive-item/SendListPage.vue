@@ -10,7 +10,7 @@
   <!-- end filtering -->
 
   <!-- meta list table -->
-  <k-meta-list-table ref="metaListTableRef" :meta="metaVendorShipment" :payload="payload">
+  <k-meta-list-table ref="metaListTableRef" :meta="metaReceiveItem" :payload="payload">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as Record<string, unknown>)" />
@@ -24,16 +24,16 @@
   <!-- end meta list table -->
 </template>
 <script setup lang="ts">
-import { VendorShipment } from 'src/common/constants/meta.constant'
+import { ReceiveItem } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { VendorShipmentRequestPage, VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemRequestPage, ReceiveItemResponsePage } from 'src/common/model/receive-item.model'
 import InventoryTopFilter from 'src/components/page/inventory/InventoryTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 
 interface ListItem {
-  item: VendorShipmentResponsePage
+  item: ReceiveItemResponsePage
 }
 
 interface Emits {
@@ -46,7 +46,7 @@ type MetaListTableExposed = {
 
 const emit = defineEmits<Emits>()
 
-const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorShipment
+const metaReceiveItem: IMetaListModule<ReceiveItemResponsePage> = ReceiveItem
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
@@ -54,7 +54,7 @@ const ListContentPage = computed(() => {
   })
 })
 
-const payload = ref({} as VendorShipmentRequestPage)
+const payload = ref({} as ReceiveItemRequestPage)
 
 const search = ref()
 

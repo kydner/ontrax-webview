@@ -10,7 +10,7 @@
   <!-- end filtering -->
 
   <!-- meta list table -->
-  <k-meta-list-table ref="metaListTableRef" :meta="metaVendorShipment" :payload="payload">
+  <k-meta-list-table ref="metaListTableRef" :meta="metaTransferItem" :payload="payload">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as Record<string, unknown>)" />
@@ -24,16 +24,16 @@
   <!-- end meta list table -->
 </template>
 <script setup lang="ts">
-import { VendorShipment } from 'src/common/constants/meta.constant'
+import { TransferItem } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { VendorShipmentRequestPage, VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
+import { TransferItemRequestPage, TransferItemResponsePage } from 'src/common/model/transfer-item.model'
 import InventoryTopFilter from 'src/components/page/inventory/InventoryTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 
 interface ListItem {
-  item: VendorShipmentResponsePage
+  item: TransferItemResponsePage
 }
 
 interface Emits {
@@ -46,21 +46,21 @@ type MetaListTableExposed = {
 
 const emit = defineEmits<Emits>()
 
-const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorShipment
+const metaTransferItem: IMetaListModule<TransferItemResponsePage> = TransferItem
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
-    loader: () => import('./SendListContent.vue'),
+    loader: () => import('./QualityControlListContent.vue'),
   })
 })
 
-const payload = ref({} as VendorShipmentRequestPage)
+const payload = ref({} as TransferItemRequestPage)
 
 const search = ref()
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 
-const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED']
+const statuses: TStatus[] = ['QC_PASSED', 'PARTIAL_PASSED', 'RECEIVED']
 
 const currentStatus = ref<TStatus | undefined>()
 
@@ -81,6 +81,4 @@ const handleStatus = (value?: TStatus) => {
   payload.value = buildPayload()
   metaListTableRef.value?.loadMore()
 }
-
-payload.value = buildPayload()
 </script>

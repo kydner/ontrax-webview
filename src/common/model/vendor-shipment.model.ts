@@ -4,7 +4,7 @@ import { TStatus } from '../enum/vendor-shipment.enum'
 import { ReceiveItem } from '../constants/meta.constant'
 
 export interface VendorShipmentRequest extends IListSortingRequest {
-  status?: TStatus
+  status?: TStatus | TStatus[]
   vendorId?: id
   receiveNumber?: number
 }

@@ -50,7 +50,7 @@ const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorSh
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
-    loader: () => import('./SendListContent.vue'),
+    loader: () => import('./QualityControlListContent.vue'),
   })
 })
 
@@ -60,7 +60,7 @@ const search = ref()
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 
-const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED']
+const statuses: TStatus[] = ['QC_PASSED', 'PARTIAL_PASSED', 'RECEIVED']
 
 const currentStatus = ref<TStatus | undefined>()
 
@@ -81,6 +81,4 @@ const handleStatus = (value?: TStatus) => {
   payload.value = buildPayload()
   metaListTableRef.value?.loadMore()
 }
-
-payload.value = buildPayload()
 </script>
