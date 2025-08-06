@@ -23,6 +23,8 @@ export interface VendorShipmentResponse extends InventoryResponse {
   status: TStatus
   receiveItems: ReceiveItem[]
   goodsReceiveItems: GoodReceiveItem[]
+  totalItems: number
+  totalItemQty: number
 }
 
 export interface VendorShipmentResponsePage extends VendorShipmentResponse {

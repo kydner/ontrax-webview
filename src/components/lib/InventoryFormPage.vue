@@ -93,7 +93,7 @@ const handleUpdate = async () => {
       if (!formId.value) throw new ErrorId('FormId')
       Loading.show()
       await repository.update(formId.value, { ...form.value })
-      Notify.create({
+      Notify.success({
         message: t('notification.successUpdateData'),
       })
     } else {
@@ -112,10 +112,9 @@ const handleCreate = async () => {
   try {
     const repository = await metaService.repository()
     if (repository.create) {
-      if (!formId.value) throw new ErrorId('FormId')
       Loading.show()
       await repository.create({ ...form.value })
-      Notify.create({
+      Notify.success({
         message: t('notification.successUpdateData'),
       })
     } else {

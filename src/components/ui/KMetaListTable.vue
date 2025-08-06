@@ -8,7 +8,7 @@
   </k-list-table>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T, R">
 import { reactive, VNode } from 'vue'
 import KListTable, { KListTableSlots } from './KListTable.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
@@ -16,16 +16,9 @@ import { MetaService } from 'src/common/services/meta.service'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 
-interface CardItem {
-  id: number
-  code: string
-  company: string
-  itemCount: number
-  status: string
-}
-
 interface KMetaListTableProps {
   meta: IMetaListModule<T>
+  payload?: R
 }
 
 interface KMetaListTableSlots extends Omit<KListTableSlots, 'list:content' | 'list'> {
@@ -40,7 +33,7 @@ defineSlots<KMetaListTableSlots>()
 const metaService = new MetaService(props.meta)
 
 const state = reactive({
-  items: [] as CardItem[],
+  items: [] as T[],
   loading: false,
   hasMore: true,
   errorMessage: null as string | null,
@@ -57,7 +50,7 @@ const loadMore = async <T extends any[]>() => {
     state.items = []
     const repository = await metaService.repository()
     if (repository.getPage) {
-      const data = await repository.getPage({ page: state.page, size: state.size })
+      const data = await repository.getPage({ page: state.page, size: state.size, ...props.payload })
       console.log(data)
       const content = data.content
       state.items.push(...(content as T))
@@ -81,4 +74,8 @@ const loadMore = async <T extends any[]>() => {
 
 // Load awal
 loadMore()
+
+defineExpose({
+  loadMore,
+})
 </script>

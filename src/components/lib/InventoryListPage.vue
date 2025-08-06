@@ -7,28 +7,6 @@
     <!-- end-prettier-ignore -->
 
     <slot>
-      <slot name="filter">
-        <div class="tw-flex tw-items-center tw-justify-between">
-          <div class="tw-basis-6/12">
-            <slot name="filter:left">
-              <div class="tw-flex tw-items-center tw-space-x-2">
-                <q-icon name="search" class="tw-text-secondary-text" size="sm"></q-icon>
-                <k-btn icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0" />
-              </div>
-            </slot>
-          </div>
-
-          <div class="tw-basis-6/12">
-            <slot name="filter:right">
-              <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                <span class="tw-text-xs tw-text-secondary-text">{{ t('sortBy') }}</span>
-                <q-icon name="img:/icons/sort-by.svg"></q-icon>
-              </div>
-            </slot>
-          </div>
-        </div>
-      </slot>
-
       <q-card flat dark class="tw-bg-transparent">
         <q-tabs
           v-model="tab"
@@ -45,17 +23,7 @@
         </q-tabs>
         <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
           <q-tab-panel :name="TAB_SEND" class="tw-px-0">
-            <k-meta-list-table :meta="props.meta">
-              <!-- prettier-ignore -->
-              <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
-                <slot :name="slotName" v-bind="(data as Record<string, unknown>)" />
-              </template>
-              <!-- end-prettier-ignore -->
-
-              <template #list:content="{ item }">
-                <component :is="ListContentPage" :item="item" @click="handleUpdate" />
-              </template>
-            </k-meta-list-table>
+            <component :is="SendListPage" @click:item="handleUpdate" />
           </q-tab-panel>
 
           <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
@@ -86,7 +54,6 @@ import MetaListPage from './MetaListPage.vue'
 import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-
 import KMetaListTable from '../ui/KMetaListTable.vue'
 import { ref } from 'vue'
 import { InventoryResponse } from 'src/common/model/inventory.model'
@@ -125,6 +92,13 @@ const ListContentPage = computed(() => {
     loader: () => import('../page/inventory/ListContent.vue'),
   })
 })
+
+const SendListPage = computed(() =>
+  defineAsyncComponent({
+    loader: () => import(`src/components/page/${props.meta.name}/SendListPage.vue`),
+  }),
+)
+
 const props = withDefaults(defineProps<Props>(), {
   keyName: 'id',
 })
