@@ -111,6 +111,14 @@
     min-height: auto !important;
     height: auto !important;
     font-size: 1rem;
+    .k-date__prepend {
+      padding-bottom: 0.15rem !important;
+      .tw-flex-auto {
+        .q-icon {
+          font-size: 0.85rem !important;
+        }
+      }
+    }
   }
 
   .q-field__control-container {

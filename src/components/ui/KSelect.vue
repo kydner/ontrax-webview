@@ -117,7 +117,7 @@
 
           <template v-else #selected-item="scope">
             <slot name="selected-item" v-bind="{ ...scope }">
-              <span class="tw-bg-overlay tw-text-white">
+              <span>
                 {{ scope?.opt?.[props.optionLabel] || scope?.opt }}
               </span>
             </slot>

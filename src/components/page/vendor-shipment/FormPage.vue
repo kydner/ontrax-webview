@@ -11,7 +11,6 @@
       horizontal-label
       required
       borderless
-      calendar-icon-size="0.85rem"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
@@ -30,7 +29,6 @@
       horizontal-align="base"
       horizontal-label
       borderless
-      calendar-icon-size="0.85rem"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
@@ -51,6 +49,7 @@
       :outline="false"
       horizontal-align="base"
       option-label="vendorName"
+      behavior="menu"
       option-value="vendorId"
       horizontal-label
       :placeholder="t('empty')"
@@ -73,6 +72,7 @@
       horizontal-align="base"
       horizontal-label
       required
+      behavior="menu"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"

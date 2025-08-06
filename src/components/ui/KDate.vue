@@ -50,7 +50,7 @@
           </template>
 
           <template #prepend>
-            <div class="tw-flex tw-items-center tw-pb-[0.45rem]">
+            <div class="k-date__prepend tw-flex tw-items-center tw-pb-[0.45rem]">
               <div class="tw-flex-auto">
                 <q-icon
                   v-if="!(props.disable && props.borderless)"
