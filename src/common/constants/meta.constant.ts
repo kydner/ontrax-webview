@@ -3,6 +3,7 @@ import { ClientResponsePage } from '../model/client.model'
 import { InventoryStockResponsePage } from '../model/inventory-stock.model'
 import { LocationSiteResponsePage } from '../model/location-site.model'
 import { LocationWarehouseResponsePage } from '../model/location-warehouse.model'
+import { ProductResponsePage } from '../model/product.model'
 import { ReceiveItemResponsePage } from '../model/receive-item.model'
 import { TransferItemResponsePage } from '../model/transfer-item.model'
 import { VendorShipmentResponsePage } from '../model/vendor-shipment.model'
@@ -56,7 +57,7 @@ export const Vendor: IMetaListModule<VendorResponsePage> = {
   items: [],
 }
 
-export const Product: IMetaListModule<VendorResponsePage> = {
+export const Product: IMetaListModule<ProductResponsePage> = {
   title: 'Product',
   name: 'product',
   items: [],
