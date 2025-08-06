@@ -62,8 +62,8 @@
 
           <template #before-options>
             <slot name="before-options">
-              <q-item v-if="props.multiple">
-                <q-item-section>
+              <q-item v-if="props.multiple" dark>
+                <q-item-section dark>
                   <q-item-label class="tw-font-medium">{{ t('selectAll') }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
@@ -82,12 +82,27 @@
               name="option"
               v-bind="{ itemProps, opt, selected, toggleOption, setOptionIndex, focused, label, html, index }"
             >
-              <q-item v-bind="itemProps">
+              <q-item v-bind="itemProps" dark>
                 <q-item-section>
                   <q-item-label>{{ opt?.[props.optionLabel] || opt }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <q-checkbox :model-value="selected" dense @update:model-value="toggleOption(opt)" />
+                </q-item-section>
+              </q-item>
+            </slot>
+          </template>
+          <template
+            v-else
+            #option="{ itemProps, opt, selected, toggleOption, setOptionIndex, focused, label, html, index }"
+          >
+            <slot
+              name="option"
+              v-bind="{ itemProps, opt, selected, toggleOption, setOptionIndex, focused, label, html, index }"
+            >
+              <q-item v-bind="itemProps" dark class="tw-bg-overlay">
+                <q-item-section>
+                  <q-item-label class="tw-text-white">{{ opt?.[props.optionLabel] || opt }}</q-item-label>
                 </q-item-section>
               </q-item>
             </slot>
@@ -102,7 +117,7 @@
 
           <template v-else #selected-item="scope">
             <slot name="selected-item" v-bind="{ ...scope }">
-              <span>
+              <span class="tw-bg-overlay tw-text-white">
                 {{ scope?.opt?.[props.optionLabel] || scope?.opt }}
               </span>
             </slot>

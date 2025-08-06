@@ -102,7 +102,7 @@ const tab = ref(TAB_SEND)
 
 interface Props {
   meta: IMetaListModule<T>
-  formId?: keyof T
+  keyName?: keyof T
 }
 
 interface Slots<T> {
@@ -126,7 +126,7 @@ const ListContentPage = computed(() => {
   })
 })
 const props = withDefaults(defineProps<Props>(), {
-  formId: 'id',
+  keyName: 'id',
 })
 
 defineSlots<Slots<T>>()
@@ -142,11 +142,11 @@ const handleCreate = () => {
 const handleUpdate = async (data: { item: T }) => {
   try {
     const { item } = data
-    const formId = item[props.formId]
+    const keyName = item[props.keyName]
     await router.push({
       name: `${props.meta.name}-form-update`,
       params: {
-        id: formId as string,
+        id: keyName as string,
       },
     })
   } catch (error) {

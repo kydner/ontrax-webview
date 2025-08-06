@@ -6,4 +6,4 @@ export enum Status {
   QCPassed = 'QC_PASSED',
 }
 
-export type IStatus = `${Status}`
+export type TStatus = `${Status}`

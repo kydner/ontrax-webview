@@ -20,7 +20,7 @@
 
     <div class="tw-basis-6/12">
       <div class="tw-flex tw-flex-col tw-items-end tw-justify-end tw-space-y-2">
-        <span class="tw-font-semibold">{{ item?.itemCount || 0 }} Items</span>
+        <span class="tw-font-semibold">{{ 0 }} Items</span>
         <k-status-badge :label="startCase(item?.status)" :color="getColor(item.status)" />
       </div>
     </div>
@@ -28,7 +28,7 @@
 </template>
 <script setup lang="ts">
 import { startCase } from 'lodash'
-import { IStatus } from 'src/common/enum/vendor-shipment.enum'
+import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
 import { formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
@@ -45,7 +45,7 @@ const emit = defineEmits<Emits>()
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const getColor = (status: IStatus): Colors => {
+const getColor = (status: TStatus): Colors => {
   switch (status) {
     case 'RECEIVED':
       return 'positive'

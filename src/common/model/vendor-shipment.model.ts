@@ -1,10 +1,10 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { InventoryResponse } from './inventory.model'
-import { IStatus } from '../enum/vendor-shipment.enum'
+import { TStatus } from '../enum/vendor-shipment.enum'
 import { ReceiveItem } from '../constants/meta.constant'
 
 export interface VendorShipmentRequest extends IListSortingRequest {
-  status?: IStatus
+  status?: TStatus
   vendorId?: id
   receiveNumber?: number
 }
@@ -20,7 +20,9 @@ export interface VendorShipmentResponse extends InventoryResponse {
   referenceDocument: string
   attachmentUrl: string
   notes: string
+  status: TStatus
   receiveItems: ReceiveItem[]
+  goodsReceiveItems: VendorShipmentResponse['receiveItems']
 }
 
 export interface VendorShipmentResponsePage extends VendorShipmentResponse {
@@ -33,7 +35,6 @@ export interface VendorShipmentResponsePage extends VendorShipmentResponse {
   receiveNumber: string
   actualReceiveDate: string
   attachmentUrl: string
-  status: IStatus
   notes: string
 }
 

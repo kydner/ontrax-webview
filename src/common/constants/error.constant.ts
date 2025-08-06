@@ -17,3 +17,4 @@ export const ERROR_CANCELED_UPLOAD = 'Upload canceled'
 export const ERROR_NOT_ALLOWED_CANCEL_UPLOAD = "It's in the process of uploading, please wait until it's finished"
 export const ERROR_EMPTY_SECRET_KEY = 'Internal Error, empty secret key'
 export const ERROR_NO_COPY_CLIPBOARD = 'Internal Error, no copy to clipboard'
+export const ERROR_ENDPOINT_NOT_DEFINED = 'Internal Error, endpoint not defined'

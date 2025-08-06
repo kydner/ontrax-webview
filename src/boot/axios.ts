@@ -88,6 +88,9 @@ api.interceptors.response.use(
     onRequestEnd()
 
     if (error?.response?.status === HttpStatusCode.Unauthorized) {
+      if (error.response?.data?.code === '40') {
+        authRepo.logout()
+      }
       if (error.response?.data?.code === '56') {
         $confirm({
           button: { submit: { label: 'Logout' } },

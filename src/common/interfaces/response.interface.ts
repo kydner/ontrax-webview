@@ -8,6 +8,7 @@ export interface BaseResponse<T = unknown> {
    * Status code representing the result of the API call.
    * - `'00'`: Request successful
    * - `'01'`: Negative Check Passed
+   * - `'40'`: Unauthorized
    * - `'50'`: Failed process data post
    * - `'51'`: Data not found
    * - `'52'`: Data already exist
@@ -99,7 +100,7 @@ export type parameterId = MasterParameterDataRequest['id']
  */
 export type TStatusCode =
   // success
-  '00' | '01' | '50' | '51' | '52' | '53' | '54' | '55' | '56' | '57' | '58' | '97' | '98' | '99'
+  '00' | '01' | '50' | '51' | '52' | '53' | '54' | '55' | '56' | '57' | '58' | '97' | '98' | '99' | '40'
 
 export const HttpStatus = {
   [AxiosStatusCode.Ok]: {

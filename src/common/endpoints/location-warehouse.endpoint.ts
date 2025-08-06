@@ -23,7 +23,7 @@ export const useLocationWarehouseEndpoint = defineEndpoint({
     }),
 
   getAll: (params?: LocationWarehouseRequest) =>
-    Get<LocationWarehouseResponse[]>('location-warehouses', {
+    GetPage<LocationWarehouseResponse[]>('location-warehouses', {
       params,
     }),
 

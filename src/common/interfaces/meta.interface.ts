@@ -74,7 +74,7 @@ export interface IMetaEndpoint {
    * @param data model
    * @param id
    */
-  update(data?: unknown, id?: unknown): Promise<unknown>
+  update(id?: unknown, data?: unknown): Promise<unknown>
 
   /**
    * Delete data

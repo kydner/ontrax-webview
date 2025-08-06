@@ -1,5 +1,5 @@
 <template>
-  <inventory-list-page :meta="metaVendorShipment" form-id="goodsReceiveId"> </inventory-list-page>
+  <inventory-list-page :meta="metaVendorShipment" key-name="goodsReceiveId"> </inventory-list-page>
 </template>
 <script setup lang="ts">
 import { VendorShipment } from 'src/common/constants/meta.constant'

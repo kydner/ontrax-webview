@@ -1,5 +1,11 @@
-import { VendorShipmentRequest, VendorShipmentResponsePage } from '../model/vendor-shipment.model'
-import { GetPage } from '../services/api.service'
+import { id } from '../interfaces/response.interface'
+import {
+  VendorShipmentDataRequest,
+  VendorShipmentRequest,
+  VendorShipmentResponse,
+  VendorShipmentResponsePage,
+} from '../model/vendor-shipment.model'
+import { Delete, Get, GetPage, Post, Put } from '../services/api.service'
 import { defineEndpoint } from '../utils/plugin.utils'
 
 export const useVendorShipmentEndpoint = defineEndpoint({
@@ -7,4 +13,12 @@ export const useVendorShipmentEndpoint = defineEndpoint({
     GetPage<VendorShipmentResponsePage>('shipments/page', {
       params,
     }),
+
+  getOne: (id: id) => Get<VendorShipmentResponse>(`shipments/${id}`),
+
+  create: (data: VendorShipmentDataRequest) => Post('shipments', data),
+
+  update: (id: id, data: VendorShipmentDataRequest) => Put(`shipments/${id}`, data),
+
+  delete: (id: id) => Delete(`shipments/${id}`),
 })
