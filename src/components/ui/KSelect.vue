@@ -62,15 +62,15 @@
 
           <template #before-options>
             <slot name="before-options">
-              <q-item v-if="props.multiple" dark>
+              <q-item v-if="props.multiple" dark class="tw-bg-overlay">
                 <q-item-section dark>
                   <q-item-label class="tw-font-medium">{{ t('selectAll') }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <q-checkbox v-model="selectAll" @update:model-value="toggleSelectAll" dense />
+                  <q-checkbox v-model="selectAll" @update:model-value="toggleSelectAll" dark color="secondary" dense />
                 </q-item-section>
               </q-item>
-              <q-separator></q-separator>
+              <q-separator dark></q-separator>
             </slot>
           </template>
 
@@ -82,16 +82,23 @@
               name="option"
               v-bind="{ itemProps, opt, selected, toggleOption, setOptionIndex, focused, label, html, index }"
             >
-              <q-item v-bind="itemProps" dark>
+              <q-item v-bind="itemProps" dark class="tw-bg-overlay">
                 <q-item-section>
                   <q-item-label>{{ opt?.[props.optionLabel] || opt }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <q-checkbox :model-value="selected" dense @update:model-value="toggleOption(opt)" />
+                  <q-checkbox
+                    :model-value="selected"
+                    dark
+                    color="secondary"
+                    dense
+                    @update:model-value="toggleOption(opt)"
+                  />
                 </q-item-section>
               </q-item>
             </slot>
           </template>
+
           <template
             v-else
             #option="{ itemProps, opt, selected, toggleOption, setOptionIndex, focused, label, html, index }"
@@ -125,8 +132,8 @@
 
           <template #no-option="data">
             <slot name="no-option" v-bind="data">
-              <q-item dark>
-                <q-item-section class="text-italic text-grey">{{ t('noOption') }} </q-item-section>
+              <q-item dark class="tw-bg-overlay">
+                <q-item-section class="text-italic tw-text-white">{{ t('noOption') }} </q-item-section>
               </q-item>
             </slot>
           </template>

@@ -38,7 +38,7 @@ interface Props extends Omit<KSelectProps, 'options' | 'loading'> {
   rules?: RuleExpression<unknown>
   parentId?: id
   loadOnMount?: boolean
-  optionMapper?: (data: unknown[]) => unknown[]
+  optionMapper?: (data: T[]) => T[]
 }
 
 interface Emits extends KSelectEmits {}

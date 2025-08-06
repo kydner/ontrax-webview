@@ -1,11 +1,11 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 
 export interface ProductRequest extends IListSortingRequest {}
 
 export type ProductRequestPage = IPaginationRequest & ProductRequest
 
 export interface ProductResponse {
-  itemId: string
+  itemId: id
   skuCode: string
   itemName: string
   description: string

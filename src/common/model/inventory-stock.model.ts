@@ -1,6 +1,9 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 
-export interface InventoryStockRequest extends IListSortingRequest {}
+export interface InventoryStockRequest extends IListSortingRequest {
+  itemId: id
+  locationWarehouseId: id
+}
 
 export type InventoryStockRequestPage = IPaginationRequest & InventoryStockRequest
 

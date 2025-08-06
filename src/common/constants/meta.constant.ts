@@ -55,3 +55,9 @@ export const Vendor: IMetaListModule<VendorResponsePage> = {
   name: 'vendor',
   items: [],
 }
+
+export const Product: IMetaListModule<VendorResponsePage> = {
+  title: 'Product',
+  name: 'product',
+  items: [],
+}
