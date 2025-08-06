@@ -51,11 +51,12 @@ const loadMore = async <T extends any[]>() => {
     if (state.loading || !state.hasMore) return
     state.loading = true
     state.errorMessage = null
+    state.items = []
     const repository = await metaService.repository()
-
-    if (repository.getAll) {
-      const newItems = await repository.getAll()
-      state.items.push(...(newItems as T))
+    if (repository.getPage) {
+      const newItems = await repository.getPage()
+      console.log(newItems.content)
+      state.items.push(...(newItems.content as T))
 
       if (state.items.length >= 100) {
         state.hasMore = false

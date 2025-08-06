@@ -2,7 +2,7 @@
   <k-page padding="normal" class="tw-bg-transparent tw-flex tw-flex-col tw-min-h-screen tw-justify-between">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
-        <k-toolbar :header-title="`${t('create')} ${props.meta?.title}`" @back="handleBack" />
+        <k-toolbar v-if="showToolbar" :header-title="`${t('create')} ${props.meta?.title}`" @back="handleBack" />
       </slot>
       <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
         <slot></slot>
@@ -24,6 +24,7 @@ import KToolbar from '../ui/KToolbar.vue'
 
 interface Props<T> {
   meta: IMetaListModule<T>
+  showToolbar?: boolean
 }
 
 interface Emits {
@@ -40,7 +41,9 @@ interface Slots {
   'filter:right': () => VNode
 }
 
-const props = withDefaults(defineProps<Props<T>>(), {})
+const props = withDefaults(defineProps<Props<T>>(), {
+  showToolbar: true,
+})
 
 const emit = defineEmits<Emits>()
 

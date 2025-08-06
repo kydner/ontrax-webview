@@ -1,5 +1,5 @@
 <template>
-  <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base">
+  <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base tw-h-screen">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
@@ -53,7 +53,7 @@
               <!-- end-prettier-ignore -->
 
               <template #list:content="{ item }">
-                <list-content :item="item" @click="handleUpdate" />
+                <component :is="ListContentPage" :item="item" @click="handleUpdate" />
               </template>
             </k-meta-list-table>
           </q-tab-panel>
@@ -67,7 +67,7 @@
               <!-- end-prettier-ignore -->
 
               <template #list:content="{ item }">
-                <list-content :item="item" @click="handleUpdate" />
+                <component :is="ListContentPage" :item="item" @click="handleUpdate" />
               </template>
             </k-meta-list-table>
           </q-tab-panel>
@@ -83,14 +83,14 @@
 <script setup lang="ts" generic="T extends InventoryResponse">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
-import { VNode } from 'vue'
+import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import ListContent from '../page/inventory/ListContent.vue'
 
 import KMetaListTable from '../ui/KMetaListTable.vue'
 import { ref } from 'vue'
 import { InventoryResponse } from 'src/common/model/inventory.model'
+import { Notify } from 'src/common/utils/plugin.utils'
 
 const TAB_SEND = 'send'
 
@@ -102,6 +102,7 @@ const tab = ref(TAB_SEND)
 
 interface Props {
   meta: IMetaListModule<T>
+  formId?: keyof T
 }
 
 interface Slots<T> {
@@ -113,7 +114,20 @@ interface Slots<T> {
   'list:content': (props: { item: T }) => VNode
   list: (props: { items: T[] }) => VNode
 }
-const props = withDefaults(defineProps<Props>(), {})
+
+const ListContentPage = computed(() => {
+  if (props.meta) {
+    return defineAsyncComponent({
+      loader: () => import(`../page/${props.meta.name}/ListContent.vue`),
+    })
+  }
+  return defineAsyncComponent({
+    loader: () => import('../page/inventory/ListContent.vue'),
+  })
+})
+const props = withDefaults(defineProps<Props>(), {
+  formId: 'id',
+})
 
 defineSlots<Slots<T>>()
 
@@ -125,14 +139,22 @@ const handleCreate = () => {
   })
 }
 
-const handleUpdate = (data: { item: T }) => {
-  const inventoryId = data.item.id
-  router.push({
-    name: `${props.meta.name}-form-update`,
-    params: {
-      inventoryId,
-    },
-  })
+const handleUpdate = async (data: { item: T }) => {
+  try {
+    const { item } = data
+    const formId = item[props.formId] || '123'
+    await router.push({
+      name: `${props.meta.name}-form-update`,
+      params: {
+        id: formId as string,
+      },
+    })
+  } catch (error) {
+    await nextTick()
+    Notify.error({
+      message: error as Error,
+    })
+  }
 }
 </script>
 
