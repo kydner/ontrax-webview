@@ -33,7 +33,7 @@
 
   <!-- Single Dialog reused for all items -->
   <q-dialog v-model="isDialogOpen" dark>
-    <q-card style="min-width: 400px; max-width: 90vw">
+    <q-card style="width: 400px; max-width: 90vw">
       <q-card-section
         v-if="dialogIndex !== null && dialogIndex !== undefined"
         class="tw-flex tw-flex-col tw-space-y-2 tw-pt-2"
