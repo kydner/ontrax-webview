@@ -124,12 +124,12 @@
       </template>
     </k-input>
 
-    <product-data-list />
+    <product-data-list v-model="form" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends VendorShipmentDataRequest">
 import { computed } from 'vue'
-import ProductDataList from 'src/components/page/inventory/ProductDataList.vue'
+import ProductDataList from './ProductDataList.vue'
 import { useI18n } from 'vue-i18n'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import { useRoute } from 'vue-router'

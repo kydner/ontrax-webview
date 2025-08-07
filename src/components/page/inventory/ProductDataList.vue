@@ -1,7 +1,6 @@
 <template>
-  <k-btn color="secondary" label="Add Product" @click="handleProductPick" />
-
-  <div class="tw-my-2">
+  <div class="tw-my-4">
+    <k-btn color="secondary" label="Add Product" @click="handleProductPick" />
     <k-card v-for="i in 5" :key="i" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">

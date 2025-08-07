@@ -2,12 +2,12 @@
   <meta-form-page ref="metaFormPageRef" v-bind="{ ...props }" :show-toolbar="false" class="bg-body-base">
     <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
       <q-tab-panel :name="PANEL_FORM" class="tw-p-0">
-        <k-toolbar :header-title="currentTitle" @back="handleBack" />
+        <k-toolbar :header-title="currentTitle" @back="handleBack" :loading="loadingPage" />
         <inventory-form-page-skeleton v-if="loadingPage" />
         <component v-else :is="FormPage" v-model="form"></component>
       </q-tab-panel>
 
-      <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0"> xxx </q-tab-panel>
+      <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0"> </q-tab-panel>
     </q-tab-panels>
 
     <template #footer>

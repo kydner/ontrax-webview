@@ -47,6 +47,10 @@ export interface ReceiveItem {
   itemId: string
   qtyOrdered: 0
   notes: string
+  itemCode: string
+  itemName: string
+  qtyReceived: number | null
+  unitPrice: number | null
 }
 
 export interface GoodReceiveItem {
