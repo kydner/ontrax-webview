@@ -103,6 +103,8 @@ const handleFilter = async () => {
     })
   }
   await nextTick()
-  scrollToClass('.target-section-operational__list')
+  setTimeout(() => {
+    scrollToClass('.target-section-operational__list')
+  }, 200)
 }
 </script>
