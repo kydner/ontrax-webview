@@ -1367,6 +1367,13 @@ export default {
   item: 'Item',
   items: 'Item',
   myProfile: 'Profil Saya',
+  saveToInTransit: 'Simpan ke Transit',
+  receive: 'Terima',
+  qcPass: 'Lolos QC',
+  readyToSend: 'Siap Kirim',
+  inTransit: 'Dalam Transit',
+  updateToReceive: 'Perbarui ke Terima',
+  updateToQcReceive: 'Perbarui ke Terima QC',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

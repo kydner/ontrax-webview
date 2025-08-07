@@ -124,7 +124,7 @@
 
           <template v-else #selected-item="scope">
             <slot name="selected-item" v-bind="{ ...scope }">
-              <span>
+              <span v-if="!props.loading">
                 {{ scope?.opt?.[props.optionLabel] || scope?.opt }}
               </span>
             </slot>

@@ -13,7 +13,39 @@
     </q-tab-panels>
 
     <template v-if="panel === PANEL_FORM" #footer>
-      <k-btn :label="t('button.submit')" color="secondary" class="fit" @click="handleSubmitByComponent" />
+      <div class="tw-flex tw-flex-col tw-space-y-2">
+        <k-btn
+          v-if="form.status === 'RECEIVED'"
+          :label="t('qcPass')"
+          color="secondary"
+          class="fit"
+          @click="handleSubmitQcPass"
+        />
+
+        <k-btn
+          v-if="form.status === 'IN_TRANSIT'"
+          :label="t('receive')"
+          color="secondary"
+          class="fit"
+          @click="handleSubmitReceive"
+        />
+
+        <k-btn
+          v-if="form.status === 'DRAFT'"
+          :label="t('saveToInTransit')"
+          color="secondary"
+          class="fit"
+          @click="handleSubmitInTransit"
+        />
+
+        <k-btn
+          v-if="form.status === undefined || form.status === 'DRAFT'"
+          :label="t('button.save')"
+          color="secondary"
+          class="fit"
+          @click="handleSubmitDraft"
+        />
+      </div>
     </template>
   </meta-form-page>
 </template>
@@ -27,12 +59,14 @@ import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { Notify } from 'src/common/utils/plugin.utils'
+import { $confirm, Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
 import InventoryFormPageSkeleton from './InventoryFormPageSkeleton.vue'
 import { bus } from 'src/common/event-bus'
+import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
+import { isoDate } from 'src/common/interfaces/response.interface'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -73,6 +107,8 @@ const emit = defineEmits<Emits<T>>()
 
 const router = useRouter()
 
+const vendorShipmentRepository = useVendorShipmentRepository()
+
 const route = useRoute()
 
 const { t } = useI18n()
@@ -99,6 +135,26 @@ const form = computed({
   },
 })
 
+const fetchSingle = async () => {
+  try {
+    console.log(route.params, 'params')
+    const repository = await metaService.repository()
+    if (repository.getOne) {
+      loadingPage.value = true
+      const response = await repository.getOne(formId.value)
+      form.value = response as T
+    } else {
+      throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
+    }
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    loadingPage.value = false
+  }
+}
+
 const handleUpdate = async () => {
   try {
     const repository = await metaService.repository()
@@ -107,8 +163,9 @@ const handleUpdate = async () => {
       Loading.show()
       await repository.update(formId.value, { ...form.value })
       Notify.success({
-        message: t('notification.successUpdateData'),
+        message: t('notification.successUpdate'),
       })
+      router.back()
     } else {
       throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
     }
@@ -128,8 +185,9 @@ const handleCreate = async () => {
       Loading.show()
       await repository.create({ ...form.value })
       Notify.success({
-        message: t('notification.successUpdateData'),
+        message: t('notification.successCreate'),
       })
+      router.back()
     } else {
       throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
     }
@@ -142,7 +200,7 @@ const handleCreate = async () => {
   }
 }
 
-const handleSubmitByComponent = async () => {
+const handleSubmitDraft = async () => {
   const validate = await metaFormPageRef.value?.validate()
   if (validate) {
     console.log(form.value, 'submit')
@@ -151,30 +209,88 @@ const handleSubmitByComponent = async () => {
   }
 }
 
+const handleSubmitInTransit = () => {
+  $confirm({
+    message: t('title.processThisData'),
+    callback: async (confirm) => {
+      if (confirm) {
+        try {
+          const shipmentId = formId.value as string
+          if (!shipmentId) throw new ErrorId('ShipmentId')
+          Loading.show()
+          await vendorShipmentRepository.inTransit(shipmentId)
+          Notify.success({
+            message: t('success'),
+          })
+          router.back()
+        } catch (error) {
+          Notify.error({
+            message: error as Error,
+          })
+        } finally {
+          Loading.hide()
+        }
+      }
+    },
+  })
+}
+
+const handleSubmitReceive = () => {
+  $confirm({
+    message: t('title.processThisData'),
+    callback: async (confirm) => {
+      if (confirm) {
+        try {
+          const shipmentId = formId.value as string
+          if (!shipmentId) throw new ErrorId('ShipmentId')
+          Loading.show()
+          await vendorShipmentRepository.receive(shipmentId, new Date().toISOString() as isoDate)
+          Notify.success({
+            message: t('success'),
+          })
+          router.back()
+        } catch (error) {
+          Notify.error({
+            message: error as Error,
+          })
+        } finally {
+          Loading.hide()
+        }
+      }
+    },
+  })
+}
+
+const handleSubmitQcPass = () => {
+  $confirm({
+    message: t('title.processThisData'),
+    callback: async (confirm) => {
+      if (confirm) {
+        try {
+          const shipmentId = formId.value as string
+          if (!shipmentId) throw new ErrorId('ShipmentId')
+          Loading.show()
+          await vendorShipmentRepository.qualityCheck(shipmentId)
+          Notify.success({
+            message: t('success'),
+          })
+          router.back()
+        } catch (error) {
+          Notify.error({
+            message: error as Error,
+          })
+        } finally {
+          Loading.hide()
+        }
+      }
+    },
+  })
+}
+
 const handleBack = () => {
   router.push({
     name: `${props.meta.name}-list`,
   })
-}
-
-const fetchSingle = async () => {
-  try {
-    console.log(route.params, 'params')
-    const repository = await metaService.repository()
-    if (repository.getOne) {
-      loadingPage.value = true
-      const response = await repository.getOne(formId.value)
-      form.value = response as T
-    } else {
-      throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
-    }
-  } catch (error) {
-    Notify.error({
-      message: error as Error,
-    })
-  } finally {
-    loadingPage.value = false
-  }
 }
 
 onMounted(() => {

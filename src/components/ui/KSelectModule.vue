@@ -94,7 +94,7 @@ const loadData = async (callback: (result: unknown) => void = () => null) => {
 
       hasLoadData.value = true
 
-      const results = props.optionMapper ? props.optionMapper(data) : [...data]
+      const results = props.optionMapper ? props.optionMapper(data as T[]) : [...data]
 
       currentOptions.value = results
       if (typeof callback === 'function') {

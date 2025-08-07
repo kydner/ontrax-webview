@@ -1,5 +1,5 @@
 import { useVendorShipmentEndpoint } from '../endpoints/vendor-shipment.endpoint'
-import { id } from '../interfaces/response.interface'
+import { id, isoDate } from '../interfaces/response.interface'
 import { VendorShipmentDataRequest, VendorShipmentRequest } from '../model/vendor-shipment.model'
 import { withRepository } from '../utils/converter.utils'
 import { defineRepository } from '../utils/plugin.utils'
@@ -34,4 +34,10 @@ export const useVendorShipmentRepository = defineRepository({
   update: (id: id, data: VendorShipmentDataRequest) => withRepository(() => shipmentEndpoint.update(id, data)),
 
   delete: (id: id) => shipmentEndpoint.delete(id),
+
+  receive: (id: id, receiveDate: isoDate) => shipmentEndpoint.receive(id, receiveDate),
+
+  qualityCheck: (id: id) => shipmentEndpoint.qualityCheck(id),
+
+  inTransit: (id: id) => shipmentEndpoint.inTransit(id),
 })

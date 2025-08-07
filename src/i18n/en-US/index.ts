@@ -1367,6 +1367,13 @@ export default {
   item: 'Item',
   items: 'Items',
   myProfile: 'My Profile',
+  saveToInTransit: 'Save to In Transit',
+  receive: 'Receive',
+  qcPass: 'QC Pass',
+  readyToSend: 'Ready to Send',
+  inTransit: 'In Transit',
+  updateToReceive: 'Update to Receive',
+  updateToQcReceive: 'Update to QC Receive',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

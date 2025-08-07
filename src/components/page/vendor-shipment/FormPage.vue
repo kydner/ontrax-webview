@@ -11,6 +11,7 @@
       horizontal-label
       required
       borderless
+      :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
@@ -29,6 +30,7 @@
       horizontal-align="base"
       horizontal-label
       borderless
+      :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
@@ -50,6 +52,7 @@
       horizontal-align="base"
       option-label="vendorName"
       behavior="menu"
+      :disable="isDisable"
       option-value="vendorId"
       horizontal-label
       :placeholder="t('empty')"
@@ -73,6 +76,7 @@
       horizontal-label
       required
       behavior="menu"
+      :disable="isDisable"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"
@@ -93,6 +97,7 @@
       borderless
       horizontal-align="base"
       horizontal-label
+      :disable="isDisable"
       required
       :placeholder="t('empty')"
       input-class="inventory__field"
@@ -112,6 +117,7 @@
       borderless
       horizontal-align="base"
       horizontal-label
+      :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
@@ -124,7 +130,7 @@
       </template>
     </k-input>
 
-    <product-data-list v-model="form" />
+    <product-data-list v-model="form" :is-disable="isDisable" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends VendorShipmentDataRequest">
@@ -160,6 +166,10 @@ const metaVendor: IMetaListModule<VendorResponsePage> = Vendor
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const formId = computed(() => route.params?.id)
+
+const isDisable = computed(() => {
+  return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'] as TStatus[]).includes(form.value.status)
+})
 
 const { t } = useI18n()
 

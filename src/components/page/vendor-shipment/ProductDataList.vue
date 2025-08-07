@@ -1,6 +1,7 @@
 <template>
   <div class="tw-my-4">
-    <k-btn color="secondary" label="Add Product" @click="handleProductPick" />
+    <k-btn v-if="!isDisable" color="secondary" label="Add Product" @click="handleProductPick" />
+
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
@@ -53,7 +54,7 @@
                 <plus-minus-field
                   v-model="productValues[dialogIndex].qtyOrdered"
                   :allow-increase="true"
-                  :disable="false"
+                  :disable="isDisable"
                 />
               </div>
             </div>
@@ -83,13 +84,16 @@ import { useI18n } from 'vue-i18n'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
+  isDisable?: boolean
 }
 
 interface Emits {
   (event: 'updte:model-value', value: Props['modelValue']): void
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+  isDisable: false,
+})
 
 const emit = defineEmits<Emits>()
 
