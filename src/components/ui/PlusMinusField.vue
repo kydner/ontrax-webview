@@ -1,17 +1,6 @@
 <template>
   <div class="plus-minus-field tw-flex">
-    <q-btn
-      flat
-      label="-"
-      :repeat-timeout="1000"
-      dense
-      class="btn left tw-text-white"
-      @click="
-        () => {
-          currentValue -= 1
-        }
-      "
-    />
+    <q-btn flat label="-" :repeat-timeout="1000" dense class="btn left tw-text-white" @click="decrease" />
     <q-input
       v-model="currentValue"
       type="number"
@@ -20,43 +9,82 @@
       class="tw-flex input"
       borderless
       hide-underline
+      disable
+      @update:model-value="handleInputChange"
     />
-    <q-btn
-      flat
-      label="+"
-      :repeat-timeout="1000"
-      dense
-      class="btn right tw-text-white"
-      @click="
-        () => {
-          currentValue += 1
-        }
-      "
-    />
+    <q-btn flat label="+" :repeat-timeout="1000" dense class="btn right tw-text-white" @click="increase" />
   </div>
 </template>
 <script setup lang="ts">
 import { QInputProps } from 'quasar'
+import { $confirm } from 'src/common/utils/plugin.utils'
 import { computed } from 'vue'
 
 interface Props extends Omit<QInputProps, 'modelValue'> {
   modelValue: number
+  allowIncrease?: boolean
 }
 
 interface Emits {
   (event: 'update:modelValue', value: Props['modelValue']): void
+  (event: 'increase', currentValue: Props['modelValue']): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: 0,
+  allowIncrease: true,
 })
 
 const emit = defineEmits<Emits>()
 
 const currentValue = computed({
-  get: () => props.modelValue || 0,
+  get: () => Number(props.modelValue) || 0,
   set: (value) => emit('update:modelValue', value),
 })
+
+const decrease = () => {
+  if (currentValue.value === 1) {
+    $confirm({
+      message: 'Yakin ingin mengubah nilai menjadi 0?',
+      callback: (confirm) => {
+        if (confirm) {
+          currentValue.value = 0
+        }
+      },
+    })
+  } else if (currentValue.value > 1) {
+    currentValue.value--
+  }
+}
+
+const increase = () => {
+  emit('increase', currentValue.value)
+  if (!props.allowIncrease) return
+  currentValue.value++
+}
+
+const handleInputChange = (value: string | number | null) => {
+  const parsed = Number(value)
+
+  // Kalau hasil parsing bukan angka valid (NaN), jangan update
+  if (isNaN(parsed)) return
+
+  if (currentValue.value === 1 && parsed === 0) {
+    $confirm({
+      message: 'Yakin ingin mengubah nilai menjadi 0?',
+      callback: (confirm) => {
+        if (confirm) {
+          currentValue.value = 0
+        } else {
+          // Kembalikan ke 1 kalau dibatalkan
+          currentValue.value = 1
+        }
+      },
+    })
+  } else {
+    currentValue.value = parsed
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -82,6 +110,7 @@ const currentValue = computed({
     }
 
     :deep(input[type='number']) {
+      appearance: textfield;
       -moz-appearance: textfield;
     }
 

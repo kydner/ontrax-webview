@@ -4,7 +4,7 @@
     <k-card v-for="product in productValues" :key="product.itemId" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
-          <div class="tw-flex tw-space-x-2">
+          <div class="tw-flex tw-justify-between tw-space-x-2">
             <q-img src="~assets/images/product-example.svg" no-spinner width="40px" />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
@@ -12,9 +12,9 @@
                 <span>{{ product.itemName }}</span>
               </div>
             </div>
-            <div class="tw-basis-auto tw-text-right">
-              <plus-minus-field v-model="product.qtyOrdered" />
-            </div>
+          </div>
+          <div class="tw-basis-auto tw-text-right">
+            <plus-minus-field v-model="product.qtyOrdered" :allow-increase="false" @increase="handleIncrease" />
           </div>
         </div>
       </q-card-section>
@@ -52,7 +52,12 @@ const productValues = computed({
     emit('updte:model-value', vendorValue.value)
   },
 })
+
 const handleProductPick = () => {
   bus.emit('product:pick')
+}
+
+const handleIncrease = () => {
+  console.log('xx')
 }
 </script>
