@@ -43,7 +43,7 @@ const state = reactive({
   loading: false,
   hasMore: true,
   errorMessage: null as string | null,
-  size: 10,
+  size: 20,
   page: 1,
   totalPages: 1,
 })
