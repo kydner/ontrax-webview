@@ -59,6 +59,7 @@ import { useI18n } from 'vue-i18n'
 import { scrollToClass } from 'src/common/utils/plugin.utils'
 import { InventoryStockRequest } from 'src/common/model/inventory-stock.model'
 import { ProductResponsePage } from 'src/common/model/product.model'
+import { nextTick } from 'vue'
 
 interface Props {
   meta: IMetaListModule<T>
@@ -90,7 +91,7 @@ const request = ref({
 
 defineSlots<Slots<T>>()
 
-const handleFilter = () => {
+const handleFilter = async () => {
   component.value = null
   if (!request.value.itemId && !request.value.locationWarehouseId) {
     component.value = defineAsyncComponent({
@@ -101,6 +102,7 @@ const handleFilter = () => {
       loader: () => import('../page/inventory-stock/ProductWarehouseFiltering.vue'),
     })
   }
+  await nextTick()
   scrollToClass('.target-section-operational__list')
 }
 </script>
