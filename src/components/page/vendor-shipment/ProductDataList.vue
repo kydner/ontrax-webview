@@ -26,6 +26,8 @@
         </div>
       </q-card-section>
     </k-card>
+
+    <div v-if="productValues?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -108,7 +110,7 @@ const vendorValue = computed({
 })
 
 const productValues = computed({
-  get: () => vendorValue.value?.receiveItems,
+  get: () => vendorValue.value?.receiveItems || [],
   set: (value) => {
     vendorValue.value.receiveItems = value
     emit('updte:model-value', vendorValue.value)

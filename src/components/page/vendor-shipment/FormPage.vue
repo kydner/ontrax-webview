@@ -2,7 +2,7 @@
   <div class="">
     <div class="tw-my-4">
       <k-status-badge v-if="!!formId" :label="startCase(form?.status)" :color="getColor(form.status)" />
-      <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2">PR-9901234</h3>
+      <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
     </div>
     <k-date
       v-model="form.shippingDate"
