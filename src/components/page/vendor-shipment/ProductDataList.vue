@@ -12,6 +12,9 @@
                 <span>{{ product.itemName }}</span>
               </div>
             </div>
+            <div class="tw-basis-auto tw-text-right">
+              <plus-minus-field v-model="product.qtyOrdered" />
+            </div>
           </div>
         </div>
       </q-card-section>
@@ -23,6 +26,7 @@ import { bus } from 'src/common/event-bus'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import KCard from 'src/components/ui/KCard.vue'
 import { computed } from 'vue'
+import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
