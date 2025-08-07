@@ -7,10 +7,12 @@
         <component v-else :is="FormPage" v-model="form"></component>
       </q-tab-panel>
 
-      <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0"> </q-tab-panel>
+      <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0">
+        <component :is="ProductPickPage" v-model="form" @back="panel = PANEL_FORM" />
+      </q-tab-panel>
     </q-tab-panels>
 
-    <template #footer>
+    <template v-if="panel === PANEL_FORM" #footer>
       <k-btn :label="t('button.submit')" color="secondary" class="fit" @click="handleSubmitByComponent" />
     </template>
   </meta-form-page>
@@ -30,6 +32,7 @@ import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
 import InventoryFormPageSkeleton from './InventoryFormPageSkeleton.vue'
+import { bus } from 'src/common/event-bus'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -55,6 +58,12 @@ const FormPage = computed(() => {
     })
   return defineAsyncComponent({
     loader: () => import('src/components/page/inventory/FormPage.vue'),
+  })
+})
+
+const ProductPickPage = computed(() => {
+  return defineAsyncComponent({
+    loader: () => import(`src/components/page/${props.meta.name}/ProductPickPage.vue`),
   })
 })
 
@@ -170,5 +179,9 @@ const fetchSingle = async () => {
 
 onMounted(() => {
   if (formId.value) fetchSingle()
+
+  bus.on('product:pick', () => {
+    panel.value = PANEL_PRODUCT
+  })
 })
 </script>

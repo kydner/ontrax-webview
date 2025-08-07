@@ -19,7 +19,7 @@ export interface VendorShipmentResponse extends InventoryResponse {
   targetReceiveDate: isoDate
   referenceDocument: string
   attachmentUrl: string
-  notes: string
+  notes: string | null
   status: TStatus
   receiveItems: ReceiveItem[]
   goodsReceiveItems: GoodReceiveItem[]
@@ -43,9 +43,9 @@ export interface VendorShipmentResponsePage extends VendorShipmentResponse {
 export interface VendorShipmentDataRequest extends VendorShipmentResponse {}
 
 export interface ReceiveItem {
-  goodsReceiveId: string
-  itemId: string
-  qtyOrdered: 0
+  goodsReceiveId: string | null
+  itemId: id
+  qtyOrdered: number
   notes: string
   itemCode: string
   itemName: string
