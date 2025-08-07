@@ -1,10 +1,10 @@
 <template>
-  <k-toolbar @back="handleBack">
+  <k-toolbar class="tw-pb-1" @back="handleBack">
     <template #title>
       <q-input v-model="search" :show-label="false" placeholder="Search by Name" borderless class="fit" />
     </template>
   </k-toolbar>
-  <q-separator dark></q-separator>
+  <q-separator dark class="tw-mb-4"></q-separator>
   <div v-if="state.isLoading">
     <k-card v-for="i in 5" :key="i" class="tw-my-2">
       <q-card-section class="tw-p-2">
@@ -76,6 +76,8 @@ interface Emits {
   (event: 'update:modelValue', value: VendorShipmentResponse): void
 }
 
+type ReceiveItem = VendorShipmentResponse['receiveItems'][0]
+
 const props = withDefaults(defineProps<Props>(), {})
 
 const currentValue = computed({
@@ -101,7 +103,7 @@ const handleBack = () => {
   emit('back')
 }
 
-const state = reactive<ResponseState<VendorShipmentResponse['receiveItems'][0][]>>({
+const state = reactive<ResponseState<ReceiveItem[]>>({
   isLoading: false,
   data: null,
   errorMessage: null,
@@ -152,29 +154,18 @@ const isChecked = (itemId: id) => {
   return receiveItems.value.some((item) => item.itemId === itemId)
 }
 
-const updateQty = (product: VendorShipmentResponse['receiveItems'][0], qty: number) => {
+const updateQty = (product: ReceiveItem, qty: number) => {
   const current = receiveItems.value.slice()
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 
   if (index > -1) {
     current[index].qtyOrdered = qty ?? 1
-  } else {
-    current.push({
-      itemId: product.itemId,
-      itemName: product.itemName,
-      itemCode: product.itemCode,
-      qtyOrdered: qty,
-      notes: '',
-      goodsReceiveId: null,
-      qtyReceived: 0,
-      unitPrice: product.unitPrice ?? 0,
-    })
   }
 
   receiveItems.value = current
 }
 
-const toggleItem = (product: VendorShipmentResponse['receiveItems'][0], checked: boolean) => {
+const toggleItem = (product: ReceiveItem, checked: boolean) => {
   const current = [...receiveItems.value]
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 

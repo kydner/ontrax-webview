@@ -30,6 +30,7 @@
       horizontal-align="base"
       horizontal-label
       borderless
+      required
       :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
@@ -52,6 +53,7 @@
       horizontal-align="base"
       option-label="vendorName"
       behavior="menu"
+      required
       :disable="isDisable"
       option-value="vendorId"
       horizontal-label
@@ -97,8 +99,8 @@
       borderless
       horizontal-align="base"
       horizontal-label
-      :disable="isDisable"
       required
+      :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
     >
