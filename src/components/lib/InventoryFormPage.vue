@@ -19,6 +19,7 @@
           :label="t('qcPass')"
           color="secondary"
           class="fit"
+          :disable="loadingPage"
           @click="handleSubmitQcPass"
         />
 
@@ -27,6 +28,7 @@
           :label="t('receive')"
           color="secondary"
           class="fit"
+          :disable="loadingPage"
           @click="handleSubmitReceive"
         />
 
@@ -35,6 +37,7 @@
           :label="t('saveToInTransit')"
           color="secondary"
           class="fit"
+          :disable="loadingPage"
           @click="handleSubmitInTransit"
         />
 
@@ -43,6 +46,7 @@
           :label="t('button.save')"
           color="secondary"
           class="fit"
+          :disable="loadingPage"
           @click="handleSubmitDraft"
         />
       </div>
