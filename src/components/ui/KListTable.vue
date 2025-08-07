@@ -98,7 +98,7 @@ $list-table-content-height: calc(100vh - 120px);
 
 .list-table__content {
   max-height: $list-table-content-height;
-  @apply tw-overflow-y-auto;
+  @apply tw-overflow-y-auto tw-mb-6;
   &:hover {
     overflow: auto;
   }
