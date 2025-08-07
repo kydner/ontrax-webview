@@ -28,6 +28,7 @@
       v-model="form.targetReceiveDate"
       t-label="targetReceiveDate"
       horizontal-align="base"
+      :options="(date: string) => date >= formatDate(new Date().toISOString(), { format: DATE_VALUE })"
       horizontal-label
       borderless
       required
@@ -148,6 +149,8 @@ import { VendorResponsePage } from 'src/common/model/vendor.model'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { LocationWarehouse, Vendor } from 'src/common/constants/meta.constant'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
+import { formatDate } from 'src/common/utils/converter.utils'
+import { DATE_VALUE } from 'src/common/constants/date.constant'
 
 interface Props {
   modelValue: T
