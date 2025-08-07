@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-justify-between tw-h-[90vh]">
+  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh]">
     <div>
       <k-toolbar class="tw-pb-1" @back="handleBack">
         <template #title>
@@ -61,7 +61,13 @@
       </div>
     </div>
     <div class="tw-my-4">
-      <k-btn :label="t('submit')" color="secondary" class="fit" @click="handleBack" />
+      <div class="tw-flex tw-flex-col tw-mb-2">
+        <span class="tw-text-xs">{{ t('items') }} : {{ receivedItemLength }}</span>
+        <span class="tw-text-xs">{{ t('quantity') }} : {{ totalQuantity }}</span>
+      </div>
+      <div>
+        <k-btn :label="t('save')" color="secondary" class="fit" @click="handleBack" />
+      </div>
     </div>
   </div>
 </template>
@@ -125,6 +131,10 @@ const filteredProducts = computed(() => {
   const keyword = search.value?.toLowerCase() || ''
   return state.data.filter((product) => product.itemName.toLowerCase().includes(keyword))
 })
+
+const receivedItemLength = computed(() => receiveItems.value?.length || 0)
+
+const totalQuantity = computed(() => receiveItems.value?.reduce((sum, item) => sum + (item.qtyOrdered || 0), 0))
 
 const fetchData = async () => {
   try {

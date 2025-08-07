@@ -1374,6 +1374,7 @@ export default {
   inTransit: 'Dalam Transit',
   updateToReceive: 'Perbarui ke Terima',
   updateToQcReceive: 'Perbarui ke Terima QC',
+  quantity: 'Kuantitas',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

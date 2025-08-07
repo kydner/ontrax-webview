@@ -1374,6 +1374,7 @@ export default {
   inTransit: 'In Transit',
   updateToReceive: 'Update to Receive',
   updateToQcReceive: 'Update to QC Receive',
+  quantity: 'Quantity',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

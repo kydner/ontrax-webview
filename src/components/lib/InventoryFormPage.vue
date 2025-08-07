@@ -216,6 +216,10 @@ const handleSubmitInTransit = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
+          const validate = await metaFormPageRef.value?.validate()
+          if (!validate) return
+          const repository = await metaService.repository()
+          await repository.update(formId.value, { ...form.value })
           await vendorShipmentRepository.inTransit(shipmentId)
           Notify.success({
             message: t('success'),
