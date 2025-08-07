@@ -1,15 +1,18 @@
 <template>
   <div class="plus-minus-field tw-flex">
     <q-btn flat label="-" :repeat-timeout="1000" dense class="btn left tw-text-white" @click="decrease" />
-    <q-input
+    <k-money
       v-model="currentValue"
-      type="number"
       dense
       input-class="tw-text-right tw-py-0"
       class="tw-flex input"
       borderless
       hide-underline
-      disable
+      disabled
+      :precision="2"
+      decimal=","
+      thousands="."
+      focus-on-right
       @update:model-value="handleInputChange"
     />
     <q-btn flat label="+" :repeat-timeout="1000" dense class="btn right tw-text-white" @click="increase" />
@@ -19,6 +22,7 @@
 import { QInputProps } from 'quasar'
 import { $confirm } from 'src/common/utils/plugin.utils'
 import { computed } from 'vue'
+import { Money3Component as kMoney } from 'v-money3'
 
 interface Props extends Omit<QInputProps, 'modelValue'> {
   modelValue: number
@@ -101,7 +105,7 @@ const handleInputChange = (value: string | number | null) => {
   }
 
   .input {
-    @apply tw-border-l-2 tw-border-r-2 tw-border-disable-text tw-w-14 tw-px-1;
+    @apply tw-border-l-2 tw-border-r-2 tw-border-disable-text tw-w-14 tw-h-8 tw-px-1 tw-bg-transparent tw-text-right;
 
     :deep(.q-field__control),
     :deep(.q-field__native),
