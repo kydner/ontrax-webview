@@ -63,7 +63,7 @@
                     <q-date
                       v-model="dateValue"
                       v-bind="field"
-                      landscape
+                      minimal
                       :default-year-month="
                         props.defaultYearMonth
                           ? props.defaultYearMonth
