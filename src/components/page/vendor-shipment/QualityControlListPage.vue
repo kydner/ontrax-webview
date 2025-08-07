@@ -17,8 +17,13 @@
     </template>
     <!-- end-prettier-ignore -->
 
-    <template #list:content="{ item }">
-      <component :is="ListContentPage" :item="item" @click="(data: ListItem) => emit('click:item', data)" />
+    <template #list:content="{ item, loading }">
+      <component
+        :is="ListContentPage"
+        :item="item"
+        :loading="loading"
+        @click="(data: ListItem) => emit('click:item', data)"
+      />
     </template>
   </k-meta-list-table>
   <!-- end meta list table -->

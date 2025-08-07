@@ -127,7 +127,6 @@ const handleProductPick = () => {
 
 const handleIncrease = (index: number) => {
   dialogIndex.value = index
-  console.log(productValues.value[index])
 }
 
 const handleZeroConfirm = (index: number) => {

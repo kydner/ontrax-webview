@@ -1,61 +1,68 @@
 <template>
-  <k-toolbar class="tw-pb-1" @back="handleBack">
-    <template #title>
-      <q-input v-model="search" :show-label="false" placeholder="Search by Name" borderless class="fit" />
-    </template>
-  </k-toolbar>
-  <q-separator dark class="tw-mb-4"></q-separator>
-  <div v-if="state.isLoading">
-    <k-card v-for="i in 5" :key="i" class="tw-my-2">
-      <q-card-section class="tw-p-2">
-        <div class="tw-flex tw-items-center tw-justify-between">
-          <div class="tw-flex tw-items-center tw-space-x-2">
-            <q-skeleton type="QCheckbox" />
-            <q-skeleton type="rect" width="40px" height="40px" />
-            <div class="tw-flex tw-flex-col tw-gap-1">
-              <q-skeleton type="text" width="100px" />
-              <q-skeleton type="text" width="150px" />
-            </div>
-          </div>
-          <div>
-            <q-skeleton type="QInput" width="100px" />
-          </div>
-        </div>
-      </q-card-section>
-    </k-card>
-  </div>
-  <div v-else>
-    <k-card v-for="product in filteredProducts" :key="product.itemId" class="tw-my-2">
-      <q-card-section class="tw-p-2">
-        <div class="tw-flex tw-items-center tw-justify-between">
-          <div class="tw-flex tw-justify-between tw-space-x-2">
-            <q-checkbox
-              :model-value="isChecked(product.itemId)"
-              @update:model-value="(val) => toggleItem(product, val)"
-              :true-value="true"
-              :false-value="false"
-              class="tw-mr-2"
-              color="secondary"
-            />
-            <q-img src="~assets/images/product-example.svg" no-spinner width="40px" />
-            <div class="tw-basis-auto">
-              <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
-                <span>{{ product?.itemName }}</span>
+  <div class="tw-flex tw-flex-col tw-justify-between tw-h-[90vh]">
+    <div>
+      <k-toolbar class="tw-pb-1" @back="handleBack">
+        <template #title>
+          <q-input v-model="search" :show-label="false" placeholder="Search by Name" borderless class="fit" />
+        </template>
+      </k-toolbar>
+      <q-separator dark class="tw-mb-4"></q-separator>
+      <div v-if="state.isLoading">
+        <k-card v-for="i in 5" :key="i" class="tw-my-2">
+          <q-card-section class="tw-p-2">
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <div class="tw-flex tw-items-center tw-space-x-2">
+                <q-skeleton type="QCheckbox" />
+                <q-skeleton type="rect" width="40px" height="40px" />
+                <div class="tw-flex tw-flex-col tw-gap-1">
+                  <q-skeleton type="text" width="100px" />
+                  <q-skeleton type="text" width="150px" />
+                </div>
+              </div>
+              <div>
+                <q-skeleton type="QInput" width="100px" />
               </div>
             </div>
-          </div>
-          <div class="tw-basis-auto tw-text-right">
-            <plus-minus-field
-              v-model="product.qtyOrdered"
-              :allow-increase="true"
-              :disable="!isChecked(product.itemId)"
-              @update:model-value="(val) => updateQty(product, val as number)"
-            />
-          </div>
-        </div>
-      </q-card-section>
-    </k-card>
+          </q-card-section>
+        </k-card>
+      </div>
+      <div v-else>
+        <k-card v-for="product in filteredProducts" :key="product.itemId" class="tw-my-2">
+          <q-card-section class="tw-p-2">
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <div class="tw-flex tw-justify-between tw-space-x-2">
+                <q-checkbox
+                  :model-value="isChecked(product.itemId)"
+                  @update:model-value="(val) => toggleItem(product, val)"
+                  :true-value="true"
+                  :false-value="false"
+                  class="tw-mr-2"
+                  color="secondary"
+                />
+                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" />
+                <div class="tw-basis-auto">
+                  <div class="tw-flex tw-flex-col">
+                    <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
+                    <span>{{ product?.itemName }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tw-basis-auto tw-text-right">
+                <plus-minus-field
+                  v-model="product.qtyOrdered"
+                  :allow-increase="true"
+                  :disable="!isChecked(product.itemId)"
+                  @update:model-value="(val) => updateQty(product, val as number)"
+                />
+              </div>
+            </div>
+          </q-card-section>
+        </k-card>
+      </div>
+    </div>
+    <div class="tw-my-4">
+      <k-btn :label="t('submit')" color="secondary" class="fit" @click="handleBack" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -67,6 +74,7 @@ import { onMounted, reactive, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
 import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
+import { useI18n } from 'vue-i18n'
 interface Props {
   modelValue: VendorShipmentResponse
 }
@@ -77,6 +85,8 @@ interface Emits {
 }
 
 type ReceiveItem = VendorShipmentResponse['receiveItems'][0]
+
+const { t } = useI18n()
 
 const props = withDefaults(defineProps<Props>(), {})
 

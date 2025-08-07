@@ -61,7 +61,6 @@ const getColor = (status: TStatus): Colors => {
 }
 
 const handleClick = () => {
-  console.log('cli')
   emit('click', { item: props.item })
 }
 </script>

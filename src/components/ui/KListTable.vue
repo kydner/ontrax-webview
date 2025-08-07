@@ -27,7 +27,7 @@
         class="tw-bg-overlay tw-rounded-base tw-col-span-12"
       >
         <q-card-section>
-          <slot name="list:content" :item="{ ...(item || {}) }">
+          <slot name="list:content" :item="{ ...(item || {}) }" :loading="loading">
             <p class="tw-text-center">Item not set</p>
           </slot>
         </q-card-section>
@@ -56,7 +56,7 @@ export interface KListTableSlots {
   list: (data: { items: unknown[] }) => VNode
   error: (data: { message: string }) => VNode
   empty: () => VNode
-  'list:content': (data: { item: unknown }) => VNode
+  'list:content': (data: { item: unknown; loading: boolean }) => VNode
 }
 const props = defineProps<{
   items: unknown[]

@@ -35,6 +35,7 @@ import { Colors } from 'src/components/ui/KStatusBadge.vue'
 
 interface Props {
   item: VendorShipmentResponsePage
+  loading?: boolean
 }
 
 interface Emits {
@@ -61,7 +62,7 @@ const getColor = (status: TStatus): Colors => {
 }
 
 const handleClick = () => {
-  console.log('cli')
+  if (props.loading) return
   emit('click', { item: props.item })
 }
 </script>

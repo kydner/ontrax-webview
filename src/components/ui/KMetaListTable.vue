@@ -28,7 +28,7 @@ interface KMetaListTableProps {
 }
 
 interface KMetaListTableSlots extends Omit<KListTableSlots, 'list:content' | 'list'> {
-  'list:content': (props: { item: T }) => VNode
+  'list:content': (props: { item: T; loading: boolean }) => VNode
   list: (data: { items: T[] }) => VNode
 }
 
@@ -53,17 +53,18 @@ const loadMore = async <T extends any[]>() => {
     if (state.loading || !state.hasMore) return
     state.loading = true
     state.errorMessage = null
-    state.items = []
     const repository = await metaService.repository()
     if (repository.getPage) {
       const data = await repository.getPage({ page: state.page, size: state.size, ...props.payload })
-      console.log(data)
       const content = data.content
+      state.totalPages = data.totalPages
       state.items.push(...(content as T))
 
       state.page++
 
-      if (state.totalPages === state.page) {
+      console.log(content, 'content')
+      console.log(state.page, state.totalPages, 'page')
+      if (state.page > state.totalPages) {
         state.hasMore = false
       }
     }

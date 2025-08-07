@@ -137,7 +137,6 @@ const form = computed({
 
 const fetchSingle = async () => {
   try {
-    console.log(route.params, 'params')
     const repository = await metaService.repository()
     if (repository.getOne) {
       loadingPage.value = true
@@ -203,7 +202,6 @@ const handleCreate = async () => {
 const handleSubmitDraft = async () => {
   const validate = await metaFormPageRef.value?.validate()
   if (validate) {
-    console.log(form.value, 'submit')
     if (formId.value) handleUpdate()
     else handleCreate()
   }
