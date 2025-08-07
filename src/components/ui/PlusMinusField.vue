@@ -1,6 +1,14 @@
 <template>
   <div class="plus-minus-field tw-flex">
-    <q-btn flat label="-" :repeat-timeout="1000" dense class="btn left tw-text-white" @click="decrease" />
+    <q-btn
+      flat
+      label="-"
+      :repeat-timeout="1000"
+      dense
+      class="btn left tw-text-white"
+      :disable="props.disable"
+      @click="decrease"
+    />
     <k-money
       v-model="currentValue"
       dense
@@ -8,14 +16,22 @@
       class="tw-flex input"
       borderless
       hide-underline
-      :disabled="props.disable"
-      :precision="2"
+      :disabled="props.disableValue"
+      :precision="precision"
       decimal=","
       thousands="."
       focus-on-right
       @update:model-value="handleInputChange"
     />
-    <q-btn flat label="+" :repeat-timeout="1000" dense class="btn right tw-text-white" @click="increase" />
+    <q-btn
+      flat
+      label="+"
+      :repeat-timeout="1000"
+      dense
+      class="btn right tw-text-white"
+      :disable="props.disable"
+      @click="increase"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -27,16 +43,24 @@ import { Money3Component as kMoney } from 'v-money3'
 interface Props extends Omit<QInputProps, 'modelValue'> {
   modelValue: number
   allowIncrease?: boolean
+  zeroConfirm?: boolean
+  disableValue?: boolean
+  zeroConfirmMessage?: string
+  precision?: number
 }
 
 interface Emits {
   (event: 'update:modelValue', value: Props['modelValue']): void
   (event: 'increase', currentValue: Props['modelValue']): void
+  (event: 'zero:confirm'): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: 0,
   allowIncrease: true,
+  zeroConfirm: false,
+  disableValue: false,
+  precision: 0,
 })
 
 const emit = defineEmits<Emits>()
@@ -47,15 +71,20 @@ const currentValue = computed({
 })
 
 const decrease = () => {
-  if (currentValue.value === 1) {
-    $confirm({
-      message: 'Yakin ingin mengubah nilai menjadi 0?',
-      callback: (confirm) => {
-        if (confirm) {
-          currentValue.value = 0
-        }
-      },
-    })
+  if (currentValue.value <= 1) {
+    if (props.zeroConfirm) {
+      $confirm({
+        message: props.zeroConfirmMessage || 'Hapus data ini?',
+        callback: (confirm) => {
+          if (confirm) {
+            emit('zero:confirm')
+            currentValue.value = 0
+          }
+        },
+      })
+    } else {
+      currentValue.value = 0
+    }
   } else if (currentValue.value > 1) {
     currentValue.value--
   }
@@ -67,26 +96,26 @@ const increase = () => {
   currentValue.value++
 }
 
-const handleInputChange = (value: string | number | null) => {
-  const parsed = Number(value)
+const handleInputChange = (value: number | string) => {
+  const to = Number(value)
+  const from = currentValue.value
 
-  // Kalau hasil parsing bukan angka valid (NaN), jangan update
-  if (isNaN(parsed)) return
+  if (isNaN(to)) return
 
-  if (currentValue.value === 1 && parsed === 0) {
+  if (to === 0 && props.zeroConfirm) {
     $confirm({
-      message: 'Yakin ingin mengubah nilai menjadi 0?',
+      message: props.zeroConfirmMessage || 'Hapus data ini?',
       callback: (confirm) => {
         if (confirm) {
           currentValue.value = 0
+          emit('zero:confirm')
         } else {
-          // Kembalikan ke 1 kalau dibatalkan
-          currentValue.value = 1
+          currentValue.value = from || 1 // Kembali ke nilai sebelumnya
         }
       },
     })
   } else {
-    currentValue.value = parsed
+    currentValue.value = to
   }
 }
 </script>

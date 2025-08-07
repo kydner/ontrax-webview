@@ -14,7 +14,14 @@
             </div>
           </div>
           <div class="tw-basis-auto tw-text-right">
-            <plus-minus-field v-model="product.qtyOrdered" :allow-increase="false" @increase="handleIncrease(index)" />
+            <plus-minus-field
+              v-model="product.qtyOrdered"
+              disable-value
+              zero-confirm
+              :allow-increase="false"
+              @increase="handleIncrease(index)"
+              @zero:confirm="handleZeroConfirm(index)"
+            />
           </div>
         </div>
       </q-card-section>
@@ -115,5 +122,10 @@ const handleProductPick = () => {
 const handleIncrease = (index: number) => {
   dialogIndex.value = index
   console.log(productValues.value[index])
+}
+
+const handleZeroConfirm = (index: number) => {
+  productValues.value?.splice(index, 1)
+  dialogIndex.value = null
 }
 </script>

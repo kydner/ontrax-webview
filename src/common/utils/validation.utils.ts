@@ -1,4 +1,4 @@
-import { date } from 'quasar'
+import { date, Dialog } from 'quasar'
 import { RuleExpression } from 'vee-validate'
 
 export const validationRules = (rules: RuleExpression<unknown> | undefined, required: boolean) => {
@@ -78,3 +78,18 @@ export const isFile = (value: unknown): boolean => 'File' in window && value ins
 export const isValidDate = (datetime: number | string): boolean => date.isValid(datetime)
 
 export const isIsoStringDate = (isoString: string): boolean => isValidDate(isoString)
+
+export function confirmToZero(): Promise<boolean> {
+  return new Promise((resolve) => {
+    Dialog.create({
+      title: 'Konfirmasi',
+      message: 'Yakin ingin mengubah nilai menjadi 0?',
+      cancel: true,
+      persistent: true,
+    }).onOk(() => {
+      resolve(true)
+    }).onCancel(() => {
+      resolve(false)
+    })
+  })
+}
