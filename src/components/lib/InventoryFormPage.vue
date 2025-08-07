@@ -3,7 +3,8 @@
     <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
       <q-tab-panel :name="PANEL_FORM" class="tw-p-0">
         <k-toolbar :header-title="currentTitle" @back="handleBack" />
-        <component :is="FormPage" v-model="form"></component>
+        <inventory-form-page-skeleton v-if="loadingPage" />
+        <component v-else :is="FormPage" v-model="form"></component>
       </q-tab-panel>
 
       <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0"> xxx </q-tab-panel>
@@ -28,6 +29,7 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
+import InventoryFormPageSkeleton from './InventoryFormPageSkeleton.vue'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -69,6 +71,8 @@ const { t } = useI18n()
 const metaService = new MetaService(props.meta)
 
 const formId = computed(() => route.params?.id)
+
+const loadingPage = ref(false)
 
 const currentTitle = computed(() => {
   if (formId.value) return form.value?.receiveNumber
@@ -149,7 +153,7 @@ const fetchSingle = async () => {
     console.log(route.params, 'params')
     const repository = await metaService.repository()
     if (repository.getOne) {
-      Loading.show()
+      loadingPage.value = true
       const response = await repository.getOne(formId.value)
       form.value = response as T
     } else {
@@ -160,7 +164,7 @@ const fetchSingle = async () => {
       message: error as Error,
     })
   } finally {
-    Loading.hide()
+    loadingPage.value = false
   }
 }
 
