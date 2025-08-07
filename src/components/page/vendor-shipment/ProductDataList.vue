@@ -1,7 +1,7 @@
 <template>
   <div class="tw-my-4">
     <k-btn color="secondary" label="Add Product" @click="handleProductPick" />
-    <k-card v-for="product in productValues" :key="product.itemId" class="tw-my-2">
+    <k-card v-for="(product, index) in productValues" :key="product.itemId" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -14,19 +14,63 @@
             </div>
           </div>
           <div class="tw-basis-auto tw-text-right">
-            <plus-minus-field v-model="product.qtyOrdered" :allow-increase="false" @increase="handleIncrease" />
+            <plus-minus-field v-model="product.qtyOrdered" :allow-increase="false" @increase="handleIncrease(index)" />
           </div>
         </div>
       </q-card-section>
     </k-card>
   </div>
+
+  <!-- Single Dialog reused for all items -->
+  <q-dialog v-model="isDialogOpen" dark>
+    <q-card style="min-width: 400px; max-width: 90vw">
+      <q-card-section
+        v-if="dialogIndex !== null && dialogIndex !== undefined"
+        class="tw-flex tw-flex-col tw-space-y-2 tw-pt-2"
+      >
+        <k-card>
+          <q-card-section class="tw-p-2">
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <div class="tw-flex tw-justify-between tw-space-x-2">
+                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" />
+                <div class="tw-basis-auto">
+                  <div class="tw-flex tw-flex-col">
+                    <span class="tw-text-secondary-text">{{ productValues[dialogIndex]?.itemCode }}</span>
+                    <span>{{ productValues[dialogIndex]?.itemName }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tw-basis-auto tw-text-right">
+                <plus-minus-field
+                  v-model="productValues[dialogIndex].qtyOrdered"
+                  :allow-increase="true"
+                  :disable="false"
+                />
+              </div>
+            </div>
+          </q-card-section>
+        </k-card>
+        <k-text-area
+          v-model="productValues[dialogIndex].notes"
+          t-label="note"
+          :show-label="false"
+          :placeholder="t('note')"
+        />
+      </q-card-section>
+
+      <q-card-actions align="right" class="tw-py-0">
+        <q-btn flat :label="t('close')" color="primary" v-close-popup @click="dialogIndex = null" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 <script setup lang="ts">
 import { bus } from 'src/common/event-bus'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import KCard from 'src/components/ui/KCard.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
@@ -39,6 +83,17 @@ interface Emits {
 const props = withDefaults(defineProps<Props>(), {})
 
 const emit = defineEmits<Emits>()
+
+const { t } = useI18n()
+
+const dialogIndex = ref<number | null>(null)
+
+const isDialogOpen = computed({
+  get: () => dialogIndex.value !== null,
+  set: (val: boolean) => {
+    if (!val) dialogIndex.value = null
+  },
+})
 
 const vendorValue = computed({
   get: () => props.modelValue,
@@ -57,7 +112,8 @@ const handleProductPick = () => {
   bus.emit('product:pick')
 }
 
-const handleIncrease = () => {
-  console.log('xx')
+const handleIncrease = (index: number) => {
+  dialogIndex.value = index
+  console.log(productValues.value[index])
 }
 </script>

@@ -20,6 +20,8 @@ const props = withDefaults(defineProps<KInputTaxProps>(), {
   required: false,
   rules: 'max:255',
   type: 'textarea',
+  dark: true,
+  color: 'secondary',
 })
 
 const emit = defineEmits<KInputTaxEmits>()

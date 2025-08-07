@@ -8,7 +8,7 @@
       class="tw-flex input"
       borderless
       hide-underline
-      disabled
+      :disabled="props.disable"
       :precision="2"
       decimal=","
       thousands="."
