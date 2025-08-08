@@ -82,7 +82,7 @@ import { KLabelProps, KLabelSlots } from 'src/components/ui/KLabel.vue'
 import { computed } from 'vue'
 import { Field, RuleExpression } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
-import { validationFileRules, isRequiredField } from 'src/common/utils/validation.utils'
+import { validationRules, isRequiredField } from 'src/common/utils/validation.utils'
 import { id } from 'src/common/interfaces/response.interface'
 import { snakeCase } from 'lodash'
 import { watch } from 'vue'
@@ -154,7 +154,7 @@ const isRequired = computed(() => {
 })
 
 const currentRules = computed(() => {
-  return validationFileRules(props.rules, props.disable ? false : props.required)
+  return validationRules(props.rules, props.disable ? false : props.required)
 })
 
 const selectedFile = ref<File | null>(null)
