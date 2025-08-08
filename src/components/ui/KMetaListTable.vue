@@ -1,6 +1,6 @@
 <template>
   <k-list-table
-    :items="state.items"
+    :items="currentItems"
     :loading="state.loading"
     :error="state.errorMessage"
     :hasMore="state.hasMore"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts" generic="T, R">
-import { reactive, VNode } from 'vue'
+import { computed, reactive, VNode } from 'vue'
 import KListTable, { KListTableSlots } from './KListTable.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { MetaService } from 'src/common/services/meta.service'
@@ -25,6 +25,7 @@ import { getErrorMessage } from 'src/common/utils/error.utils'
 interface KMetaListTableProps {
   meta: IMetaListModule<T>
   payload?: R
+  itemMapper?: (items: T[]) => T[]
 }
 
 interface KMetaListTableSlots extends Omit<KListTableSlots, 'list:content' | 'list'> {
@@ -47,6 +48,10 @@ const state = reactive({
   page: 1,
   totalPages: 1,
 })
+
+const currentItems = computed(() =>
+  props.itemMapper ? props.itemMapper(state.items as unknown as T[]) : (state.items as unknown as T[]),
+)
 
 const loadMore = async <T extends any[]>(reset = false) => {
   if (reset) resetLoad()

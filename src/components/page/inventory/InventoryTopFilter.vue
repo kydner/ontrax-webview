@@ -53,7 +53,7 @@
           <q-btn
             flat
             padding="xs"
-            size="sm"
+            size="xs"
             rounded
             :icon="`img:/icons/${sortDirection === 'asc' ? 'sort-by-up.svg' : 'sort-by-down.svg'}`"
             @click="toggleSort"
@@ -88,13 +88,12 @@
 </template>
 
 <script setup lang="ts">
-import { Many } from 'lodash'
 import { QInputProps } from 'quasar'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-export type TsortDirection = Many<boolean | 'asc' | 'desc'>
+export type TsortDirection = 'asc' | 'desc'
 
 interface Props {
   searchValue: QInputProps['modelValue']

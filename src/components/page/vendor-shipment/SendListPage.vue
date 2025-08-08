@@ -11,7 +11,12 @@
   <!-- end filtering -->
 
   <!-- meta list table -->
-  <k-meta-list-table ref="metaListTableRef" :meta="metaVendorShipment" :payload="payload">
+  <k-meta-list-table
+    ref="metaListTableRef"
+    :meta="metaVendorShipment"
+    :payload="payload"
+    :item-mapper="(items) => orderBy(items, (item) => item.shippingDate, [sortDirection])"
+  >
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as Record<string, unknown>)" />
@@ -37,6 +42,7 @@ import InventoryTopFilter, { TsortDirection } from 'src/components/page/inventor
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
+import { orderBy } from 'lodash'
 
 interface ListItem {
   item: VendorShipmentResponsePage
