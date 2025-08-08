@@ -5,7 +5,7 @@
     :show-toolbar="false"
     class="bg-body-base tw-h-screen tw-flex tw-flex-col"
   >
-    <div class="tw-flex-1 tw-overflow-hidden">
+    <div class="tw-flex-1 tw-min-h-[75vh] tw-overflow-hidden">
       <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
           <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
