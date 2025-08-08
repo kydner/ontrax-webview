@@ -52,19 +52,23 @@
 import { defineProps, ref, onMounted, onUnmounted, VNode } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+export interface KListTableProps {
+  items: unknown[]
+  loading: boolean
+  hasMore: boolean
+  error?: string | null
+  onScrollBottom: () => void
+  listMapper?: (items: unknown[]) => unknown[]
+}
+
 export interface KListTableSlots {
   list: (data: { items: unknown[] }) => VNode
   error: (data: { message: string }) => VNode
   empty: () => VNode
   'list:content': (data: { item: unknown; loading: boolean }) => VNode
 }
-const props = defineProps<{
-  items: unknown[]
-  loading: boolean
-  hasMore: boolean
-  error?: string | null
-  onScrollBottom: () => void
-}>()
+
+const props = defineProps<KListTableProps>()
 
 defineSlots<KListTableSlots>()
 

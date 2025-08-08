@@ -48,7 +48,8 @@ const state = reactive({
   totalPages: 1,
 })
 
-const loadMore = async <T extends any[]>() => {
+const loadMore = async <T extends any[]>(reset = false) => {
+  if (reset) resetLoad()
   try {
     if (state.loading || !state.hasMore) return
     state.loading = true
@@ -77,6 +78,11 @@ const loadMore = async <T extends any[]>() => {
   } finally {
     state.loading = false
   }
+}
+
+const resetLoad = () => {
+  state.items = []
+  state.hasMore = true
 }
 
 // Load awal

@@ -2,6 +2,7 @@
   <inventory-top-filter
     v-model:search-value="search"
     v-model:status-value="currentStatus"
+    v-model:sort-direction="sortDirection"
     :statuses="statuses"
     @search="handleSearch"
     @item:selected="(value) => handleStatus(value)"
@@ -32,7 +33,7 @@
 import { VendorShipment } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentRequestPage, VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
-import InventoryTopFilter from 'src/components/page/inventory/InventoryTopFilter.vue'
+import InventoryTopFilter, { TsortDirection } from 'src/components/page/inventory/InventoryTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
@@ -46,7 +47,7 @@ interface Emits {
 }
 
 type MetaListTableExposed = {
-  loadMore: () => Promise<void>
+  loadMore: (reset?: boolean) => Promise<void>
 }
 
 const emit = defineEmits<Emits>()
@@ -67,6 +68,8 @@ const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | nul
 
 const statuses: TStatus[] = ['QC_PASSED', 'PARTIAL_PASSED', 'RECEIVED']
 
+const sortDirection = ref<TsortDirection>('asc')
+
 const currentStatus = ref<TStatus | undefined>()
 
 const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
@@ -78,12 +81,12 @@ const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
 
 const handleSearch = () => {
   payload.value = buildPayload()
-  metaListTableRef.value?.loadMore()
+  metaListTableRef.value?.loadMore(true)
 }
 
 const handleStatus = (value?: TStatus) => {
   currentStatus.value = currentStatus.value === value ? undefined : value
   payload.value = buildPayload()
-  metaListTableRef.value?.loadMore()
+  metaListTableRef.value?.loadMore(true)
 }
 </script>

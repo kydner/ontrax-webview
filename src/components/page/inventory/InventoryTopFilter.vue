@@ -50,7 +50,14 @@
       <slot name="right">
         <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
           <span class="tw-text-xs tw-text-secondary-text">{{ t('sortBy') }}</span>
-          <q-icon name="img:/icons/sort-by.svg"></q-icon>
+          <q-btn
+            flat
+            padding="xs"
+            size="sm"
+            rounded
+            :icon="`img:/icons/${sortDirection === 'asc' ? 'sort-by-up.svg' : 'sort-by-down.svg'}`"
+            @click="toggleSort"
+          ></q-btn>
         </div>
       </slot>
     </div>
@@ -81,14 +88,18 @@
 </template>
 
 <script setup lang="ts">
+import { Many } from 'lodash'
 import { QInputProps } from 'quasar'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
 import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+export type TsortDirection = Many<boolean | 'asc' | 'desc'>
+
 interface Props {
   searchValue: QInputProps['modelValue']
   statusValue?: TStatus
+  sortDirection: TsortDirection
   statuses: TStatus[]
 }
 
@@ -97,6 +108,7 @@ interface Emits {
   (event: 'item:selected', value: Props['statusValue']): void
   (event: 'update:search-value', value: QInputProps['modelValue']): void
   (event: 'update:status-value', value: Props['statusValue']): void
+  (event: 'update:sort-direction', value: Props['sortDirection']): void
 }
 
 const props = withDefaults(defineProps<Props>(), {})
@@ -118,6 +130,11 @@ const currentStatus = computed({
 const showInput = ref(false)
 
 const inputVisible = ref(false)
+
+const toggleSort = () => {
+  const newValue = props.sortDirection === 'asc' ? 'desc' : 'asc'
+  emit('update:sort-direction', newValue)
+}
 
 function toggleInput(show: boolean) {
   if (show) {
