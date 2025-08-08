@@ -1,6 +1,6 @@
 <template>
   <k-list-table
-    :items="currentItems"
+    :items="mappedItems"
     :loading="state.loading"
     :error="state.errorMessage"
     :hasMore="state.hasMore"
@@ -49,7 +49,7 @@ const state = reactive({
   totalPages: 1,
 })
 
-const currentItems = computed(() =>
+const mappedItems = computed(() =>
   props.itemMapper ? props.itemMapper(state.items as unknown as T[]) : (state.items as unknown as T[]),
 )
 
