@@ -34,30 +34,21 @@
       </q-card>
     </slot>
 
-    <!-- Loader at bottom -->
-    <div v-if="loading" class="tw-col-span-12 tw-text-center tw-text-sm tw-text-secondary tw-py-4">
-      {{ t('loadMore') }}...
-    </div>
-
-    <div
-      v-else-if="!hasMore && items.length > 0"
-      class="tw-col-span-12 tw-text-center tw-text-sm tw-text-secondary tw-py-4"
-    >
-      {{ t('noMoreItems') }}.
-    </div>
+    <!-- Footer slot -->
+    <slot name="after" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted, onUnmounted, VNode } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import type { VNode } from 'vue'
 
 export interface KListTableProps {
   items: unknown[]
   loading: boolean
   hasMore: boolean
   error?: string | null
-  onScrollBottom: () => void
   listMapper?: (items: unknown[]) => unknown[]
 }
 
@@ -66,57 +57,15 @@ export interface KListTableSlots {
   error: (data: { message: string }) => VNode
   empty: () => VNode
   'list:content': (data: { item: unknown; loading: boolean }) => VNode
+  after: () => VNode
 }
 
-const props = defineProps<KListTableProps>()
+defineProps<KListTableProps>()
 
 defineSlots<KListTableSlots>()
 
 const { t } = useI18n()
 
 const scrollContainer = ref<HTMLElement | null>(null)
-
-const handleScroll = () => {
-  const el = scrollContainer.value
-  if (!el || props.loading || !props.hasMore) return
-  const threshold = 100
-  const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold
-  if (isBottom) {
-    props.onScrollBottom()
-  }
-}
-
-onMounted(() => {
-  scrollContainer.value?.addEventListener('scroll', handleScroll)
-})
-
-onUnmounted(() => {
-  scrollContainer.value?.removeEventListener('scroll', handleScroll)
-})
-
-defineExpose({ scrollContainer }) // optional: expose for parent control
+defineExpose({ scrollContainer })
 </script>
-
-<style scoped lang="scss">
-$list-table-content-height: calc(100vh - 120px);
-
-.list-table__content {
-  max-height: $list-table-content-height;
-  @apply tw-overflow-y-auto tw-mb-6;
-  &:hover {
-    overflow: auto;
-  }
-
-  &::-webkit-scrollbar {
-    @apply tw-w-2;
-  }
-
-  &::-webkit-scrollbar-track {
-    @apply tw-bg-base;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    @apply tw-rounded-full tw-bg-disable-text tw-shadow-lg;
-  }
-}
-</style>

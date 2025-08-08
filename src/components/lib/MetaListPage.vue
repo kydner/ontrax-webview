@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" :class="props.class">
+  <k-page padding="normal" class="tw-h-screen" :class="props.class">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
         <k-toolbar :header-title="props.meta?.title" @back="handleBack" />
@@ -16,7 +16,6 @@ import { useRouter } from 'vue-router'
 import KPage from './KPage.vue'
 import { VNode } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
-
 interface Props<T> {
   meta: IMetaListModule<T>
   class?: string

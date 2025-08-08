@@ -11,16 +11,29 @@
       <slot :name="slotName" v-bind="data" />
     </template>
     <!-- end-prettier-ignore -->
+
+    <!-- Tambahan slot after untuk loading dan noMoreItems -->
+    <template #after>
+      <div v-if="state.loading" class="tw-col-span-12 tw-text-center tw-py-4">{{ t('loadMore') }}...</div>
+      <div
+        v-else-if="!state.hasMore && mappedItems.length > 0"
+        class="tw-col-span-12 tw-text-center tw-py-4 tw-text-secondary"
+      >
+        {{ t('noMoreItems') }}
+      </div>
+    </template>
   </k-list-table>
 </template>
 
 <script setup lang="ts" generic="T, R">
-import { computed, reactive, VNode } from 'vue'
+import { computed, onMounted, reactive, VNode } from 'vue'
 import KListTable, { KListTableSlots } from './KListTable.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { MetaService } from 'src/common/services/meta.service'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { getErrorMessage } from 'src/common/utils/error.utils'
+import { useI18n } from 'vue-i18n'
+import { bus } from 'src/common/event-bus'
 
 interface KMetaListTableProps {
   meta: IMetaListModule<T>
@@ -36,6 +49,8 @@ interface KMetaListTableSlots extends Omit<KListTableSlots, 'list:content' | 'li
 const props = withDefaults(defineProps<KMetaListTableProps>(), {})
 
 defineSlots<KMetaListTableSlots>()
+
+const { t } = useI18n()
 
 const metaService = new MetaService(props.meta)
 
@@ -90,8 +105,14 @@ const resetLoad = () => {
   state.hasMore = true
 }
 
-// Load awal
-loadMore()
+onMounted(() => {
+  // Load awal
+  loadMore()
+
+  bus.on('scroll:bottom-reached', () => {
+    loadMore()
+  })
+})
 
 defineExpose({
   loadMore,

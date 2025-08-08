@@ -66,7 +66,7 @@
         <span class="tw-text-xs">{{ t('quantity') }} : {{ totalQuantity }}</span>
       </div>
       <div>
-        <k-btn :label="t('save')" color="secondary" class="fit" @click="handleBack" />
+        <k-btn :label="t('save')" color="secondary" :disable="state.isLoading" class="fit" @click="handleBack" />
       </div>
     </div>
   </div>
