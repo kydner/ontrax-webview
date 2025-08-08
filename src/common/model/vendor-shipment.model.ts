@@ -25,6 +25,7 @@ export interface VendorShipmentResponse extends InventoryResponse {
   goodsReceiveItems: GoodReceiveItem[]
   totalItems: number
   totalItemQty: number
+  fileId: id
 }
 
 export interface VendorShipmentResponsePage extends VendorShipmentResponse {

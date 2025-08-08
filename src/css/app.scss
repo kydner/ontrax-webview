@@ -180,4 +180,57 @@
       font-size: 0.5rem;
     }
   }
+
+  // Tambahan spesifik untuk q-file input text
+
+  .q-field__native,
+  .q-field__control,
+  .q-field__control-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    line-height: 1.2 !important;
+    font-size: 0.75rem !important;
+  }
+
+  .q-placeholder {
+    font-size: 0.75rem !important;
+    opacity: 1 !important;
+    color: var(--q-placeholder-color, #999) !important;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // Saat pakai prepend (ikon upload), pastikan tingginya sejajar
+  .q-field__prepend,
+  .q-field__append {
+    align-items: center !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 0.85rem !important;
+  }
+
+  // File name preview di q-file
+  .q-file__file {
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // Remove margin bottom kalau ada error hint
+  &.q-field--with-bottom {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  // Placeholder terlihat saat tidak ada label
+  input::placeholder {
+    @apply tw-text-disable-text tw-font-medium;
+    font-size: 0.75rem !important;
+    opacity: 1 !important;
+  }
 }

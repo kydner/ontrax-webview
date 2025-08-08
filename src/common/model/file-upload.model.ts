@@ -1,4 +1,4 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 
 export interface FileUploadRequest extends IListSortingRequest {
   module: 'SHIPMENT' | 'QC_SHIPMENT_ITEM' | 'PRODUCT' | 'TRANSFER' | 'QC_TRANSFER_ITEM'
@@ -6,7 +6,11 @@ export interface FileUploadRequest extends IListSortingRequest {
 
 export type FileUploadRequestPage = IPaginationRequest & FileUploadRequest
 
-export type FileUploadResponse = Blob
+export interface FileUploadResponse {
+  fileId: id
+  filename: string
+  fileUrl: string
+}
 
 export interface FileUploadResponsePage extends FileUploadResponse {}
 

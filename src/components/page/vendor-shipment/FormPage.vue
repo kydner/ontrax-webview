@@ -114,14 +114,16 @@
       </template>
     </k-input>
 
-    <k-input
-      v-model="form.attachmentUrl"
+    <k-file-upload
+      v-model="form.fileId"
       t-label="attachFile"
       borderless
       horizontal-align="base"
+      :payload="{ module: 'SHIPMENT' }"
       horizontal-label
       :disable="isDisable"
       :placeholder="t('empty')"
+      required
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
@@ -131,7 +133,7 @@
       <template #label="{ label }">
         <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
       </template>
-    </k-input>
+    </k-file-upload>
 
     <product-data-list v-model="form" :is-disable="isDisable" />
   </div>
@@ -151,6 +153,7 @@ import { LocationWarehouse, Vendor } from 'src/common/constants/meta.constant'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
+import KFileUpload from 'src/components/ui/KFileUpload.vue'
 
 interface Props {
   modelValue: T

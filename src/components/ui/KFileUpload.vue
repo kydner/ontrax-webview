@@ -27,7 +27,7 @@
       >
         <q-file
           v-bind="{ ...props, name: field.name }"
-          v-model="currentValue"
+          v-model="selectedFile"
           :for="props.for || props.label"
           :label="
             screen?.lt?.md
@@ -40,11 +40,16 @@
           "
           :error="!!errorMessage"
           :rules="undefined"
+          dense
           :error-message="errorMessage"
           :clearable="isRequired ? false : props.clearable"
-          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''}`"
+          :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${!!errorMessage ? 'show-error' : ''} ${inputClass}`"
           :placeholder="currentPlaceholder"
           :outlined="borderless ? false : props.outlined"
+          :accept="accept"
+          :disable="disable || uploading"
+          @rejected="handleRejected"
+          @clear="handleClear"
         >
           <!-- prettier-ignore -->
           <template v-for="(_, slotName) in ($slots as unknown)" #[slotName] :key="slotName">
@@ -52,17 +57,18 @@
           </template>
           <!-- end-prettier-ignore -->
           <template #prepend>
-            <q-icon name="cloud_upload" />
+            <q-icon name="attach_file" class="tw-rotate-45" />
           </template>
 
           <template #append>
             <slot name="append">
-              <k-btn v-if="fileId && !isMenu" icon="download" padding="none" flat @click="emit('download')" />
+              <q-icon v-if="modelValue && !isMenu" name="download" padding="none" flat @click="emit('download')" />
               <k-menu
-                v-if="fileId && isMenu"
+                v-if="modelValue && isMenu"
                 :item-options="itemOptions"
                 @downloadOriginal="emit('downloadOriginal', $event)"
               />
+              <q-spinner v-if="uploading" size="1.5em" />
             </slot>
           </template>
         </q-file>
@@ -71,24 +77,37 @@
   </k-label>
 </template>
 <script setup lang="ts">
-import { QFileProps, QFileSlots } from 'quasar'
+import { QFileProps, QFileSlots, QRejectedEntry } from 'quasar'
 import { KLabelProps, KLabelSlots } from 'src/components/ui/KLabel.vue'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { Field, RuleExpression } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
 import { validationFileRules, isRequiredField } from 'src/common/utils/validation.utils'
 import { id } from 'src/common/interfaces/response.interface'
 import { snakeCase } from 'lodash'
+import { watch } from 'vue'
+import { ref } from 'vue'
+import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
+import { FileUploadRequest } from 'src/common/model/file-upload.model'
 
-export interface KInputProps extends Omit<QFileProps, 'rules'>, KLabelProps {
+export interface KInputProps extends KLabelProps {
+  modelValue: id | null
+  name?: string
+  label?: string
   labelInput?: boolean
   placeholder?: string
   rules?: RuleExpression<unknown>
   defaultValue?: QFileProps['modelValue']
-  fileId?: id
   fileName?: string
   isMenu?: boolean
+  disable?: boolean
   itemOptions?: { label: string; value: boolean }[]
+  borderless?: boolean
+  outlined?: boolean
+  clearable?: boolean
+  accept?: string // optional, e.g. '.jpg,.png,.pdf'
+  payload: FileUploadRequest
+  inputClass?: string
 }
 
 export interface KInputEmits {
@@ -119,10 +138,7 @@ defineSlots<QFileSlots & KLabelSlots>()
 
 const { t } = useI18n()
 
-const currentValue = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:model-value', value),
-})
+const uploadRepository = useFileUploadRepository()
 
 const currentFor = computed(() => props.for || props.label)
 
@@ -130,7 +146,7 @@ const currentPlaceholder = computed(() => {
   if (props.labelInput) return null
   if (props.placeholder) return props.placeholder
   const label = props.tLabel ? t(props.tLabel) : props.label
-  return `${t('upload')} ${label}`
+  return `${t('input')} ${label}`
 })
 
 const isRequired = computed(() => {
@@ -141,9 +157,33 @@ const currentRules = computed(() => {
   return validationFileRules(props.rules, props.disable ? false : props.required)
 })
 
-onMounted(() => {
-  if (!props.modelValue) {
-    if (props.defaultValue !== null) emit('update:model-value', props.defaultValue)
+const selectedFile = ref<File | null>(null)
+
+const uploading = ref(false)
+
+watch(selectedFile, async (file) => {
+  if (!file) return
+  uploading.value = true
+
+  try {
+    const data = await uploadRepository.upload(file, props.payload)
+    console.log(data)
+    emit('update:model-value', data.fileId)
+  } catch (err) {
+    console.error('Upload failed:', err)
+    emit('update:model-value', null)
+  } finally {
+    uploading.value = false
   }
 })
+
+const handleRejected = (entries: QRejectedEntry[]) => {
+  entries.forEach((entry) => {
+    console.warn(`File "${entry.file.name}" ditolak. Alasan:`, entry.failedPropValidation)
+  })
+}
+
+const handleClear = () => {
+  emit('update:model-value', null)
+}
 </script>
