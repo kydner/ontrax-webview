@@ -14,10 +14,12 @@
 
     <!-- Tambahan slot after untuk loading dan noMoreItems -->
     <template #after>
-      <div v-if="state.loading" class="tw-col-span-12 tw-text-center tw-py-4">{{ t('loadMore') }}...</div>
+      <div v-if="state.loading" class="tw-col-span-12 tw-text-center tw-py-4 tw-text-secondary">
+        {{ t('loadMore') }}...
+      </div>
       <div
         v-else-if="!state.hasMore && mappedItems.length > 0"
-        class="tw-col-span-12 tw-text-center tw-py-4 tw-text-secondary"
+        class="tw-col-span-12 tw-text-center tw-py-4 tw-text-secondary-text"
       >
         {{ t('noMoreItems') }}
       </div>

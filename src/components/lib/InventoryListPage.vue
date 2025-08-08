@@ -33,7 +33,7 @@
       </q-card>
     </slot>
 
-    <div class="tw-absolute tw-right-0 tw-pr-6" :style="{ top: `calc(100vh - 80px)` }">
+    <div class="inventory-add-button">
       <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
     </div>
   </meta-list-page>
@@ -117,6 +117,18 @@ const handleUpdate = async (data: { item: T }) => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:math';
+
+$max-page-width: 480px;
+$half-page-width: math.div($max-page-width, 2);
+
+.inventory-add-button {
+  position: fixed;
+  bottom: 20px;
+  right: clamp(16px, calc(50% - #{$half-page-width} + 25px), 100%);
+  z-index: 999;
+}
+
 ::v-deep(.logistic-tab-list) {
   .q-tabs__content {
     @apply tw-border-2 tw-border-disable-text tw-rounded-base !important;
