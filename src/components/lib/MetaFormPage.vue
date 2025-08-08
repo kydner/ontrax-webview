@@ -8,7 +8,7 @@
         <slot></slot>
       </Form>
     </div>
-    <slot name="footer"></slot>
+    <slot name="footer"> </slot>
   </k-page>
 </template>
 <script setup lang="ts" generic="T">

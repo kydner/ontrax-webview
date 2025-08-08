@@ -1,17 +1,23 @@
 <template>
-  <meta-form-page ref="metaFormPageRef" v-bind="{ ...props }" :show-toolbar="false" class="bg-body-base">
-    <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
-      <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
-        <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
-        <inventory-form-page-skeleton v-if="loadingPage" />
-        <component v-else :is="FormPage" v-model="form"></component>
-      </q-tab-panel>
+  <meta-form-page
+    ref="metaFormPageRef"
+    v-bind="{ ...props }"
+    :show-toolbar="false"
+    class="bg-body-base tw-h-screen tw-flex tw-flex-col"
+  >
+    <div class="tw-flex-1 tw-overflow-hidden">
+      <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
+        <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
+          <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
+          <inventory-form-page-skeleton v-if="loadingPage" />
+          <component v-else :is="FormPage" v-model="form"></component>
+        </q-tab-panel>
 
-      <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
-        <component :is="ProductPickPage" v-model="form" @back="panel = PANEL_FORM" />
-      </q-tab-panel>
-    </q-tab-panels>
-
+        <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
+          <component :is="ProductPickPage" v-model="form" @back="panel = PANEL_FORM" />
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
     <template v-if="panel === PANEL_FORM" #footer>
       <div class="tw-flex tw-flex-col tw-space-y-2">
         <k-btn
