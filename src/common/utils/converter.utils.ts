@@ -302,7 +302,7 @@ export function generateFilenameFromBlob(
 export function formatDate(value: string | isoDate, options: KOptionDate = { isDateTime: false }): string {
   const { format, isDateTime, defaultReturn } = options
   if (!isValidDate(value)) return defaultReturn ?? '-'
-  const currentFormat = format ?? (isDateTime ? 'DD MMM YYYY HH:mm' : 'DD MMM YYYY')
+  const currentFormat = format ?? (isDateTime ? 'DD MMMM YYYY HH:mm' : 'DD MMMM YYYY')
   return date.formatDate(value, currentFormat)
 }
 
