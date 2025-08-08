@@ -62,13 +62,21 @@
 
           <template #append>
             <slot name="append">
-              <q-icon v-if="modelValue && !isMenu" name="download" padding="none" flat @click="emit('download')" />
+              <q-btn
+                v-if="modelValue && !isMenu"
+                icon="download"
+                padding="none"
+                rounded
+                size="xs"
+                flat
+                @click="emit('download')"
+              />
               <k-menu
                 v-if="modelValue && isMenu"
                 :item-options="itemOptions"
                 @downloadOriginal="emit('downloadOriginal', $event)"
               />
-              <q-spinner v-if="uploading" size="1.5em" />
+              <q-spinner v-if="uploading" size="1rem" />
             </slot>
           </template>
         </q-file>
