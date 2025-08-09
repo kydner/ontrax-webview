@@ -1,19 +1,24 @@
 <template>
-  <k-page padding="normal" class="k-index-page">
-    <div>
+  <k-page padding="normal" class="k-index-page tw-flex tw-flex-col tw-h-full">
+    <!-- Konten utama -->
+    <div class="tw-flex-1 tw-flex tw-flex-col tw-space-y-6">
+      <!-- Toolbar -->
       <k-toolbar :header-title="t('myProfile')" @back="router.push({ name: 'home' })" />
 
+      <!-- Avatar -->
       <div class="tw-flex tw-items-center tw-justify-center tw-min-h-[25vh]">
         <q-avatar size="60px" class="overlapping tw-cursor-pointer" v-ripple @click="router.push({ name: 'profile' })">
           <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
         </q-avatar>
       </div>
 
+      <!-- Kartu profil -->
       <div>
         <k-card>
           <q-card-section>
             <h3 class="tw-font-semibold tw-text-lg tw-my-2">{{ fullName }}</h3>
 
+            <!-- Email -->
             <k-popup-edit
               :model-value="profile?.email"
               t-label="attachFile"
@@ -37,6 +42,7 @@
               </template>
             </k-popup-edit>
 
+            <!-- Phone -->
             <k-popup-edit
               :model-value="profile?.email"
               t-label="attachFile"
@@ -64,11 +70,15 @@
       </div>
     </div>
 
-    <div>
-      <k-btn color="secondary" :label="t('logout')" class="fit tw-bg-border" @click="onLogout" />
-    </div>
+    <!-- Footer Logout -->
+    <template #footer>
+      <div class="tw-sticky tw-bottom-0">
+        <k-btn color="secondary" :label="t('logout')" class="fit tw-bg-border" @click="onLogout" />
+      </div>
+    </template>
   </k-page>
 </template>
+
 <script setup lang="ts">
 import KPage from 'src/components/lib/KPage.vue'
 import KToolbar from 'src/components/ui/KToolbar.vue'

@@ -9,7 +9,6 @@ import { bus } from 'src/common/event-bus'
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const container = ref<HTMLElement | null>(null)
-
 const triggered = ref(false)
 
 const handleScroll = () => {
@@ -23,7 +22,6 @@ const handleScroll = () => {
     bus.emit('scroll:bottom-reached')
   }
 
-  // Reset saat user scroll ke atas sedikit
   if (!isBottom) {
     triggered.value = false
   }
@@ -35,9 +33,8 @@ onUnmounted(() => container.value?.removeEventListener('scroll', handleScroll))
 
 <style scoped lang="scss">
 .scrollable-container {
-  height: 100vh;
-  overflow-y: auto;
-  @apply tw-flex tw-flex-col;
+  @apply tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-overflow-y-auto;
+
   &:hover {
     overflow: auto;
   }

@@ -1,16 +1,22 @@
 <template>
-  <k-page padding="normal" class="tw-bg-transparent tw-flex tw-flex-col tw-min-h-screen tw-justify-between">
+  <k-page padding="normal" class="tw-bg-transparent">
+    <!-- Bagian Header -->
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
         <k-toolbar v-if="showToolbar" :header-title="`${t('create')} ${props.meta?.title}`" @back="handleBack" />
       </slot>
-      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
-        <slot></slot>
+
+      <!-- Bagian Form -->
+      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')" class="tw-flex-1">
+        <slot />
       </Form>
     </div>
-    <slot name="footer"> </slot>
+
+    <!-- Bagian Footer -->
+    <slot name="footer" />
   </k-page>
 </template>
+
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import KPage from './KPage.vue'

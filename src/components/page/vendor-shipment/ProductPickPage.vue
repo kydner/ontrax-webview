@@ -12,7 +12,7 @@
           <q-card-section class="tw-p-2">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-items-center tw-space-x-2">
-                <q-skeleton type="QCheckbox" />
+                <q-skeleton type="rect" width="20px" height="20px" />
                 <q-skeleton type="rect" width="40px" height="40px" />
                 <div class="tw-flex tw-flex-col tw-gap-1">
                   <q-skeleton type="text" width="100px" />
@@ -39,7 +39,7 @@
                   class="tw-mr-2"
                   color="secondary"
                 />
-                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" />
+                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" height="40px" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
