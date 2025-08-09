@@ -77,10 +77,10 @@ import KCard from 'src/components/ui/KCard.vue'
 import { useRouter } from 'vue-router'
 import { InventoryStock } from 'src/common/constants/meta.constant'
 import { useStockCardRepository } from 'src/common/repository/stock-card.repository'
-import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 import { onMounted, reactive } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
+import { StockCardAggregationResponsePage } from 'src/common/model/stock-card-aggregation.model'
 
 const { t } = useI18n()
 
@@ -89,7 +89,7 @@ const router = useRouter()
 const stockRepository = useStockCardRepository()
 
 const state = reactive({
-  items: [] as StockCardResponsePage[],
+  items: [] as StockCardAggregationResponsePage[],
   isLoading: false,
   hasMore: true,
   errorMessage: null as string | null,
@@ -104,14 +104,14 @@ const handleDetailPage = () => {
   })
 }
 
-const loadMore = async <T extends StockCardResponsePage[]>(reset = false) => {
+const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {
   if (reset) resetLoad()
   try {
     if (state.isLoading || !state.hasMore) return
     state.isLoading = true
     state.errorMessage = null
     console.log('lll')
-    const data = await stockRepository.getPage()
+    const data = await stockRepository.aggregation()
     const content = data.content
     state.totalPages = data.totalPages
     state.items.push(...(content as T))
