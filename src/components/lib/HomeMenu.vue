@@ -8,23 +8,13 @@
       @click="router.push(item.page)"
     >
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
-        <q-avatar
-          text-color="primary"
-          size="60px"
-          :icon="item.icon"
-          :style="{
-            backgroundImage: randomBg,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
-        ></q-avatar>
+        <q-icon text-color="primary" size="80px" :name="`img:/icons/menu/${item.icon}.svg`" />
         <div class="tw-text-xs tw-text-center">{{ item.name }}</div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { getRandomMenuVectors } from 'src/common/constants/utils.constant'
 import { UserMenu } from 'src/common/model/profile.model'
 import { useRouter } from 'vue-router'
 
@@ -35,6 +25,4 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {})
 
 const router = useRouter()
-
-const randomBg = getRandomMenuVectors()
 </script>
