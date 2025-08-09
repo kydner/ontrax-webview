@@ -1,3 +1,4 @@
+import { StockCardAggregationRequest, StockCardAggregationResponse } from '../model/stock-card-aggregation.model'
 import { StockCardLocationWarehouseRequest } from '../model/stock-card-location-warehouse.model'
 import { StockCardLowStockRequest, StockCardLowStockResponse } from '../model/stock-card-low-stock.model'
 import { StockCardSearchRequest, StockCardSearchResponse } from '../model/stock-card-search.model'
@@ -37,6 +38,11 @@ export const useStockCardEndpoint = defineEndpoint({
 
   lowStock: (params: StockCardLowStockRequest) =>
     GetPage<StockCardLowStockResponse[]>('stock-cards/low-stock', {
+      params,
+    }),
+
+  aggregation: (params?: StockCardAggregationRequest) =>
+    GetPage<StockCardAggregationResponse[]>('stock-cards/aggregation', {
       params,
     }),
 })
