@@ -1,5 +1,5 @@
 <template>
-  <inventory-top-filter
+  <operational-top-filter
     v-model:search-value="search"
     v-model:status-value="currentStatus"
     v-model:sort-direction="sortDirection"
@@ -7,7 +7,7 @@
     @search="handleSearch"
     @item:selected="(value) => handleStatus(value)"
   >
-  </inventory-top-filter>
+  </operational-top-filter>
   <!-- end filtering -->
 
   <!-- meta list table -->
@@ -38,7 +38,7 @@
 import { VendorShipment } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentRequestPage, VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
-import InventoryTopFilter, { TsortDirection } from 'src/components/page/operational/InventoryTopFilter.vue'
+import OperationalTopFilter, { TsortDirection } from 'src/components/page/operational/OperationalTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'

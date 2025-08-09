@@ -21,7 +21,7 @@
           :label="t('qcPass')"
           color="secondary"
           class="fit"
-          :disable="loadingPage"
+          :disable="loadingPage || !!errorMessage"
           @click="handleSubmitQcPass"
         />
 
@@ -30,7 +30,7 @@
           :label="t('receive')"
           color="secondary"
           class="fit"
-          :disable="loadingPage"
+          :disable="loadingPage || !!errorMessage"
           @click="handleSubmitReceive"
         />
 
@@ -39,7 +39,7 @@
           :label="t('saveToInTransit')"
           color="secondary"
           class="fit"
-          :disable="loadingPage"
+          :disable="loadingPage || !!errorMessage"
           @click="handleSubmitInTransit"
         />
 
@@ -48,7 +48,7 @@
           :label="t('button.save')"
           color="secondary"
           class="fit"
-          :disable="loadingPage"
+          :disable="loadingPage || !!errorMessage"
           @click="handleSubmitDraft"
         />
       </div>
@@ -73,7 +73,8 @@ import { bus } from 'src/common/event-bus'
 import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
 import { isoDate } from 'src/common/interfaces/response.interface'
 import { OperationalDataRequest } from 'src/common/model/operational.model'
-
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { getErrorMessage } from 'src/common/utils/error.utils'
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
 
@@ -91,12 +92,9 @@ type MetaFormPageExposed = {
 }
 
 const FormPage = computed(() => {
-  if (props.meta.name)
-    return defineAsyncComponent({
-      loader: () => import(`src/components/page/${props.meta.name}/FormPage.vue`),
-    })
   return defineAsyncComponent({
-    loader: () => import('src/components/page/inventory/FormPage.vue'),
+    loader: () => import(`src/components/page/${props.meta.name}/FormPage.vue`),
+    errorComponent: ErrorNotFound,
   })
 })
 
@@ -124,6 +122,8 @@ const formId = computed(() => route.params?.id)
 
 const loadingPage = ref(false)
 
+const errorMessage = ref<string | null>(null)
+
 const currentTitle = computed(() => {
   if (formId.value) return form.value?.receiveNumber
   return `${t('create')} ${props.meta.title}`
@@ -145,12 +145,14 @@ const fetchSingle = async () => {
     const repository = await metaService.repository()
     if (repository.getOne) {
       loadingPage.value = true
+      errorMessage.value = null
       const response = await repository.getOne(formId.value)
       form.value = response as T
     } else {
       throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
     }
   } catch (error) {
+    errorMessage.value = getErrorMessage(error as Error)
     Notify.error({
       message: error as Error,
     })
