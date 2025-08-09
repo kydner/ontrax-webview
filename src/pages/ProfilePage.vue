@@ -1,13 +1,13 @@
 <template>
   <k-page padding="normal" class="k-index-page tw-flex tw-flex-col tw-h-full">
     <!-- Konten utama -->
-    <div class="tw-flex-1 tw-flex tw-flex-col tw-space-y-6">
+    <div class="tw-flex-1 tw-flex tw-flex-col">
       <!-- Toolbar -->
       <k-toolbar :header-title="t('myProfile')" @back="router.push({ name: 'home' })" />
 
       <!-- Avatar -->
       <div class="tw-flex tw-items-center tw-justify-center tw-min-h-[25vh]">
-        <q-avatar size="60px" class="overlapping tw-cursor-pointer" v-ripple @click="router.push({ name: 'profile' })">
+        <q-avatar size="80px" class="overlapping tw-cursor-pointer" v-ripple @click="router.push({ name: 'profile' })">
           <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
         </q-avatar>
       </div>
