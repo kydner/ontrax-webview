@@ -2,9 +2,7 @@
   <k-page padding="none" class="k-index-page">
     <div class="k-main-header tw-bg-transparent">
       <div class="k-main-toolbar tw-p-4 tw-pt-8 tw-pb-4">
-        <div
-          class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-2 md:tw-space-y-0 tw-space-x-0 md:tw-space-x-4 md:tw-items-center"
-        >
+        <div class="tw-flex tw-flex-col tw-space-y-2">
           <q-avatar
             size="60px"
             class="overlapping tw-cursor-pointer"
