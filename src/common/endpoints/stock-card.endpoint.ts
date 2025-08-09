@@ -42,7 +42,7 @@ export const useStockCardEndpoint = defineEndpoint({
     }),
 
   aggregation: (params?: StockCardAggregationRequest) =>
-    GetPage<StockCardAggregationResponse[]>('stock-cards/aggregation', {
+    Get<StockCardAggregationResponse[]>('stock-cards/aggregation', {
       params,
     }),
 })

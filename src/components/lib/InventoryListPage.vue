@@ -10,7 +10,7 @@
       <div class="tw-grid tw-grid-cols-12 tw-gap-2">
         <div class="tw-col-span-12">
           <k-select-module
-            v-model="request.itemId"
+            v-model="request.itemIds"
             :filled="false"
             outlined
             t-label="product"
@@ -25,7 +25,7 @@
 
         <div class="tw-col-span-12">
           <k-select-module
-            v-model="request.locationWarehouseId"
+            v-model="request.warehouseIds"
             :filled="false"
             outlined
             t-label="warehouse"
@@ -43,7 +43,7 @@
         </div>
 
         <div class="target-section-operational__list tw-col-span-12">
-          <component :is="component" />
+          <component :is="component" :payload="{ ...request }" />
         </div>
       </div>
     </slot>
@@ -57,9 +57,9 @@ import { LocationWarehouseResponsePage } from 'src/common/model/location-warehou
 import { LocationWarehouse, Product } from 'src/common/constants/meta.constant'
 import { useI18n } from 'vue-i18n'
 import { scrollToClass } from 'src/common/utils/plugin.utils'
-import { InventoryStockRequest } from 'src/common/model/inventory-stock.model'
 import { ProductResponsePage } from 'src/common/model/product.model'
 import { nextTick } from 'vue'
+import { StockCardAggregationRequest } from 'src/common/model/stock-card-aggregation.model'
 
 interface Props {
   meta: IMetaListModule<T>
@@ -84,16 +84,13 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
 
-const request = ref({
-  itemId: undefined,
-  locationWarehouseId: undefined,
-} as Partial<InventoryStockRequest>)
+const request = ref({} as StockCardAggregationRequest)
 
 defineSlots<Slots<T>>()
 
 const handleFilter = async () => {
   component.value = null
-  if (!request.value.itemId && !request.value.locationWarehouseId) {
+  if (!request.value.itemIds && !request.value.warehouseIds) {
     component.value = defineAsyncComponent({
       loader: () => import('../page/inventory-stock/AllFiltering.vue'),
     })
