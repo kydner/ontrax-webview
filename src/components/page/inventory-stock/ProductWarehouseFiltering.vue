@@ -137,7 +137,11 @@ const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = fa
     state.isLoading = true
     state.errorMessage = null
     console.log('lll')
-    const data = await stockRepository.aggregation({ ...props.payload })
+    const data = await stockRepository.aggregation({
+      ...props.payload,
+      itemIds: props.payload.itemIds || undefined,
+      warehouseIds: props.payload.warehouseIds || undefined,
+    })
     const content = data.content
     state.totalPages = data.totalPages
     state.items.push(...(content as T))
