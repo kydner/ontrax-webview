@@ -1,13 +1,13 @@
 <template>
   <k-page padding="normal" class="tw-bg-transparent">
     <!-- Bagian Header -->
-    <div class="tw-flex tw-flex-col tw-space-y-4">
+    <div class="tw-flex tw-flex-col">
       <slot name="toolbar">
         <k-toolbar v-if="showToolbar" :header-title="`${t('create')} ${props.meta?.title}`" @back="handleBack" />
       </slot>
 
       <!-- Bagian Form -->
-      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')" class="tw-flex-1">
+      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
         <slot />
       </Form>
     </div>

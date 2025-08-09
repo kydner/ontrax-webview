@@ -1,4 +1,5 @@
 import { id, isoDate } from '../interfaces/response.interface'
+import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 import {
   VendorShipmentDataRequest,
   VendorShipmentRequest,
@@ -29,7 +30,7 @@ export const useVendorShipmentEndpoint = defineEndpoint({
       },
     }),
 
-  qualityCheck: (id: id) => Patch(`shipments/${id}/quality-check`),
+  qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => Patch(`shipments/${id}/quality-check`, data),
 
   inTransit: (id: id) => Patch(`shipments/${id}/in-transit`),
 })

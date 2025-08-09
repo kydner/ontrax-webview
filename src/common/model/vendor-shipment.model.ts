@@ -2,6 +2,7 @@ import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common
 import { InventoryResponse } from './inventory.model'
 import { TStatus } from '../enum/vendor-shipment.enum'
 import { ReceiveItem } from '../constants/meta.constant'
+import { VendorShipmentQualityCheckResponse } from './vendor-shipment-quality-check.model'
 
 export interface VendorShipmentRequest extends IListSortingRequest {
   status?: TStatus | TStatus[]
@@ -12,8 +13,10 @@ export interface VendorShipmentRequest extends IListSortingRequest {
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
 export interface VendorShipmentResponse extends InventoryResponse {
-  vendorId: string
-  warehouseId: string
+  vendorId: id
+  warehouseId: id
+  locationWarehouseId?: id
+  goodsReceiveId?: id
   referenceNumber: string
   shippingDate: isoDate
   targetReceiveDate: isoDate
@@ -23,6 +26,9 @@ export interface VendorShipmentResponse extends InventoryResponse {
   status: TStatus
   receiveItems: ReceiveItem[]
   goodsReceiveItems: GoodReceiveItem[]
+  qcItems: VendorShipmentQualityCheckResponse
+  // same as qcItems
+  qcGoodsReceive: VendorShipmentQualityCheckResponse
   totalItems: number
   totalItemQty: number
   fileId: id

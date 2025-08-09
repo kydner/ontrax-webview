@@ -1,5 +1,6 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 import { TStatus } from '../enum/vendor-shipment.enum'
+import { VendorShipmentQualityCheckDataRequest } from './vendor-shipment-quality-check.model'
 
 export interface InventoryRequest extends IListSortingRequest {}
 
@@ -9,6 +10,7 @@ export interface InventoryResponse {
   id: id
   receiveNumber: string
   status: TStatus
+  qcItems: VendorShipmentQualityCheckDataRequest
 }
 
 export interface InventoryResponsePage extends InventoryResponse {}

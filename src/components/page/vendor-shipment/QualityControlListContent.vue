@@ -52,6 +52,8 @@ const getColor = (status: TStatus): Colors => {
       return 'secondary'
     case 'QC_PASSED':
       return 'positive'
+    case 'PARTIAL_PASSED':
+      return 'positive'
     case 'IN_TRANSIT':
       return 'secondary'
     case 'DRAFT':

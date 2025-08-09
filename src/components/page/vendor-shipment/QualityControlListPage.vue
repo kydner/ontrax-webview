@@ -65,18 +65,19 @@ const ListContentPage = computed(() => {
     loader: () => import('./QualityControlListContent.vue'),
   })
 })
-
-const payload = ref({} as VendorShipmentRequestPage)
-
 const search = ref()
 
-const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
+const currentStatus = ref<TStatus | undefined>()
 
 const statuses: TStatus[] = ['QC_PASSED', 'PARTIAL_PASSED', 'RECEIVED']
 
-const sortDirection = ref<TsortDirection>('asc')
+const payload = ref({
+  status: currentStatus.value || statuses,
+} as VendorShipmentRequestPage)
 
-const currentStatus = ref<TStatus | undefined>()
+const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
+
+const sortDirection = ref<TsortDirection>('asc')
 
 const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
   page: 1,
