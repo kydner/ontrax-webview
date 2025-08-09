@@ -80,7 +80,6 @@ const PANEL_PRODUCT = 'panel-product'
 interface Props {
   meta: IMetaListModule<T>
   modelValue: T
-  keyName: keyof T
 }
 
 interface Emits<T> {
