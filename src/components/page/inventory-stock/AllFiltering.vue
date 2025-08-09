@@ -45,8 +45,8 @@
                 <q-img src="~assets/images/product-example.svg" no-spinner width="40px" height="40px" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ stock?.item?.skuCode }}</span>
-                    <span>{{ stock?.item?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ stock?.skuCode }}</span>
+                    <span>{{ stock?.itemName }}</span>
                   </div>
                 </div>
               </div>
@@ -55,7 +55,7 @@
                 <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
                   <div class="tw-basis-auto">
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                      <span>{{ stock?.currentQty }}</span>
+                      <span>{{ stock?.totalCurrentQty }}</span>
                       <span class="tw-text-secondary-text">pcs</span>
                     </div>
                   </div>
