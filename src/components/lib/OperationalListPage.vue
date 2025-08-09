@@ -38,15 +38,15 @@
     </div>
   </meta-list-page>
 </template>
-<script setup lang="ts" generic="T extends InventoryResponse">
+<script setup lang="ts" generic="T extends OperationalResponse">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
 import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { InventoryResponse } from 'src/common/model/inventory.model'
 import { Notify } from 'src/common/utils/plugin.utils'
+import { OperationalResponse } from 'src/common/model/operational.model'
 
 const TAB_SEND = 'send'
 

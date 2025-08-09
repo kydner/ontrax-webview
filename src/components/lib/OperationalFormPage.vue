@@ -55,8 +55,7 @@
     </template>
   </meta-form-page>
 </template>
-<script setup lang="ts" generic="T extends InventoryDataRequest">
-import { InventoryDataRequest } from 'src/common/model/inventory.model'
+<script setup lang="ts" generic="T extends OperationalDataRequest">
 import MetaFormPage from './MetaFormPage.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
@@ -73,6 +72,7 @@ import OperationalFormSkeleton from './OperationalFormSkeleton.vue'
 import { bus } from 'src/common/event-bus'
 import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
 import { isoDate } from 'src/common/interfaces/response.interface'
+import { OperationalDataRequest } from 'src/common/model/operational.model'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'

@@ -1,12 +1,17 @@
 import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
-import { InventoryDataRequest, InventoryRequest, InventoryResponse, InventoryResponsePage } from './inventory.model'
+import {
+  OperationalDataRequest,
+  OperationalRequest,
+  OperationalResponse,
+  OperationalResponsePage,
+} from './operational.model'
 
-export interface VendorShipmentRequest extends IListSortingRequest, InventoryRequest {}
+export interface VendorShipmentRequest extends IListSortingRequest, OperationalRequest {}
 
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
-export interface VendorShipmentResponse extends InventoryResponse {}
+export interface VendorShipmentResponse extends OperationalResponse {}
 
-export interface VendorShipmentResponsePage extends InventoryResponsePage {}
+export interface VendorShipmentResponsePage extends OperationalResponsePage {}
 
-export interface VendorShipmentDataRequest extends InventoryDataRequest {}
+export interface VendorShipmentDataRequest extends OperationalDataRequest {}
