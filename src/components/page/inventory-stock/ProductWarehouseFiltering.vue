@@ -33,9 +33,16 @@
       </div>
     </template>
 
+    <!-- NO DATA -->
+    <template v-else-if="!state.isLoading && state.items.length === 0">
+      <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-64 tw-text-center tw-space-y-2">
+        <div class="tw-text-secondary-text">{{ t('noData') }}</div>
+      </div>
+    </template>
+
     <!-- Data State -->
     <template v-else>
-      <div v-for="(stock, index) in state.data" :key="index" class="tw-basis-full">
+      <div v-for="(stock, index) in state.items" :key="index" class="tw-basis-full">
         <div class="tw-grid tw-grid-cols-12 tw-gap-2">
           <div class="tw-col-span-12">
             <div class="tw-flex tw-items-center tw-justify-between tw-px-2">
@@ -83,7 +90,7 @@
 </template>
 <script setup lang="ts">
 import { InventoryStock } from 'src/common/constants/meta.constant'
-import { ResponseState } from 'src/common/interfaces/response.interface'
+import { bus } from 'src/common/event-bus'
 import {
   StockCardAggregationRequest,
   StockCardAggregationResponsePage,
@@ -92,6 +99,7 @@ import { useStockCardRepository } from 'src/common/repository/stock-card.reposit
 import { Notify } from 'src/common/utils/plugin.utils'
 import KCard from 'src/components/ui/KCard.vue'
 import { onMounted, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 interface Props {
@@ -102,12 +110,18 @@ const props = withDefaults(defineProps<Props>(), {})
 
 const router = useRouter()
 
+const { t } = useI18n()
+
 const stockRepository = useStockCardRepository()
 
-const state = reactive<ResponseState<StockCardAggregationResponsePage[]>>({
+const state = reactive({
+  items: [] as StockCardAggregationResponsePage[],
   isLoading: false,
-  data: null,
-  errorMessage: null,
+  hasMore: true,
+  errorMessage: null as string | null,
+  size: 10,
+  page: 1,
+  totalPages: 1,
 })
 
 const handleDetailPage = () => {
@@ -116,11 +130,23 @@ const handleDetailPage = () => {
   })
 }
 
-const fetchData = async () => {
+const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {
+  if (reset) resetLoad()
   try {
+    if (state.isLoading || !state.hasMore) return
     state.isLoading = true
-    const response = await stockRepository.aggregation({ ...props.payload })
-    state.data = response
+    state.errorMessage = null
+    console.log('lll')
+    const data = await stockRepository.aggregation({ ...props.payload })
+    const content = data.content
+    state.totalPages = data.totalPages
+    state.items.push(...(content as T))
+
+    state.page++
+
+    if (state.page > state.totalPages) {
+      state.hasMore = false
+    }
   } catch (error) {
     Notify.error({
       message: error as Error,
@@ -130,7 +156,15 @@ const fetchData = async () => {
   }
 }
 
+const resetLoad = () => {
+  state.items = []
+  state.hasMore = true
+}
+
 onMounted(() => {
-  fetchData()
+  loadMore()
+  bus.on('scroll:bottom-reached', () => {
+    loadMore()
+  })
 })
 </script>

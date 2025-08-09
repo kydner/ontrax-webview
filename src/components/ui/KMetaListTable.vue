@@ -1,7 +1,7 @@
 <template>
   <k-list-table
     :items="mappedItems"
-    :loading="state.loading"
+    :loading="state.isLoading"
     :error="state.errorMessage"
     :hasMore="state.hasMore"
     :on-scroll-bottom="loadMore"
@@ -14,7 +14,7 @@
 
     <!-- Tambahan slot after untuk loading dan noMoreItems -->
     <template #after>
-      <div v-if="state.loading" class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-4 tw-text-secondary">
+      <div v-if="state.isLoading" class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-4 tw-text-secondary">
         {{ t('loadMore') }}...
       </div>
       <div
@@ -58,7 +58,7 @@ const metaService = new MetaService(props.meta)
 
 const state = reactive({
   items: [] as T[],
-  loading: false,
+  isLoading: false,
   hasMore: true,
   errorMessage: null as string | null,
   size: 10,
@@ -73,8 +73,8 @@ const mappedItems = computed(() =>
 const loadMore = async <T extends any[]>(reset = false) => {
   if (reset) resetLoad()
   try {
-    if (state.loading || !state.hasMore) return
-    state.loading = true
+    if (state.isLoading || !state.hasMore) return
+    state.isLoading = true
     state.errorMessage = null
     const repository = await metaService.repository()
     if (repository.getPage) {
@@ -85,8 +85,6 @@ const loadMore = async <T extends any[]>(reset = false) => {
 
       state.page++
 
-      console.log(content, 'content')
-      console.log(state.page, state.totalPages, 'page')
       if (state.page > state.totalPages) {
         state.hasMore = false
       }
@@ -98,7 +96,7 @@ const loadMore = async <T extends any[]>(reset = false) => {
       message: error as Error,
     })
   } finally {
-    state.loading = false
+    state.isLoading = false
   }
 }
 

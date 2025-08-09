@@ -117,7 +117,9 @@
 
           <template v-if="multiple" #selected-item="scope">
             <slot name="selected-item" v-bind="{ ...scope }">
-              <span v-if="currentValue?.length <= 4"> {{ scope?.opt?.[props.optionLabel] }} &nbsp; </span>
+              <span v-if="currentValue?.length <= 4">
+                {{ scope?.opt?.[props.optionLabel] }}<span v-if="scope.index < currentValue.length - 1">,&nbsp; </span>
+              </span>
               <span v-else-if="scope.index === 0"> {{ currentValue?.length }} items selected </span>
             </slot>
           </template>
