@@ -135,7 +135,7 @@
     </k-file-upload>
 
     <quality-check-data-list v-if="['PARTIAL_PASSED', 'QC_PASSED', 'RECEIVED'].includes(form.status)" v-model="form" />
-    <product-data-list v-else v-model="form" :is-disable="isDisable" />
+    <product-data-list v-else v-model="form" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends VendorShipmentDataRequest">
