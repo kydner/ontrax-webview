@@ -1,11 +1,11 @@
 <template>
-  <inventory-list-page :meta="metaVendorShipment" key-name="goodsReceiveId"> </inventory-list-page>
+  <operational-list-page :meta="metaVendorShipment" key-name="goodsReceiveId"> </operational-list-page>
 </template>
 <script setup lang="ts">
 import { VendorShipment } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
-import InventoryListPage from 'src/components/lib/InventoryListPage.vue'
+import OperationalListPage from 'src/components/lib/OperationalListPage.vue'
 
 const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorShipment
 </script>

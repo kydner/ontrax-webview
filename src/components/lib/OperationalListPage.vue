@@ -1,5 +1,5 @@
 <template>
-  <meta-list-page v-bind="{ ...props }" class="bg-body-base">
+  <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base tw-h-screen">
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
@@ -7,62 +7,58 @@
     <!-- end-prettier-ignore -->
 
     <slot>
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-12">
-          <k-select-module
-            v-model="request.itemId"
-            :filled="false"
-            outlined
-            t-label="product"
-            behavior="menu"
-            option-label="itemName"
-            option-value="itemId"
-            :meta="metaProduct"
-            :placeholder="t('all')"
-            multiple
-          />
-        </div>
+      <q-card flat dark class="tw-bg-transparent">
+        <q-tabs
+          v-model="tab"
+          dense
+          class="logistic-tab-list text-grey"
+          active-color="grey-5"
+          indicator-color="grey-5"
+          align="justify"
+          no-caps
+          narrow-indicator
+        >
+          <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
+          <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
+        </q-tabs>
+        <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
+          <q-tab-panel :name="TAB_SEND" class="tw-px-0">
+            <component :is="SendListPage" @click:item="handleUpdate" />
+          </q-tab-panel>
 
-        <div class="tw-col-span-12">
-          <k-select-module
-            v-model="request.locationWarehouseId"
-            :filled="false"
-            outlined
-            t-label="warehouse"
-            behavior="menu"
-            option-label="warehouseName"
-            option-value="locationWarehouseId"
-            :meta="metaLocationWarehouse"
-            :placeholder="t('all')"
-            multiple
-          />
-        </div>
-
-        <div class="tw-col-span-12 tw-my-2">
-          <k-btn color="secondary" :label="t('search')" class="fit" @click="handleFilter" />
-        </div>
-
-        <div class="target-section-operational__list tw-col-span-12">
-          <component :is="component" />
-        </div>
-      </div>
+          <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
+            <component :is="QualityControlListPage" @click:item="handleUpdate" />
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
     </slot>
+
+    <div class="inventory-add-button">
+      <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
+    </div>
   </meta-list-page>
 </template>
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends InventoryResponse">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
-import { defineAsyncComponent, ref, VNode, type Component } from 'vue'
-import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
-import { LocationWarehouse, Product } from 'src/common/constants/meta.constant'
+import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { scrollToClass } from 'src/common/utils/plugin.utils'
-import { InventoryStockRequest } from 'src/common/model/inventory-stock.model'
-import { ProductResponsePage } from 'src/common/model/product.model'
-import { nextTick } from 'vue'
+import { ref } from 'vue'
+import { InventoryResponse } from 'src/common/model/inventory.model'
+import { Notify } from 'src/common/utils/plugin.utils'
+
+const TAB_SEND = 'send'
+
+const TAB_QUALITY_CONTROL = 'quality-control'
+
+const { t } = useI18n()
+
+const tab = ref(TAB_SEND)
 
 interface Props {
   meta: IMetaListModule<T>
+  keyName?: keyof T
 }
 
 interface Slots<T> {
@@ -74,37 +70,87 @@ interface Slots<T> {
   'list:content': (props: { item: T }) => VNode
   list: (props: { items: T[] }) => VNode
 }
-const props = withDefaults(defineProps<Props>(), {})
 
-const { t } = useI18n()
+const SendListPage = computed(() =>
+  defineAsyncComponent({
+    loader: () => import(`src/components/page/${props.meta.name}/SendListPage.vue`),
+  }),
+)
 
-const component = ref<Component | null>(null)
+const QualityControlListPage = computed(() =>
+  defineAsyncComponent({
+    loader: () => import(`src/components/page/${props.meta.name}/QualityControlListPage.vue`),
+  }),
+)
 
-const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
-
-const metaProduct: IMetaListModule<ProductResponsePage> = Product
-
-const request = ref({
-  itemId: undefined,
-  locationWarehouseId: undefined,
-} as Partial<InventoryStockRequest>)
+const props = withDefaults(defineProps<Props>(), {
+  keyName: 'id',
+})
 
 defineSlots<Slots<T>>()
 
-const handleFilter = async () => {
-  component.value = null
-  if (!request.value.itemId && !request.value.locationWarehouseId) {
-    component.value = defineAsyncComponent({
-      loader: () => import('../page/inventory-stock/AllFiltering.vue'),
+const router = useRouter()
+
+const handleCreate = () => {
+  router.push({
+    name: `${props.meta.name}-form-create`,
+  })
+}
+
+const handleUpdate = async (data: { item: T }) => {
+  try {
+    const { item } = data
+    const keyName = item[props.keyName]
+    await router.push({
+      name: `${props.meta.name}-form-update`,
+      params: {
+        id: keyName as string,
+      },
     })
-  } else {
-    component.value = defineAsyncComponent({
-      loader: () => import('../page/inventory-stock/ProductWarehouseFiltering.vue'),
+  } catch (error) {
+    await nextTick()
+    Notify.error({
+      message: error as Error,
     })
   }
-  await nextTick()
-  setTimeout(() => {
-    scrollToClass('.target-section-operational__list')
-  }, 200)
 }
 </script>
+
+<style scoped lang="scss">
+@use 'sass:math';
+
+$max-page-width: 480px;
+$half-page-width: math.div($max-page-width, 2);
+
+.inventory-add-button {
+  position: fixed;
+  bottom: 20px;
+  right: clamp(16px, calc(50% - #{$half-page-width} + 25px), 100%);
+  z-index: 999;
+}
+
+::v-deep(.logistic-tab-list) {
+  .q-tabs__content {
+    @apply tw-border-2 tw-border-disable-text tw-rounded-base !important;
+    .q-tab {
+      @apply tw-bg-disable-text;
+      .q-tab__content {
+        .q-tab__label {
+          @apply tw-text-xs tw-text-secondary-text;
+        }
+      }
+      &.q-tab--active {
+        @apply tw-bg-overlay tw-rounded-sm;
+        .q-tab__content {
+          .q-tab__label {
+            @apply tw-text-xs tw-text-white;
+          }
+          .q-tab__indicator {
+            @apply tw-hidden;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

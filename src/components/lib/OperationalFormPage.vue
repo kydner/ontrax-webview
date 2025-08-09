@@ -4,7 +4,7 @@
       <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
           <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
-          <inventory-form-page-skeleton v-if="loadingPage" />
+          <operational-form-skeleton v-if="loadingPage" />
           <component v-else :is="FormPage" v-model="form"></component>
         </q-tab-panel>
 
@@ -69,7 +69,7 @@ import { $confirm, Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
-import InventoryFormPageSkeleton from './InventoryFormPageSkeleton.vue'
+import OperationalFormSkeleton from './OperationalFormSkeleton.vue'
 import { bus } from 'src/common/event-bus'
 import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
 import { isoDate } from 'src/common/interfaces/response.interface'
