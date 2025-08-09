@@ -73,13 +73,13 @@ interface Slots<T> {
 
 const SendListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/SendListPage.vue`),
+    loader: () => import(`src/components/page/${props.meta.name}/send/ListPage.vue`),
   }),
 )
 
 const QualityControlListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/QualityControlListPage.vue`),
+    loader: () => import(`src/components/page/${props.meta.name}/quality-control/ListPage.vue`),
   }),
 )
 

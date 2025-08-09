@@ -38,7 +38,7 @@
 import { VendorShipment } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentRequestPage, VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
-import InventoryTopFilter, { TsortDirection } from 'src/components/page/inventory/InventoryTopFilter.vue'
+import InventoryTopFilter, { TsortDirection } from 'src/components/page/operational/InventoryTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
@@ -62,7 +62,7 @@ const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorSh
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
-    loader: () => import('./QualityControlListContent.vue'),
+    loader: () => import('./ListContent.vue'),
   })
 })
 const search = ref()
