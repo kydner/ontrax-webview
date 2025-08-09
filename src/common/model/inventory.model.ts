@@ -11,6 +11,7 @@ export interface InventoryRequest extends IListSortingRequest {
 export type InventoryRequestPage = IPaginationRequest & InventoryRequest
 
 export interface InventoryResponse {
+  id?: id
   vendorId: id
   warehouseId: id
   locationWarehouseId?: id
