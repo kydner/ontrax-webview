@@ -70,7 +70,7 @@
                       <div class="tw-basis-auto">
                         <div class="tw-flex tw-items-center tw-justify-between tw-space-x-2">
                           <span>{{ warehouse.currentQty }}</span>
-                          <span class="tw-text-secondary-text">pcs</span>
+                          <span class="tw-text-secondary-text">{{ stock?.unit?.toLowerCase() }}</span>
                         </div>
                       </div>
 
