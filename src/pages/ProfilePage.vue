@@ -128,7 +128,7 @@ const onLogout = () => {
 </script>
 <style scoped lang="scss">
 .k-index-page {
-  @apply tw-flex tw-flex-col tw-min-h-[90vh] tw-justify-between;
+  @apply tw-justify-between;
   &::before {
     background: url('~assets/images/home-background.svg');
     @apply tw-content-['-'] tw-absolute tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain tw-text-surface tw-inset-0 tw-top-0;
