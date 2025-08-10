@@ -2,80 +2,142 @@
   <k-page padding="normal" class="bg-body-base tw-min-h-screen">
     <k-toolbar header-title="Inventory Stock Movement" @back="handleBack" />
 
+    <!-- HEADER -->
     <div class="tw-flex tw-flex-col tw-space-y-2 tw-my-2">
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-4">{{ t('product') }}</div>
-        <div class="tw-col-span-8">: {{ pageState.data?.item?.itemName }}</div>
-      </div>
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-4">{{ t('warehouse') }}</div>
-        <div class="tw-col-span-8">: {{ pageState.data?.locationWarehouse?.warehouseName }}</div>
-      </div>
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-4">{{ t('stock') }}</div>
-        <div class="tw-col-span-8">: {{ format(pageState.data?.currentQty, { precision: 0 }) }} pcs</div>
-      </div>
+      <!-- Loading Skeleton -->
+      <template v-if="stateHeader.isLoading">
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2" v-for="n in 3" :key="n">
+          <div class="tw-col-span-4"><q-skeleton type="text" width="80%" /></div>
+          <div class="tw-col-span-8"><q-skeleton type="text" width="100%" /></div>
+        </div>
+      </template>
+
+      <!-- Data -->
+      <template v-else>
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+          <div class="tw-col-span-4">{{ t('product') }}</div>
+          <div class="tw-col-span-8">: {{ stateHeader.data?.item?.itemName }}</div>
+        </div>
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+          <div class="tw-col-span-4">{{ t('warehouse') }}</div>
+          <div class="tw-col-span-8">: {{ stateHeader.data?.locationWarehouse?.warehouseName }}</div>
+        </div>
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+          <div class="tw-col-span-4">{{ t('stock') }}</div>
+          <div class="tw-col-span-8">: {{ format(stateHeader.data?.currentQty, { precision: 0 }) }} pcs</div>
+        </div>
+      </template>
     </div>
 
+    <!-- MOVEMENT LIST -->
     <div class="tw-flex tw-flex-col tw-my-2 tw-space-y-2">
-      <k-card v-for="(stock, index) in state.items" :key="index">
-        <q-card-section>
-          <div class="tw-flex tw-items-center tw-justify-between">
-            <span class="tw-text-secondary tw-text-lg"
-              >{{ stock?.locationWarehouse?.warehouseCode }}-{{ stock?.movementType }}-{{ stock?.item?.skuCode }}</span
-            >
-            <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
-          </div>
-        </q-card-section>
+      <!-- Skeleton Loading -->
+      <template v-if="state.isLoading && !state.items.length">
+        <k-card v-for="n in 3" :key="n">
+          <!-- HEADER -->
+          <q-card-section>
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <q-skeleton type="text" width="60%" height="16px" />
+              <q-skeleton type="text" width="30%" height="14px" />
+            </div>
+          </q-card-section>
 
-        <q-separator dark></q-separator>
+          <q-separator dark />
 
-        <q-card-section>
-          <div class="tw-flex tw-flex-col tw-space-y-4">
-            <div class="tw-basis-full">
-              <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-                <div class="tw-col-span-3">
-                  <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                    <span class="tw-text-secondary-text tw-text-xs">Adjustment</span>
-                    <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
-                  </div>
-                </div>
-
-                <div class="tw-col-span-3">
-                  <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                    <span class="tw-text-secondary-text tw-text-xs">Last Balance</span>
-                    <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
-                  </div>
-                </div>
-
-                <div class="tw-col-span-3">
-                  <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                    <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
-                    <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
-                  </div>
-                </div>
-
-                <div class="tw-col-span-3">
-                  <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                    <span class="tw-text-secondary-text tw-text-xs">New Balance</span>
-                    <span>-</span>
+          <!-- BODY -->
+          <q-card-section>
+            <div class="tw-flex tw-flex-col tw-space-y-4">
+              <div class="tw-basis-full">
+                <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+                  <div v-for="i in 4" :key="i" class="tw-col-span-3">
+                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                      <q-skeleton type="text" width="70%" height="10px" />
+                      <q-skeleton type="text" width="40%" height="14px" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="tw-basis-full">
-              <div class="tw-flex tw-flex-col tw-space-y-4">
-                <span class="tw-text-secondary-text tw-text-xs">Remark</span>
-                <span>{{ stock?.referenceId || '-' }}</span>
+              <div class="tw-basis-full">
+                <div class="tw-flex tw-flex-col tw-space-y-4">
+                  <q-skeleton type="text" width="50%" height="10px" />
+                  <q-skeleton type="text" width="70%" height="12px" />
+                </div>
               </div>
             </div>
-          </div>
-        </q-card-section>
-      </k-card>
+          </q-card-section>
+        </k-card>
+      </template>
+
+      <!-- No Data -->
+      <template v-else-if="!state.isLoading && !state.items.length">
+        <div class="tw-text-center tw-text-secondary-text tw-my-4">
+          {{ t('noData') }}
+        </div>
+      </template>
+
+      <!-- Data -->
+      <template v-else>
+        <k-card v-for="(stock, index) in state.items" :key="index">
+          <q-card-section>
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <span class="tw-text-secondary tw-text-lg">
+                {{ stock?.locationWarehouse?.warehouseCode }}-{{ stock?.movementType }}-{{ stock?.item?.skuCode }}
+              </span>
+              <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
+            </div>
+          </q-card-section>
+
+          <q-separator dark />
+
+          <q-card-section>
+            <div class="tw-flex tw-flex-col tw-space-y-4">
+              <div class="tw-basis-full">
+                <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+                  <div class="tw-col-span-3">
+                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                      <span class="tw-text-secondary-text tw-text-xs">Adjustment</span>
+                      <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
+                    </div>
+                  </div>
+
+                  <div class="tw-col-span-3">
+                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                      <span class="tw-text-secondary-text tw-text-xs">Last Balance</span>
+                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
+                    </div>
+                  </div>
+
+                  <div class="tw-col-span-3">
+                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                      <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
+                      <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
+                    </div>
+                  </div>
+
+                  <div class="tw-col-span-3">
+                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                      <span class="tw-text-secondary-text tw-text-xs">New Balance</span>
+                      <span>-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tw-basis-full">
+                <div class="tw-flex tw-flex-col tw-space-y-4">
+                  <span class="tw-text-secondary-text tw-text-xs">Remark</span>
+                  <span>{{ stock?.referenceId || '-' }}</span>
+                </div>
+              </div>
+            </div>
+          </q-card-section>
+        </k-card>
+      </template>
     </div>
   </k-page>
 </template>
+
 <script setup lang="ts">
 import KPage from 'src/components/lib/KPage.vue'
 import KToolbar from 'src/components/ui/KToolbar.vue'
@@ -108,7 +170,7 @@ const locationWarehouseParams = computed(() => params.value?.locationWarehouseId
 
 const itemParams = computed(() => params.value?.itemId)
 
-const pageState = reactive<ResponseState<StockCardLocationWarehouseResponse>>({
+const stateHeader = reactive<ResponseState<StockCardLocationWarehouseResponse>>({
   isLoading: false,
   data: null,
   errorMessage: null,
@@ -164,13 +226,14 @@ const fetchData = async () => {
   try {
     const locationWarehouseId = locationWarehouseParams.value as id
     const itemId = itemParams.value as id
-    pageState.isLoading = true
-    pageState.errorMessage = null
+    stateHeader.isLoading = true
+    state.isLoading = true
+    stateHeader.errorMessage = null
     if (!locationWarehouseId && !itemId) throw new Error('Invalid Params')
 
     const response = await stockCardRepository.locationWarehouseItem({ itemId, locationWarehouseId })
 
-    pageState.data = response
+    stateHeader.data = response
 
     loadMore(true)
   } catch (error) {
@@ -179,7 +242,7 @@ const fetchData = async () => {
     })
   }
   {
-    pageState.isLoading = false
+    stateHeader.isLoading = false
   }
 }
 
