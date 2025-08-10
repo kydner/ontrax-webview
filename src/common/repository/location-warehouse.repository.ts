@@ -12,7 +12,7 @@ export const useLocationWarehouseRepository = defineRepository({
   getAll: (params?: LocationWarehouseRequestPage) =>
     withRepository(
       () => {
-        return warehouseEndpoint.getAll({ size: 800, ...params })
+        return warehouseEndpoint.getPage({ page: 1, size: 800, ...params })
       },
       (response) => {
         return response.content
