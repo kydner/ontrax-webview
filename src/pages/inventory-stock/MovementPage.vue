@@ -97,21 +97,21 @@
                   <div class="tw-col-span-3">
                     <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
                       <span class="tw-text-secondary-text tw-text-xs">Adjustment</span>
-                      <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
+                      <span>{{ stock?.movementType?.toUpperCase() }}</span>
                     </div>
                   </div>
 
                   <div class="tw-col-span-3">
                     <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
                       <span class="tw-text-secondary-text tw-text-xs">Last Balance</span>
-                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
+                      <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
                     </div>
                   </div>
 
                   <div class="tw-col-span-3">
                     <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
                       <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
-                      <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
+                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
                     </div>
                   </div>
 
