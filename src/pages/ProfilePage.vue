@@ -1,7 +1,7 @@
 <template>
-  <k-page padding="normal" class="k-index-page tw-flex tw-flex-col tw-h-full">
+  <k-page padding="normal" class="k-profile-page">
     <!-- Konten utama -->
-    <div class="tw-flex-1 tw-flex tw-flex-col">
+    <div class="tw-flex-1 tw-flex tw-flex-col tw-min-h-[90vh]">
       <!-- Toolbar -->
       <k-toolbar :header-title="t('myProfile')" @back="router.push({ name: 'home' })" />
 
@@ -137,8 +137,8 @@ const onLogout = () => {
 }
 </script>
 <style scoped lang="scss">
-.k-index-page {
-  @apply tw-justify-between;
+.k-profile-page {
+  @apply tw-flex tw-flex-col tw-justify-between tw-h-screen;
   &::before {
     background: url('~assets/images/home-background.svg');
     @apply tw-content-['-'] tw-absolute tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain tw-text-surface tw-inset-0 tw-top-0;
