@@ -37,7 +37,9 @@
                   :true-value="true"
                   :false-value="false"
                   class="tw-mr-2"
-                  color="secondary"
+                  checked-icon="img:/icons/rectangle-checked.svg"
+                  unchecked-icon="img:/icons/rectangle-unchecked.svg"
+                  color="grey"
                 />
                 <product-image />
                 <div class="tw-basis-auto">
