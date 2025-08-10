@@ -20,7 +20,7 @@
       <!-- Other left component -->
       <slot name="other-left">
         <q-btn-dropdown icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0">
-          <q-list dark bordered>
+          <q-list dark flat :bordered="false">
             <q-item
               v-for="status in statuses"
               :key="status"
