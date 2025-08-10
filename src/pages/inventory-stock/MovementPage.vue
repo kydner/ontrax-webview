@@ -127,7 +127,7 @@
               <div class="tw-basis-full">
                 <div class="tw-flex tw-flex-col tw-space-y-4">
                   <span class="tw-text-secondary-text tw-text-xs">Remark</span>
-                  <span>{{ stock?.referenceId || '-' }}</span>
+                  <span>{{ stock?.notes || '-' }}</span>
                 </div>
               </div>
             </div>
