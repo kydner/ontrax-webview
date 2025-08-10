@@ -23,6 +23,7 @@ export interface StockCardResponse {
   updatedDate: isoDate
   createdBy: string
   updatedBy: string
+  unit: string
   locationWarehouse: Pick<LocationWarehouseResponse, 'locationWarehouseId' | 'warehouseName' | 'warehouseCode'>
   item: {
     itemId: id

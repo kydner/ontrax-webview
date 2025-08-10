@@ -24,7 +24,9 @@
         </div>
         <div class="tw-grid tw-grid-cols-12 tw-gap-2">
           <div class="tw-col-span-4">{{ t('stock') }}</div>
-          <div class="tw-col-span-8">: {{ format(stateHeader.data?.currentQty, { precision: 0 }) }} pcs</div>
+          <div class="tw-col-span-8">
+            : {{ format(stateHeader.data?.availableQty, { precision: 0 }) }} {{ stateHeader?.data?.unit || 'pcs' }}
+          </div>
         </div>
       </template>
     </div>

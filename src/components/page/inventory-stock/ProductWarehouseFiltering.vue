@@ -47,7 +47,7 @@
           <div class="tw-col-span-12">
             <div class="tw-flex tw-items-center tw-justify-between tw-px-2">
               <div class="tw-text-lg">{{ stock?.skuCode }} - {{ stock?.itemName }}</div>
-              <div class="tw-text-lg">{{ format(stock?.totalCurrentQty, { precision: 0 }) }}</div>
+              <div class="tw-text-lg">{{ format(stock?.totalAvailableQty, { precision: 0 }) }}</div>
             </div>
             <q-separator spaced="0.25rem" dark></q-separator>
           </div>
