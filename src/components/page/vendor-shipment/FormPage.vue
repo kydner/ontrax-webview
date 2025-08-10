@@ -100,7 +100,6 @@
       borderless
       horizontal-align="base"
       horizontal-label
-      required
       :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
