@@ -68,7 +68,6 @@ import { computed, onMounted, reactive, ref, VNode } from 'vue'
 import KListTable, { KListTableSlots } from './KListTable.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { MetaService } from 'src/common/services/meta.service'
-import { Notify } from 'src/common/utils/plugin.utils'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { useI18n } from 'vue-i18n'
 import { bus } from 'src/common/event-bus'
@@ -116,7 +115,7 @@ const loadMore = async <T extends any[]>(reset = false) => {
     state.errorMessage = null
     const repository = await metaService.repository()
     if (repository.getPage) {
-      const data = await repository.getPage({ page: state.page, size: state.size, ...props.payload })
+      const data = await repository.getPage({ ...props.payload, page: state.page })
       const content = data.content
       state.totalPages = data.totalPages
       state.items.push(...(content as T))
@@ -130,9 +129,6 @@ const loadMore = async <T extends any[]>(reset = false) => {
   } catch (error) {
     const currentErrorMessage = getErrorMessage(error as Error)
     state.errorMessage = currentErrorMessage
-    Notify.error({
-      message: error as Error,
-    })
   } finally {
     state.isLoading = false
     if (isFirstLoading.value) {
@@ -144,6 +140,7 @@ const loadMore = async <T extends any[]>(reset = false) => {
 const resetLoad = () => {
   state.items = []
   state.hasMore = true
+  state.page = (props.payload as { page: number })?.page || 1
 }
 
 onMounted(() => {
