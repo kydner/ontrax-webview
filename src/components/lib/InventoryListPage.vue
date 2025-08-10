@@ -43,7 +43,7 @@
         </div>
 
         <div class="target-section-operational__list tw-col-span-12">
-          <component :is="component" :payload="{ ...request }" />
+          <component :is="component" :key="componentKey" :payload="{ ...request }" />
         </div>
       </div>
     </slot>
@@ -80,6 +80,8 @@ const { t } = useI18n()
 
 const component = ref<Component | null>(null)
 
+const componentKey = ref(0)
+
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
@@ -99,6 +101,8 @@ const handleFilter = async () => {
       loader: () => import('../page/inventory-stock/ProductWarehouseFiltering.vue'),
     })
   }
+
+  componentKey.value++
   await nextTick()
   setTimeout(() => {
     scrollToClass('.target-section-operational__list')
