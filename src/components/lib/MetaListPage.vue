@@ -16,6 +16,8 @@ import { useRouter } from 'vue-router'
 import KPage from './KPage.vue'
 import { VNode } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
+import { Loading } from 'quasar'
+import { nextTick } from 'vue'
 interface Props<T> {
   meta: IMetaListModule<T>
   class?: string
@@ -39,7 +41,13 @@ defineSlots<Slots<T>>()
 
 const router = useRouter()
 
-const handleBack = () => {
-  router.push('/')
+const handleBack = async () => {
+  try {
+    Loading.show()
+    router.push('/')
+  } finally {
+    await nextTick()
+    Loading.hide()
+  }
 }
 </script>

@@ -5,7 +5,7 @@
       :key="item.name"
       v-ripple
       class="tw-relative tw-rounded-base tw-bg-overlay tw-col-span-6 tw-py-4 tw-px-1 tw-cursor-pointer"
-      @click="router.push(item.page)"
+      @click="handleTo(item)"
     >
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
         <q-icon text-color="primary" size="80px" :name="`img:/icons/menu/${item.icon}.svg`" />
@@ -15,7 +15,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Loading } from 'quasar'
 import { UserMenu } from 'src/common/model/profile.model'
+import { Notify } from 'src/common/utils/plugin.utils'
+import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 
 interface Props {
@@ -25,4 +28,18 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {})
 
 const router = useRouter()
+
+const handleTo = async (item: UserMenu) => {
+  try {
+    Loading.show()
+    await router.push(item.page)
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    await nextTick()
+    Loading.hide()
+  }
+}
 </script>
