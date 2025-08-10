@@ -52,6 +52,13 @@
           @rejected="handleRejected"
           @clear="handleClear"
         >
+          <!-- Placeholder custom -->
+          <span
+            v-if="!selectedFile || !props.modelValue"
+            class="tw-absolute tw-left-0 tw-top-1/2 -tw-translate-y-1/2 tw-text-disable-text tw-pointer-events-none"
+          >
+            {{ currentPlaceholder }}
+          </span>
           <!-- prettier-ignore -->
           <template v-for="(_, slotName) in ($slots as unknown)" #[slotName] :key="slotName">
             <slot :name="slotName" />
