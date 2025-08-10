@@ -47,6 +47,7 @@ import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 
 const TAB_SEND = 'send'
 
@@ -74,12 +75,14 @@ interface Slots<T> {
 const SendListPage = computed(() =>
   defineAsyncComponent({
     loader: () => import(`src/components/page/${props.meta.name}/send/ListPage.vue`),
+    errorComponent: ErrorNotFound,
   }),
 )
 
 const QualityControlListPage = computed(() =>
   defineAsyncComponent({
     loader: () => import(`src/components/page/${props.meta.name}/quality-control/ListPage.vue`),
+    errorComponent: ErrorNotFound,
   }),
 )
 

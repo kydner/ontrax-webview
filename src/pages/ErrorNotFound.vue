@@ -3,7 +3,7 @@
     <div>
       <k-lottie animation-link="/lotties/error_404.json" auto-play loop renderer="svg" />
 
-      <q-btn class="q-mt-xl" color="primary" text-color="white" unelevated to="/" label="Go Home" no-caps />
+      <q-btn class="q-mt-xl" color="secondary" text-color="white" unelevated to="/" label="Go Home" no-caps />
     </div>
   </div>
 </template>
