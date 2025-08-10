@@ -38,7 +38,7 @@
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section
         v-if="dialogIndex !== null && dialogIndex !== undefined"
-        class="tw-flex tw-flex-col tw-space-y-2 tw-pt-2"
+        class="tw-flex tw-flex-col tw-space-y-2 tw-pt-4"
       >
         <k-card>
           <q-card-section class="tw-p-2">

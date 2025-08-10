@@ -54,7 +54,7 @@
         >
           <!-- Placeholder custom -->
           <span
-            v-if="!selectedFile || !props.modelValue"
+            v-if="!(selectedFile || props.modelValue)"
             class="tw-absolute tw-left-0 tw-top-1/2 -tw-translate-y-1/2 tw-text-disable-text tw-pointer-events-none"
           >
             {{ currentPlaceholder }}
@@ -185,7 +185,8 @@ watch(selectedFile, async (file) => {
 
   try {
     const data = await uploadRepository.upload(file, props.payload)
-    console.log(data)
+    // const x = await uploadRepository.getOne(data.fileId)
+    // console.log(data, x)
     emit('update:model-value', data.fileId)
   } catch (err) {
     console.error('Upload failed:', err)
