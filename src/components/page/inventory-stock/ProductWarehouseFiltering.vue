@@ -47,7 +47,7 @@
           <div class="tw-col-span-12">
             <div class="tw-flex tw-items-center tw-justify-between tw-px-2">
               <div class="tw-text-lg">{{ stock?.skuCode }} - {{ stock?.itemName }}</div>
-              <div class="tw-text-lg">{{ stock?.totalCurrentQty }}</div>
+              <div class="tw-text-lg">{{ format(stock?.totalCurrentQty, { precision: 0 }) }}</div>
             </div>
             <q-separator spaced="0.25rem" dark></q-separator>
           </div>
@@ -69,7 +69,7 @@
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-4">
                       <div class="tw-basis-auto">
                         <div class="tw-flex tw-items-center tw-justify-between tw-space-x-2">
-                          <span>{{ warehouse.currentQty }}</span>
+                          <span>{{ format(warehouse.currentQty, { precision: 0 }) }}</span>
                           <span class="tw-text-secondary-text">{{ stock?.unit?.toLowerCase() }}</span>
                         </div>
                       </div>
@@ -97,6 +97,7 @@ import {
   StockCardAggregationResponsePage,
 } from 'src/common/model/stock-card-aggregation.model'
 import { useStockCardRepository } from 'src/common/repository/stock-card.repository'
+import { format } from 'src/common/utils/converter.utils'
 import { Notify } from 'src/common/utils/plugin.utils'
 import KCard from 'src/components/ui/KCard.vue'
 import { onMounted, reactive } from 'vue'

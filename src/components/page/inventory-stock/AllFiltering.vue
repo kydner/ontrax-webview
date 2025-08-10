@@ -61,7 +61,7 @@
                 <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
                   <div class="tw-basis-auto">
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                      <span>{{ stock?.currentQty }}</span>
+                      <span>{{ format(stock?.currentQty, { precision: 0 }) }}</span>
                       <span class="tw-text-secondary-text">{{ 'unit'?.toLowerCase() }}</span>
                     </div>
                   </div>
@@ -88,6 +88,7 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
 import { id } from 'src/common/interfaces/response.interface'
 import { StockCardResponsePage } from 'src/common/model/stock-card.model'
+import { format } from 'src/common/utils/converter.utils'
 
 const { t } = useI18n()
 
