@@ -1,5 +1,8 @@
 import { StockCardAggregationRequest, StockCardAggregationResponse } from '../model/stock-card-aggregation.model'
-import { StockCardLocationWarehouseRequest } from '../model/stock-card-location-warehouse.model'
+import {
+  StockCardLocationWarehouseRequest,
+  StockCardLocationWarehouseResponse,
+} from '../model/stock-card-location-warehouse.model'
 import { StockCardLowStockRequest, StockCardLowStockResponse } from '../model/stock-card-low-stock.model'
 import { StockCardSearchRequest, StockCardSearchResponse } from '../model/stock-card-search.model'
 import { StockCardWarehouseRequest } from '../model/stock-card-warehouse.model'
@@ -18,7 +21,7 @@ export const useStockCardEndpoint = defineEndpoint({
     const params = { ...currentParams } as Partial<StockCardLocationWarehouseRequest>
     delete params.locationWarehouseId
     delete params.itemId
-    return Get(`stock-cards/${locationWarehouseId}/${itemId}`, {
+    return Get<StockCardLocationWarehouseResponse>(`stock-cards/${locationWarehouseId}/${itemId}`, {
       params,
     })
   },

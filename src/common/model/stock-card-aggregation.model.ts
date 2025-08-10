@@ -1,5 +1,4 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
-import { StockCardDataRequest, StockCardResponse } from './stock-card.model'
 
 export interface StockCardAggregationRequest extends IListSortingRequest {
   itemIds?: id[]
@@ -8,7 +7,7 @@ export interface StockCardAggregationRequest extends IListSortingRequest {
 
 export type StockCardAggregationRequestPage = IPaginationRequest & StockCardAggregationRequest
 
-export interface StockCardAggregationResponse extends StockCardResponse {
+export interface StockCardAggregationResponse {
   itemId: id
   skuCode: string
   itemName: string
@@ -30,4 +29,4 @@ export interface StockCardAggregationResponse extends StockCardResponse {
 
 export interface StockCardAggregationResponsePage extends StockCardAggregationResponse {}
 
-export interface StockCardAggregationDataRequest extends StockCardDataRequest {}
+export interface StockCardAggregationDataRequest {}

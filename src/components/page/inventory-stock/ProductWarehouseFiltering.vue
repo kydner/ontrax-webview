@@ -139,6 +139,8 @@ const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = fa
     console.log('lll')
     const data = await stockRepository.aggregation({
       ...props.payload,
+      page: state.page,
+      size: 10,
       itemIds: props.payload.itemIds || undefined,
       warehouseIds: props.payload.warehouseIds || undefined,
     })
@@ -163,6 +165,7 @@ const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = fa
 const resetLoad = () => {
   state.items = []
   state.hasMore = true
+  state.page = 1
 }
 
 onMounted(() => {

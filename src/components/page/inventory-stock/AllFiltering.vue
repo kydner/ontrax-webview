@@ -38,15 +38,21 @@
 
       <!-- DATA LIST -->
       <template v-else>
-        <k-card v-for="(stock, index) in state.items" :key="index" v-ripple @click="handleDetailPage">
+        <k-card
+          v-for="(stock, index) in state.items"
+          :key="index"
+          v-ripple
+          class="tw-cursor-pointer"
+          @click="handleDetailPage(stock.locationWarehouseId, stock.itemId)"
+        >
           <q-card-section class="tw-p-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-space-x-2">
                 <q-img src="~assets/images/product-example.svg" no-spinner width="40px" height="40px" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ stock?.skuCode }}</span>
-                    <span>{{ stock?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ stock?.item?.skuCode }}</span>
+                    <span>{{ stock?.item?.itemName }}</span>
                   </div>
                 </div>
               </div>
@@ -55,8 +61,8 @@
                 <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
                   <div class="tw-basis-auto">
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                      <span>{{ stock?.totalCurrentQty }}</span>
-                      <span class="tw-text-secondary-text">{{ stock?.unit?.toLowerCase() }}</span>
+                      <span>{{ stock?.currentQty }}</span>
+                      <span class="tw-text-secondary-text">{{ 'unit'?.toLowerCase() }}</span>
                     </div>
                   </div>
                   <div>
@@ -80,7 +86,8 @@ import { useStockCardRepository } from 'src/common/repository/stock-card.reposit
 import { onMounted, reactive } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
-import { StockCardAggregationResponsePage } from 'src/common/model/stock-card-aggregation.model'
+import { id } from 'src/common/interfaces/response.interface'
+import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 
 const { t } = useI18n()
 
@@ -89,29 +96,27 @@ const router = useRouter()
 const stockRepository = useStockCardRepository()
 
 const state = reactive({
-  items: [] as StockCardAggregationResponsePage[],
+  items: [] as StockCardResponsePage[],
   isLoading: false,
   hasMore: true,
   errorMessage: null as string | null,
   size: 10,
-  page: 1,
+  page: 0,
   totalPages: 1,
 })
 
-const handleDetailPage = () => {
-  router.push({
-    name: `${InventoryStock.name}-filter-detail`,
-  })
+const handleDetailPage = (locationWarehouseId: id, itemId: id) => {
+  router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
 }
 
-const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {
+const loadMore = async <T extends StockCardResponsePage[]>(reset = false) => {
   if (reset) resetLoad()
   try {
     if (state.isLoading || !state.hasMore) return
     state.isLoading = true
     state.errorMessage = null
     console.log('lll')
-    const data = await stockRepository.aggregation()
+    const data = await stockRepository.getPage({ page: state.page, size: 10 })
     const content = data.content
     state.totalPages = data.totalPages
     state.items.push(...(content as T))
@@ -133,6 +138,7 @@ const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = fa
 const resetLoad = () => {
   state.items = []
   state.hasMore = true
+  state.page = 1
 }
 
 onMounted(() => {

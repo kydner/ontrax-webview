@@ -4,7 +4,7 @@ import { defineEndpoint } from '../utils/plugin.utils'
 
 export const useStockMovementEndpoint = defineEndpoint({
   getPage: (params: StockMovementRequestPage) =>
-    GetPage<StockMovementResponsePage>('clients/page', {
+    GetPage<StockMovementResponsePage>('stock-movement/page', {
       params,
     }),
 })
