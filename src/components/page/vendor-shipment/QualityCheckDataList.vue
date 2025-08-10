@@ -30,7 +30,7 @@
   </div>
 
   <!-- Single Dialog reused for all items -->
-  <q-dialog v-model="isDialogOpen" dark>
+  <q-dialog v-model="isDialogOpen" dark no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section
         v-if="dialogIndex !== null && dialogIndex !== undefined"
@@ -66,8 +66,8 @@
         />
       </q-card-section>
 
-      <q-card-actions align="right" class="tw-py-0">
-        <q-btn flat :label="t('close')" color="primary" v-close-popup @click="dialogIndex = null" />
+      <q-card-actions align="right">
+        <q-btn :label="t('save')" color="secondary" dense v-close-popup @click="dialogIndex = null" />
       </q-card-actions>
     </q-card>
   </q-dialog>

@@ -122,7 +122,7 @@ const handleInputChange = (value: number | string) => {
 
 <style scoped lang="scss">
 .plus-minus-field {
-  @apply tw-border-2 tw-border-disable-text tw-rounded tw-flex tw-items-center tw-h-8;
+  @apply tw-border tw-border-disable-text tw-rounded tw-flex tw-items-center tw-h-8;
 
   .btn {
     @apply tw-h-8 tw-min-h-0 tw-px-3 tw-text-xs tw-py-0;
@@ -134,7 +134,7 @@ const handleInputChange = (value: number | string) => {
   }
 
   .input {
-    @apply tw-border-l-2 tw-border-r-2 tw-border-disable-text tw-w-14 tw-h-8 tw-px-1 tw-bg-transparent tw-text-right;
+    @apply tw-border-l tw-border-r tw-border-disable-text tw-w-14 tw-h-8 tw-px-1 tw-bg-transparent tw-text-right;
 
     :deep(.q-field__control),
     :deep(.q-field__native),
