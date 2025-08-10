@@ -150,8 +150,20 @@ module.exports = configure(function (ctx) {
     framework: {
       config: {
         dark: true,
+
+        brand: {
+          base: '#0C0C0F',           // --color-base
+          surface: '#1F1F23',        // --color-surface
+          overlay: '#2A2A2E',        // --color-overlay
+          border: '#2C2C30',         // --color-border
+          inactive: '#7A7A80',       // --color-inactive
+          active: '#4A90E2',         // --color-active
+          line: '#393944',           // --color-line
+          'secondary-text': '#B0B0B5',  // --color-secondary-text
+          'disable-text': '#66666B'     // --color-disable-text
+        },
         loading: {
-          boxClass: 'bg-blue-grey-10 text-grey-1',
+          boxClass: 'bg-overlay text-grey-1',
           spinnerColor: 'primary',
           spinnerSize: 60,
         },
@@ -159,6 +171,7 @@ module.exports = configure(function (ctx) {
           color: 'primary',
           size: '3px',
         },
+
       },
 
       iconSet: 'material-icons', // Quasar icon set
