@@ -24,7 +24,7 @@
         :key="index"
         dark
         flat
-        class="tw-bg-overlay tw-rounded-base tw-col-span-12"
+        class="gradient-card tw-bg-overlay tw-rounded-base tw-col-span-12"
       >
         <q-card-section>
           <slot name="list:content" :item="{ ...(item || {}) }" :loading="loading">
@@ -69,3 +69,5 @@ const { t } = useI18n()
 const scrollContainer = ref<HTMLElement | null>(null)
 defineExpose({ scrollContainer })
 </script>
+
+<style scoped lang="scss"></style>

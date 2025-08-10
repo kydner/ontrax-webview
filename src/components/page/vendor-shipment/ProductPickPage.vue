@@ -28,7 +28,7 @@
       </div>
       <div v-else>
         <k-card v-for="product in filteredProducts" :key="product.itemId" class="tw-my-2">
-          <q-card-section class="tw-p-2">
+          <q-card-section class="tw-p-2 tw-py-0">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-justify-between tw-space-x-2">
                 <q-checkbox
@@ -39,7 +39,7 @@
                   class="tw-mr-2"
                   color="secondary"
                 />
-                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" height="40px" />
+                <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
@@ -56,6 +56,7 @@
                 />
               </div>
             </div>
+            <q-separator dark spaced></q-separator>
           </q-card-section>
         </k-card>
       </div>
@@ -81,6 +82,8 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
 import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
 import { useI18n } from 'vue-i18n'
+import ProductImage from 'src/components/lib/ProductImage.vue'
+
 interface Props {
   modelValue: VendorShipmentResponse
 }

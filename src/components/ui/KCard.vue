@@ -15,7 +15,8 @@ interface Props extends QCardProps {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  flat: false,
+  flat: true,
+  bordered: false,
 })
 
 defineSlots<QCardSlots>()

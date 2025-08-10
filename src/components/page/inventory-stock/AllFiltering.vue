@@ -48,7 +48,7 @@
           <q-card-section class="tw-p-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-space-x-2">
-                <q-img src="~assets/images/product-example.svg" no-spinner width="40px" height="40px" />
+                <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ stock?.item?.skuCode }}</span>
@@ -89,6 +89,7 @@ import { bus } from 'src/common/event-bus'
 import { id } from 'src/common/interfaces/response.interface'
 import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 import { format } from 'src/common/utils/converter.utils'
+import ProductImage from 'src/components/lib/ProductImage.vue'
 
 const { t } = useI18n()
 
