@@ -105,6 +105,8 @@ import { watch } from 'vue'
 import { ref } from 'vue'
 import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
 import { FileUploadRequest } from 'src/common/model/file-upload.model'
+import { useForm } from 'vee-validate'
+import { getErrorMessage } from 'src/common/utils/error.utils'
 
 export interface KInputProps extends KLabelProps {
   modelValue: id | null
@@ -146,6 +148,8 @@ const props = withDefaults(defineProps<KInputProps>(), {
   unmaskedValue: true,
   clearIcon: 'highlight_off',
   dark: true,
+  accept:
+    'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,zip,application/zip,application/x-zip-compressed,application/x-rar-compressed,application/vnd.rar',
 })
 
 const emit = defineEmits<KInputEmits>()
@@ -157,6 +161,10 @@ const { t } = useI18n()
 const uploadRepository = useFileUploadRepository()
 
 const currentFor = computed(() => props.for || props.label)
+
+const { setFieldError } = useForm()
+
+const uploadError = ref<string | null>(null)
 
 const currentPlaceholder = computed(() => {
   if (props.labelInput) return null
@@ -187,9 +195,12 @@ watch(selectedFile, async (file) => {
     const data = await uploadRepository.upload(file, props.payload)
     // const x = await uploadRepository.getOne(data.fileId)
     // console.log(data, x)
+
     emit('update:model-value', data.fileId)
-  } catch (err) {
-    console.error('Upload failed:', err)
+  } catch (error) {
+    const message = getErrorMessage(error as Error)
+    uploadError.value = message
+    setFieldError(props.name || props.tLabel, message)
     emit('update:model-value', null)
   } finally {
     uploading.value = false
