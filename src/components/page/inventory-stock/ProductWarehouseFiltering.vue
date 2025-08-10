@@ -58,7 +58,7 @@
               :key="index"
               class="tw-my-2 tw-cursor-pointer"
               v-ripple
-              @click="handleDetailPage"
+              @click="handleDetailPage(warehouse.locationWarehouseId, stock.itemId)"
             >
               <q-card-section class="tw-px-2">
                 <div class="tw-flex tw-items-center tw-justify-between">
@@ -91,6 +91,7 @@
 <script setup lang="ts">
 import { InventoryStock } from 'src/common/constants/meta.constant'
 import { bus } from 'src/common/event-bus'
+import { id } from 'src/common/interfaces/response.interface'
 import {
   StockCardAggregationRequest,
   StockCardAggregationResponsePage,
@@ -124,10 +125,8 @@ const state = reactive({
   totalPages: 1,
 })
 
-const handleDetailPage = () => {
-  router.push({
-    name: `${InventoryStock.name}-filter-detail`,
-  })
+const handleDetailPage = (locationWarehouseId: id, itemId: id) => {
+  router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
 }
 
 const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {
