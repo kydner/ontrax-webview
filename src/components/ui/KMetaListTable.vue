@@ -1,5 +1,6 @@
 <template>
   <k-list-table
+    v-if="!isFirstLoading"
     :items="mappedItems"
     :loading="state.isLoading"
     :error="state.errorMessage"
@@ -12,7 +13,7 @@
     </template>
     <!-- end-prettier-ignore -->
 
-    <!-- Tambahan slot after untuk loading dan noMoreItems -->
+    <!-- Slot after untuk loadMore -->
     <template #after>
       <div v-if="state.isLoading" class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-4 tw-text-secondary">
         {{ t('loadMore') }}...
@@ -25,10 +26,45 @@
       </div>
     </template>
   </k-list-table>
+
+  <!-- Skeleton hanya saat loading pertama -->
+  <div v-else-if="isFirstLoading" class="tw-p-4">
+    <div
+      v-for="n in state.size"
+      :key="n"
+      class="tw-flex tw-items-start tw-justify-between tw-cursor-pointer tw-py-3 tw-border-b tw-border-gray-200"
+    >
+      <div class="tw-basis-6/12">
+        <div class="tw-flex tw-flex-col tw-space-y-2">
+          <!-- Nomor receive -->
+          <q-skeleton type="text" width="100px" height="16px" />
+
+          <!-- Vendor + Shipping Date -->
+          <div class="tw-flex tw-flex-col tw-space-y-1">
+            <div class="tw-flex tw-items-center tw-space-x-2">
+              <q-icon name="person" color="grey-5" />
+              <q-skeleton type="text" width="80px" height="12px" />
+            </div>
+            <div class="tw-flex tw-items-center tw-space-x-2">
+              <q-icon name="calendar_today" color="grey-5" />
+              <q-skeleton type="text" width="80px" height="12px" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tw-basis-6/12">
+        <div class="tw-flex tw-flex-col tw-items-end tw-justify-end tw-space-y-2">
+          <q-skeleton type="text" width="60px" height="14px" />
+          <q-skeleton type="rect" width="90px" height="20px" class="tw-rounded-full" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts" generic="T, R">
-import { computed, onMounted, reactive, VNode } from 'vue'
+import { computed, onMounted, reactive, ref, VNode } from 'vue'
 import KListTable, { KListTableSlots } from './KListTable.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { MetaService } from 'src/common/services/meta.service'
@@ -53,6 +89,8 @@ const props = withDefaults(defineProps<KMetaListTableProps>(), {})
 defineSlots<KMetaListTableSlots>()
 
 const { t } = useI18n()
+
+const isFirstLoading = ref(true)
 
 const metaService = new MetaService(props.meta)
 
@@ -97,6 +135,9 @@ const loadMore = async <T extends any[]>(reset = false) => {
     })
   } finally {
     state.isLoading = false
+    if (isFirstLoading.value) {
+      isFirstLoading.value = false
+    }
   }
 }
 
