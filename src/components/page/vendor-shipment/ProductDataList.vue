@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-my-4">
+  <div class="tw-my-4 tw-min-h-[40vh]">
     <k-btn v-if="!isDisable" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="tw-my-2">

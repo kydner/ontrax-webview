@@ -26,6 +26,7 @@
         :model-value="props.modelValue"
       >
         <q-file
+          ref="fileInputRef"
           v-bind="{ ...props, name: field.name }"
           v-model="selectedFile"
           :for="props.for || props.label"
@@ -57,7 +58,7 @@
           </template>
           <!-- end-prettier-ignore -->
           <template #prepend>
-            <q-icon name="attach_file" class="tw-rotate-45" />
+            <q-icon name="attach_file" class="tw-rotate-45 tw-cursor-pointer" @click="openFileDialog" />
           </template>
 
           <template #append>
@@ -85,7 +86,7 @@
   </k-label>
 </template>
 <script setup lang="ts">
-import { QFileProps, QFileSlots, QRejectedEntry } from 'quasar'
+import { QFile, QFileProps, QFileSlots, QRejectedEntry } from 'quasar'
 import { KLabelProps, KLabelSlots } from 'src/components/ui/KLabel.vue'
 import { computed } from 'vue'
 import { Field, RuleExpression } from 'vee-validate'
@@ -167,6 +168,8 @@ const currentRules = computed(() => {
 
 const selectedFile = ref<File | null>(null)
 
+const fileInputRef = ref<InstanceType<typeof QFile> | null>(null)
+
 const uploading = ref(false)
 
 watch(selectedFile, async (file) => {
@@ -193,5 +196,9 @@ const handleRejected = (entries: QRejectedEntry[]) => {
 
 const handleClear = () => {
   emit('update:model-value', null)
+}
+
+const openFileDialog = () => {
+  fileInputRef.value?.pickFiles()
 }
 </script>

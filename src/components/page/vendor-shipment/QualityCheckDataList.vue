@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-my-4">
+  <div class="tw-my-4 tw-min-h-[40vh]">
     <k-card v-for="(product, index) in qualityCheck.qcItems" :key="index" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
