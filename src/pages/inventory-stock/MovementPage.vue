@@ -82,7 +82,7 @@
           <q-card-section>
             <div class="tw-flex tw-items-center tw-justify-between">
               <span class="tw-text-secondary tw-text-lg">
-                {{ stock?.locationWarehouse?.warehouseCode }}-{{ stock?.movementType }}-{{ stock?.item?.skuCode }}
+                {{ stock?.movementNumber }}
               </span>
               <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
             </div>

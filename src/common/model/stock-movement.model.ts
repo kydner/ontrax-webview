@@ -13,6 +13,7 @@ export interface StockMovementResponse {
   stockMovementId: id
   referenceId: id
   movementType: 'IN' | 'OUT' | 'ADJUSTMENT'
+  movementNumber: string
   qtyBefore: number
   qtyChange: number
   qtyAfter: number
