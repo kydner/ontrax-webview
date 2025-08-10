@@ -119,7 +119,6 @@ const handleUpdate = async (data: { item: T }) => {
 <style scoped lang="scss">
 @use 'sass:math';
 
-$max-page-width: 480px;
 $half-page-width: math.div($max-page-width, 2);
 
 .inventory-add-button {
