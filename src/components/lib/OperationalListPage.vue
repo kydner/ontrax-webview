@@ -1,42 +1,44 @@
 <template>
-  <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base tw-h-screen">
-    <!-- prettier-ignore -->
-    <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
+  <scrollable-container>
+    <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base tw-h-screen">
+      <!-- prettier-ignore -->
+      <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
     </template>
-    <!-- end-prettier-ignore -->
+      <!-- end-prettier-ignore -->
 
-    <slot>
-      <q-card flat dark class="tw-bg-transparent">
-        <q-tabs
-          v-model="tab"
-          dense
-          class="logistic-tab-list text-grey"
-          active-color="grey-5"
-          indicator-color="grey-5"
-          align="justify"
-          no-caps
-          narrow-indicator
-        >
-          <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
-          <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
-        </q-tabs>
-        <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
-          <q-tab-panel :name="TAB_SEND" class="tw-px-0">
-            <component :is="SendListPage" @click:item="handleUpdate" />
-          </q-tab-panel>
+      <slot>
+        <q-card flat dark class="tw-bg-transparent">
+          <q-tabs
+            v-model="tab"
+            dense
+            class="logistic-tab-list text-grey"
+            active-color="grey-5"
+            indicator-color="grey-5"
+            align="justify"
+            no-caps
+            narrow-indicator
+          >
+            <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
+            <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
+          </q-tabs>
+          <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
+            <q-tab-panel :name="TAB_SEND" class="tw-px-0">
+              <component :is="SendListPage" @click:item="handleUpdate" />
+            </q-tab-panel>
 
-          <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
-            <component :is="QualityControlListPage" @click:item="handleUpdate" />
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card>
-    </slot>
+            <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
+              <component :is="QualityControlListPage" @click:item="handleUpdate" />
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card>
+      </slot>
 
-    <div class="inventory-add-button">
-      <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
-    </div>
-  </meta-list-page>
+      <div class="inventory-add-button">
+        <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
+      </div>
+    </meta-list-page>
+  </scrollable-container>
 </template>
 <script setup lang="ts" generic="T extends OperationalResponse">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
@@ -48,6 +50,7 @@ import { ref } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import ScrollableContainer from '../ui/ScrollableContainer.vue'
 
 const TAB_SEND = 'send'
 

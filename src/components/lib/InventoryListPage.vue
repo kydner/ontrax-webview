@@ -1,53 +1,55 @@
 <template>
-  <meta-list-page v-bind="{ ...props }" class="bg-body-base">
-    <!-- prettier-ignore -->
-    <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
+  <scrollable-container>
+    <meta-list-page v-bind="{ ...props }" class="bg-body-base">
+      <!-- prettier-ignore -->
+      <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
     </template>
-    <!-- end-prettier-ignore -->
+      <!-- end-prettier-ignore -->
 
-    <slot>
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-12">
-          <k-select-module
-            v-model="request.itemIds"
-            :filled="false"
-            outlined
-            t-label="product"
-            behavior="menu"
-            option-label="itemName"
-            option-value="itemId"
-            :meta="metaProduct"
-            :placeholder="t('all')"
-            multiple
-          />
-        </div>
+      <slot>
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+          <div class="tw-col-span-12">
+            <k-select-module
+              v-model="request.itemIds"
+              :filled="false"
+              outlined
+              t-label="product"
+              behavior="menu"
+              option-label="itemName"
+              option-value="itemId"
+              :meta="metaProduct"
+              :placeholder="t('all')"
+              multiple
+            />
+          </div>
 
-        <div class="tw-col-span-12">
-          <k-select-module
-            v-model="request.warehouseIds"
-            :filled="false"
-            outlined
-            t-label="warehouse"
-            behavior="menu"
-            option-label="warehouseName"
-            option-value="locationWarehouseId"
-            :meta="metaLocationWarehouse"
-            :placeholder="t('all')"
-            multiple
-          />
-        </div>
+          <div class="tw-col-span-12">
+            <k-select-module
+              v-model="request.warehouseIds"
+              :filled="false"
+              outlined
+              t-label="warehouse"
+              behavior="menu"
+              option-label="warehouseName"
+              option-value="locationWarehouseId"
+              :meta="metaLocationWarehouse"
+              :placeholder="t('all')"
+              multiple
+            />
+          </div>
 
-        <div class="tw-col-span-12 tw-my-2">
-          <k-btn color="secondary" :label="t('search')" class="fit" @click="handleFilter" />
-        </div>
+          <div class="tw-col-span-12 tw-my-2">
+            <k-btn color="secondary" :label="t('search')" class="fit" @click="handleFilter" />
+          </div>
 
-        <div class="target-section-operational__list tw-col-span-12">
-          <component :is="component" :key="componentKey" :payload="{ ...request }" />
+          <div class="target-section-operational__list tw-col-span-12">
+            <component :is="component" :key="componentKey" :payload="{ ...request }" />
+          </div>
         </div>
-      </div>
-    </slot>
-  </meta-list-page>
+      </slot>
+    </meta-list-page>
+  </scrollable-container>
 </template>
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
@@ -60,6 +62,7 @@ import { scrollToClass } from 'src/common/utils/plugin.utils'
 import { ProductResponsePage } from 'src/common/model/product.model'
 import { nextTick } from 'vue'
 import { StockCardAggregationRequest } from 'src/common/model/stock-card-aggregation.model'
+import ScrollableContainer from 'src/components/ui/ScrollableContainer.vue'
 
 interface Props {
   meta: IMetaListModule<T>
