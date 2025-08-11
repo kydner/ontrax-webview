@@ -34,13 +34,12 @@ onUnmounted(() => container.value?.removeEventListener('scroll', handleScroll))
 <style scoped lang="scss">
 .scrollable-container {
   @apply tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-overflow-y-auto;
-
   &:hover {
     overflow: auto;
   }
 
   &::-webkit-scrollbar {
-    @apply tw-w-2;
+    @apply tw-w-1 lg:tw-w-2;
   }
 
   &::-webkit-scrollbar-track {
