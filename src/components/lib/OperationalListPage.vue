@@ -110,11 +110,11 @@ const handleCreate = () => {
   })
 }
 
-const handleUpdate = async (data: ListContentEvent, path: 'send' | 'qc') => {
+const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'qc') => {
   try {
     const { item } = data
     const keyName = item[props.keyName]
-    const routeName = `${props.meta.name}-${path}-form-update`
+    const routeName = `${props.meta.name}-${routePath}-form-update`
     await router.push({
       name: routeName,
       params: {
