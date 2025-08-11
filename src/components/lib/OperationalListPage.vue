@@ -24,11 +24,14 @@
           </q-tabs>
           <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
             <q-tab-panel :name="TAB_SEND" class="tw-px-0">
-              <component :is="SendListPage" @click:item="handleUpdate" />
+              <component :is="SendListPage" @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')" />
             </q-tab-panel>
 
             <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
-              <component :is="QualityControlListPage" @click:item="handleUpdate" />
+              <component
+                :is="QualityControlListPage"
+                @click:item="(data: ListContentEvent) => handleUpdate(data, 'qc')"
+              />
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -55,6 +58,10 @@ import ScrollableContainer from '../ui/ScrollableContainer.vue'
 const TAB_SEND = 'send'
 
 const TAB_QUALITY_CONTROL = 'quality-control'
+
+interface ListContentEvent {
+  item: T
+}
 
 const { t } = useI18n()
 
@@ -103,12 +110,13 @@ const handleCreate = () => {
   })
 }
 
-const handleUpdate = async (data: { item: T }) => {
+const handleUpdate = async (data: ListContentEvent, path: 'send' | 'qc') => {
   try {
     const { item } = data
     const keyName = item[props.keyName]
+    const routeName = `${props.meta.name}-${path}-form-update`
     await router.push({
-      name: `${props.meta.name}-form-update`,
+      name: routeName,
       params: {
         id: keyName as string,
       },
