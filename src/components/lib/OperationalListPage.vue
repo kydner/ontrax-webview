@@ -24,14 +24,27 @@
           </q-tabs>
           <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
             <q-tab-panel :name="TAB_SEND" class="tw-px-0">
-              <component :is="SendListPage" @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')" />
+              <component
+                v-if="allowSend"
+                :is="SendListPage"
+                @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')"
+              />
+              <access-denied-image v-else>
+                <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
+                <p>Sorry, you are not allowed to access this page</p>
+              </access-denied-image>
             </q-tab-panel>
 
             <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
               <component
+                v-if="allowQC"
                 :is="QualityControlListPage"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'qc')"
               />
+              <access-denied-image v-else>
+                <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
+                <p>Sorry, you are not allowed to access this page</p>
+              </access-denied-image>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -54,6 +67,7 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ScrollableContainer from '../ui/ScrollableContainer.vue'
+import AccessDeniedImage from './AccessDeniedImage.vue'
 
 const TAB_SEND = 'send'
 
@@ -95,6 +109,10 @@ const QualityControlListPage = computed(() =>
     errorComponent: ErrorNotFound,
   }),
 )
+
+const allowSend = computed(() => true)
+
+const allowQC = computed(() => true)
 
 const props = withDefaults(defineProps<Props>(), {
   keyName: 'id',
