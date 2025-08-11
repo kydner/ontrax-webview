@@ -1,6 +1,6 @@
 <template>
   <scrollable-container>
-    <meta-list-page v-bind="{ ...props }" class="tw-relative bg-body-base tw-h-screen">
+    <meta-list-page v-bind="{ ...props }" :allow-access="allowAccessPage" class="tw-relative bg-body-base tw-h-screen">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
@@ -103,6 +103,8 @@ const props = withDefaults(defineProps<Props>(), {
 defineSlots<Slots<T>>()
 
 const router = useRouter()
+
+const allowAccessPage = computed(() => true)
 
 const handleCreate = () => {
   router.push({

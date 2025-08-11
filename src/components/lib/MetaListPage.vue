@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" class="tw-h-screen" :class="props.class">
+  <k-page padding="normal" class="tw-h-screen" :class="props.class" :allow-access="allowAccess">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
         <k-toolbar :header-title="props.meta?.title" @back="handleBack" />
@@ -21,6 +21,7 @@ import { nextTick } from 'vue'
 interface Props<T> {
   meta: IMetaListModule<T>
   class?: string
+  allowAccess?: boolean
 }
 
 interface Slots<T> {
@@ -35,7 +36,9 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
-const props = withDefaults(defineProps<Props<T>>(), {})
+const props = withDefaults(defineProps<Props<T>>(), {
+  allowAccess: false,
+})
 
 defineSlots<Slots<T>>()
 

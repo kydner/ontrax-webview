@@ -1375,6 +1375,7 @@ export default {
   updateToReceive: 'Perbarui ke Terima',
   updateToQcReceive: 'Perbarui ke Terima QC',
   quantity: 'Kuantitas',
+  home: 'Beranda',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

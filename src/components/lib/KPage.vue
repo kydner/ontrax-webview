@@ -13,18 +13,25 @@
     </q-inner-loading>
   </div>
 
-  <div v-else class="tw-h-[70vh] tw-flex tw-items-center tw-justify-center tw-bg-white tw-rounded-base tw-m-4">
-    <div class="tw-basis-full">
-      <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
-        <q-icon name="warning" color="negative" size="4rem" />
-        <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
-        <p>Sorry, you are not allowed to access this page</p>
-      </div>
+  <div v-else class="tw-min-h-screen tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
+    <div>
+      <k-lottie
+        animation-link="/lotties/access_denied.json"
+        auto-play
+        loop
+        renderer="svg"
+        class="tw-w-52 tw-h-5tw-w-52 tw-overflow-hidden tw-block"
+      />
     </div>
+    <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
+    <p>Sorry, you are not allowed to access this page</p>
+    <q-btn color="secondary" :label="t('home')" to="/" unelevated class="tw-mt-4" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import KLottie from '../ui/KLottie.vue'
 import { VNode } from 'vue'
 
 interface Props {
@@ -47,6 +54,8 @@ export interface KPageSlots {
 }
 
 defineSlots<KPageSlots>()
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">

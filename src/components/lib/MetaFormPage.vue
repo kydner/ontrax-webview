@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" class="tw-bg-transparent">
+  <k-page padding="normal" :allow-access="allowAccess" class="tw-bg-transparent">
     <!-- Bagian Header -->
     <div class="tw-flex tw-flex-col">
       <slot name="toolbar">
@@ -31,6 +31,7 @@ import KToolbar from '../ui/KToolbar.vue'
 interface Props<T> {
   meta: IMetaListModule<T>
   showToolbar?: boolean
+  allowAccess?: boolean
 }
 
 interface Emits {
@@ -49,6 +50,7 @@ interface Slots {
 
 const props = withDefaults(defineProps<Props<T>>(), {
   showToolbar: true,
+  allowAccess: false,
 })
 
 const emit = defineEmits<Emits>()

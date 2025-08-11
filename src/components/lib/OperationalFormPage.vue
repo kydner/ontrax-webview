@@ -1,5 +1,11 @@
 <template>
-  <meta-form-page ref="metaFormPageRef" v-bind="{ ...props }" :show-toolbar="false" class="bg-body-base">
+  <meta-form-page
+    ref="metaFormPageRef"
+    v-bind="{ ...props }"
+    :show-toolbar="false"
+    :allow-access="allowAccessPage"
+    class="bg-body-base"
+  >
     <div class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
       <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
@@ -121,6 +127,8 @@ const metaService = new MetaService(props.meta)
 const formId = computed(() => route.params?.id)
 
 const loadingPage = ref(false)
+
+const allowAccessPage = computed(() => true)
 
 const errorMessage = ref<string | null>(null)
 
