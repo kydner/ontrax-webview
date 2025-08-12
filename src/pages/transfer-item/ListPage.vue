@@ -1,5 +1,5 @@
 <template>
-  <operational-list-page :meta="metaTransfetItem" key-name="goodsReceiveId"> </operational-list-page>
+  <operational-list-page :meta="metaTransfetItem" key-name="stockTransferId"> </operational-list-page>
 </template>
 <script setup lang="ts">
 import { TransferItem } from 'src/common/constants/meta.constant'

@@ -37,8 +37,8 @@
                   :true-value="true"
                   :false-value="false"
                   class="tw-mr-2"
-                  checked-icon="img:/icons/rectangle-checked.svg"
-                  unchecked-icon="img:/icons/rectangle-unchecked.svg"
+                  checked-icon="img:/icons/rectangle__checked.svg"
+                  unchecked-icon="img:/icons/rectangle__unchecked.svg"
                   color="grey"
                 />
                 <product-image />
