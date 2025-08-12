@@ -78,12 +78,18 @@ interface KMetaListTableProps {
   itemMapper?: (items: T[]) => T[]
 }
 
+interface Emits {
+  (event: 'error', message: string): void
+}
+
 interface KMetaListTableSlots extends Omit<KListTableSlots, 'list:content' | 'list'> {
   'list:content': (props: { item: T; loading: boolean }) => VNode
   list: (data: { items: T[] }) => VNode
 }
 
 const props = withDefaults(defineProps<KMetaListTableProps>(), {})
+
+const emit = defineEmits<Emits>()
 
 defineSlots<KMetaListTableSlots>()
 
@@ -129,6 +135,7 @@ const loadMore = async <T extends any[]>(reset = false) => {
   } catch (error) {
     const currentErrorMessage = getErrorMessage(error as Error)
     state.errorMessage = currentErrorMessage
+    emit('error', currentErrorMessage)
   } finally {
     state.isLoading = false
     if (isFirstLoading.value) {

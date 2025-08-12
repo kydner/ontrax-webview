@@ -3,7 +3,9 @@
     <!-- Error state -->
     <div v-if="error?.length" class="tw-col-span-12 tw-text-center tw-text-negative tw-py-2">
       <slot name="error" :message="error">
-        {{ error }}
+        <internal-error>
+          {{ error }}
+        </internal-error>
       </slot>
     </div>
 
@@ -43,6 +45,7 @@
 import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { VNode } from 'vue'
+import InternalError from '../images/InternalError.vue'
 
 export interface KListTableProps {
   items: unknown[]
