@@ -27,6 +27,7 @@
         :rules="currentRules"
         :model-value="props.modelValue"
       >
+        <slot name="prefix:value"></slot>
         <div v-if="!currentValue" class="preview-label tw-text-disable-text">
           <slot name="preview:prefix"></slot>
           <span class="tw-text-disable-text">{{ currentPlaceholder }}</span>
@@ -41,7 +42,7 @@
             icon="img:/icons/x-square.svg"
             padding="none"
             size="sm"
-            @click="currentValue = null"
+            @click.stop="currentValue = null"
           />
         </div>
         <q-popup-edit
@@ -101,7 +102,7 @@ const props = withDefaults(defineProps<KPopupEditProps>(), {
 
 const emit = defineEmits<(e: 'update:model-value', value: unknown) => void>()
 
-defineSlots<KLabelSlots & QPopupEditSlots & { 'preview:prefix': () => VNode }>()
+defineSlots<KLabelSlots & QPopupEditSlots & { 'preview:prefix': () => VNode; 'prefix:value': () => VNode }>()
 
 const { t } = useI18n()
 

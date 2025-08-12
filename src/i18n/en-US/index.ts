@@ -1376,6 +1376,7 @@ export default {
   updateToQcReceive: 'Update to QC Receive',
   quantity: 'Quantity',
   home: 'Home',
+  remarkSender: 'Remark Sender',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

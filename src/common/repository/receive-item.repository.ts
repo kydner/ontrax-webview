@@ -13,7 +13,7 @@ export const useReceiveItemRepository = defineRepository({
     withRepository(
       () => receiveEndpoint.getOne(id),
       (response) => {
-        const receiveItems = [...response.goodsReceiveItems]?.map((item) => {
+        const receiveItems = [...(response?.goodsReceiveItems || [])]?.map((item) => {
           return {
             goodsReceiveId: item.goodsReceiveItemId,
             itemId: item.itemId,
