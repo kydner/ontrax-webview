@@ -188,7 +188,7 @@ export default {
   pidNo: 'PID No.',
   draft: 'Draft',
   previous: 'Sebelumnya',
-  saveDraft: 'Simpan ke draft',
+  saveDraft: 'Simpan ke Draft',
   pleaseWait: 'Silahkan tunggu',
   note: 'Catatan',
   nominal: 'Nominal',

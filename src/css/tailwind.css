@@ -101,3 +101,11 @@ input:-webkit-autofill {
     linear-gradient(180deg, #2a2a2e 0%, #1e1e22 100%) padding-box,
     /* border */ linear-gradient(90deg, rgba(60, 60, 98, 1), rgba(85, 85, 96, 1)) border-box;
 }
+
+.bg-secondary-text {
+  background: var(--color-secondary-text) !important;
+}
+
+.text-secondary-text {
+  color: var(--color-secondary-text) !important;
+}

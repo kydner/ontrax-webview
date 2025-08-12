@@ -187,7 +187,7 @@ export default {
   pidNo: 'PID No',
   draft: 'Draft',
   previous: 'Previous',
-  saveDraft: 'Save as draft',
+  saveDraft: 'Save as Draft',
   pleaseWait: 'Please wait',
   note: 'Note',
   nominal: 'Nominal',

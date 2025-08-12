@@ -159,8 +159,8 @@ module.exports = configure(function (ctx) {
           inactive: '#7A7A80',       // --color-inactive
           active: '#4A90E2',         // --color-active
           line: '#393944',           // --color-line
-          'secondary-text': '#B0B0B5',  // --color-secondary-text
-          'disable-text': '#66666B'     // --color-disable-text
+          secondaryText: '#B0B0B5',  // --color-secondary-text
+          disableText: '#66666B'     // --color-disable-text
         },
         loading: {
           boxClass: 'bg-overlay text-grey-1',

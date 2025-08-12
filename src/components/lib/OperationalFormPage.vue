@@ -41,21 +41,21 @@
         />
 
         <k-btn
+          v-if="form.status === undefined || form.status === 'DRAFT'"
+          :label="form.status === 'DRAFT' ? t('saveDraft') : t('button.save')"
+          class="fit tw-text-white"
+          :class="form.status === 'DRAFT' ? 'tw-bg-secondary-text' : 'tw-bg-secondary'"
+          :disable="loadingPage || !!errorMessage"
+          @click="handleSubmitDraft"
+        />
+
+        <k-btn
           v-if="form.status === 'DRAFT'"
           :label="t('saveToInTransit')"
           color="secondary"
           class="fit"
           :disable="loadingPage || !!errorMessage"
           @click="handleSubmitInTransit"
-        />
-
-        <k-btn
-          v-if="form.status === undefined || form.status === 'DRAFT'"
-          :label="t('button.save')"
-          color="secondary"
-          class="fit"
-          :disable="loadingPage || !!errorMessage"
-          @click="handleSubmitDraft"
         />
       </div>
     </template>
@@ -76,7 +76,6 @@ import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
 import OperationalFormSkeleton from './OperationalFormSkeleton.vue'
 import { bus } from 'src/common/event-bus'
-import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
 import { isoDate } from 'src/common/interfaces/response.interface'
 import { OperationalDataRequest } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
@@ -115,8 +114,6 @@ const props = withDefaults(defineProps<Props>(), {})
 const emit = defineEmits<Emits<T>>()
 
 const router = useRouter()
-
-const vendorShipmentRepository = useVendorShipmentRepository()
 
 const route = useRoute()
 
@@ -236,7 +233,7 @@ const handleSubmitInTransit = async () => {
 
           const repository = await metaService.repository()
           await repository.update(formId.value, { ...form.value })
-          await vendorShipmentRepository.inTransit(shipmentId)
+          await repository.inTransit<T>(shipmentId)
           Notify.success({
             message: t('success'),
           })
@@ -262,7 +259,8 @@ const handleSubmitReceive = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          await vendorShipmentRepository.receive(shipmentId, new Date().toISOString() as isoDate)
+          const repository = await metaService.repository()
+          await repository.receive<T>(shipmentId, new Date().toISOString() as isoDate)
           Notify.success({
             message: t('success'),
           })
@@ -288,7 +286,8 @@ const handleSubmitQcPass = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          await vendorShipmentRepository.qualityCheck(shipmentId, form.value.qcItems || [])
+          const repository = await metaService.repository()
+          await repository.qualityCheck<T, T['qcItems']>(shipmentId, form.value.qcItems || [])
           Notify.success({
             message: t('success'),
           })
