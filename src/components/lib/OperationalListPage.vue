@@ -30,10 +30,10 @@
                 :meta="props.meta"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')"
               />
-              <access-denied-image v-else>
+              <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
                 <p>Sorry, you are not allowed to access this page</p>
-              </access-denied-image>
+              </access-denied>
             </q-tab-panel>
 
             <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
@@ -43,10 +43,10 @@
                 :meta="props.meta"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'qc')"
               />
-              <access-denied-image v-else>
+              <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
                 <p>Sorry, you are not allowed to access this page</p>
-              </access-denied-image>
+              </access-denied>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -69,7 +69,7 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ScrollableContainer from '../ui/ScrollableContainer.vue'
-import AccessDeniedImage from './AccessDeniedImage.vue'
+import AccessDenied from '../images/AccessDenied.vue'
 
 const TAB_SEND = 'send'
 
