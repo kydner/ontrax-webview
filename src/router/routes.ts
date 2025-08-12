@@ -117,9 +117,18 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form/:id',
+            path: 'send/form/:id',
             component: () => import('pages/transfer-item/FormPage.vue'),
-            name: `${Meta.TransferItem.name}-form-update`,
+            name: `${Meta.TransferItem.name}-send-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+          {
+            path: 'qc/form/:id',
+            component: () => import('pages/transfer-item/FormPage.vue'),
+            name: `${Meta.TransferItem.name}-qc-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
@@ -152,9 +161,18 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form/:id',
+            path: 'send/form/:id',
             component: () => import('pages/receive-item/FormPage.vue'),
-            name: `${Meta.ReceiveItem.name}-form-update`,
+            name: `${Meta.ReceiveItem.name}-send-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+          {
+            path: 'qc/form/:id',
+            component: () => import('pages/receive-item/FormPage.vue'),
+            name: `${Meta.ReceiveItem.name}-qc-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
