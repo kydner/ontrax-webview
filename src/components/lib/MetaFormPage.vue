@@ -25,7 +25,6 @@ import { useI18n } from 'vue-i18n'
 import { ref, VNode } from 'vue'
 import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
 import { Notify } from 'src/common/utils/plugin.utils'
-import { snakeCase } from 'lodash'
 import KToolbar from '../ui/KToolbar.vue'
 
 interface Props<T> {
@@ -87,24 +86,6 @@ const validate = async () => {
   for (const promise of promises) {
     const result = await promise
     if (result?.valid !== true) {
-      const errorFields = Object.keys(result?.errors as Record<string, string>)
-      const errorField = errorFields?.[0]
-      const scrollToClass = () => {
-        const target = document.querySelector<HTMLElement>(`.target-section-${snakeCase(errorField)}`)
-        if (target) {
-          const headerOffset = 80 // Sesuaikan dengan tinggi header/toolbar
-          const elementPosition = target.getBoundingClientRect().top + window.scrollY
-          const offsetPosition = elementPosition - headerOffset
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          })
-        }
-      }
-
-      scrollToClass()
-
       Notify.create({
         message: Object.values(result?.errors as Record<string, string>)?.[0],
         type: 'negative',

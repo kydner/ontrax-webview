@@ -130,7 +130,7 @@ const allowAccessPage = computed(() => true)
 const errorMessage = ref<string | null>(null)
 
 const currentTitle = computed(() => {
-  if (formId.value) return form.value?.receiveNumber
+  if (formId.value) return form.value?.receiveNumber || form.value?.transferNumber
   return `${t('create')} ${props.meta.title}`
 })
 

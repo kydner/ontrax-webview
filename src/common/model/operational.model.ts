@@ -36,6 +36,7 @@ export interface OperationalResponse {
   locationWarehouseName: string
   vendorName: string
   receiveNumber: string
+  transferNumber: string
   actualReceiveDate: string
 }
 
