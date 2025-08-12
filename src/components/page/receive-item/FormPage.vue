@@ -1,7 +1,26 @@
 <template>
   <div class="">
     <div class="tw-my-4">
-      <k-status-badge v-if="!!formId" :label="startCase(form?.status)" :color="getColor(form.status)" />
+      <k-label v-if="!!formId" t-label="status" horizontal-label horizontal-align="base">
+        <template #label>
+          <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
+        </template>
+        <k-popup-edit
+          v-model="form.senderNotes"
+          t-label="remarkSender"
+          :show-label="false"
+          horizontal-label
+          :placeholder="t('inputRemark')"
+          input-class="inventory__field"
+        >
+          <template #default="scope">
+            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+          </template>
+          <template #preview:prefix>
+            <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
+          </template>
+        </k-popup-edit>
+      </k-label>
       <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
     </div>
     <k-date
