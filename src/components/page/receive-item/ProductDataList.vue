@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-my-4 tw-min-h-[40vh]">
+  <div class="tw-my-4 tw-min-h-[60vh]">
     <k-btn v-if="!isDisable" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
