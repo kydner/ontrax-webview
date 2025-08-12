@@ -21,7 +21,7 @@
     </div>
 
     <template v-if="panel === PANEL_FORM" #footer>
-      <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2">
+      <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2 tw-pb-2">
         <k-btn
           v-if="form.status === 'RECEIVED'"
           :label="t('qcPass')"
