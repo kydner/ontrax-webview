@@ -1,7 +1,7 @@
 <template>
   <span
     v-if="props.label"
-    class="tw-inline-flex tw-p-1 tw-px-3 tw-rounded-base tw-text-sm"
+    class="tw-inline-flex tw-p-1 tw-px-3 tw-rounded-base tw-text-xs"
     :class="`${currentColor}`"
     >{{ props.label }}</span
   >

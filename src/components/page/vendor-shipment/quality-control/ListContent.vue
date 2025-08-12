@@ -1,6 +1,6 @@
 <template>
   <div class="tw-flex tw-items-start tw-justify-between tw-cursor-pointer" v-ripple @click.stop="handleClick">
-    <div class="tw-basis-6/12">
+    <div class="tw-basis-7/12">
       <div class="tw-flex tw-flex-col tw-space-y-2">
         <div class="tw-font-semibold">{{ item?.receiveNumber }}</div>
         <div class="tw-flex tw-flex-col tw-space-y-2">

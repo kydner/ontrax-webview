@@ -1,6 +1,6 @@
 <template>
   <div class="tw-flex tw-items-start tw-justify-between tw-cursor-pointer" v-ripple @click.stop="handleClick">
-    <div class="tw-basis-7/12">
+    <div class="tw-basis-8/12">
       <div class="tw-flex tw-flex-col tw-space-y-2">
         <div class="tw-font-semibold">{{ item?.receiveNumber }}</div>
         <div class="tw-flex tw-flex-col tw-space-y-2">
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="tw-basis-5/12">
+    <div class="tw-basis-4/12">
       <div class="tw-flex tw-flex-col tw-items-end tw-justify-end tw-space-y-2">
         <span class="tw-font-semibold">{{ format(item?.totalItems, { precision: 0 }) || 0 }} Items</span>
         <k-status-badge :label="startCase(item?.status)" :color="getColor(item.status)" />
