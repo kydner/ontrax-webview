@@ -15,6 +15,7 @@
         >
           <template #default="scope">
             <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+            <k-text-area v-model="form.receiverNotes" t-label="note" />
           </template>
           <template #preview:prefix>
             <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
@@ -156,11 +157,11 @@
     <product-data-list v-else v-model="form" />
   </div>
 </template>
-<script setup lang="ts" generic="T extends VendorShipmentDataRequest">
+<script setup lang="ts" generic="T extends ReceiveItemDataRequest">
 import { computed } from 'vue'
 import ProductDataList from './ProductDataList.vue'
 import { useI18n } from 'vue-i18n'
-import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemDataRequest } from 'src/common/model/receive-item.model'
 import { useRoute } from 'vue-router'
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'

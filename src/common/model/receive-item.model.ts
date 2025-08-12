@@ -5,7 +5,10 @@ export interface ReceiveItemRequest extends IListSortingRequest {}
 
 export type ReceiveItemRequestPage = IPaginationRequest & ReceiveItemRequest
 
-export interface ReceiveItemResponse extends TransferItemResponse {}
+export interface ReceiveItemResponse extends TransferItemResponse {
+  senderNotes: string
+  receiverNotes: string
+}
 
 export interface ReceiveItemResponsePage extends TransferItemResponsePage {}
 
