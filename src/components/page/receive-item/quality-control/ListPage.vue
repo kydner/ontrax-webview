@@ -41,7 +41,7 @@ import { ReceiveItemRequestPage, ReceiveItemResponsePage } from 'src/common/mode
 import OperationalTopFilter, { TsortDirection } from 'src/components/page/operational/OperationalTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
-import { TStatus } from 'src/common/enum/vendor-shipment.enum'
+import { TStatus } from 'src/common/enum/operational.enum'
 import { orderBy } from 'lodash'
 
 interface ListItem {

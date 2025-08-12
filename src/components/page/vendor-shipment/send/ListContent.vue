@@ -28,7 +28,7 @@
 </template>
 <script setup lang="ts">
 import { startCase } from 'lodash'
-import { TStatus } from 'src/common/enum/vendor-shipment.enum'
+import { TStatus } from 'src/common/enum/operational.enum'
 import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
 import { format, formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
