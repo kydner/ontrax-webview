@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import { QInputProps } from 'quasar'
-import { TStatus } from 'src/common/enum/vendor-shipment.enum'
+import { TStatus } from 'src/common/enum/operational.enum'
 import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
