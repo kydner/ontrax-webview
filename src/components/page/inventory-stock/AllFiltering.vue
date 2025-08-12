@@ -89,7 +89,7 @@ import { bus } from 'src/common/event-bus'
 import { id } from 'src/common/interfaces/response.interface'
 import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 import { format } from 'src/common/utils/converter.utils'
-import ProductImage from 'src/components/lib/ProductImage.vue'
+import ProductImage from 'src/components/images/Product.vue'
 
 const { t } = useI18n()
 

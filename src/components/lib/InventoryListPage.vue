@@ -1,6 +1,6 @@
 <template>
   <scrollable-container>
-    <meta-list-page v-bind="{ ...props }" class="bg-body-base">
+    <meta-list-page v-bind="{ ...props }" class="bg-body-base" :allow-access="allowAccessPage">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
@@ -54,7 +54,7 @@
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
-import { defineAsyncComponent, ref, VNode, type Component } from 'vue'
+import { computed, defineAsyncComponent, ref, VNode, type Component } from 'vue'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { LocationWarehouse, Product } from 'src/common/constants/meta.constant'
 import { useI18n } from 'vue-i18n'
@@ -90,6 +90,8 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
 
 const request = ref({} as StockCardAggregationRequest)
+
+const allowAccessPage = computed(() => true)
 
 defineSlots<Slots<T>>()
 

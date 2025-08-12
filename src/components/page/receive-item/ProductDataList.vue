@@ -83,7 +83,7 @@ import KCard from 'src/components/ui/KCard.vue'
 import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
-import ProductImage from 'src/components/lib/ProductImage.vue'
+import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest

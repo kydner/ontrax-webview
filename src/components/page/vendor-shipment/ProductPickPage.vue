@@ -84,7 +84,7 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
 import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
 import { useI18n } from 'vue-i18n'
-import ProductImage from 'src/components/lib/ProductImage.vue'
+import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
   modelValue: VendorShipmentResponse

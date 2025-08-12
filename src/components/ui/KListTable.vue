@@ -4,7 +4,8 @@
     <div v-if="error?.length" class="tw-col-span-12 tw-text-center tw-text-negative tw-py-2">
       <slot name="error" :message="error">
         <internal-error>
-          {{ error }}
+          <div>{{ error }}</div>
+          <q-btn color="secondary" :label="t('home')" to="/" unelevated class="tw-mt-4" />
         </internal-error>
       </slot>
     </div>
