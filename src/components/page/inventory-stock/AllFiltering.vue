@@ -83,13 +83,14 @@ import KCard from 'src/components/ui/KCard.vue'
 import { useRouter } from 'vue-router'
 import { InventoryStock } from 'src/common/constants/meta.constant'
 import { useStockCardRepository } from 'src/common/repository/stock-card.repository'
-import { onMounted, reactive } from 'vue'
+import { nextTick, onMounted, reactive } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
 import { id } from 'src/common/interfaces/response.interface'
 import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 import { format } from 'src/common/utils/converter.utils'
 import ProductImage from 'src/components/images/Product.vue'
+import { Loading } from 'quasar'
 
 const { t } = useI18n()
 
@@ -107,8 +108,18 @@ const state = reactive({
   totalPages: 1,
 })
 
-const handleDetailPage = (locationWarehouseId: id, itemId: id) => {
-  router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
+const handleDetailPage = async (locationWarehouseId: id, itemId: id) => {
+  try {
+    Loading.show()
+    await router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    await nextTick()
+    Loading.hide()
+  }
 }
 
 const loadMore = async <T extends StockCardResponsePage[]>(reset = false) => {

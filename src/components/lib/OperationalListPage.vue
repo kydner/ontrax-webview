@@ -70,6 +70,7 @@ import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ScrollableContainer from '../ui/ScrollableContainer.vue'
 import AccessDenied from '../images/AccessDenied.vue'
+import { Loading } from 'quasar'
 
 const TAB_SEND = 'send'
 
@@ -126,10 +127,20 @@ const router = useRouter()
 
 const allowAccessPage = computed(() => true)
 
-const handleCreate = () => {
-  router.push({
-    name: `${props.meta.name}-form-create`,
-  })
+const handleCreate = async () => {
+  try {
+    Loading.show()
+    await router.push({
+      name: `${props.meta.name}-form-create`,
+    })
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    await nextTick()
+    Loading.hide()
+  }
 }
 
 const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'qc') => {
@@ -137,6 +148,7 @@ const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'qc') =>
     const { item } = data
     const keyName = item[props.keyName]
     const routeName = `${props.meta.name}-${routePath}-form-update`
+    Loading.show()
     await router.push({
       name: routeName,
       params: {
@@ -144,10 +156,12 @@ const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'qc') =>
       },
     })
   } catch (error) {
-    await nextTick()
     Notify.error({
       message: error as Error,
     })
+  } finally {
+    await nextTick()
+    Loading.hide()
   }
 }
 </script>

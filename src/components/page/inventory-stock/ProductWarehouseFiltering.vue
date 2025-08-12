@@ -89,6 +89,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Loading } from 'quasar'
 import { InventoryStock } from 'src/common/constants/meta.constant'
 import { bus } from 'src/common/event-bus'
 import { id } from 'src/common/interfaces/response.interface'
@@ -100,7 +101,7 @@ import { useStockCardRepository } from 'src/common/repository/stock-card.reposit
 import { format } from 'src/common/utils/converter.utils'
 import { Notify } from 'src/common/utils/plugin.utils'
 import KCard from 'src/components/ui/KCard.vue'
-import { onMounted, reactive } from 'vue'
+import { nextTick, onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -126,8 +127,18 @@ const state = reactive({
   totalPages: 1,
 })
 
-const handleDetailPage = (locationWarehouseId: id, itemId: id) => {
-  router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
+const handleDetailPage = async (locationWarehouseId: id, itemId: id) => {
+  try {
+    Loading.show()
+    await router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    await nextTick()
+    Loading.hide()
+  }
 }
 
 const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {
