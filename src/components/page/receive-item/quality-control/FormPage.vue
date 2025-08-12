@@ -137,11 +137,11 @@
     <product-data-list v-else v-model="form" />
   </div>
 </template>
-<script setup lang="ts" generic="T extends VendorShipmentDataRequest">
+<script setup lang="ts" generic="T extends ReceiveItemDataRequest">
 import { computed } from 'vue'
 import ProductDataList from '../ProductDataList.vue'
 import { useI18n } from 'vue-i18n'
-import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemDataRequest } from 'src/common/model/receive-item.model'
 import { useRoute } from 'vue-router'
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'
