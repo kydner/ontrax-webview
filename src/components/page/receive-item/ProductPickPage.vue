@@ -82,20 +82,20 @@ import KToolbar from 'src/components/ui/KToolbar.vue'
 import { onMounted, reactive, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
-import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemResponse } from 'src/common/model/receive-item.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/lib/ProductImage.vue'
 
 interface Props {
-  modelValue: VendorShipmentResponse
+  modelValue: ReceiveItemResponse
 }
 
 interface Emits {
   (event: 'back'): void
-  (event: 'update:modelValue', value: VendorShipmentResponse): void
+  (event: 'update:modelValue', value: ReceiveItemResponse): void
 }
 
-type ReceiveItem = VendorShipmentResponse['receiveItems'][0]
+type ReceiveItem = ReceiveItemResponse['receiveItems'][0]
 
 const { t } = useI18n()
 
