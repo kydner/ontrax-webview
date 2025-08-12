@@ -181,7 +181,7 @@ const resetLoad = () => {
 
 onMounted(() => {
   loadMore()
-  bus.on('scroll:bottom-reached', () => {
+  bus.on('scroll:bottom-reached-inv-filter', () => {
     loadMore()
   })
 })

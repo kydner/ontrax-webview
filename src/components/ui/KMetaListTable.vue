@@ -154,7 +154,7 @@ onMounted(() => {
   // Load awal
   loadMore()
 
-  bus.on('scroll:bottom-reached', () => {
+  bus.on('scroll:bottom-reached-operational-list', () => {
     loadMore()
   })
 })

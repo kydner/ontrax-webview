@@ -6,10 +6,22 @@
 
 <script setup lang="ts">
 import { bus } from 'src/common/event-bus'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
+interface Props {
+  suffixEvent?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {})
 
 const container = ref<HTMLElement | null>(null)
+
 const triggered = ref(false)
+
+const eventName = computed(() => {
+  if (props.suffixEvent) return `scroll:bottom-reached-${props.suffixEvent}`
+  return 'scroll:bottom-reached'
+})
 
 const handleScroll = () => {
   const el = container.value
@@ -19,7 +31,7 @@ const handleScroll = () => {
 
   if (isBottom && !triggered.value) {
     triggered.value = true
-    bus.emit('scroll:bottom-reached')
+    bus.emit(eventName.value)
   }
 
   if (!isBottom) {

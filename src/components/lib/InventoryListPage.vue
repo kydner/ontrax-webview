@@ -1,5 +1,5 @@
 <template>
-  <scrollable-container>
+  <scrollable-container suffix-event="inv-filter">
     <meta-list-page v-bind="{ ...props }" class="bg-body-base" :allow-access="allowAccessPage">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
