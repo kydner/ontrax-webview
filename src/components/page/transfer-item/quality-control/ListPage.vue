@@ -15,7 +15,7 @@
     ref="metaListTableRef"
     :meta="metaTransferItem"
     :payload="payload"
-    :item-mapper="(items) => orderBy(items, (item) => item.shippingDate, [sortDirection])"
+    :item-mapper="(items) => orderBy(items, (item) => item.transferDate, [sortDirection])"
   >
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
