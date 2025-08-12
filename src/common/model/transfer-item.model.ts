@@ -1,12 +1,22 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
-import { VendorShipmentResponse, VendorShipmentResponsePage } from './vendor-shipment.model'
+import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
+import { OperationalResponse } from './operational.model'
+import { TStatus } from '../enum/operational.enum'
 
 export interface TransferItemRequest extends IListSortingRequest {}
 
 export type TransferItemRequestPage = IPaginationRequest & TransferItemRequest
 
-export interface TransferItemResponse extends VendorShipmentResponse {}
+export interface TransferItemResponse extends OperationalResponse {
+  stockTransferId: id
+  transferNumber: string
+  fromLocationWarehouseName: string
+  toLocationWarehouseName: string
+  transferDate: isoDate
+  status: TStatus
+  totalItems: number
+  totalItemQty: number
+}
 
-export interface TransferItemResponsePage extends VendorShipmentResponsePage {}
+export interface TransferItemResponsePage extends TransferItemResponse {}
 
-export interface TransferItemDataRequest extends VendorShipmentResponse {}
+export interface TransferItemDataRequest extends TransferItemResponse {}

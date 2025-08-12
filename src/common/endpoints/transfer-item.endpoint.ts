@@ -10,15 +10,15 @@ import { defineEndpoint } from '../utils/plugin.utils'
 
 export const useTransferItemEndpoint = defineEndpoint({
   getPage: (params?: TransferItemRequest) =>
-    GetPage<TransferItemResponsePage>('transfer-items/page', {
+    GetPage<TransferItemResponsePage>('transfer-stock/page', {
       params,
     }),
 
-  getOne: (id: id) => Get<TransferItemResponse>(`transfer-items/${id}`),
+  getOne: (id: id) => Get<TransferItemResponse>(`transfer-stock/${id}`),
 
-  create: (data: TransferItemDataRequest) => Post('transfer-items', data),
+  create: (data: TransferItemDataRequest) => Post('transfer-stock/draft', data),
 
-  update: (id: id, data: TransferItemDataRequest) => Put(`transfer-items/${id}`, data),
+  update: (id: id, data: TransferItemDataRequest) => Put(`transfer-stock/draft/${id}`, data),
 
-  delete: (id: id) => Delete(`transfer-items/${id}`),
+  delete: (id: id) => Delete(`transfer-stock/${id}`),
 })

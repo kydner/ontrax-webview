@@ -1,6 +1,6 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import { TStatus } from '../enum/vendor-shipment.enum'
 import { VendorShipmentQualityCheckResponse } from './vendor-shipment-quality-check.model'
+import { TStatus } from '../enum/operational.enum'
 
 export interface OperationalRequest extends IListSortingRequest {
   status?: TStatus | TStatus[]

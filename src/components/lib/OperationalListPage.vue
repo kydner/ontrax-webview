@@ -27,6 +27,7 @@
               <component
                 v-if="allowSend"
                 :is="SendListPage"
+                :meta="props.meta"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')"
               />
               <access-denied-image v-else>
@@ -39,6 +40,7 @@
               <component
                 v-if="allowQC"
                 :is="QualityControlListPage"
+                :meta="props.meta"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'qc')"
               />
               <access-denied-image v-else>

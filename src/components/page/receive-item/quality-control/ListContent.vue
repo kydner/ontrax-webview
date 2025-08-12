@@ -29,17 +29,17 @@
 <script setup lang="ts">
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
-import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemResponsePage } from 'src/common/model/receive-item.model'
 import { format, formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
 
 interface Props {
-  item: VendorShipmentResponsePage
+  item: ReceiveItemResponsePage
   loading?: boolean
 }
 
 interface Emits {
-  (e: 'click', data: { item: VendorShipmentResponsePage }): void
+  (e: 'click', data: { item: ReceiveItemResponsePage }): void
 }
 
 const emit = defineEmits<Emits>()

@@ -6,12 +6,16 @@
         <div class="tw-flex tw-flex-col tw-space-y-2">
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-basis-auto">
             <div class="tw-flex tw-items-center tw-space-x-2">
-              <q-icon name="person" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ item?.vendorName }}</span>
+              <q-icon name="img:/icons/upload-box-primary.svg" color="primary" />
+              <span class="tw-text-xs tw-text-secondary-text">{{ item?.fromLocationWarehouseName }}</span>
+            </div>
+            <div class="tw-flex tw-items-center tw-space-x-2">
+              <q-icon name="img:/icons/download-primary.svg" color="primary" />
+              <span class="tw-text-xs tw-text-secondary-text">{{ item?.toLocationWarehouseName }}</span>
             </div>
             <div class="tw-flex tw-items-center tw-space-x-2">
               <q-icon name="calendar_today" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ formatDate(item?.shippingDate) }}</span>
+              <span class="tw-text-xs tw-text-secondary-text">{{ formatDate(item?.transferDate) }}</span>
             </div>
           </div>
         </div>
@@ -29,17 +33,17 @@
 <script setup lang="ts">
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/vendor-shipment.enum'
-import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
+import { TransferItemResponsePage } from 'src/common/model/transfer-item.model'
 import { format, formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
 
 interface Props {
-  item: VendorShipmentResponsePage
+  item: TransferItemResponsePage
   loading?: boolean
 }
 
 interface Emits {
-  (e: 'click', data: { item: VendorShipmentResponsePage }): void
+  (e: 'click', data: { item: TransferItemResponsePage }): void
 }
 
 const emit = defineEmits<Emits>()
