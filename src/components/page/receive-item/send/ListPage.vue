@@ -13,7 +13,7 @@
   <!-- meta list table -->
   <k-meta-list-table
     ref="metaListTableRef"
-    :meta="metaTransferItem"
+    :meta="metaReceiveItem"
     :payload="payload"
     :item-mapper="(items) => orderBy(items, (item) => item.shippingDate, [sortDirection])"
   >
@@ -35,9 +35,9 @@
   <!-- end meta list table -->
 </template>
 <script setup lang="ts">
-import { TransferItem } from 'src/common/constants/meta.constant'
+import { ReceiveItem } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { TransferItemRequestPage, TransferItemResponsePage } from 'src/common/model/transfer-item.model'
+import { ReceiveItemRequestPage, ReceiveItemResponsePage } from 'src/common/model/receive-item.model'
 import OperationalTopFilter, { TsortDirection } from 'src/components/page/operational/OperationalTopFilter.vue'
 import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vue'
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
@@ -45,7 +45,7 @@ import { TStatus } from 'src/common/enum/operational.enum'
 import { orderBy } from 'lodash'
 
 interface ListItem {
-  item: TransferItemResponsePage
+  item: ReceiveItemResponsePage
 }
 
 interface Emits {
@@ -58,7 +58,7 @@ type MetaListTableExposed = {
 
 const emit = defineEmits<Emits>()
 
-const metaTransferItem: IMetaListModule<TransferItemResponsePage> = TransferItem
+const metaReceiveItem: IMetaListModule<ReceiveItemResponsePage> = ReceiveItem
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
@@ -73,7 +73,7 @@ const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED']
 
 const payload = ref({
   status: currentStatus.value || statuses,
-} as TransferItemRequestPage)
+} as ReceiveItemRequestPage)
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 

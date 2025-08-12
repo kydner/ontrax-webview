@@ -95,25 +95,6 @@
       </template>
     </k-select-module>
 
-    <k-input
-      v-model="form.referenceNumber"
-      t-label="refNumber"
-      borderless
-      horizontal-align="base"
-      horizontal-label
-      :disable="isDisable"
-      :placeholder="t('empty')"
-      input-class="inventory__field"
-    >
-      <template #additional:prefix-label>
-        <q-icon name="img:/icons/hash.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
-      </template>
-
-      <template #label="{ label }">
-        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
-      </template>
-    </k-input>
-
     <k-file-upload
       v-model="form.fileId"
       t-label="attachFile"

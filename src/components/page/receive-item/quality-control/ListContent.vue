@@ -6,12 +6,16 @@
         <div class="tw-flex tw-flex-col tw-space-y-2">
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-basis-auto">
             <div class="tw-flex tw-items-center tw-space-x-2">
-              <q-icon name="person" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ item?.vendorName }}</span>
+              <q-icon name="img:/icons/upload-box__primary.svg" color="primary" />
+              <span class="tw-text-xs tw-text-secondary-text">{{ item?.fromLocationWarehouseName }}</span>
+            </div>
+            <div class="tw-flex tw-items-center tw-space-x-2">
+              <q-icon name="img:/icons/download__primary.svg" color="primary" />
+              <span class="tw-text-xs tw-text-secondary-text">{{ item?.toLocationWarehouseName }}</span>
             </div>
             <div class="tw-flex tw-items-center tw-space-x-2">
               <q-icon name="calendar_today" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ formatDate(item?.shippingDate) }}</span>
+              <span class="tw-text-xs tw-text-secondary-text">{{ formatDate(item?.transferDate) }}</span>
             </div>
           </div>
         </div>
