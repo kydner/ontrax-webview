@@ -82,9 +82,9 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'qc/form/:id',
+            path: 'quality-control/form/:id',
             component: () => import('pages/vendor-shipment/FormPage.vue'),
-            name: `${Meta.VendorShipment.name}-qc-form-update`,
+            name: `${Meta.VendorShipment.name}-quality-control-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',

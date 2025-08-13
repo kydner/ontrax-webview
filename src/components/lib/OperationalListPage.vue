@@ -41,7 +41,7 @@
                 v-if="allowQC"
                 :is="QualityControlListPage"
                 :meta="props.meta"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'qc')"
+                @click:item="(data: ListContentEvent) => handleUpdate(data, 'quality-control')"
               />
               <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
@@ -143,7 +143,7 @@ const handleCreate = async () => {
   }
 }
 
-const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'qc') => {
+const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'quality-control') => {
   try {
     const { item } = data
     const keyName = item[props.keyName]
