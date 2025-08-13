@@ -25,7 +25,6 @@ export const useTransferItemRepository = defineRepository({
         })
         return {
           ...response,
-          senderNotes: response.senderNotes || '',
           transferItems,
           fromWarehouseId: response?.fromLocationWarehouseId,
           toWarehouseId: response?.toLocationWarehouseId,
