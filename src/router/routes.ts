@@ -79,6 +79,7 @@ const routes: RouteRecordRaw[] = [
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
@@ -88,6 +89,7 @@ const routes: RouteRecordRaw[] = [
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'quality-control',
             },
           },
         ],

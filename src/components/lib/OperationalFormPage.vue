@@ -96,9 +96,16 @@ type MetaFormPageExposed = {
   validate: () => Promise<boolean>
 }
 
+const route = useRoute()
+
+const router = useRouter()
+
+const routePath = computed(() => route.meta?.routePath)
+
 const FormPage = computed(() => {
+  console.log(route)
   return defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/FormPage.vue`),
+    loader: () => import(`src/components/page/${props.meta.name}/${routePath.value}/FormPage.vue`),
     errorComponent: ErrorNotFound,
   })
 })
@@ -112,10 +119,6 @@ const ProductPickPage = computed(() => {
 const props = withDefaults(defineProps<Props>(), {})
 
 const emit = defineEmits<Emits<T>>()
-
-const router = useRouter()
-
-const route = useRoute()
 
 const { t } = useI18n()
 
