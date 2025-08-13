@@ -26,14 +26,14 @@
         </div>
         <div
           v-if="['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
-          class="tw-flex tw-items-center tw-space-x-4 tw-text-xs tw-mt-2"
+          class="tw-flex tw-items-center tw-space-x-6 tw-text-xs tw-mt-2"
         >
           <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
             <q-icon name="img:/icons/qty-order__secondary-text.svg" />
             <div class="tw-text-secondary-text">Qty Ordered</div>
           </div>
           <div>
-            {{ product.qtyOrdered }}
+            {{ format(product.qtyOrdered, { precision: 0 }) }}
           </div>
         </div>
       </q-card-section>
@@ -93,6 +93,7 @@ import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: VendorShipmentDataRequest

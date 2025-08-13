@@ -33,7 +33,7 @@
                   <span class="tw-text-secondary-text">Qty Order</span>
                 </div>
                 <div>
-                  <span class="tw-text-white">{{ product.qtyPass }}</span>
+                  <span class="tw-text-white">{{ format(product.qtyPass, { precision: 0 }) }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
@@ -42,7 +42,7 @@
                   <span class="tw-text-secondary-text">Qty Receive</span>
                 </div>
                 <div>
-                  <span class="tw-text-white">{{ product.qtyPass }}</span>
+                  <span class="tw-text-white">{{ format(product.qtyPass, { precision: 0 }) }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
@@ -51,7 +51,7 @@
                   <span class="tw-text-secondary-text">Qty Reject</span>
                 </div>
                 <div>
-                  <span class="tw-text-negative">{{ product.qtyReject }}</span>
+                  <span class="tw-text-negative">{{ format(product.qtyReject, { precision: 0 }) }}</span>
                 </div>
               </div>
             </div>
@@ -113,6 +113,7 @@ import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
