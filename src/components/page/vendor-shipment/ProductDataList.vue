@@ -18,7 +18,6 @@
             <plus-minus-field
               v-if="vendorValue.status === 'IN_TRANSIT'"
               v-model="product.qtyReceived"
-              zero-confirm
               :allow-increase="false"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
