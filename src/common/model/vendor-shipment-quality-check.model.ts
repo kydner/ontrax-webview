@@ -20,6 +20,7 @@ export interface QcItems {
   itemId: id
   itemName?: string
   itemCode?: string
+  skuCode?: string
   qcGoodsReceiveItemId?: id
   qtyReject: number
   note?: string | null

@@ -40,6 +40,7 @@ export const useVendorShipmentRepository = defineRepository({
           qcItems: qcGoodsReceive?.qcGoodsReceiveItems?.map((receive) => {
             return {
               ...receive,
+              skuCode: receive?.skuCode,
             }
           }),
         }
