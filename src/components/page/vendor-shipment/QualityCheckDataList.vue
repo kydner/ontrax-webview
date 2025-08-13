@@ -30,19 +30,19 @@
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
                 <div class="tw-basis-auto tw-space-x-4">
                   <q-icon name="img:/icons/qty-order__secondary-text.svg" />
-                  <span>Qty Order</span>
+                  <span class="tw-text-secondary-text">Qty Order</span>
                 </div>
                 <div>
-                  <span class="tw-text-secondary-text">{{ product.qtyPass }}</span>
+                  <span class="tw-text-white">{{ product.qtyPass }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
                 <div class="tw-basis-auto tw-space-x-4">
                   <q-icon name="img:/icons/qty-receive__secondary-text.svg" />
-                  <span>Qty Receive</span>
+                  <span class="tw-text-secondary-text">Qty Receive</span>
                 </div>
                 <div>
-                  <span class="tw-text-secondary-text">{{ product.qtyPass }}</span>
+                  <span class="tw-text-white">{{ product.qtyPass }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
