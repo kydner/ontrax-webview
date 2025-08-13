@@ -1,9 +1,10 @@
 import { useVendorShipmentEndpoint } from '../endpoints/vendor-shipment.endpoint'
-import { id, isoDate } from '../interfaces/response.interface'
+import { id } from '../interfaces/response.interface'
 import {
   VendorShipmentQualityCheckDataRequest,
   VendorShipmentQualityCheckResponse,
 } from '../model/vendor-shipment-quality-check.model'
+import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentDataRequest, VendorShipmentRequest } from '../model/vendor-shipment.model'
 import { withRepository } from '../utils/converter.utils'
 import { defineRepository } from '../utils/plugin.utils'
@@ -20,6 +21,7 @@ export const useVendorShipmentRepository = defineRepository({
         const warehouseId = response.locationWarehouseId
         const receiveItems = [...response.goodsReceiveItems]?.map((item) => {
           return {
+            goodsReceiveItemId: item?.goodsReceiveItemId,
             goodsReceiveId: item.goodsReceiveItemId,
             itemId: item.itemId,
             qtyOrdered: item.qtyOrdered,
@@ -51,7 +53,8 @@ export const useVendorShipmentRepository = defineRepository({
 
   delete: (id: id) => shipmentEndpoint.delete(id),
 
-  receive: (id: id, receiveDate: isoDate) => shipmentEndpoint.receive(id, receiveDate),
+  receive: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentRequest) =>
+    shipmentEndpoint.receive(id, data, params),
 
   qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => shipmentEndpoint.qualityCheck(id, data),
 

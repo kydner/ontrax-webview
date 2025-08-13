@@ -1,5 +1,5 @@
 import { QTableColumn } from 'quasar'
-import { id, IDataPage, isoDate } from './response.interface'
+import { id, IDataPage } from './response.interface'
 import { IStoreState } from './store.interface'
 import { MessageSchema } from 'src/boot/i18n'
 
@@ -84,7 +84,7 @@ export interface IMetaEndpoint {
 
   inTransit<T>(id: id): Promise<T>
 
-  receive<T>(id: id, receiveDate: isoDate): Promise<T>
+  receive<T, R, P>(id: id, data: R, params: P): Promise<T>
 
   qualityCheck<RES, REQ>(id: id, data: REQ): Promise<RES>
 

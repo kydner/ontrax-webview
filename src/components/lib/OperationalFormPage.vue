@@ -23,7 +23,7 @@
     <template v-if="panel === PANEL_FORM" #footer>
       <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2 tw-pb-2">
         <k-btn
-          v-if="form.status === 'RECEIVED'"
+          v-if="form.status === 'RECEIVED' && routePath === 'quality-control'"
           :label="t('qcPass')"
           color="secondary"
           class="fit"
@@ -76,7 +76,7 @@ import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
 import OperationalFormSkeleton from './OperationalFormSkeleton.vue'
 import { bus } from 'src/common/event-bus'
-import { isoDate } from 'src/common/interfaces/response.interface'
+import { id } from 'src/common/interfaces/response.interface'
 import { OperationalDataRequest } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import { getErrorMessage } from 'src/common/utils/error.utils'
@@ -99,8 +99,6 @@ type MetaFormPageExposed = {
 const route = useRoute()
 
 const router = useRouter()
-
-const routePath = computed(() => route.meta?.routePath)
 
 const FormPage = computed(() => {
   return defineAsyncComponent({
@@ -130,6 +128,8 @@ const loadingPage = ref(false)
 const allowAccessPage = computed(() => true)
 
 const errorMessage = ref<string | null>(null)
+
+const routePath = computed(() => route.meta?.routePath)
 
 const currentTitle = computed(() => {
   if (formId.value) return form.value?.receiveNumber || form.value?.transferNumber
@@ -258,11 +258,15 @@ const handleSubmitReceive = () => {
     callback: async (confirm) => {
       if (confirm) {
         try {
-          const shipmentId = formId.value as string
+          const shipmentId = formId.value as id
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
           const repository = await metaService.repository()
-          await repository.receive<T>(shipmentId, new Date().toISOString() as isoDate)
+          await repository.receive(
+            shipmentId,
+            { receivedItems: form.value?.receiveItems },
+            { receiveDate: new Date().toISOString() },
+          )
           Notify.success({
             message: t('success'),
           })

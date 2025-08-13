@@ -1,5 +1,6 @@
-import { id, isoDate } from '../interfaces/response.interface'
+import { id } from '../interfaces/response.interface'
 import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
+import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import {
   VendorShipmentDataRequest,
   VendorShipmentRequest,
@@ -23,11 +24,9 @@ export const useVendorShipmentEndpoint = defineEndpoint({
 
   delete: (id: id) => Delete(`shipments/${id}`),
 
-  receive: (id: id, receiveDate: isoDate) =>
-    Patch(`shipments/${id}/received`, null, {
-      params: {
-        receiveDate,
-      },
+  receive: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentRequest) =>
+    Patch(`shipments/${id}/received`, data, {
+      params,
     }),
 
   qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => Patch(`shipments/${id}/quality-check`, data),
