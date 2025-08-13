@@ -51,8 +51,8 @@ export interface ReceiveItem {
   notes: string
   itemCode: string
   itemName: string
-  qtyReceived: number | null
-  unitPrice: number | null
+  qtyReceived: number
+  unitPrice: number
 }
 
 export interface GoodReceiveItem {
