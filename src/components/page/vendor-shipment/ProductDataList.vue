@@ -1,6 +1,11 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
-    <k-btn v-if="!isDisable" color="secondary" label="Add Product" @click="handleProductPick" />
+    <k-btn
+      v-if="!isDisable || !['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
+      color="secondary"
+      label="Add Product"
+      @click="handleProductPick"
+    />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
