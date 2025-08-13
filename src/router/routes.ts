@@ -125,15 +125,17 @@ const routes: RouteRecordRaw[] = [
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
-            path: 'qc/form/:id',
+            path: 'quality-control/form/:id',
             component: () => import('pages/transfer-item/FormPage.vue'),
             name: `${Meta.TransferItem.name}-qc-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'quality-control',
             },
           },
         ],
@@ -169,15 +171,17 @@ const routes: RouteRecordRaw[] = [
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
-            path: 'qc/form/:id',
+            path: 'quality-control/form/:id',
             component: () => import('pages/receive-item/FormPage.vue'),
             name: `${Meta.ReceiveItem.name}-qc-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'quality-control',
             },
           },
         ],
