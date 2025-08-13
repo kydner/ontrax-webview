@@ -103,7 +103,6 @@ const router = useRouter()
 const routePath = computed(() => route.meta?.routePath)
 
 const FormPage = computed(() => {
-  console.log(route)
   return defineAsyncComponent({
     loader: () => import(`src/components/page/${props.meta.name}/${routePath.value}/FormPage.vue`),
     errorComponent: ErrorNotFound,
@@ -142,7 +141,7 @@ const panel = ref(PANEL_FORM)
 const metaFormPageRef = ref<ComponentPublicInstance<MetaFormPageExposed> | null>(null)
 
 const form = computed({
-  get: () => props.modelValue,
+  get: () => props?.modelValue,
   set: (value) => {
     emit('update:modelValue', value)
   },

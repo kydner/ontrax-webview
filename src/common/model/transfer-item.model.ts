@@ -15,22 +15,28 @@ export interface TransferItemResponse extends OperationalResponse {
   status: TStatus
   totalItems: number
   totalItemQty: number
-}
-
-export interface TransferItemResponsePage extends TransferItemResponse, OperationalResponse {}
-
-export interface TransferItemDataRequest extends TransferItemResponse, OperationalDataRequest {
   fromWarehouseId: id
+  fromLocationWarehouseId: id
   toWarehouseId: id
+  toLocationWarehouseId: id
+  stockTransferItems: TransferItemDetail[]
   senderNotes: string
   attachmentId?: id
   transferItems: TransferItemDetail[]
 }
 
+export interface TransferItemResponsePage extends TransferItemResponse, OperationalResponse {}
+
+export interface TransferItemDataRequest extends TransferItemResponse, OperationalDataRequest {}
+
 export interface TransferItemDetail {
-  transferItemId: id
-  transferId: id
+  stockTransferItemId?: id
+  transferItemId?: id
+  transferId?: id
   itemId: id
   qty: number
+  qtyTransfer?: number
   notes: string
+  itemName: string
+  itemCode?: string
 }

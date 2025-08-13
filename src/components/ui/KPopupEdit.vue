@@ -107,7 +107,7 @@ defineSlots<KLabelSlots & QPopupEditSlots & { 'preview:prefix': () => VNode; 'pr
 const { t } = useI18n()
 
 const currentValue = computed({
-  get: () => props.modelValue,
+  get: () => props?.modelValue,
   set: (value) => emit('update:model-value', value),
 })
 

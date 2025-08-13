@@ -1,6 +1,6 @@
 import { useTransferItemEndpoint } from '../endpoints/transfer-item.endpoint'
 import { id } from '../interfaces/response.interface'
-import { TransferItemDataRequest, TransferItemRequest } from '../model/transfer-item.model'
+import { TransferItemDataRequest, TransferItemDetail, TransferItemRequest } from '../model/transfer-item.model'
 import { withRepository } from '../utils/converter.utils'
 import { defineRepository } from '../utils/plugin.utils'
 
@@ -13,15 +13,23 @@ export const useTransferItemRepository = defineRepository({
     withRepository(
       () => transferEndpoint.getOne(id),
       (response) => {
-        const receiveItems = [...(response?.goodsReceiveItems || [])]?.map((item) => {
+        const transferItems: TransferItemDetail[] = [...(response?.stockTransferItems || [])]?.map((item) => {
           return {
-            goodsReceiveId: item.goodsReceiveItemId,
             itemId: item.itemId,
-            qtyOrdered: item.qtyOrdered,
+            itemName: item.itemName,
+            transferItemId: item.stockTransferItemId,
+            qty: item.qtyTransfer || 0,
             notes: item.notes,
+            itemCode: item.itemCode,
           }
         })
-        return { ...response, receiveItems }
+        return {
+          ...response,
+          senderNotes: response.senderNotes || '',
+          transferItems,
+          fromWarehouseId: response?.fromLocationWarehouseId,
+          toWarehouseId: response?.toLocationWarehouseId,
+        }
       },
     ),
 

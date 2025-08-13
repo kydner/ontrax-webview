@@ -1,7 +1,26 @@
 <template>
   <div class="">
     <div class="tw-my-4">
-      <k-status-badge v-if="!!formId" :label="startCase(form?.status)" :color="getColor(form.status)" />
+      <k-label v-if="!!formId" t-label="status" horizontal-label horizontal-align="base">
+        <template #label>
+          <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
+        </template>
+        <k-popup-edit
+          v-model="form.senderNotes"
+          t-label="remarkSender"
+          :show-label="false"
+          horizontal-label
+          :placeholder="t('inputRemark')"
+          input-class="inventory__field"
+        >
+          <template #default="scope">
+            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+          </template>
+          <template #preview:prefix>
+            <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
+          </template>
+        </k-popup-edit>
+      </k-label>
       <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
     </div>
     <k-date
@@ -16,7 +35,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -37,7 +56,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -62,7 +81,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/upload-box-primary.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/upload-box__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -87,32 +106,13 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/download-primary.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/download__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
         <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
       </template>
     </k-select-module>
-
-    <k-input
-      v-model="form.referenceNumber"
-      t-label="refNumber"
-      borderless
-      horizontal-align="base"
-      horizontal-label
-      :disable="isDisable"
-      :placeholder="t('empty')"
-      input-class="inventory__field"
-    >
-      <template #additional:prefix-label>
-        <q-icon name="img:/icons/hash.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
-      </template>
-
-      <template #label="{ label }">
-        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
-      </template>
-    </k-input>
 
     <k-file-upload
       v-model="form.fileId"
@@ -134,8 +134,7 @@
       </template>
     </k-file-upload>
 
-    <quality-check-data-list v-if="['PARTIAL_PASSED', 'QC_PASSED', 'RECEIVED'].includes(form.status)" v-model="form" />
-    <product-data-list v-else v-model="form" />
+    <product-data-list v-model="form" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends TransferItemDataRequest">
@@ -153,7 +152,7 @@ import { LocationWarehouseResponsePage } from 'src/common/model/location-warehou
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
-import QualityCheckDataList from '../QualityCheckDataList.vue'
+import KPopupEdit from 'src/components/ui/KPopupEdit.vue'
 
 interface Props {
   modelValue: T
