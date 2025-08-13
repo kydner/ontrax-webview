@@ -12,7 +12,10 @@
               </div>
             </div>
           </div>
-          <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
+          <div
+            v-if="vendorValue.status === 'RECEIVED'"
+            class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right"
+          >
             <span class="tw-text-xs">Input Qty Reject</span>
             <plus-minus-field
               v-model="product.qtyReject"
@@ -21,6 +24,37 @@
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
+          </div>
+          <div v-else class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
+            <div class="tw-flex tw-flex-col tw-space-y-1">
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                  <span>Qty Order</span>
+                </div>
+                <div>
+                  <span class="tw-text-secondary-text">{{ product.qtyPass }}</span>
+                </div>
+              </div>
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-receive__secondary-text.svg" />
+                  <span>Qty Receive</span>
+                </div>
+                <div>
+                  <span class="tw-text-secondary-text">{{ product.qtyPass }}</span>
+                </div>
+              </div>
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-reject__secondary-text.svg" />
+                  <span class="tw-text-secondary-text">Qty Reject</span>
+                </div>
+                <div>
+                  <span class="tw-text-negative">{{ product.qtyReject }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </q-card-section>
