@@ -41,7 +41,7 @@
         />
 
         <k-btn
-          v-if="form.status === undefined || form.status === 'DRAFT'"
+          v-if="(form.status === undefined || form.status === 'DRAFT') && !loadingPage"
           :label="form.status === 'DRAFT' ? t('saveDraft') : t('button.save')"
           class="fit tw-text-white"
           :class="form.status === 'DRAFT' ? 'tw-bg-secondary-text' : 'tw-bg-secondary'"
