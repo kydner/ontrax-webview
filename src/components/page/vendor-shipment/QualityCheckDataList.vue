@@ -30,28 +30,28 @@
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
                 <div class="tw-basis-auto tw-space-x-4">
                   <q-icon name="img:/icons/qty-order__secondary-text.svg" />
-                  <span class="tw-text-secondary-text">Qty Order</span>
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Order</span>
                 </div>
                 <div>
-                  <span class="tw-text-white">{{ format(product.qtyPass, { precision: 0 }) }}</span>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyPass, { precision: 0 }) }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
                 <div class="tw-basis-auto tw-space-x-4">
                   <q-icon name="img:/icons/qty-receive__secondary-text.svg" />
-                  <span class="tw-text-secondary-text">Qty Receive</span>
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Receive</span>
                 </div>
                 <div>
-                  <span class="tw-text-white">{{ format(product.qtyPass, { precision: 0 }) }}</span>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyPass, { precision: 0 }) }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
                 <div class="tw-basis-auto tw-space-x-4">
                   <q-icon name="img:/icons/qty-reject__secondary-text.svg" />
-                  <span class="tw-text-secondary-text">Qty Reject</span>
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Reject</span>
                 </div>
                 <div>
-                  <span class="tw-text-negative">{{ format(product.qtyReject, { precision: 0 }) }}</span>
+                  <span class="tw-text-negative tw-text-xs">{{ format(product.qtyReject, { precision: 0 }) }}</span>
                 </div>
               </div>
             </div>

@@ -133,13 +133,11 @@
       </template>
     </k-file-upload>
 
-    <quality-check-data-list v-if="['PARTIAL_PASSED', 'QC_PASSED', 'RECEIVED'].includes(form.status)" v-model="form" />
-    <product-data-list v-else v-model="form" />
+    <quality-check-data-list v-model="form" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends VendorShipmentDataRequest">
 import { computed } from 'vue'
-import ProductDataList from '../ProductDataList.vue'
 import { useI18n } from 'vue-i18n'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import { useRoute } from 'vue-router'

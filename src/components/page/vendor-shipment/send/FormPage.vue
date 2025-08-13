@@ -133,8 +133,7 @@
       </template>
     </k-file-upload>
 
-    <quality-check-data-list v-if="['PARTIAL_PASSED', 'QC_PASSED', 'RECEIVED'].includes(form.status)" v-model="form" />
-    <product-data-list v-else v-model="form" />
+    <product-data-list v-model="form" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends VendorShipmentDataRequest">
@@ -153,7 +152,6 @@ import { LocationWarehouseResponsePage } from 'src/common/model/location-warehou
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
-import QualityCheckDataList from '../QualityCheckDataList.vue'
 
 interface Props {
   modelValue: T
