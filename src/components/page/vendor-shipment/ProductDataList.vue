@@ -1,11 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
-    <k-btn
-      v-if="!isDisable || !['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
-      color="secondary"
-      label="Add Product"
-      @click="handleProductPick"
-    />
+    <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
@@ -151,6 +146,10 @@ const productValues = computed({
     vendorValue.value.receiveItems = value
     emit('updte:model-value', vendorValue.value)
   },
+})
+
+const showCreateButton = computed(() => {
+  return !['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.value.status)
 })
 
 const handleProductPick = () => {
