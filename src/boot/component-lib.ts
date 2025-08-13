@@ -5,7 +5,6 @@ import KBtn from 'components/ui/KBtn.vue'
 import KDate from 'components/ui/KDate.vue'
 import KLabel from 'components/ui/KLabel.vue'
 import KSelect from 'components/ui/KSelect.vue'
-import KSelectModule from 'components/ui/KSelectModule.vue'
 import KOptionGroup from 'src/components/ui/KOptionGroup.vue'
 import KToggle from 'src/components/ui/KToggle.vue'
 import KCurrency from 'src/components/ui/KCurrency.vue'
@@ -20,6 +19,7 @@ import KInputPhone from 'src/components/ui/KInputPhone.vue'
 import KInputMobilePhone from 'src/components/ui/KInputMobilePhone.vue'
 import KTextArea from 'src/components/ui/KTextArea.vue'
 import KStatusBadge from 'src/components/ui/KStatusBadge.vue'
+import KSelectModule from 'components/ui/KSelectModule.vue'
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ app } /* { app, router, ... } */) => {
@@ -30,7 +30,7 @@ export default boot(async ({ app } /* { app, router, ... } */) => {
   app.component('k-date', KDate)
   app.component('k-label', KLabel)
   app.component('k-select', KSelect)
-  app.component('k-select-module', KSelectModule)
+  app.component('k-select-module', KSelectModule as any)
   app.component('k-toggle', KToggle)
   app.component('k-currency', KCurrency)
   app.component('k-option-group', KOptionGroup)
