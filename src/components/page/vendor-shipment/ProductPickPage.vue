@@ -162,7 +162,7 @@ const fetchData = async () => {
         unitPrice: product.unitPrice,
         isActive: product.isActive,
 
-        qtyOrdered: existing?.qtyOrdered ?? 1,
+        qtyOrdered: existing?.qtyOrdered ?? 0,
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
         goodsReceiveId: existing?.goodsReceiveId ?? null,

@@ -25,7 +25,6 @@
             <plus-minus-field
               v-else
               v-model="product.qtyOrdered"
-              zero-confirm
               :allow-increase="false"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
