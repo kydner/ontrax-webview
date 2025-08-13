@@ -64,12 +64,13 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form',
+            path: 'send/form',
             component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
@@ -110,12 +111,13 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form',
+            path: 'send/form',
             component: () => import('pages/transfer-item/FormPage.vue'),
             name: `${Meta.TransferItem.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
@@ -156,12 +158,13 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'form',
+            path: 'send/form',
             component: () => import('pages/receive-item/FormPage.vue'),
             name: `${Meta.ReceiveItem.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
+              routePath: 'send',
             },
           },
           {
