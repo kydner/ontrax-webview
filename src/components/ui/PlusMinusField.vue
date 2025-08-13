@@ -16,7 +16,7 @@
       class="tw-flex input"
       borderless
       hide-underline
-      :disabled="props.disableValue"
+      :disabled="props.disableValue || props.disable"
       :precision="precision"
       decimal=","
       thousands="."

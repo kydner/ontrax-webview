@@ -21,6 +21,7 @@
               v-model="product.qtyReceived"
               :allow-increase="false"
               :max="product.qtyOrdered"
+              :disable="vendorValue.status === 'RECEIVED'"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
