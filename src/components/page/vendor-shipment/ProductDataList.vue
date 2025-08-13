@@ -19,6 +19,7 @@
               v-if="vendorValue.status === 'IN_TRANSIT'"
               v-model="product.qtyReceived"
               :allow-increase="false"
+              :max="product.qtyOrdered"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
@@ -73,6 +74,7 @@
                   v-if="vendorValue.status === 'IN_TRANSIT'"
                   v-model="productValues[dialogIndex].qtyReceived"
                   :allow-increase="true"
+                  :max="productValues[dialogIndex]?.qtyOrdered"
                   :disable="isDisable"
                 />
                 <plus-minus-field

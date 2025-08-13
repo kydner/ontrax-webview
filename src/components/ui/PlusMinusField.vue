@@ -20,6 +20,8 @@
       :precision="precision"
       decimal=","
       thousands="."
+      :max="props.max"
+      :min="props.min"
       focus-on-right
       @update:model-value="handleInputChange"
     />
@@ -47,6 +49,8 @@ interface Props extends Omit<QInputProps, 'modelValue'> {
   disableValue?: boolean
   zeroConfirmMessage?: string
   precision?: number
+  max?: string | number
+  min?: string | number
 }
 
 interface Emits {
