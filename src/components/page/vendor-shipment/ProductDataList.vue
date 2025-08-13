@@ -16,6 +16,15 @@
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
             <plus-minus-field
+              v-if="vendorValue.status === 'IN_TRANSIT'"
+              v-model="product.qtyReceived"
+              zero-confirm
+              :allow-increase="false"
+              @increase="handleIncrease(index)"
+              @zero:confirm="handleZeroConfirm(index)"
+            />
+            <plus-minus-field
+              v-else
               v-model="product.qtyOrdered"
               zero-confirm
               :allow-increase="false"
@@ -63,6 +72,13 @@
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
+                  v-if="vendorValue.status === 'IN_TRANSIT'"
+                  v-model="productValues[dialogIndex].qtyReceived"
+                  :allow-increase="true"
+                  :disable="isDisable"
+                />
+                <plus-minus-field
+                  v-else
                   v-model="productValues[dialogIndex].qtyOrdered"
                   :allow-increase="true"
                   :disable="isDisable"
