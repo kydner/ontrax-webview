@@ -58,6 +58,8 @@ const getColor = (status: TStatus): Colors => {
       return 'positive'
     case 'IN_TRANSIT':
       return 'secondary'
+    case 'READY_TO_SEND':
+      return 'positive'
     case 'DRAFT':
       return 'mute'
     default:
