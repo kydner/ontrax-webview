@@ -24,7 +24,7 @@ export const useVendorShipmentEndpoint = defineEndpoint({
 
   delete: (id: id) => Delete(`shipments/${id}`),
 
-  receive: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentRequest) =>
+  received: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentRequest) =>
     Patch(`shipments/${id}/received`, data, {
       params,
     }),

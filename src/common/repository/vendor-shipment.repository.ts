@@ -54,8 +54,8 @@ export const useVendorShipmentRepository = defineRepository({
 
   delete: (id: id) => shipmentEndpoint.delete(id),
 
-  receive: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentReceiveRequest) =>
-    shipmentEndpoint.receive(id, data, params),
+  received: (id: id, data: VendorShipmentReceiveDataRequest, params: VendorShipmentReceiveRequest) =>
+    shipmentEndpoint.received(id, data, params),
 
   qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => shipmentEndpoint.qualityCheck(id, data),
 

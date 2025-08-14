@@ -40,8 +40,12 @@ export const useTransferItemRepository = defineRepository({
 
   delete: (id: id) => transferEndpoint.delete(id),
 
-  receive: (id: id, data: TransferItemReceiveDataRequest, params: TransferItemRequest) =>
-    transferEndpoint.receive(id, data, params),
+  startQcSend: (id: id) => transferEndpoint.startQcSend(id),
+
+  startQcReceived: (id: id) => transferEndpoint.startQcReceived(id),
+
+  received: (id: id, data: TransferItemReceiveDataRequest, params: TransferItemRequest) =>
+    transferEndpoint.received(id, data, params),
 
   qualityCheck: (id: id, data: TransferItemQualityCheckDataRequest) => transferEndpoint.qualityCheck(id, data),
 

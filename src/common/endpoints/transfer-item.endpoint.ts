@@ -24,7 +24,11 @@ export const useTransferItemEndpoint = defineEndpoint({
 
   delete: (id: id) => Delete(`transfer-stock/${id}`),
 
-  receive: (id: id, data: TransferItemReceiveDataRequest, params?: TransferItemReceiveRequest) =>
+  startQcSend: (id: id) => Patch(`transfer-stock/${id}/start-qc-send`),
+
+  startQcReceived: (id: id) => Patch(`transfer-stock/${id}/start-qc-received`),
+
+  received: (id: id, data: TransferItemReceiveDataRequest, params?: TransferItemReceiveRequest) =>
     Patch(`transfer-stock/${id}/received`, data, {
       params,
     }),

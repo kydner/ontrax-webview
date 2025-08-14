@@ -107,7 +107,7 @@ const handleSubmitReceive = () => {
           const shipmentId = formId.value as id
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          await repository.receive(
+          await repository.received(
             shipmentId,
             { receivedItems: form.value?.receiveItems || [] },
             { receiveDate: new Date().toISOString() as isoDate },
