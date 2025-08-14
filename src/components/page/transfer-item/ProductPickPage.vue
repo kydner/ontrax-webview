@@ -51,7 +51,7 @@
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="product.qtyOrdered"
+                  v-model="product.qty"
                   :allow-increase="true"
                   :disable="!isChecked(product.itemId)"
                   @update:model-value="(val) => updateQty(product, val as number)"
@@ -82,20 +82,20 @@ import KToolbar from 'src/components/ui/KToolbar.vue'
 import { onMounted, reactive, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
-import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
+import { TransferItemResponse } from 'src/common/model/transfer-item.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
-  modelValue: VendorShipmentResponse
+  modelValue: TransferItemResponse
 }
 
 interface Emits {
   (event: 'back'): void
-  (event: 'update:modelValue', value: VendorShipmentResponse): void
+  (event: 'update:modelValue', value: TransferItemResponse): void
 }
 
-type ReceiveItem = VendorShipmentResponse['receiveItems'][0]
+type ReceiveItem = TransferItemResponse['transferItems'][0]
 
 const { t } = useI18n()
 
@@ -106,12 +106,12 @@ const currentValue = computed({
   set: (value) => emit('update:modelValue', value),
 })
 
-const receiveItems = computed({
-  get: () => props.modelValue?.receiveItems || [],
+const transferItems = computed({
+  get: () => props.modelValue?.transferItems || [],
   set: (value) =>
     emit('update:modelValue', {
       ...currentValue.value,
-      receiveItems: [...value],
+      transferItems: [...value],
     }),
 })
 const emit = defineEmits<Emits>()
@@ -137,9 +137,9 @@ const filteredProducts = computed(() => {
   return state.data.filter((product) => product.itemName.toLowerCase().includes(keyword))
 })
 
-const receivedItemLength = computed(() => receiveItems.value?.length || 0)
+const receivedItemLength = computed(() => transferItems.value?.length || 0)
 
-const totalQuantity = computed(() => receiveItems.value?.reduce((sum, item) => sum + (item.qtyOrdered || 0), 0))
+const totalQuantity = computed(() => transferItems.value?.reduce((sum, item) => sum + (item.qty || 0), 0))
 
 const fetchData = async () => {
   try {
@@ -150,7 +150,7 @@ const fetchData = async () => {
     const response = await productRepo.getAll()
 
     state.data = response.map((product) => {
-      const existing = receiveItems.value.find((item) => item.itemId === product.itemId)
+      const existing = transferItems.value.find((item) => item.itemId === product.itemId)
 
       return {
         itemId: product.itemId,
@@ -161,11 +161,9 @@ const fetchData = async () => {
         unit: product.unit,
         unitPrice: product.unitPrice,
         isActive: product.isActive,
-        qtyOrdered: existing?.qtyOrdered ?? 0,
-        qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
         stockTransferItemId: existing?.stockTransferItemId ?? 'null',
-        goodsReceiveId: existing?.goodsReceiveId ?? 'null',
+        qty: existing?.qty ?? 0,
       }
     })
   } catch (error) {
@@ -176,22 +174,22 @@ const fetchData = async () => {
 }
 
 const isChecked = (itemId: id) => {
-  return receiveItems.value.some((item) => item.itemId === itemId)
+  return transferItems.value.some((item) => item.itemId === itemId)
 }
 
 const updateQty = (product: ReceiveItem, qty: number) => {
-  const current = receiveItems.value.slice()
+  const current = transferItems.value.slice()
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 
   if (index > -1) {
-    current[index].qtyOrdered = qty ?? 1
+    current[index].qty = qty ?? 1
   }
 
-  receiveItems.value = current
+  transferItems.value = current
 }
 
 const toggleItem = (product: ReceiveItem, checked: boolean) => {
-  const current = [...receiveItems.value]
+  const current = [...transferItems.value]
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 
   if (checked) {
@@ -200,11 +198,8 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         itemId: product.itemId,
         itemName: product.itemName,
         itemCode: product.itemCode,
-        qtyOrdered: 1,
         notes: '',
-        goodsReceiveId: null,
-        qtyReceived: 0,
-        unitPrice: 0,
+        qty: 0,
         stockTransferItemId: product.stockTransferItemId,
       })
     }
@@ -214,7 +209,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
     }
   }
 
-  receiveItems.value = current
+  transferItems.value = current
 }
 
 onMounted(() => {
