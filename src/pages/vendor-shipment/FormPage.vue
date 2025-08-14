@@ -1,5 +1,5 @@
 <template>
-  <operational-form-page v-model="form" :meta="metaVendorShipment"></operational-form-page>
+  <operational-form-page v-model="form" :meta="metaVendorShipment"> </operational-form-page>
 </template>
 <script setup lang="ts">
 import { VendorShipment } from 'src/common/constants/meta.constant'
