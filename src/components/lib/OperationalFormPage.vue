@@ -6,7 +6,13 @@
     :allow-access="allowAccessPage"
     class="bg-body-base"
   >
-    <div class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
+    <div v-if="!!errorMessage" class="tw-min-h-[80vh] tw-flex tw-items-center tw-justify-center">
+      <internal-error>
+        <div>{{ errorMessage }}</div>
+        <q-btn color="secondary" :label="t('home')" to="/" unelevated class="tw-mt-4" />
+      </internal-error>
+    </div>
+    <div v-else class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
       <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
           <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
@@ -21,43 +27,25 @@
     </div>
 
     <template v-if="panel === PANEL_FORM" #footer>
-      <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2 tw-pb-2">
-        <k-btn
-          v-if="form.status === 'RECEIVED' && routePath === 'quality-control'"
-          :label="t('qcPass')"
-          color="secondary"
-          class="fit"
-          :disable="loadingPage || !!errorMessage"
-          @click="handleSubmitQcPass"
-        />
+      <slot name="footer">
+        <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2 tw-pb-2">
+          <k-btn
+            v-if="(form.status === undefined || form.status === 'DRAFT') && !loadingPage"
+            :label="form.status === 'DRAFT' ? t('saveDraft') : t('button.save')"
+            class="fit tw-text-white"
+            :class="form.status === 'DRAFT' ? 'tw-bg-secondary-text' : 'tw-bg-secondary'"
+            :disable="loadingPage || !!errorMessage"
+            @click="handleSubmitDraft"
+          />
 
-        <k-btn
-          v-if="form.status === 'IN_TRANSIT'"
-          :label="t('receive')"
-          color="secondary"
-          class="fit"
-          :disable="loadingPage || !!errorMessage"
-          @click="handleSubmitReceive"
-        />
-
-        <k-btn
-          v-if="(form.status === undefined || form.status === 'DRAFT') && !loadingPage"
-          :label="form.status === 'DRAFT' ? t('saveDraft') : t('button.save')"
-          class="fit tw-text-white"
-          :class="form.status === 'DRAFT' ? 'tw-bg-secondary-text' : 'tw-bg-secondary'"
-          :disable="loadingPage || !!errorMessage"
-          @click="handleSubmitDraft"
-        />
-
-        <k-btn
-          v-if="form.status === 'DRAFT'"
-          :label="t('saveToInTransit')"
-          color="secondary"
-          class="fit"
-          :disable="loadingPage || !!errorMessage"
-          @click="handleSubmitInTransit"
-        />
-      </div>
+          <slot
+            name="footer:button"
+            :loading="loadingPage"
+            :error-message="errorMessage"
+            :route-path="routePath"
+          ></slot>
+        </div>
+      </slot>
     </template>
   </meta-form-page>
 </template>
@@ -70,16 +58,18 @@ import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { $confirm, Notify } from 'src/common/utils/plugin.utils'
+import { Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
 import OperationalFormSkeleton from './OperationalFormSkeleton.vue'
 import { bus } from 'src/common/event-bus'
-import { id } from 'src/common/interfaces/response.interface'
 import { OperationalDataRequest } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import { getErrorMessage } from 'src/common/utils/error.utils'
+import { OperationalRoutePath } from 'src/common/enum/operational.enum'
+import InternalError from '../images/InternalError.vue'
+
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
 
@@ -129,7 +119,7 @@ const allowAccessPage = computed(() => true)
 
 const errorMessage = ref<string | null>(null)
 
-const routePath = computed(() => route.meta?.routePath)
+const routePath = computed<OperationalRoutePath>(() => route.meta?.routePath as OperationalRoutePath)
 
 const currentTitle = computed(() => {
   if (formId.value) return form.value?.receiveNumber || form.value?.transferNumber
@@ -147,12 +137,16 @@ const form = computed({
   },
 })
 
+const validate = (): Promise<boolean> => {
+  return metaFormPageRef.value?.validate() ?? Promise.resolve(false)
+}
+
 const fetchSingle = async () => {
   try {
     const repository = await metaService.repository()
+    errorMessage.value = null
     if (repository.getOne) {
       loadingPage.value = true
-      errorMessage.value = null
       const response = await repository.getOne(formId.value)
       form.value = response as T
     } else {
@@ -221,95 +215,6 @@ const handleSubmitDraft = async () => {
   }
 }
 
-const handleSubmitInTransit = async () => {
-  const validate = await metaFormPageRef.value?.validate()
-  if (!validate) return
-  $confirm({
-    message: `${t('saveToInTransit')}?`,
-    callback: async (confirm) => {
-      if (confirm) {
-        try {
-          const shipmentId = formId.value as string
-          if (!shipmentId) throw new ErrorId('ShipmentId')
-          Loading.show()
-
-          const repository = await metaService.repository()
-          await repository.update(formId.value, { ...form.value })
-          await repository.inTransit<T>(shipmentId)
-          Notify.success({
-            message: t('success'),
-          })
-          router.back()
-        } catch (error) {
-          Notify.error({
-            message: error as Error,
-          })
-        } finally {
-          Loading.hide()
-        }
-      }
-    },
-  })
-}
-
-const handleSubmitReceive = () => {
-  $confirm({
-    message: `${t('receive')}?`,
-    callback: async (confirm) => {
-      if (confirm) {
-        try {
-          const shipmentId = formId.value as id
-          if (!shipmentId) throw new ErrorId('ShipmentId')
-          Loading.show()
-          const repository = await metaService.repository()
-          await repository.receive(
-            shipmentId,
-            { receivedItems: form.value?.receiveItems },
-            { receiveDate: new Date().toISOString() },
-          )
-          Notify.success({
-            message: t('success'),
-          })
-          router.back()
-        } catch (error) {
-          Notify.error({
-            message: error as Error,
-          })
-        } finally {
-          Loading.hide()
-        }
-      }
-    },
-  })
-}
-
-const handleSubmitQcPass = () => {
-  $confirm({
-    message: `${t('qcPass')}?`,
-    callback: async (confirm) => {
-      if (confirm) {
-        try {
-          const shipmentId = formId.value as string
-          if (!shipmentId) throw new ErrorId('ShipmentId')
-          Loading.show()
-          const repository = await metaService.repository()
-          await repository.qualityCheck<T, T['qcItems']>(shipmentId, form.value.qcItems || [])
-          Notify.success({
-            message: t('success'),
-          })
-          router.back()
-        } catch (error) {
-          Notify.error({
-            message: error as Error,
-          })
-        } finally {
-          Loading.hide()
-        }
-      }
-    },
-  })
-}
-
 const handleBack = () => {
   router.push({
     name: `${props.meta.name}-list`,
@@ -322,5 +227,9 @@ onMounted(() => {
   bus.on('product:pick', () => {
     panel.value = PANEL_PRODUCT
   })
+})
+
+defineExpose({
+  validate,
 })
 </script>

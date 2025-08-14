@@ -12,5 +12,5 @@ export interface VendorShipmentReceiveResponse {}
 export interface VendorShipmentReceiveResponsePage extends VendorShipmentReceiveResponse {}
 
 export interface VendorShipmentReceiveDataRequest extends VendorShipmentReceiveResponse {
-  receivedItems: Pick<GoodReceiveItem, 'goodsReceiveItemId' | 'qtyReceived'>[]
+  receivedItems: GoodReceiveItem[]
 }
