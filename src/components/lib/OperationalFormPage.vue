@@ -21,7 +21,7 @@
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
-          <component :is="ProductPickPage" v-model="form" @back="panel = PANEL_FORM" />
+          <component :is="ProductPickPage" v-model="form" :warehouse-id="fromWarehouseId" @back="panel = PANEL_FORM" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -69,6 +69,7 @@ import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import InternalError from '../images/InternalError.vue'
+import { id } from 'src/common/interfaces/response.interface'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -112,6 +113,8 @@ const { t } = useI18n()
 const metaService = new MetaService(props.meta)
 
 const formId = computed(() => route.params?.id)
+
+const fromWarehouseId = computed(() => (form.value as unknown as { fromWarehouseId: id }).fromWarehouseId)
 
 const loadingPage = ref(false)
 

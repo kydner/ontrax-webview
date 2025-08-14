@@ -85,9 +85,11 @@ import { computed } from 'vue'
 import { TransferItemResponse } from 'src/common/model/transfer-item.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import { ErrorId } from 'src/common/exceptions/error-id'
 
 interface Props {
   modelValue: TransferItemResponse
+  warehouseId: id
 }
 
 interface Emits {
@@ -147,7 +149,9 @@ const fetchData = async () => {
     state.data = null
     state.errorMessage = null
 
-    const response = await productRepo.getAll()
+    if (!props.warehouseId) throw new ErrorId('warehouseId')
+
+    const response = await productRepo.availableItem(props.warehouseId)
 
     state.data = response.map((product) => {
       const existing = transferItems.value.find((item) => item.itemId === product.itemId)
