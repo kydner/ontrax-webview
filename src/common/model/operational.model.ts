@@ -44,6 +44,9 @@ export interface OperationalResponsePage extends OperationalResponse {}
 
 export interface OperationalDataRequest extends OperationalResponse {}
 
+/**
+ * Barang yang diterima
+ */
 export interface ReceiveItem {
   stockTransferItemId: id | null
   goodsReceiveId: id | null
@@ -56,6 +59,9 @@ export interface ReceiveItem {
   unitPrice: number
 }
 
+/**
+ * Barang diterima tanpa kerusakan
+ */
 export interface GoodReceiveItem {
   goodsReceiveItemId: id
   itemId: id
@@ -65,4 +71,20 @@ export interface GoodReceiveItem {
   qtyReceived: number
   unitPrice: number
   notes: string
+}
+
+/**
+ * Barang cacat melalui proses quality control
+ */
+export interface QcItem {
+  itemId: id
+  itemName?: string
+  itemCode?: string
+  skuCode?: string
+  qcGoodsReceiveItemId?: id
+  qtyReject: number
+  note?: string | null
+  notes?: string | null
+  qtyPass: number
+  attachmentUrl?: string | null
 }

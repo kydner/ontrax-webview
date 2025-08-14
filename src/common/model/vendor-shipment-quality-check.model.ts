@@ -1,4 +1,5 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
+import { QcItem } from './operational.model'
 
 export interface VendorShipmentQualityCheckRequest extends IListSortingRequest {}
 
@@ -8,23 +9,10 @@ export interface VendorShipmentQualityCheckResponse {
   qcBy?: string | null
   qcDate?: isoDate | null
   qcGoodsReceiveId?: id | null
-  qcGoodsReceiveItems: QcItems[]
-  qcItems: QcItems[]
+  qcGoodsReceiveItems: QcItem[]
+  qcItems: QcItem[]
 }
 
 export interface VendorShipmentQualityCheckResponsePage extends VendorShipmentQualityCheckResponse {}
 
 export interface VendorShipmentQualityCheckDataRequest extends VendorShipmentQualityCheckResponse {}
-
-export interface QcItems {
-  itemId: id
-  itemName?: string
-  itemCode?: string
-  skuCode?: string
-  qcGoodsReceiveItemId?: id
-  qtyReject: number
-  note?: string | null
-  notes?: string | null
-  qtyPass: number
-  attachmentUrl?: string | null
-}
