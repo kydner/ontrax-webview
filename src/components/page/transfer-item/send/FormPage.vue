@@ -73,7 +73,7 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || form.stockTransferItems?.length > 0"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"
