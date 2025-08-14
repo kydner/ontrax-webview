@@ -80,6 +80,7 @@ import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import { Notify } from 'src/common/utils/plugin.utils'
 
 interface Props {
   modelValue: TransferItemDataRequest
@@ -107,20 +108,25 @@ const isDialogOpen = computed({
   },
 })
 
-const vendorValue = computed({
+const transferValue = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
 const productValues = computed({
-  get: () => vendorValue.value?.transferItems || [],
+  get: () => transferValue.value?.transferItems || [],
   set: (value) => {
-    vendorValue.value.transferItems = value
-    emit('updte:model-value', vendorValue.value)
+    transferValue.value.transferItems = value
+    emit('updte:model-value', transferValue.value)
   },
 })
 
 const handleProductPick = () => {
+  if (!transferValue.value?.fromWarehouseId)
+    return Notify.create({
+      message: 'Please select a warehouse first.',
+      type: 'negative',
+    })
   bus.emit('product:pick')
 }
 
