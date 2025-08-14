@@ -79,6 +79,7 @@
       option-value="locationWarehouseId"
       :placeholder="t('empty')"
       input-class="inventory__field"
+      @selected:item="() => (form.toWarehouseId = null)"
     >
       <template #additional:prefix-label>
         <q-icon name="img:/icons/upload-box__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
@@ -98,7 +99,8 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || !form.fromWarehouseId"
+      :parent-id="form.fromWarehouseId"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"

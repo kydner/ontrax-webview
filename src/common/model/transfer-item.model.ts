@@ -17,7 +17,7 @@ export interface TransferItemResponse extends OperationalResponse {
   totalItemQty: number
   fromWarehouseId: id
   fromLocationWarehouseId: id
-  toWarehouseId: id
+  toWarehouseId: id | null
   toLocationWarehouseId: id
   stockTransferItems: TransferItemDetail[]
   senderNotes: string

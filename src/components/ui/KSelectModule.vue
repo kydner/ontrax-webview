@@ -73,7 +73,11 @@ const currentValue = computed({
 
 const errorMessage = ref<string | undefined>()
 
-const currentOptions = ref<readonly unknown[] | undefined>([])
+const options = ref<readonly unknown[] | undefined>([])
+
+const currentOptions = computed(() =>
+  options.value?.filter((item) => (item as any)?.[props.optionValue as any] !== props.parentId),
+)
 
 const hasLoadData = ref(false)
 
@@ -96,7 +100,7 @@ const loadData = async (callback: (result: unknown) => void = () => null) => {
 
       const results = props.optionMapper ? props.optionMapper(data as T[]) : [...data]
 
-      currentOptions.value = results
+      options.value = results
       if (typeof callback === 'function') {
         callback(results)
       }
@@ -120,7 +124,7 @@ const loadSingle = async () => {
           const response = await useCase.getOne(currentValue.value)
           hasLoadSingle.value = true
           const data = [response]
-          currentOptions.value = data
+          options.value = data
         }
       } else throw new Error(ERROR_SERVICE_USE_CASE)
     } else loadData()
