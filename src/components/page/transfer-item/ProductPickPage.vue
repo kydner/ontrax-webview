@@ -167,7 +167,7 @@ const fetchData = async () => {
         isActive: product.isActive,
         notes: existing?.notes ?? '',
         stockTransferItemId: existing?.stockTransferItemId ?? 'null',
-        qty: existing?.qty ?? 0,
+        qty: existing?.qty ?? 1,
       }
     })
   } catch (error) {
@@ -203,7 +203,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         itemName: product.itemName,
         itemCode: product.itemCode,
         notes: '',
-        qty: 0,
+        qty: 1,
         stockTransferItemId: product.stockTransferItemId,
       })
     }
