@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh]">
+  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh] tw-h-screen tw-overflow-y-auto">
     <div>
       <k-toolbar class="tw-pb-1" @back="handleBack">
         <template #title>
@@ -161,11 +161,11 @@ const fetchData = async () => {
         unit: product.unit,
         unitPrice: product.unitPrice,
         isActive: product.isActive,
-
         qtyOrdered: existing?.qtyOrdered ?? 0,
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
-        goodsReceiveId: existing?.goodsReceiveId ?? null,
+        stockTransferItemId: existing?.stockTransferItemId ?? 'null',
+        goodsReceiveId: existing?.goodsReceiveId ?? 'null',
       }
     })
   } catch (error) {
@@ -205,6 +205,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         goodsReceiveId: null,
         qtyReceived: 0,
         unitPrice: 0,
+        stockTransferItemId: product.stockTransferItemId,
       })
     }
   } else {
