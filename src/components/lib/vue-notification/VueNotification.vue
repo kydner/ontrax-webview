@@ -8,7 +8,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <div class="tw-my-2 tw-mb-3 tw-text-center tw-font-medium tw-text-secondary-text">
+        <div class="tw-my-2 tw-mb-3 tw-text-center tw-font-medium tw-text-white">
           {{ params.message }}
         </div>
       </q-card-section>
