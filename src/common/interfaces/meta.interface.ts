@@ -84,7 +84,7 @@ export interface IMetaEndpoint {
 
   inTransit<T>(id: id): Promise<T>
 
-  receive<T, R, P>(id: id, data: R, params: P): Promise<T>
+  receive<REQ, DATA, PARAM>(id: id, data: DATA, params?: PARAM): Promise<REQ>
 
   qualityCheck<RES, REQ>(id: id, data: REQ): Promise<RES>
 
