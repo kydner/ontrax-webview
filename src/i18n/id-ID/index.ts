@@ -1377,6 +1377,7 @@ export default {
   quantity: 'Kuantitas',
   home: 'Beranda',
   remarkSender: 'Komentar Pengirim',
+  saveToReadyToSend: 'Simpan Sebagai Siap Kirim',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

@@ -2,7 +2,15 @@
   <div class="tw-flex tw-items-center tw-space-x-4 tw-py-4">
     <k-btn icon="img:/icons/arrow-left.svg" flat rounded size="xs" padding="xs" @click="emit('back')" />
     <slot name="title">
-      <div v-if="props.headerTitle" class="tw-font-semibold tw-text-lg">{{ props.headerTitle }}</div>
+      <div
+        v-if="props.headerTitle"
+        class="tw-basis-full tw-flex tw-items-center tw-justify-between tw-font-semibold tw-text-lg"
+      >
+        <slot name="title:left">
+          <div class="tw-mr-2">{{ props.headerTitle }}</div>
+        </slot>
+        <slot name="title:right"></slot>
+      </div>
       <q-skeleton v-else-if="loading" height="24px" width="200px" class="tw-rounded-md" />
     </slot>
   </div>

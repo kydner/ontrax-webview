@@ -1377,6 +1377,7 @@ export default {
   quantity: 'Quantity',
   home: 'Home',
   remarkSender: 'Remark Sender',
+  saveToReadyToSend: 'Save to Ready to Send',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

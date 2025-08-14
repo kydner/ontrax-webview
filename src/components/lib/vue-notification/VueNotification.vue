@@ -14,6 +14,7 @@
       </q-card-section>
 
       <q-separator dark />
+
       <q-card-actions class="tw-p-0 flex">
         <button
           id="vueNotificationButton"
