@@ -44,4 +44,5 @@ export interface TransferItemDetail {
   itemName: string
   itemCode?: string
   qtyReject?: number
+  qcStockTransferItemId?: id
 }

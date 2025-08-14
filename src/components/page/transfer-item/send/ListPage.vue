@@ -69,7 +69,7 @@ const search = ref()
 
 const currentStatus = ref<TStatus | undefined>()
 
-const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED', 'READY_TO_SEND']
+const statuses: TStatus[] = ['DRAFT', 'RECEIVED', 'READY_TO_SEND', 'IN_TRANSIT']
 
 const payload = ref({
   status: currentStatus.value || statuses,

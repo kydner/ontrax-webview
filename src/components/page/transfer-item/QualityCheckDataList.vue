@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span class="tw-text-xs">Input Qty Reject</span>
+            <span v-if="transferValue.status === 'QC_SEND'" class="tw-text-xs">Input Qty Reject</span>
             <plus-minus-field
               v-model="product.qtyReject"
               :zero-confirm="false"

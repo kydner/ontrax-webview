@@ -52,15 +52,13 @@ const props = withDefaults(defineProps<Props>(), {})
 
 const getColor = (status: TStatus): Colors => {
   switch (status) {
+    case 'DRAFT':
+      return 'mute'
     case 'RECEIVED':
       return 'positive'
-    case 'QC_PASSED':
-      return 'positive'
-    case 'IN_TRANSIT':
-      return 'secondary'
     case 'READY_TO_SEND':
       return 'positive'
-    case 'DRAFT':
+    case 'IN_TRANSIT':
       return 'mute'
     default:
       return 'disable'

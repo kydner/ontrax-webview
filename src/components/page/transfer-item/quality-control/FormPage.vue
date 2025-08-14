@@ -195,6 +195,8 @@ const getColor = (status: TStatus): Colors => {
       return 'mute'
     case 'QC_SEND':
       return 'warning'
+    case 'READY_TO_SEND':
+      return 'positive'
     default:
       return 'disable'
   }

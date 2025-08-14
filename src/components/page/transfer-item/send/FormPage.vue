@@ -197,6 +197,8 @@ const getColor = (status: TStatus): Colors => {
       return 'secondary'
     case 'DRAFT':
       return 'mute'
+    case 'READY_TO_SEND':
+      return 'positive'
     default:
       return 'disable'
   }
