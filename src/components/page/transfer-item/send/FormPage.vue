@@ -81,6 +81,8 @@
       input-class="inventory__field"
       @selected:item="() => (form.toWarehouseId = null)"
     >
+      <q-tooltip v-if="form.stockTransferItems?.length > 0"> Delete product for change warehouse </q-tooltip>
+
       <template #additional:prefix-label>
         <q-icon name="img:/icons/upload-box__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
