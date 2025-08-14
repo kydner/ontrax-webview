@@ -54,7 +54,7 @@
         >
           <!-- Placeholder custom -->
           <span
-            v-if="!(selectedFile || props.modelValue)"
+            v-if="!(selectedFile || props.modelValue) && showLabel"
             class="tw-absolute tw-left-0 tw-top-1/2 -tw-translate-y-1/2 tw-text-disable-text tw-pointer-events-none"
           >
             {{ currentPlaceholder }}
@@ -65,7 +65,7 @@
           </template>
           <!-- end-prettier-ignore -->
           <template #prepend>
-            <q-icon name="attach_file" class="tw-rotate-45 tw-cursor-pointer" @click="openFileDialog" />
+            <q-icon :name="icon" :class="`${icon ? '' : 'tw-rotate-45'} tw-cursor-pointer`" @click="openFileDialog" />
           </template>
 
           <template #append>
@@ -126,6 +126,7 @@ export interface KInputProps extends KLabelProps {
   accept?: string // optional, e.g. '.jpg,.png,.pdf'
   payload: FileUploadRequest
   inputClass?: string
+  icon?: string
 }
 
 export interface KInputEmits {
@@ -148,6 +149,8 @@ const props = withDefaults(defineProps<KInputProps>(), {
   unmaskedValue: true,
   clearIcon: 'highlight_off',
   dark: true,
+  icon: 'attach_file',
+  color: 'secondary',
   accept:
     'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,zip,application/zip,application/x-zip-compressed,application/x-rar-compressed,application/vnd.rar',
 })

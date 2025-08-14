@@ -81,4 +81,5 @@ export interface QcItem {
   notes?: string | null
   qtyPass: number
   attachmentUrl?: string | null
+  fileId: id
 }

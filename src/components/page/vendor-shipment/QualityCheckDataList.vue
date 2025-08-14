@@ -98,6 +98,14 @@
           :show-label="false"
           :placeholder="t('note')"
         />
+        <k-file-upload
+          v-model="qualityCheck.qcItems[dialogIndex].fileId"
+          t-label="note"
+          icon="upload"
+          :payload="{ module: 'SHIPMENT' }"
+          :show-label="false"
+          :placeholder="t('upload')"
+        />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -114,6 +122,7 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { format } from 'src/common/utils/converter.utils'
+import KFileUpload from 'src/components/ui/KFileUpload.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
