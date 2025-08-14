@@ -52,7 +52,7 @@
         </q-card>
       </slot>
 
-      <div class="inventory-add-button">
+      <div v-if="meta.name !== 'receive-item'" class="inventory-add-button">
         <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
       </div>
     </meta-list-page>

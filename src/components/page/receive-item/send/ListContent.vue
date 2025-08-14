@@ -1,8 +1,8 @@
 <template>
   <div class="tw-flex tw-items-start tw-justify-between tw-cursor-pointer" v-ripple @click.stop="handleClick">
-    <div class="tw-basis-9/12">
+    <div class="tw-basis-7/12">
       <div class="tw-flex tw-flex-col tw-space-y-2">
-        <div class="tw-font-semibold">{{ item?.receiveNumber }}</div>
+        <div class="tw-font-semibold">{{ item?.transferNumber }}</div>
         <div class="tw-flex tw-flex-col tw-space-y-2">
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-basis-auto">
             <div class="tw-flex tw-items-center tw-space-x-2">
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="tw-basis-3/12">
+    <div class="tw-basis-6/12">
       <div class="tw-flex tw-flex-col tw-items-end tw-justify-end tw-space-y-2">
         <span class="tw-font-semibold">{{ format(item?.totalItems, { precision: 0 }) || 0 }} Items</span>
         <k-status-badge :label="startCase(item?.status)" :color="getColor(item.status)" />
@@ -33,17 +33,17 @@
 <script setup lang="ts">
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'
-import { TransferItemResponsePage } from 'src/common/model/transfer-item.model'
+import { ReceiveItemResponsePage } from 'src/common/model/receive-item.model'
 import { format, formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
 
 interface Props {
-  item: TransferItemResponsePage
+  item: ReceiveItemResponsePage
   loading?: boolean
 }
 
 interface Emits {
-  (e: 'click', data: { item: TransferItemResponsePage }): void
+  (e: 'click', data: { item: ReceiveItemResponsePage }): void
 }
 
 const emit = defineEmits<Emits>()
@@ -54,11 +54,7 @@ const getColor = (status: TStatus): Colors => {
   switch (status) {
     case 'RECEIVED':
       return 'positive'
-    case 'QC_PASSED':
-      return 'positive'
     case 'IN_TRANSIT':
-      return 'secondary'
-    case 'DRAFT':
       return 'mute'
     default:
       return 'disable'

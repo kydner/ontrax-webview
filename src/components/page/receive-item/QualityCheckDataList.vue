@@ -1,6 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[40vh]">
-    <k-card v-for="(product, index) in qualityCheck.qcItems" :key="index" class="tw-my-2">
+    <k-card v-for="(product, index) in qcBeforeSend.qcStockTransferItems" :key="index" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span class="tw-text-xs">Input Qty Reject</span>
+            <span v-if="transferValue.status === 'QC_SEND'" class="tw-text-xs">Input Qty Reject</span>
             <plus-minus-field
               v-model="product.qtyReject"
               :zero-confirm="false"
@@ -26,7 +26,9 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="qualityCheck.qcItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="qcBeforeSend.qcStockTransferItems?.length === 0" class="tw-my-4 tw-text-disable-text">
+      {{ t('noData') }}
+    </div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -43,14 +45,16 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ qualityCheck.qcItems[dialogIndex]?.itemCode }}</span>
-                    <span>{{ qualityCheck.qcItems[dialogIndex]?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{
+                      qcBeforeSend.qcStockTransferItems[dialogIndex]?.itemCode
+                    }}</span>
+                    <span>{{ qcBeforeSend.qcStockTransferItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="qualityCheck.qcItems[dialogIndex].qtyReject"
+                  v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].qtyReject"
                   :allow-increase="true"
                   :disable="isDisable"
                 />
@@ -59,7 +63,7 @@
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="qualityCheck.qcItems[dialogIndex].note"
+          v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
@@ -73,7 +77,7 @@
   </q-dialog>
 </template>
 <script setup lang="ts">
-import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemDataRequest } from 'src/common/model/receive-item.model'
 import KCard from 'src/components/ui/KCard.vue'
 import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
@@ -81,7 +85,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
-  modelValue: VendorShipmentDataRequest
+  modelValue: ReceiveItemDataRequest
   isDisable?: boolean
 }
 
@@ -106,16 +110,16 @@ const isDialogOpen = computed({
   },
 })
 
-const vendorValue = computed({
+const transferValue = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
-const qualityCheck = computed({
-  get: () => vendorValue.value.qcItems,
+const qcBeforeSend = computed({
+  get: () => transferValue.value.qcBeforeSend,
   set: (value) => {
-    vendorValue.value.qcItems = value
-    emit('updte:model-value', vendorValue.value)
+    transferValue.value.qcBeforeSend = value
+    emit('updte:model-value', transferValue.value)
   },
 })
 const handleIncrease = (index: number) => {
@@ -123,7 +127,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  qualityCheck.value.qcItems?.splice(index, 1)
+  qcBeforeSend.value.qcStockTransferItems?.splice(index, 1)
   dialogIndex.value = null
 }
 </script>

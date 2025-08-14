@@ -13,9 +13,9 @@
   <!-- meta list table -->
   <k-meta-list-table
     ref="metaListTableRef"
-    :meta="metaReceiveItem"
+    :meta="metaTransferItem"
     :payload="payload"
-    :item-mapper="(items) => orderBy(items, (item) => item.shippingDate, [sortDirection])"
+    :item-mapper="(items) => orderBy(items, (item) => item.transferDate, [sortDirection])"
   >
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
@@ -35,7 +35,7 @@
   <!-- end meta list table -->
 </template>
 <script setup lang="ts">
-import { ReceiveItem } from 'src/common/constants/meta.constant'
+import { TransferItem } from 'src/common/constants/meta.constant'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { ReceiveItemRequestPage, ReceiveItemResponsePage } from 'src/common/model/receive-item.model'
 import OperationalTopFilter, { TsortDirection } from 'src/components/page/operational/OperationalTopFilter.vue'
@@ -58,7 +58,7 @@ type MetaListTableExposed = {
 
 const emit = defineEmits<Emits>()
 
-const metaReceiveItem: IMetaListModule<ReceiveItemResponsePage> = ReceiveItem
+const metaTransferItem: IMetaListModule<ReceiveItemResponsePage> = TransferItem
 
 const ListContentPage = computed(() => {
   return defineAsyncComponent({
@@ -69,7 +69,7 @@ const search = ref()
 
 const currentStatus = ref<TStatus | undefined>()
 
-const statuses: TStatus[] = ['DRAFT', 'IN_TRANSIT', 'RECEIVED']
+const statuses: TStatus[] = ['IN_TRANSIT', 'RECEIVED']
 
 const payload = ref({
   status: currentStatus.value || statuses,

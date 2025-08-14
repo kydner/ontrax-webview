@@ -15,12 +15,8 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span v-if="['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)" class="tw-text-xs"
-              >Qty Ordered: {{ product.qtyOrdered }}</span
-            >
             <plus-minus-field
-              v-model="product.qtyOrdered"
-              zero-confirm
+              v-model="product.qty"
               :allow-increase="false"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
@@ -54,7 +50,7 @@
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="productValues[dialogIndex].qtyOrdered"
+                  v-model="productValues[dialogIndex].qty"
                   :allow-increase="true"
                   :disable="isDisable"
                 />
@@ -78,7 +74,7 @@
 </template>
 <script setup lang="ts">
 import { bus } from 'src/common/event-bus'
-import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
+import { ReceiveItemDataRequest } from 'src/common/model/receive-item.model'
 import KCard from 'src/components/ui/KCard.vue'
 import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
@@ -86,7 +82,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
-  modelValue: VendorShipmentDataRequest
+  modelValue: ReceiveItemDataRequest
   isDisable?: boolean
 }
 
@@ -117,9 +113,9 @@ const vendorValue = computed({
 })
 
 const productValues = computed({
-  get: () => vendorValue.value?.receiveItems || [],
+  get: () => vendorValue.value?.transferItems || [],
   set: (value) => {
-    vendorValue.value.receiveItems = value
+    vendorValue.value.transferItems = value
     emit('updte:model-value', vendorValue.value)
   },
 })
