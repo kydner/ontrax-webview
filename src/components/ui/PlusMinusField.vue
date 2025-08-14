@@ -43,7 +43,7 @@ import { computed } from 'vue'
 import { Money3Component as kMoney } from 'v-money3'
 
 interface Props extends Omit<QInputProps, 'modelValue'> {
-  modelValue: number
+  modelValue?: number
   allowIncrease?: boolean
   zeroConfirm?: boolean
   disableValue?: boolean

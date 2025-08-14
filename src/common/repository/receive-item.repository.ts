@@ -1,6 +1,7 @@
 import { useReceiveItemEndpoint } from '../endpoints/receive-item.endpoint'
 import { id } from '../interfaces/response.interface'
 import { ReceiveItemDataRequest, ReceiveItemRequest } from '../model/receive-item.model'
+import { TransferItemDetail } from '../model/transfer-item.model'
 import { withRepository } from '../utils/converter.utils'
 import { defineRepository } from '../utils/plugin.utils'
 
@@ -13,12 +14,16 @@ export const useReceiveItemRepository = defineRepository({
     withRepository(
       () => receiveEndpoint.getOne(id),
       (response) => {
-        const receiveItems = [...(response?.goodsReceiveItems || [])]?.map((item) => {
+        const receiveItems: TransferItemDetail[] = [...(response?.stockTransferItems || [])]?.map((item) => {
           return {
-            goodsReceiveId: item.goodsReceiveItemId,
+            ...item,
             itemId: item.itemId,
-            qtyOrdered: item.qtyOrdered,
+            itemCode: item.itemCode,
+            itemName: item.itemName,
             notes: item.notes,
+            qty: item.qty || 0,
+            qtyTransfer: item.qtyTransfer || 0,
+            stockTransferItemId: item.stockTransferItemId,
           }
         })
         return { ...response, receiveItems }

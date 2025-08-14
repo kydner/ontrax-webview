@@ -1,5 +1,4 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import { VendorShipmentQualityCheckResponse } from './vendor-shipment-quality-check.model'
 import { TStatus } from '../enum/operational.enum'
 
 export interface OperationalRequest extends IListSortingRequest {
@@ -23,11 +22,6 @@ export interface OperationalResponse {
   attachmentUrl: string
   notes: string | null
   status: TStatus
-  receiveItems: ReceiveItem[]
-  goodsReceiveItems: GoodReceiveItem[]
-  qcItems: VendorShipmentQualityCheckResponse
-  // same as qcItems
-  qcGoodsReceive: VendorShipmentQualityCheckResponse
   totalItems: number
   totalItemQty: number
   fileId: id
