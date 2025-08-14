@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh]">
+  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh] tw-h-screen tw-overflow-y-auto">
     <div>
       <k-toolbar class="tw-pb-1" @back="handleBack">
         <template #title>
@@ -82,20 +82,20 @@ import KToolbar from 'src/components/ui/KToolbar.vue'
 import { onMounted, reactive, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
-import { ReceiveItemResponse } from 'src/common/model/receive-item.model'
+import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
-  modelValue: ReceiveItemResponse
+  modelValue: VendorShipmentResponse
 }
 
 interface Emits {
   (event: 'back'): void
-  (event: 'update:modelValue', value: ReceiveItemResponse): void
+  (event: 'update:modelValue', value: VendorShipmentResponse): void
 }
 
-type ReceiveItem = ReceiveItemResponse['receiveItems'][0]
+type ReceiveItem = VendorShipmentResponse['receiveItems'][0]
 
 const { t } = useI18n()
 
@@ -161,11 +161,11 @@ const fetchData = async () => {
         unit: product.unit,
         unitPrice: product.unitPrice,
         isActive: product.isActive,
-
-        qtyOrdered: existing?.qtyOrdered ?? 1,
+        qtyOrdered: existing?.qtyOrdered ?? 0,
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
-        goodsReceiveId: existing?.goodsReceiveId ?? null,
+        stockTransferItemId: existing?.stockTransferItemId ?? 'null',
+        goodsReceiveId: existing?.goodsReceiveId ?? 'null',
       }
     })
   } catch (error) {
@@ -205,6 +205,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         goodsReceiveId: null,
         qtyReceived: 0,
         unitPrice: 0,
+        stockTransferItemId: product.stockTransferItemId,
       })
     }
   } else {
