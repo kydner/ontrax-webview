@@ -45,7 +45,8 @@ export interface OperationalResponsePage extends OperationalResponse {}
 export interface OperationalDataRequest extends OperationalResponse {}
 
 export interface ReceiveItem {
-  goodsReceiveId: string | null
+  stockTransferItemId: id
+  goodsReceiveId: id
   itemId: id
   qtyOrdered: number
   notes: string

@@ -1,5 +1,7 @@
 import { useTransferItemEndpoint } from '../endpoints/transfer-item.endpoint'
 import { id } from '../interfaces/response.interface'
+import { TransferItemQualityCheckDataRequest } from '../model/transfer-item-quality-check.model'
+import { TransferItemReceiveDataRequest } from '../model/transfer-item-receive.model'
 import { TransferItemDataRequest, TransferItemDetail, TransferItemRequest } from '../model/transfer-item.model'
 import { withRepository } from '../utils/converter.utils'
 import { defineRepository } from '../utils/plugin.utils'
@@ -37,4 +39,11 @@ export const useTransferItemRepository = defineRepository({
   update: (id: id, data: TransferItemDataRequest) => withRepository(() => transferEndpoint.update(id, data)),
 
   delete: (id: id) => transferEndpoint.delete(id),
+
+  receive: (id: id, data: TransferItemReceiveDataRequest, params: TransferItemRequest) =>
+    transferEndpoint.receive(id, data, params),
+
+  qualityCheck: (id: id, data: TransferItemQualityCheckDataRequest) => transferEndpoint.qualityCheck(id, data),
+
+  inTransit: (id: id) => transferEndpoint.inTransit(id),
 })
