@@ -73,7 +73,7 @@
   </q-dialog>
 </template>
 <script setup lang="ts">
-import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
+import { TransferItemDataRequest } from 'src/common/model/transfer-item.model'
 import KCard from 'src/components/ui/KCard.vue'
 import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
@@ -81,7 +81,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 
 interface Props {
-  modelValue: VendorShipmentDataRequest
+  modelValue: TransferItemDataRequest
   isDisable?: boolean
 }
 
@@ -106,16 +106,16 @@ const isDialogOpen = computed({
   },
 })
 
-const vendorValue = computed({
+const transferValue = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
 const qualityCheck = computed({
-  get: () => vendorValue.value.qcItems,
+  get: () => transferValue.value.qcItems,
   set: (value) => {
-    vendorValue.value.qcItems = value
-    emit('updte:model-value', vendorValue.value)
+    transferValue.value.qcItems = value
+    emit('updte:model-value', transferValue.value)
   },
 })
 const handleIncrease = (index: number) => {
