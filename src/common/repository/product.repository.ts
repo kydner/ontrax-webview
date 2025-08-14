@@ -18,4 +18,6 @@ export const useProductRepository = defineRepository({
   update: (id: id, data: ProductDataRequest) => withRepository(() => productEndpoint.update(id, data)),
 
   delete: (id: id) => productEndpoint.delete(id),
+
+  availableItem: (warehouseId: id) => withRepository(() => productEndpoint.availableItem(warehouseId)),
 })

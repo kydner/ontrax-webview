@@ -1,4 +1,5 @@
 import { id } from '../interfaces/response.interface'
+import { ProductAvailableItemResponse } from '../model/product-available-item.model'
 import {
   ProductDataRequest,
   ProductRequest,
@@ -27,4 +28,6 @@ export const useProductEndpoint = defineEndpoint({
   update: (id: id, data: ProductDataRequest) => Post(`product/${id}`, data),
 
   delete: (id: id) => Delete(`product/${id}`),
+
+  availableItem: (warehouseId: id) => Get<ProductAvailableItemResponse[]>(`product/get-available-item/${warehouseId}`),
 })
