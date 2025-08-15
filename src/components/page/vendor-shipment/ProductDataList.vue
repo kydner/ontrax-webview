@@ -2,7 +2,7 @@
   <div class="tw-my-4 tw-min-h-[60vh]">
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
-    <k-card v-for="(product, index) in productValues" :key="index" class="gradient-card tw-my-2">
+    <k-card v-for="(product, index) in receiveItems" :key="index" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -51,7 +51,7 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="productValues?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="receiveItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -68,22 +68,22 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ productValues[dialogIndex]?.itemCode }}</span>
-                    <span>{{ productValues[dialogIndex]?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ receiveItems[dialogIndex]?.itemCode }}</span>
+                    <span>{{ receiveItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
                   v-if="form.status === 'IN_TRANSIT'"
-                  v-model="productValues[dialogIndex].qtyReceived"
+                  v-model="receiveItems[dialogIndex].qtyReceived"
                   :allow-increase="true"
-                  :max="productValues[dialogIndex]?.qtyOrdered"
+                  :max="receiveItems[dialogIndex]?.qtyOrdered"
                   :disable="isDisable"
                 />
                 <plus-minus-field
                   v-else
-                  v-model="productValues[dialogIndex].qtyOrdered"
+                  v-model="receiveItems[dialogIndex].qtyOrdered"
                   :allow-increase="true"
                   :disable="isDisable"
                 />
@@ -92,7 +92,7 @@
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="productValues[dialogIndex].notes"
+          v-model="receiveItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
@@ -146,7 +146,7 @@ const form = computed({
   set: (value) => emit('update:model-value', value),
 })
 
-const productValues = computed({
+const receiveItems = computed({
   get: () => form.value?.receiveItems || [],
   set: (value) => {
     form.value.receiveItems = value
@@ -167,7 +167,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  productValues.value?.splice(index, 1)
+  receiveItems.value?.splice(index, 1)
   dialogIndex.value = null
 }
 </script>

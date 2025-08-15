@@ -115,7 +115,7 @@ const handleSubmitReceive = () => {
           const receiveItems = form.value?.receiveItems || []
 
           const data: VendorShipmentReceiveDataRequest = {
-            receivedItems: receiveItems?.map((item) => {
+            receivedItems: [...receiveItems]?.map((item) => {
               return {
                 goodsReceiveItemId: item.goodsReceiveItemId ?? null,
                 qtyReceived: item.qtyReceived ?? 0,
