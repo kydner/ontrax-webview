@@ -7,21 +7,32 @@
         </template>
         <k-popup-edit
           v-model="form.senderNotes"
-          t-label="remarkSender"
+          t-label="remark"
           :show-label="false"
           horizontal-label
           :placeholder="t('inputRemark')"
           input-class="inventory__field"
         >
           <template #default="scope">
-            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+            <k-text-area
+              v-model="scope.value"
+              :disable="['RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkSender"
+              :show-label="true"
+            />
+            <k-text-area
+              v-if="['RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'].includes(form.status)"
+              v-model="form.receiverNotes"
+              :disable="['PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkReceiver"
+              :show-label="true"
+            />
           </template>
           <template #preview:prefix>
             <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
           </template>
         </k-popup-edit>
       </k-label>
-      <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
     </div>
     <k-date
       v-model="form.transferDate"
@@ -177,7 +188,7 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const formId = computed(() => route.params?.id)
 
 const isDisable = computed(() => {
-  return (['RECEIVED', 'IN_TRANSIT'] as TStatus[]).includes(form.value.status)
+  return !(['DRAFT'] as TStatus[]).includes(form.value.status) || !form.value.status
 })
 
 const { t } = useI18n()

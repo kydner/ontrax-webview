@@ -54,6 +54,10 @@ const getColor = (status: TStatus): Colors => {
   switch (status) {
     case 'QC_RECEIVE':
       return 'warning'
+    case 'QC_PASSED':
+      return 'positive'
+    case 'PARTIAL_PASSED':
+      return 'positive'
 
     default:
       return 'disable'

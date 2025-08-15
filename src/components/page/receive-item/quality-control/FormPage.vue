@@ -1,12 +1,42 @@
 <template>
   <div class="">
     <div class="tw-my-4">
-      <k-status-badge v-if="!!formId" :label="startCase(form?.status)" :color="getColor(form.status)" />
-      <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
+      <k-label v-if="!!formId" t-label="status" horizontal-label horizontal-align="base">
+        <template #label>
+          <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
+        </template>
+        <k-popup-edit
+          v-model="form.senderNotes"
+          t-label="remark"
+          :show-label="false"
+          horizontal-label
+          :placeholder="t('inputRemark')"
+          input-class="inventory__field"
+        >
+          <template #default="scope">
+            <k-text-area
+              v-model="scope.value"
+              :disable="['RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkSender"
+              :show-label="true"
+            />
+            <k-text-area
+              v-if="['RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'].includes(form.status)"
+              v-model="form.receiverNotes"
+              :disable="['PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkReceiver"
+              :show-label="true"
+            />
+          </template>
+          <template #preview:prefix>
+            <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
+          </template>
+        </k-popup-edit>
+      </k-label>
     </div>
     <k-date
-      v-model="form.shippingDate"
-      t-label="shippingDate"
+      v-model="form.transferDate"
+      t-label="transferDate"
       horizontal-align="base"
       horizontal-label
       required
@@ -16,7 +46,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -37,7 +67,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -46,23 +76,26 @@
     </k-date>
 
     <k-select-module
-      v-model="form.vendorId"
-      t-label="vendor"
-      :meta="metaVendor"
+      v-model="form.fromWarehouseId"
+      t-label="from"
+      :meta="metaLocationWarehouse"
       borderless
-      :outline="false"
       horizontal-align="base"
-      option-label="vendorName"
-      behavior="menu"
-      required
-      :disable="isDisable"
-      option-value="vendorId"
       horizontal-label
+      required
+      behavior="menu"
+      :disable="isDisable || form.stockTransferItems?.length > 0"
+      :outlined="false"
+      option-label="warehouseName"
+      option-value="locationWarehouseId"
       :placeholder="t('empty')"
       input-class="inventory__field"
+      @selected:item="() => (form.toWarehouseId = null)"
     >
+      <q-tooltip v-if="form.stockTransferItems?.length > 0"> Delete product for change warehouse </q-tooltip>
+
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/upload-box__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -71,15 +104,16 @@
     </k-select-module>
 
     <k-select-module
-      v-model="form.warehouseId"
-      t-label="warehouse"
+      v-model="form.toWarehouseId"
+      t-label="to"
       :meta="metaLocationWarehouse"
       borderless
       horizontal-align="base"
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || !form.fromWarehouseId"
+      :parent-id="form.fromWarehouseId"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"
@@ -87,31 +121,13 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/home.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/download__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
         <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
       </template>
     </k-select-module>
-    <k-input
-      v-model="form.referenceNumber"
-      t-label="refNumber"
-      borderless
-      horizontal-align="base"
-      horizontal-label
-      :disable="isDisable"
-      :placeholder="t('empty')"
-      input-class="inventory__field"
-    >
-      <template #additional:prefix-label>
-        <q-icon name="img:/icons/hash.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
-      </template>
-
-      <template #label="{ label }">
-        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
-      </template>
-    </k-input>
 
     <k-file-upload
       v-model="form.fileId"
@@ -144,14 +160,14 @@ import { useRoute } from 'vue-router'
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
-import { VendorResponsePage } from 'src/common/model/vendor.model'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { LocationWarehouse, Vendor } from 'src/common/constants/meta.constant'
+import { LocationWarehouse } from 'src/common/constants/meta.constant'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
 import QualityCheckDataList from '../QualityCheckDataList.vue'
+import KPopupEdit from 'src/components/ui/KPopupEdit.vue'
 
 interface Props {
   modelValue: T
@@ -167,14 +183,12 @@ const emit = defineEmits<Emits>()
 
 const route = useRoute()
 
-const metaVendor: IMetaListModule<VendorResponsePage> = Vendor
-
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const formId = computed(() => route.params?.id)
 
 const isDisable = computed(() => {
-  return (['QC_RECEIVE'] as TStatus[]).includes(form.value.status)
+  return !(['DRAFT'] as TStatus[]).includes(form.value.status) || !form.value.status
 })
 
 const { t } = useI18n()
@@ -188,6 +202,10 @@ const getColor = (status: TStatus): Colors => {
   switch (status) {
     case 'QC_RECEIVE':
       return 'warning'
+    case 'QC_PASSED':
+      return 'positive'
+    case 'PARTIAL_PASSED':
+      return 'positive'
 
     default:
       return 'disable'

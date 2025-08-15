@@ -7,28 +7,51 @@
             <product-image />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product.itemCode }}</span>
+                <span class="tw-text-secondary-text">{{ product.itemCode || product?.skuCode }}</span>
                 <span>{{ product.itemName }}</span>
               </div>
             </div>
           </div>
-          <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <div v-if="['QC_SEND'].includes(form.status)" class="tw-flex tw-flex-col">
-              <span class="tw-text-xs">Input Qty Reject</span>
-              <plus-minus-field
-                v-model="product.qtyReject"
-                :zero-confirm="false"
-                :allow-increase="false"
-                @increase="handleIncrease(index)"
-                @zero:confirm="handleZeroConfirm(index)"
-              />
+          <div
+            v-if="['QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+            class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right"
+          >
+            <div class="tw-flex tw-flex-col tw-space-y-1">
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Send</span>
+                </div>
+                <div>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyTransfer, { precision: 0 }) }}</span>
+                </div>
+              </div>
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-receive__secondary-text.svg" />
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Receive</span>
+                </div>
+                <div>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyReceived, { precision: 0 }) }}</span>
+                </div>
+              </div>
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-reject__secondary-text.svg" />
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Reject</span>
+                </div>
+                <div>
+                  <span class="tw-text-negative tw-text-xs">{{ format(product.qtyReject, { precision: 0 }) }}</span>
+                </div>
+              </div>
             </div>
-            <div v-if="['QC_RECEIVE'].includes(form.status)" class="tw-flex tw-flex-col">
-              <span class="tw-text-xs">Input Qty Reject</span>
+          </div>
+          <div v-else class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
+            <div v-if="['QC_RECEIVE', 'QC_SEND'].includes(form.status)" class="tw-flex tw-flex-col tw-space-y-2">
+              <div class="tw-text-xs">Input Qty Reject</div>
               <plus-minus-field
                 v-model="product.qtyReject"
                 :zero-confirm="false"
-                :allow-increase="false"
                 @increase="handleIncrease(index)"
                 @zero:confirm="handleZeroConfirm(index)"
               />
@@ -37,7 +60,6 @@
               <plus-minus-field
                 v-model="product.qtyReject"
                 :zero-confirm="false"
-                :allow-increase="false"
                 @increase="handleIncrease(index)"
                 @zero:confirm="handleZeroConfirm(index)"
               />
@@ -112,6 +134,7 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
