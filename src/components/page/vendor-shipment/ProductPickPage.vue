@@ -86,6 +86,7 @@ import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { ShipmentGoodReceiveItem } from 'src/common/model/operational.model'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: VendorShipmentResponse
@@ -136,9 +137,14 @@ const filteredProducts = computed(() => {
   return state.data.filter((product) => product.itemName.toLowerCase().includes(keyword))
 })
 
-const receivedItemLength = computed(() => receiveItems.value?.length || 0)
+const receivedItemLength = computed(() => format(receiveItems.value?.length || 0, { precision: 0 }))
 
-const totalQuantity = computed(() => receiveItems.value?.reduce((sum, item) => sum + (item.qtyOrdered || 0), 0))
+const totalQuantity = computed(() =>
+  format(
+    receiveItems.value?.reduce((sum, item) => sum + (item.qtyOrdered || 0), 0),
+    { precision: 0 },
+  ),
+)
 
 const fetchData = async () => {
   try {

@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
-                <span class="tw-text-xs">Available Qty: {{ product.availableQty }}</span>
+                <span class="tw-text-xs">Available Qty: {{ format(product.availableQty, { precision: 0 }) }}</span>
                 <plus-minus-field
                   v-model="product.qty"
                   :allow-increase="true"
@@ -89,6 +89,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { TransferItem } from 'src/common/model/operational.model'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: TransferItemResponse
@@ -142,9 +143,14 @@ const filteredProducts = computed(() => {
   return state.data.filter((product) => product.itemName.toLowerCase().includes(keyword))
 })
 
-const receivedItemLength = computed(() => transferItems.value?.length || 0)
+const receivedItemLength = computed(() => format(transferItems.value?.length, { precision: 0 }) || 0)
 
-const totalQuantity = computed(() => transferItems.value?.reduce((sum, item) => sum + (item.qty || 0), 0))
+const totalQuantity = computed(() =>
+  format(
+    transferItems.value?.reduce((sum, item) => sum + (item.qty || 0), 0),
+    { precision: 0 },
+  ),
+)
 
 const fetchData = async () => {
   try {

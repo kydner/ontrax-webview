@@ -15,7 +15,9 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span v-if="vendorValue.status === 'RECEIVED'" class="tw-text-xs">Qty Order: {{ product.qtyOrdered }}</span>
+            <span v-if="vendorValue.status === 'RECEIVED'" class="tw-text-xs"
+              >Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}</span
+            >
             <plus-minus-field
               v-if="['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
               v-model="product.qtyReceived"

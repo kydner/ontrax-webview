@@ -17,7 +17,7 @@
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
             <plus-minus-field
               v-model="product.qty"
-              :allow-increase="false"
+              :allow-increase="true"
               :is-disable="isDisable"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
