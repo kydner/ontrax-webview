@@ -29,6 +29,7 @@
               <plus-minus-field
                 v-model="product.qty"
                 :allow-increase="false"
+                :disable="['RECEIVED'].includes(form.status)"
                 @increase="handleIncrease(index)"
                 @zero:confirm="handleZeroConfirm(index)"
               />
