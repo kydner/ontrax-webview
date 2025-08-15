@@ -22,7 +22,7 @@
             <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
             <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
           </q-tabs>
-          <q-tab-panels v-model="tab" animated class="tw-bg-transparent">
+          <q-tab-panels v-model="tab" keep-alive animated class="tw-bg-transparent">
             <q-tab-panel :name="TAB_SEND" class="tw-px-0">
               <component
                 v-if="allowSend"
