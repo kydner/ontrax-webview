@@ -1,6 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[40vh]">
-    <k-card v-for="(product, index) in qcBeforeSend.qcStockTransferItems" :key="index" class="tw-my-2">
+    <k-card v-for="(product, index) in qcAfterReceived.qcStockTransferItems" :key="index" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -13,7 +13,17 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <div v-if="transferValue.status === 'QC_SEND'" class="tw-flex tw-flex-col">
+            <div v-if="['QC_SEND'].includes(form.status)" class="tw-flex tw-flex-col">
+              <span class="tw-text-xs">Input Qty Reject</span>
+              <plus-minus-field
+                v-model="product.qtyReject"
+                :zero-confirm="false"
+                :allow-increase="false"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+              />
+            </div>
+            <div v-if="['QC_RECEIVE'].includes(form.status)" class="tw-flex tw-flex-col">
               <span class="tw-text-xs">Input Qty Reject</span>
               <plus-minus-field
                 v-model="product.qtyReject"
@@ -37,7 +47,7 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="qcBeforeSend.qcStockTransferItems?.length === 0" class="tw-my-4 tw-text-disable-text">
+    <div v-if="qcAfterReceived.qcStockTransferItems?.length === 0" class="tw-my-4 tw-text-disable-text">
       {{ t('noData') }}
     </div>
   </div>
@@ -57,15 +67,15 @@
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{
-                      qcBeforeSend.qcStockTransferItems[dialogIndex]?.itemCode
+                      qcAfterReceived.qcStockTransferItems[dialogIndex]?.itemCode
                     }}</span>
-                    <span>{{ qcBeforeSend.qcStockTransferItems[dialogIndex]?.itemName }}</span>
+                    <span>{{ qcAfterReceived.qcStockTransferItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].qtyReject"
+                  v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].qtyReject"
                   :allow-increase="true"
                   :disable="isDisable"
                 />
@@ -74,13 +84,13 @@
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].notes"
+          v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
         />
         <k-file-upload
-          v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].notes"
+          v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].notes"
           t-label="note"
           :payload="{ module: 'TRANSFER' }"
           :show-label="false"
@@ -129,16 +139,16 @@ const isDialogOpen = computed({
   },
 })
 
-const transferValue = computed({
+const form = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
-const qcBeforeSend = computed({
-  get: () => transferValue.value.qcBeforeSend,
+const qcAfterReceived = computed({
+  get: () => form.value.qcAfterReceived,
   set: (value) => {
-    transferValue.value.qcBeforeSend = value
-    emit('updte:model-value', transferValue.value)
+    form.value.qcAfterReceived = value
+    emit('updte:model-value', form.value)
   },
 })
 const handleIncrease = (index: number) => {
@@ -146,7 +156,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  qcBeforeSend.value.qcStockTransferItems?.splice(index, 1)
+  qcAfterReceived.value.qcStockTransferItems?.splice(index, 1)
   dialogIndex.value = null
 }
 </script>
