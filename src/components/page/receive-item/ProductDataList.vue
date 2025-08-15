@@ -16,6 +16,14 @@
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
             <plus-minus-field
+              v-if="form.status === 'IN_TRANSIT'"
+              v-model="product.qtyTransfer"
+              :allow-increase="false"
+              @increase="handleIncrease(index)"
+              @zero:confirm="handleZeroConfirm(index)"
+            />
+            <plus-minus-field
+              v-else
               v-model="product.qty"
               :allow-increase="false"
               @increase="handleIncrease(index)"
@@ -102,7 +110,7 @@ const dialogIndex = ref<number | null>(null)
 
 const showAddButton = computed(() => {
   if (!form.value.status) return true
-  if (!['DRAFT'].includes(form.value.status)) return true
+  if (['DRAFT'].includes(form.value.status)) return true
   return !props.isDisable
 })
 

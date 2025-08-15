@@ -17,5 +17,6 @@ export interface TransferItemQualityCheckDataRequest extends TransferItemQuality
 
 export interface QcStockTransferItem extends Partial<TransferItem> {
   /// same as stockTransferItemId
-  qcStockTransferItemId: id
+  qcStockTransferItemId: id | null
+  note?: string | null
 }

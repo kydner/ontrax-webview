@@ -1,7 +1,26 @@
 <template>
   <div class="">
     <div class="tw-my-4">
-      <k-status-badge v-if="!!formId" :label="startCase(form?.status)" :color="getColor(form.status)" />
+      <k-label v-if="!!formId" t-label="status" horizontal-label horizontal-align="base">
+        <template #label>
+          <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
+        </template>
+        <k-popup-edit
+          v-model="form.senderNotes"
+          t-label="remarkSender"
+          :show-label="false"
+          horizontal-label
+          :placeholder="t('inputRemark')"
+          input-class="inventory__field"
+        >
+          <template #default="scope">
+            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+          </template>
+          <template #preview:prefix>
+            <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
+          </template>
+        </k-popup-edit>
+      </k-label>
       <h3 v-else class="tw-text-lg tw-font-medium tw-mb-2"></h3>
     </div>
     <k-date
@@ -54,13 +73,16 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || form.stockTransferItems?.length > 0"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"
       :placeholder="t('empty')"
       input-class="inventory__field"
+      @selected:item="() => (form.toWarehouseId = null)"
     >
+      <q-tooltip v-if="form.stockTransferItems?.length > 0"> Delete product for change warehouse </q-tooltip>
+
       <template #additional:prefix-label>
         <q-icon name="img:/icons/upload-box__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
@@ -79,7 +101,8 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || !form.fromWarehouseId"
+      :parent-id="form.fromWarehouseId"
       :outlined="false"
       option-label="warehouseName"
       option-value="locationWarehouseId"
@@ -115,8 +138,7 @@
       </template>
     </k-file-upload>
 
-    <quality-check-data-list v-if="['PARTIAL_PASSED', 'QC_PASSED', 'RECEIVED'].includes(form.status)" v-model="form" />
-    <product-data-list v-else v-model="form" />
+    <product-data-list v-model="form" :is-disable="!form.status || form.status !== 'DRAFT'" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends ReceiveItemDataRequest">
@@ -134,7 +156,7 @@ import { LocationWarehouseResponsePage } from 'src/common/model/location-warehou
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
-import QualityCheckDataList from '../QualityCheckDataList.vue'
+import KPopupEdit from 'src/components/ui/KPopupEdit.vue'
 
 interface Props {
   modelValue: T
@@ -155,7 +177,7 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const formId = computed(() => route.params?.id)
 
 const isDisable = computed(() => {
-  return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'] as TStatus[]).includes(form.value.status)
+  return (['RECEIVED', 'IN_TRANSIT'] as TStatus[]).includes(form.value.status)
 })
 
 const { t } = useI18n()
@@ -168,7 +190,7 @@ const form = computed({
 const getColor = (status: TStatus): Colors => {
   switch (status) {
     case 'RECEIVED':
-      return 'positive'
+      return 'secondary'
     case 'QC_PASSED':
       return 'positive'
     case 'IN_TRANSIT':

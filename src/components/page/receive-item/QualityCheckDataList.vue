@@ -13,14 +13,25 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span v-if="transferValue.status === 'QC_SEND'" class="tw-text-xs">Input Qty Reject</span>
-            <plus-minus-field
-              v-model="product.qtyReject"
-              :zero-confirm="false"
-              :allow-increase="false"
-              @increase="handleIncrease(index)"
-              @zero:confirm="handleZeroConfirm(index)"
-            />
+            <div v-if="transferValue.status === 'QC_SEND'" class="tw-flex tw-flex-col">
+              <span class="tw-text-xs">Input Qty Reject</span>
+              <plus-minus-field
+                v-model="product.qtyReject"
+                :zero-confirm="false"
+                :allow-increase="false"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+              />
+            </div>
+            <div v-else>
+              <plus-minus-field
+                v-model="product.qtyReject"
+                :zero-confirm="false"
+                :allow-increase="false"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+              />
+            </div>
           </div>
         </div>
       </q-card-section>

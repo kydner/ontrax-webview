@@ -176,7 +176,7 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const formId = computed(() => route.params?.id)
 
 const isDisable = computed(() => {
-  return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'] as TStatus[]).includes(form.value.status)
+  return (['QC_RECEIVE'] as TStatus[]).includes(form.value.status)
 })
 
 const { t } = useI18n()
@@ -188,14 +188,9 @@ const form = computed({
 
 const getColor = (status: TStatus): Colors => {
   switch (status) {
-    case 'RECEIVED':
-      return 'positive'
-    case 'QC_PASSED':
-      return 'positive'
-    case 'IN_TRANSIT':
-      return 'secondary'
-    case 'DRAFT':
-      return 'mute'
+    case 'QC_RECEIVE':
+      return 'warning'
+
     default:
       return 'disable'
   }

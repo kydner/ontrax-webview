@@ -1374,6 +1374,7 @@ export default {
   inTransit: 'In Transit',
   updateToReceive: 'Update to Receive',
   updateToQcReceive: 'Update to QC Receive',
+  updateToQcPass: 'Update to QC Pass',
   quantity: 'Quantity',
   home: 'Home',
   remarkSender: 'Remark Sender',

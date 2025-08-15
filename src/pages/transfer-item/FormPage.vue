@@ -45,7 +45,7 @@ import { ComponentPublicInstance, computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-type MetaFormPageExposed = {
+export type MetaFormPageExposed = {
   validate: () => Promise<boolean>
 }
 

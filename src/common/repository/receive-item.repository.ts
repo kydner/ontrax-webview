@@ -1,8 +1,8 @@
-import { useTransferItemEndpoint } from '../endpoints/transfer-item.endpoint'
 import { defineRepository } from '../utils/plugin.utils'
+import { useTransferItemRepository } from './transfer-item.repository'
 
-const transferEndpoint = useTransferItemEndpoint()
+const transferRepository = useTransferItemRepository()
 
 export const useReceiveItemRepository = defineRepository({
-  ...transferEndpoint,
+  ...transferRepository,
 })
