@@ -17,6 +17,15 @@
         :disable="loading || !!errorMessage"
         @click="handleReadyToSend"
       />
+
+      <k-btn
+        v-if="form.status === 'READY_TO_SEND'"
+        :label="t('inTransit')"
+        color="secondary"
+        class="fit"
+        :disable="loading || !!errorMessage"
+        @click="handleIntransit"
+      />
     </template>
   </operational-form-page>
 </template>
@@ -104,6 +113,31 @@ const handleReadyToSend = () => {
             }),
           }
           await repository.qualityCheck(transferId, data)
+          Notify.success({
+            message: t('success'),
+          })
+          router.back()
+        } catch (error) {
+          Notify.error({
+            message: error as Error,
+          })
+        } finally {
+          Loading.hide()
+        }
+      }
+    },
+  })
+}
+const handleIntransit = () => {
+  $confirm({
+    message: `${t('ReadyToSend')}?`,
+    callback: async (confirm) => {
+      if (confirm) {
+        try {
+          const transferId = formId.value as id
+          if (!transferId) throw new ErrorId('transferId')
+          Loading.show()
+          await repository.inTransit(transferId)
           Notify.success({
             message: t('success'),
           })

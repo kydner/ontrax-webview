@@ -138,7 +138,7 @@
       </template>
     </k-file-upload>
 
-    <product-data-list v-model="form" />
+    <product-data-list v-model="form" :is-disable="!form.status || form.status !== 'DRAFT'" />
   </div>
 </template>
 <script setup lang="ts" generic="T extends TransferItemDataRequest">

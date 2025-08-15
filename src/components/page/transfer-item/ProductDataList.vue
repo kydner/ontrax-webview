@@ -18,6 +18,7 @@
             <plus-minus-field
               v-model="product.qty"
               :allow-increase="false"
+              :is-disable="isDisable"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
