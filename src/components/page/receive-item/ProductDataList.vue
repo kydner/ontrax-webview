@@ -115,7 +115,7 @@ interface Props {
 }
 
 interface Emits {
-  (event: 'updte:model-value', value: Props['modelValue']): void
+  (event: 'update:model-value', value: Props['modelValue']): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -143,14 +143,14 @@ const isDialogOpen = computed({
 
 const form = computed({
   get: () => props.modelValue,
-  set: (value) => emit('updte:model-value', value),
+  set: (value) => emit('update:model-value', value),
 })
 
 const productValues = computed({
   get: () => form.value?.transferItems || [],
   set: (value) => {
     form.value.transferItems = value
-    emit('updte:model-value', form.value)
+    emit('update:model-value', form.value)
   },
 })
 
