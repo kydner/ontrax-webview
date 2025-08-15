@@ -1,5 +1,5 @@
 import { IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import { GoodReceiveItem } from './operational.model'
+import { ShipmentGoodReceiveItem } from './operational.model'
 
 export interface VendorShipmentReceiveRequest extends IListSortingRequest {
   receiveDate: isoDate
@@ -12,5 +12,5 @@ export interface VendorShipmentReceiveResponse {}
 export interface VendorShipmentReceiveResponsePage extends VendorShipmentReceiveResponse {}
 
 export interface VendorShipmentReceiveDataRequest extends VendorShipmentReceiveResponse {
-  receivedItems: GoodReceiveItem[]
+  receivedItems: ShipmentGoodReceiveItem[]
 }

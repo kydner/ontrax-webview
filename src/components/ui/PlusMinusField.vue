@@ -75,6 +75,9 @@ const currentValue = computed({
 })
 
 const decrease = () => {
+  if (props.min) {
+    if (currentValue.value <= Number(props.min)) return
+  }
   if (currentValue.value <= 1) {
     if (props.zeroConfirm) {
       $confirm({
@@ -95,8 +98,11 @@ const decrease = () => {
 }
 
 const increase = () => {
-  emit('increase', currentValue.value)
+  if (props.max) {
+    if (currentValue.value >= Number(props.max)) return
+  }
   if (!props.allowIncrease) return
+  emit('increase', currentValue.value)
   currentValue.value++
 }
 

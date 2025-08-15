@@ -50,9 +50,11 @@
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
+                <span class="tw-text-xs">Available Qty: {{ product.availableQty }}</span>
                 <plus-minus-field
                   v-model="product.qty"
                   :allow-increase="true"
+                  :max="product?.availableQty"
                   :disable="!isChecked(product.itemId)"
                   @update:model-value="(val) => updateQty(product, val as number)"
                 />
@@ -86,6 +88,7 @@ import { TransferItemResponse } from 'src/common/model/transfer-item.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { ErrorId } from 'src/common/exceptions/error-id'
+import { TransferItem } from 'src/common/model/operational.model'
 
 interface Props {
   modelValue: TransferItemResponse
@@ -126,7 +129,7 @@ const handleBack = () => {
   emit('back')
 }
 
-const state = reactive<ResponseState<ReceiveItem[]>>({
+const state = reactive<ResponseState<TransferItem[]>>({
   isLoading: false,
   data: null,
   errorMessage: null,
@@ -160,14 +163,13 @@ const fetchData = async () => {
         itemId: product.itemId,
         itemCode: product.skuCode,
         itemName: product.itemName,
-        skuCode: product.skuCode,
-        description: product.description,
-        unit: product.unit,
-        unitPrice: product.unitPrice,
-        isActive: product.isActive,
+        availableQty: product.availableQty,
         notes: existing?.notes ?? '',
-        stockTransferItemId: existing?.stockTransferItemId ?? 'null',
+        stockTransferItemId: existing?.stockTransferItemId ?? null,
         qty: existing?.qty ?? 1,
+        qtyReceived: 0,
+        qtyTransfer: 0,
+        qcStockTransferItemId: existing?.qcStockTransferItemId ?? null,
       }
     })
   } catch (error) {
@@ -199,12 +201,14 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
   if (checked) {
     if (index === -1) {
       current.push({
+        stockTransferItemId: product.stockTransferItemId,
         itemId: product.itemId,
         itemName: product.itemName,
         itemCode: product.itemCode,
+        qtyTransfer: 0,
+        qtyReceived: 0,
         notes: '',
         qty: 1,
-        stockTransferItemId: product.stockTransferItemId,
       })
     }
   } else {

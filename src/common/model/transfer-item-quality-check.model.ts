@@ -1,5 +1,5 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
-import { TransferItemDetail } from './transfer-item.model'
+import { TransferItem } from './operational.model'
 
 export interface TransferItemQualityCheckRequest extends IListSortingRequest {}
 
@@ -15,7 +15,7 @@ export interface TransferItemQualityCheckResponsePage extends TransferItemQualit
 
 export interface TransferItemQualityCheckDataRequest extends TransferItemQualityCheckResponse {}
 
-export interface QcStockTransferItem extends Partial<TransferItemDetail> {
+export interface QcStockTransferItem extends Partial<TransferItem> {
   /// same as stockTransferItemId
   qcStockTransferItemId: id
 }

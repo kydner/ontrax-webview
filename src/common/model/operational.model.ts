@@ -1,5 +1,6 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { TStatus } from '../enum/operational.enum'
+import { ProductAvailableItemResponse } from './product-available-item.model'
 
 export interface OperationalRequest extends IListSortingRequest {
   status?: TStatus | TStatus[]
@@ -41,9 +42,9 @@ export interface OperationalDataRequest extends OperationalResponse {}
 /**
  * Barang diterima tanpa kerusakan
  */
-export interface GoodReceiveItem {
-  goodsReceiveItemId: id
-  itemId: id
+export interface ShipmentGoodReceiveItem {
+  goodsReceiveItemId: id | null
+  itemId: id | null
   itemCode: string
   itemName: string
   qtyOrdered: number
@@ -52,10 +53,27 @@ export interface GoodReceiveItem {
   notes: string
 }
 
+export interface TransferItem extends Partial<ProductAvailableItemResponse> {
+  stockTransferItemId: id | null
+  itemId: id
+  itemName: string
+  itemCode: string
+  qtyTransfer: number
+  qtyReceived: number | null
+  notes: string | null
+
+  // used for send Post & Put
+  qty?: number
+  qtyReject?: number
+  qcStockTransferItemId?: id | null
+}
+
 /**
  * Barang yang diterima
  */
-export interface ReceiveItem extends GoodReceiveItem {
+export interface ReceiveItem extends TransferItem {}
+
+export interface ShipmentReceiveItem extends ShipmentGoodReceiveItem {
   stockTransferItemId: id | null
   goodsReceiveId: id | null
   itemId: id

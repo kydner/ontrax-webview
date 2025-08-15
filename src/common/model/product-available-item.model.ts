@@ -8,12 +8,7 @@ export interface ProductAvailableItemResponse {
   itemId: id
   skuCode: string
   itemName: string
-  categoryId: id
-  categoryValue: string
-  description: string
-  unit: string
-  unitPrice: number
-  isActive: boolean
+  availableQty: 0
   imageId: id
 }
 

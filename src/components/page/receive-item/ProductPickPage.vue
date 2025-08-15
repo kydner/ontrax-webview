@@ -86,6 +86,7 @@ import { ReceiveItemResponse } from 'src/common/model/receive-item.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { ErrorId } from 'src/common/exceptions/error-id'
+import { ReceiveItem } from 'src/common/model/operational.model'
 
 interface Props {
   modelValue: ReceiveItemResponse
@@ -96,8 +97,6 @@ interface Emits {
   (event: 'back'): void
   (event: 'update:modelValue', value: ReceiveItemResponse): void
 }
-
-type ReceiveItem = ReceiveItemResponse['transferItems'][0]
 
 const { t } = useI18n()
 
@@ -160,14 +159,13 @@ const fetchData = async () => {
         itemId: product.itemId,
         itemCode: product.skuCode,
         itemName: product.itemName,
-        skuCode: product.skuCode,
-        description: product.description,
-        unit: product.unit,
-        unitPrice: product.unitPrice,
-        isActive: product.isActive,
+        availableQty: product.availableQty,
         notes: existing?.notes ?? '',
-        stockTransferItemId: existing?.stockTransferItemId ?? 'null',
+        stockTransferItemId: existing?.stockTransferItemId ?? null,
         qty: existing?.qty ?? 1,
+        qtyReceived: 0,
+        qtyTransfer: 0,
+        qcStockTransferItemId: existing?.qcStockTransferItemId ?? null,
       }
     })
   } catch (error) {
@@ -199,12 +197,14 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
   if (checked) {
     if (index === -1) {
       current.push({
+        stockTransferItemId: product.stockTransferItemId,
         itemId: product.itemId,
         itemName: product.itemName,
         itemCode: product.itemCode,
+        qtyTransfer: 0,
+        qtyReceived: 0,
         notes: '',
         qty: 1,
-        stockTransferItemId: product.stockTransferItemId,
       })
     }
   } else {

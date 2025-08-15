@@ -1,10 +1,10 @@
 import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 import {
-  GoodReceiveItem,
+  ShipmentGoodReceiveItem,
   OperationalRequest,
   OperationalResponse,
   OperationalResponsePage,
-  ReceiveItem,
+  ShipmentReceiveItem,
 } from './operational.model'
 import { VendorShipmentQualityCheckResponse } from './vendor-shipment-quality-check.model'
 
@@ -13,8 +13,8 @@ export interface VendorShipmentRequest extends IListSortingRequest, OperationalR
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
 export interface VendorShipmentResponse extends OperationalResponse {
-  receiveItems: ReceiveItem[]
-  goodsReceiveItems: GoodReceiveItem[]
+  receiveItems: ShipmentReceiveItem[]
+  goodsReceiveItems: ShipmentGoodReceiveItem[]
   qcItems: VendorShipmentQualityCheckResponse
   // same as qcItems
   qcGoodsReceive: VendorShipmentQualityCheckResponse

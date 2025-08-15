@@ -1,5 +1,5 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import { OperationalResponse } from './operational.model'
+import { OperationalResponse, TransferItem } from './operational.model'
 import { TStatus } from '../enum/operational.enum'
 import { TransferItemBeforeSendResponse } from './transfer-item-before-send.model'
 import { TransferItemAfterSendResponse } from './transfer-item-after-send.model'
@@ -21,10 +21,10 @@ export interface TransferItemResponse extends OperationalResponse {
   fromLocationWarehouseId: id
   toWarehouseId: id | null
   toLocationWarehouseId: id
-  stockTransferItems: TransferItemDetail[]
+  stockTransferItems: TransferItem[]
   senderNotes: string
   attachmentId?: id
-  transferItems: TransferItemDetail[]
+  transferItems: TransferItem[]
   qcBeforeSend: TransferItemBeforeSendResponse
   qcAfterReceived: TransferItemAfterSendResponse
 }
@@ -32,17 +32,3 @@ export interface TransferItemResponse extends OperationalResponse {
 export interface TransferItemResponsePage extends TransferItemResponse, OperationalResponse {}
 
 export interface TransferItemDataRequest extends TransferItemResponse {}
-
-export interface TransferItemDetail {
-  stockTransferItemId?: id
-  transferItemId?: id
-  transferId?: id
-  itemId: id
-  qty: number
-  qtyTransfer?: number
-  notes: string
-  itemName: string
-  itemCode?: string
-  qtyReject?: number
-  qcStockTransferItemId?: id
-}
