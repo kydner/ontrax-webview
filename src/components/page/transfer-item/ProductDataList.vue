@@ -1,6 +1,12 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
-    <k-btn v-if="showAddButton" color="secondary" label="Add Product" @click="handleProductPick" />
+    <k-btn
+      v-if="showAddButton"
+      :disable="!form?.fromWarehouseId"
+      color="secondary"
+      label="Add Product"
+      @click="handleProductPick"
+    />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
@@ -16,8 +22,10 @@
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
             <plus-minus-field
+              v-if="form.status === undefined || form.status === 'DRAFT'"
               v-model="product.qty"
               :allow-increase="true"
+              :max="product.availableQty"
               :is-disable="isDisable"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
@@ -53,7 +61,7 @@
                 <plus-minus-field
                   v-model="productValues[dialogIndex].qty"
                   :allow-increase="true"
-                  :disable="isDisable"
+                  :max="productValues[dialogIndex].availableQty"
                 />
               </div>
             </div>

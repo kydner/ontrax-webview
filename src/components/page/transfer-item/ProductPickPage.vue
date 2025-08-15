@@ -211,6 +211,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         itemId: product.itemId,
         itemName: product.itemName,
         itemCode: product.itemCode,
+        availableQty: product.availableQty,
         qtyTransfer: 0,
         qtyReceived: 0,
         notes: '',
