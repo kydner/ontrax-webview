@@ -98,7 +98,7 @@ export type TsortDirection = 'asc' | 'desc'
 interface Props {
   searchValue: QInputProps['modelValue']
   statusValue?: TStatus
-  sortDirection: TsortDirection
+  sortDirection: TsortDirection | undefined
   statuses: TStatus[]
 }
 

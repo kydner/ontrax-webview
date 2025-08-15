@@ -15,7 +15,7 @@
     ref="metaListTableRef"
     :meta="metaTransferItem"
     :payload="payload"
-    :item-mapper="(items) => orderBy(items, (item) => item.transferDate, [sortDirection])"
+    :item-mapper="(items) => (sortDirection ? orderBy(items, (item) => item.transferDate, [sortDirection]) : items)"
   >
     <!-- prettier-ignore -->
     <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
@@ -77,7 +77,7 @@ const payload = ref({
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)
 
-const sortDirection = ref<TsortDirection>('asc')
+const sortDirection = ref<TsortDirection | undefined>()
 
 const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
   page: 1,
