@@ -219,7 +219,6 @@ const form = computed({
 })
 
 const getColor = (status: TStatus): Colors => {
-  console.log(status)
   switch (status) {
     case 'RECEIVED':
       return 'secondary'

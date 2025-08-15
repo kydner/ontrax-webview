@@ -196,7 +196,6 @@ const loadMore = async <T extends StockMovementResponse[]>(reset = false) => {
     const itemId = itemParams.value as id
     state.isLoading = true
     state.errorMessage = null
-    console.log('lll')
     const data = await movementRepository.getPage({ itemId, warehouseId })
     const content = data.content
     state.totalPages = data.totalPages

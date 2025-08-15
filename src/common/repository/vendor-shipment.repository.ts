@@ -21,7 +21,6 @@ export const useVendorShipmentRepository = defineRepository({
          * used for request data Post & Put
          */
         const receiveItems = [...response.goodsReceiveItems]?.map((item) => {
-          console.log(item.qtyReceived)
           return {
             ...item,
             goodsReceiveItemId: item?.goodsReceiveItemId,

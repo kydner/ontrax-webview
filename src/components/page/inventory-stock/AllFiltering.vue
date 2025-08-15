@@ -128,7 +128,6 @@ const loadMore = async <T extends StockCardResponsePage[]>(reset = false) => {
     if (state.isLoading || !state.hasMore) return
     state.isLoading = true
     state.errorMessage = null
-    console.log('lll')
     const data = await stockRepository.getPage({ page: state.page, size: 10 })
     const content = data.content
     state.totalPages = data.totalPages

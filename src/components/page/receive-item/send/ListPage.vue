@@ -94,7 +94,6 @@ const handleSearch = () => {
 const handleStatus = (value?: TStatus) => {
   currentStatus.value = currentStatus.value === value ? undefined : value
   payload.value = buildPayload()
-  console.log(metaListTableRef.value)
   metaListTableRef.value?.loadMore(true)
 }
 

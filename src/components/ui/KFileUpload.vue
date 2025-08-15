@@ -197,7 +197,6 @@ watch(selectedFile, async (file) => {
   try {
     const data = await uploadRepository.upload(file, props.payload)
     // const x = await uploadRepository.getOne(data.fileId)
-    // console.log(data, x)
 
     emit('update:model-value', data.fileId)
   } catch (error) {

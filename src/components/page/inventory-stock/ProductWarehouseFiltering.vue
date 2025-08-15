@@ -147,7 +147,6 @@ const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = fa
     if (state.isLoading || !state.hasMore) return
     state.isLoading = true
     state.errorMessage = null
-    console.log('lll')
     const data = await stockRepository.aggregation({
       ...props.payload,
       page: state.page,
