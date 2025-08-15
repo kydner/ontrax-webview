@@ -1,6 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
-    <k-btn v-if="!isDisable" color="secondary" label="Add Product" @click="handleProductPick" />
+    <k-btn v-if="showAddButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
@@ -100,6 +100,12 @@ const { t } = useI18n()
 
 const dialogIndex = ref<number | null>(null)
 
+const showAddButton = computed(() => {
+  if (!form.value.status) return true
+  if (!['DRAFT'].includes(form.value.status)) return true
+  return !props.isDisable
+})
+
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,
   set: (val: boolean) => {
@@ -107,16 +113,16 @@ const isDialogOpen = computed({
   },
 })
 
-const vendorValue = computed({
+const form = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
 const productValues = computed({
-  get: () => vendorValue.value?.transferItems || [],
+  get: () => form.value?.transferItems || [],
   set: (value) => {
-    vendorValue.value.transferItems = value
-    emit('updte:model-value', vendorValue.value)
+    form.value.transferItems = value
+    emit('updte:model-value', form.value)
   },
 })
 
