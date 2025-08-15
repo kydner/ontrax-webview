@@ -20,8 +20,8 @@
       :precision="precision"
       decimal=","
       thousands="."
-      :max="props.max"
-      :min="props.min"
+      :max="props.disable || props.disableValue ? undefined : props.max"
+      :min="props.disable || props.disableValue ? undefined : props.min"
       focus-on-right
       @update:model-value="handleInputChange"
     />
