@@ -134,7 +134,7 @@ const handleUpdateToQcPass = () => {
           const qcAfterReceived = form.value?.qcAfterReceived
 
           const data: TransferItemQualityCheckResponse = {
-            qcNotes: form.value.receiverNotes,
+            qcNotes: form.value.senderNotes || '',
             qcStockTransferId: qcAfterReceived.qcStockTransferId,
             qcStockTransferItems:
               qcAfterReceived?.qcStockTransferItems?.map((item) => {

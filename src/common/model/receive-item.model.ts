@@ -10,10 +10,7 @@ export interface ReceiveItemRequest extends TransferItemRequest {}
 
 export type ReceiveItemRequestPage = IPaginationRequest & ReceiveItemRequest
 
-export interface ReceiveItemResponse extends TransferItemResponse {
-  senderNotes: string
-  receiverNotes: string
-}
+export interface ReceiveItemResponse extends TransferItemResponse {}
 
 export interface ReceiveItemResponsePage extends ReceiveItemResponse, TransferItemResponsePage {}
 

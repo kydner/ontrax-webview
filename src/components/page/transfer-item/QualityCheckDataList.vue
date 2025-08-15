@@ -13,11 +13,20 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span v-if="transferValue.status === 'QC_SEND'" class="tw-text-xs">Input Qty Reject</span>
+            <span v-if="form.status === 'QC_SEND'" class="tw-text-xs">Input Qty Reject</span>
             <plus-minus-field
+              v-if="form.status === 'QC_SEND'"
               v-model="product.qtyReject"
               :zero-confirm="false"
-              :allow-increase="false"
+              :allow-increase="true"
+              @increase="handleIncrease(index)"
+              @zero:confirm="handleZeroConfirm(index)"
+            />
+            <plus-minus-field
+              v-else
+              v-model="product.qtyReject"
+              :zero-confirm="false"
+              :allow-increase="true"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
@@ -110,16 +119,16 @@ const isDialogOpen = computed({
   },
 })
 
-const transferValue = computed({
+const form = computed({
   get: () => props.modelValue,
   set: (value) => emit('updte:model-value', value),
 })
 
 const qcBeforeSend = computed({
-  get: () => transferValue.value.qcBeforeSend,
+  get: () => form.value.qcBeforeSend,
   set: (value) => {
-    transferValue.value.qcBeforeSend = value
-    emit('updte:model-value', transferValue.value)
+    form.value.qcBeforeSend = value
+    emit('updte:model-value', form.value)
   },
 })
 const handleIncrease = (index: number) => {

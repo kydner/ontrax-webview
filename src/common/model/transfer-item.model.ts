@@ -22,7 +22,8 @@ export interface TransferItemResponse extends OperationalResponse {
   toWarehouseId: id | null
   toLocationWarehouseId: id
   stockTransferItems: TransferItem[]
-  senderNotes: string
+  senderNotes: string | null
+  receiverNotes?: string | null
   attachmentId?: id
   transferItems: TransferItem[]
   qcBeforeSend: TransferItemBeforeSendResponse

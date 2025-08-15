@@ -6,7 +6,7 @@
           <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
         </template>
         <k-popup-edit
-          v-model="form.notes"
+          v-model="form.senderNotes"
           t-label="remark"
           :show-label="false"
           horizontal-label
@@ -14,7 +14,21 @@
           input-class="inventory__field"
         >
           <template #default="scope">
-            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+            <k-text-area
+              v-model="scope.value"
+              :disable="['RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkSender"
+              :show-label="true"
+              :horizontal-label="false"
+            />
+            <k-text-area
+              v-if="['RECEIVED'].includes(form.status)"
+              v-model="form.receiverNotes"
+              :disable="['PARTIAL_PASSED'].includes(form.status)"
+              t-label="remarkReceiver"
+              :show-label="true"
+              :horizontal-label="false"
+            />
           </template>
           <template #preview:prefix>
             <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />

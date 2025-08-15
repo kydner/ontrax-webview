@@ -169,7 +169,7 @@ const fetchData = async () => {
         itemId: product.itemId,
         itemCode: product.skuCode,
         itemName: product.itemName,
-        availableQty: product.availableQty,
+        availableQty: product.availableQty ?? existing?.availableQty,
         notes: existing?.notes ?? '',
         stockTransferItemId: existing?.stockTransferItemId ?? null,
         qty: existing?.qty ?? 1,

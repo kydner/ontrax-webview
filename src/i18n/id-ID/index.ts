@@ -1379,7 +1379,8 @@ export default {
   home: 'Beranda',
   remarkSender: 'Komentar Pengirim',
   saveToReadyToSend: 'Simpan Sebagai Siap Kirim',
-  remark: 'Remark',
+  remark: 'Komentar',
+  remarkReceiver: 'Komentar Penerima',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',
