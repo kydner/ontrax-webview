@@ -1379,6 +1379,7 @@ export default {
   home: 'Home',
   remarkSender: 'Remark Sender',
   saveToReadyToSend: 'Save to Ready to Send',
+  remark: 'Remark',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

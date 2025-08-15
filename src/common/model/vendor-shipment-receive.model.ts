@@ -1,6 +1,7 @@
-import { IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import { ShipmentGoodReceiveItem } from './operational.model'
-
+/**
+ * For Process Shipment Receive Request
+ */
+import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 export interface VendorShipmentReceiveRequest extends IListSortingRequest {
   receiveDate: isoDate
 }
@@ -12,5 +13,10 @@ export interface VendorShipmentReceiveResponse {}
 export interface VendorShipmentReceiveResponsePage extends VendorShipmentReceiveResponse {}
 
 export interface VendorShipmentReceiveDataRequest extends VendorShipmentReceiveResponse {
-  receivedItems: ShipmentGoodReceiveItem[]
+  receivedItems: ReceiveItemDetail[]
+}
+
+export interface ReceiveItemDetail {
+  goodsReceiveItemId: id | null
+  qtyReceived: number
 }

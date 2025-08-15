@@ -4,20 +4,22 @@ import {
   OperationalRequest,
   OperationalResponse,
   OperationalResponsePage,
-  ShipmentReceiveItem,
+  ShipmentQcGoodReceive,
 } from './operational.model'
-import { VendorShipmentQualityCheckResponse } from './vendor-shipment-quality-check.model'
 
 export interface VendorShipmentRequest extends IListSortingRequest, OperationalRequest {}
 
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
 export interface VendorShipmentResponse extends OperationalResponse {
-  receiveItems: ShipmentReceiveItem[]
+  /**
+   * used for request Post & Put
+   */
+  receiveItems?: ShipmentGoodReceiveItem[]
+
   goodsReceiveItems: ShipmentGoodReceiveItem[]
-  qcItems: VendorShipmentQualityCheckResponse
-  // same as qcItems
-  qcGoodsReceive: VendorShipmentQualityCheckResponse
+
+  qcGoodsReceive: ShipmentQcGoodReceive
 }
 
 export interface VendorShipmentResponsePage extends OperationalResponsePage {}

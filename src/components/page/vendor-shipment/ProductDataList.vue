@@ -2,7 +2,7 @@
   <div class="tw-my-4 tw-min-h-[60vh]">
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
-    <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
+    <k-card v-for="(product, index) in productValues" :key="index" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -19,7 +19,7 @@
             <plus-minus-field
               v-if="['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
               v-model="product.qtyReceived"
-              :allow-increase="false"
+              :allow-increase="true"
               :max="product.qtyOrdered"
               :disable="vendorValue.status === 'RECEIVED'"
               @increase="handleIncrease(index)"
@@ -28,7 +28,7 @@
             <plus-minus-field
               v-else
               v-model="product.qtyOrdered"
-              :allow-increase="false"
+              :allow-increase="true"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
@@ -119,7 +119,7 @@ interface Props {
 }
 
 interface Emits {
-  (event: 'updte:model-value', value: Props['modelValue']): void
+  (event: 'update:model-value', value: Props['modelValue']): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -141,14 +141,14 @@ const isDialogOpen = computed({
 
 const vendorValue = computed({
   get: () => props.modelValue,
-  set: (value) => emit('updte:model-value', value),
+  set: (value) => emit('update:model-value', value),
 })
 
 const productValues = computed({
   get: () => vendorValue.value?.receiveItems || [],
   set: (value) => {
     vendorValue.value.receiveItems = value
-    emit('updte:model-value', vendorValue.value)
+    emit('update:model-value', vendorValue.value)
   },
 })
 

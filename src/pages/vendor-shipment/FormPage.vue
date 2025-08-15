@@ -37,6 +37,11 @@ import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { id, isoDate } from 'src/common/interfaces/response.interface'
+import { VendorShipmentQualityCheckDataRequest } from 'src/common/model/vendor-shipment-quality-check.model'
+import {
+  VendorShipmentReceiveDataRequest,
+  VendorShipmentReceiveRequest,
+} from 'src/common/model/vendor-shipment-receive.model'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
 import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
@@ -107,11 +112,22 @@ const handleSubmitReceive = () => {
           const shipmentId = formId.value as id
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          await repository.received(
-            shipmentId,
-            { receivedItems: form.value?.receiveItems || [] },
-            { receiveDate: new Date().toISOString() as isoDate },
-          )
+          const receiveItems = form.value?.receiveItems || []
+
+          const data: VendorShipmentReceiveDataRequest = {
+            receivedItems: receiveItems?.map((item) => {
+              return {
+                goodsReceiveItemId: item.goodsReceiveItemId ?? null,
+                qtyReceived: item.qtyReceived ?? 0,
+              }
+            }),
+          }
+
+          const params: VendorShipmentReceiveRequest = {
+            receiveDate: new Date().toISOString() as isoDate,
+          }
+          await repository.received(shipmentId, data, params)
+
           Notify.success({
             message: t('success'),
           })
@@ -137,7 +153,20 @@ const handleSubmitQcPass = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          await repository.qualityCheck(shipmentId, form.value.qcItems || [])
+
+          const qcGoodsReceive = form.value?.qcGoodsReceive
+
+          const data: VendorShipmentQualityCheckDataRequest = {
+            qcGoodsReceiveId: qcGoodsReceive.qcGoodsReceiveId,
+            qcItems: qcGoodsReceive.qcGoodsReceiveItems.map((item) => {
+              return {
+                qcGoodsReceiveItemId: item.qcGoodsReceiveItemId || null,
+                qtyReject: item.qtyReject,
+                note: item.notes,
+              }
+            }),
+          }
+          await repository.qualityCheck(shipmentId, data)
           Notify.success({
             message: t('success'),
           })

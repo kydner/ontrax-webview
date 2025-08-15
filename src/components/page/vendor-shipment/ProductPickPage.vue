@@ -85,7 +85,7 @@ import { computed } from 'vue'
 import { VendorShipmentResponse } from 'src/common/model/vendor-shipment.model'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
-import { ShipmentReceiveItem } from 'src/common/model/operational.model'
+import { ShipmentGoodReceiveItem } from 'src/common/model/operational.model'
 
 interface Props {
   modelValue: VendorShipmentResponse
@@ -123,7 +123,7 @@ const handleBack = () => {
   emit('back')
 }
 
-const state = reactive<ResponseState<ShipmentReceiveItem[]>>({
+const state = reactive<ResponseState<ShipmentGoodReceiveItem[]>>({
   isLoading: false,
   data: null,
   errorMessage: null,
@@ -160,11 +160,9 @@ const fetchData = async () => {
         unit: product.unit,
         unitPrice: product.unitPrice,
         isActive: product.isActive,
-        qtyOrdered: existing?.qtyOrdered ?? 0,
+        qtyOrdered: existing?.qtyOrdered ?? 1,
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
-        stockTransferItemId: existing?.stockTransferItemId ?? null,
-        goodsReceiveId: existing?.goodsReceiveId ?? null,
         goodsReceiveItemId: existing?.goodsReceiveItemId ?? null,
       }
     })
@@ -175,11 +173,11 @@ const fetchData = async () => {
   }
 }
 
-const isChecked = (itemId: id) => {
+const isChecked = (itemId: id | null) => {
   return receiveItems.value.some((item) => item.itemId === itemId)
 }
 
-const updateQty = (product: ShipmentReceiveItem, qty: number) => {
+const updateQty = (product: ShipmentGoodReceiveItem, qty: number) => {
   const current = receiveItems.value.slice()
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 
@@ -190,7 +188,7 @@ const updateQty = (product: ShipmentReceiveItem, qty: number) => {
   receiveItems.value = current
 }
 
-const toggleItem = (product: ShipmentReceiveItem, checked: boolean) => {
+const toggleItem = (product: ShipmentGoodReceiveItem, checked: boolean) => {
   const current = [...receiveItems.value]
   const index = current?.findIndex((item) => item.itemId === product.itemId)
 
@@ -202,10 +200,8 @@ const toggleItem = (product: ShipmentReceiveItem, checked: boolean) => {
         itemCode: product.itemCode,
         qtyOrdered: 1,
         notes: '',
-        goodsReceiveId: null,
         qtyReceived: 0,
         unitPrice: 0,
-        stockTransferItemId: product.stockTransferItemId,
         goodsReceiveItemId: product.goodsReceiveItemId,
       })
     }

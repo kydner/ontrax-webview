@@ -1,9 +1,6 @@
 import { useVendorShipmentEndpoint } from '../endpoints/vendor-shipment.endpoint'
 import { id } from '../interfaces/response.interface'
-import {
-  VendorShipmentQualityCheckDataRequest,
-  VendorShipmentQualityCheckResponse,
-} from '../model/vendor-shipment-quality-check.model'
+import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 import { VendorShipmentReceiveDataRequest, VendorShipmentReceiveRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentDataRequest, VendorShipmentRequest } from '../model/vendor-shipment.model'
 import { withRepository } from '../utils/converter.utils'
@@ -19,6 +16,10 @@ export const useVendorShipmentRepository = defineRepository({
       () => shipmentEndpoint.getOne(id),
       (response) => {
         const warehouseId = response.locationWarehouseId
+
+        /**
+         * used for request data Post & Put
+         */
         const receiveItems = [...response.goodsReceiveItems]?.map((item) => {
           return {
             goodsReceiveItemId: item?.goodsReceiveItemId,
@@ -28,23 +29,11 @@ export const useVendorShipmentRepository = defineRepository({
             notes: item.notes,
             itemName: item.itemName,
             itemCode: item.itemCode,
-            qtyReceived: item.qtyReceived,
+            qtyReceived: item.qtyReceived ?? 0,
             unitPrice: item.unitPrice,
           }
         })
-
-        const qcGoodsReceive = response?.qcGoodsReceive
-
-        const qcItems: VendorShipmentQualityCheckResponse = {
-          ...qcGoodsReceive,
-          qcItems: qcGoodsReceive?.qcGoodsReceiveItems?.map((receive) => {
-            return {
-              ...receive,
-              skuCode: receive?.skuCode,
-            }
-          }),
-        }
-        return { ...response, warehouseId, receiveItems, qcItems }
+        return { ...response, warehouseId, receiveItems }
       },
     ),
 

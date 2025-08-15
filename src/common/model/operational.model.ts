@@ -101,3 +101,25 @@ export interface QcItem {
   attachmentUrl?: string | null
   fileId: id
 }
+
+export interface ShipmentQcGoodReceive {
+  qcGoodsReceiveId: id
+  totalQtyPass: number
+  totalQtyReject: number
+  qcStatus: string
+  qcNotes: string | null
+  qcDate: isoDate
+  qcBy: string
+  urlPath: string
+  qcGoodsReceiveItems: ShipmentQcGoodReceiveItem[]
+}
+
+export interface ShipmentQcGoodReceiveItem {
+  qcGoodsReceiveItemId: id | null
+  itemId: id | null
+  itemName: string
+  skuCode: string
+  qtyPass: number
+  qtyReject: number
+  notes: string | null
+}

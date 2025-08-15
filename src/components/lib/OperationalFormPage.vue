@@ -13,7 +13,7 @@
       </internal-error>
     </div>
     <div v-else class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
-      <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
+      <q-tab-panels v-model="panel" keep-alive animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
           <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
           <operational-form-skeleton v-if="loadingPage" />
