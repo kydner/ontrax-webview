@@ -23,7 +23,9 @@
                   <span class="tw-text-secondary-text tw-text-xs">Qty Send</span>
                 </div>
                 <div>
-                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyTransfer, { precision: 0 }) }}</span>
+                  <span class="tw-text-white tw-text-xs">{{
+                    format(stockTransferItem(product.itemId)?.qtyTransfer, { precision: 0 })
+                  }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
@@ -32,7 +34,9 @@
                   <span class="tw-text-secondary-text tw-text-xs">Qty Receive</span>
                 </div>
                 <div>
-                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyReceived, { precision: 0 }) }}</span>
+                  <span class="tw-text-white tw-text-xs">{{
+                    format(stockTransferItem(product.itemId)?.qtyReceived, { precision: 0 })
+                  }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
@@ -135,6 +139,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
 import { format } from 'src/common/utils/converter.utils'
+import { id } from 'src/common/interfaces/response.interface'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
@@ -174,6 +179,12 @@ const qcAfterReceived = computed({
     emit('updte:model-value', form.value)
   },
 })
+
+const stockTransferItems = computed(() => form.value?.stockTransferItems || [])
+
+const stockTransferItem = (itemId: id) => {
+  return stockTransferItems.value?.find((product) => product.itemId === itemId)
+}
 const handleIncrease = (index: number) => {
   dialogIndex.value = index
 }
