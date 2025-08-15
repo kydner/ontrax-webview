@@ -8,7 +8,7 @@
       @click="handleProductPick"
     />
 
-    <k-card v-for="(product, index) in productValues" :key="product.itemId" class="gradient-card tw-my-2">
+    <k-card v-for="(product, index) in transferItems" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -35,7 +35,7 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="productValues?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="transferItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -52,23 +52,23 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ productValues[dialogIndex]?.itemCode }}</span>
-                    <span>{{ productValues[dialogIndex]?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ transferItems[dialogIndex]?.itemCode }}</span>
+                    <span>{{ transferItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="productValues[dialogIndex].qty"
+                  v-model="transferItems[dialogIndex].qty"
                   :allow-increase="true"
-                  :max="productValues[dialogIndex].availableQty"
+                  :max="transferItems[dialogIndex].availableQty"
                 />
               </div>
             </div>
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="productValues[dialogIndex].notes"
+          v-model="transferItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
@@ -128,7 +128,7 @@ const form = computed({
   set: (value) => emit('update:model-value', value),
 })
 
-const productValues = computed({
+const transferItems = computed({
   get: () => form.value?.transferItems || [],
   set: (value) => {
     form.value.transferItems = value
@@ -150,7 +150,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  productValues.value?.splice(index, 1)
+  transferItems.value?.splice(index, 1)
   dialogIndex.value = null
 }
 </script>
