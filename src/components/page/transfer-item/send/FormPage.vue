@@ -6,7 +6,7 @@
           <k-status-badge :label="startCase(form?.status)" :color="getColor(form.status)" />
         </template>
         <k-popup-edit
-          v-model="form.notes"
+          v-model="form.senderNotes"
           t-label="remark"
           :show-label="false"
           horizontal-label
@@ -21,21 +21,6 @@
           </template>
         </k-popup-edit>
       </k-label>
-      <k-popup-edit
-        v-else
-        v-model="form.notes"
-        t-label="remark"
-        horizontal-label
-        :placeholder="t('inputRemark')"
-        input-class="inventory__field"
-      >
-        <template #default="scope">
-          <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
-        </template>
-        <template #preview:prefix>
-          <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
-        </template>
-      </k-popup-edit>
     </div>
     <k-date
       v-model="form.transferDate"
