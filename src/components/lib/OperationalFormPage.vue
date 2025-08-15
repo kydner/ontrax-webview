@@ -15,7 +15,11 @@
     <div v-else class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
       <q-tab-panels v-model="panel" keep-alive animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
-          <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack" />
+          <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack">
+            <template v-if="form.status === 'DRAFT'" #title:right>
+              <k-btn icon="img:/icons/trash__negative.svg" flat rounded size="xs" padding="xs" @click="handleDelete" />
+            </template>
+          </k-toolbar>
           <operational-form-skeleton v-if="loadingPage" />
           <component v-else :is="FormPage" v-model="form"></component>
         </q-tab-panel>
@@ -58,7 +62,7 @@ import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { Notify } from 'src/common/utils/plugin.utils'
+import { $confirm, Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
@@ -208,6 +212,32 @@ const handleCreate = async () => {
   } finally {
     Loading.hide()
   }
+}
+
+const handleDelete = () => {
+  $confirm({
+    message: t('title.deleteThisData'),
+    callback: async (confirm) => {
+      if (confirm) {
+        try {
+          const repository = await metaService.repository()
+          if (!repository.delete) throw new Error('Repository delete not exist')
+          Loading.show()
+          await repository.delete(formId.value)
+          handleBack()
+          Notify.success({
+            message: t('notification.successDelete'),
+          })
+        } catch (error) {
+          Notify.error({
+            message: error as Error,
+          })
+        } finally {
+          Loading.hide()
+        }
+      }
+    },
+  })
 }
 
 const handleSubmitDraft = async () => {
