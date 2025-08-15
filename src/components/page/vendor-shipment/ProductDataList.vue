@@ -15,15 +15,15 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <span v-if="vendorValue.status === 'RECEIVED'" class="tw-text-xs"
+            <span v-if="form.status === 'RECEIVED'" class="tw-text-xs"
               >Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}</span
             >
             <plus-minus-field
-              v-if="['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.status)"
+              v-if="['IN_TRANSIT', 'RECEIVED'].includes(form.status)"
               v-model="product.qtyReceived"
               :allow-increase="true"
               :max="product.qtyOrdered"
-              :disable="vendorValue.status === 'RECEIVED'"
+              :disable="form.status === 'RECEIVED'"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div
-          v-if="['IN_TRANSIT'].includes(vendorValue.status)"
+          v-if="['IN_TRANSIT'].includes(form.status)"
           class="tw-flex tw-items-center tw-space-x-6 tw-text-xs tw-mt-2"
         >
           <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
@@ -75,7 +75,7 @@
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-if="vendorValue.status === 'IN_TRANSIT'"
+                  v-if="form.status === 'IN_TRANSIT'"
                   v-model="productValues[dialogIndex].qtyReceived"
                   :allow-increase="true"
                   :max="productValues[dialogIndex]?.qtyOrdered"
@@ -141,21 +141,21 @@ const isDialogOpen = computed({
   },
 })
 
-const vendorValue = computed({
+const form = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:model-value', value),
 })
 
 const productValues = computed({
-  get: () => vendorValue.value?.receiveItems || [],
+  get: () => form.value?.receiveItems || [],
   set: (value) => {
-    vendorValue.value.receiveItems = value
-    emit('update:model-value', vendorValue.value)
+    form.value.receiveItems = value
+    emit('update:model-value', form.value)
   },
 })
 
 const showCreateButton = computed(() => {
-  return !['IN_TRANSIT', 'RECEIVED'].includes(vendorValue.value.status)
+  return !['IN_TRANSIT', 'RECEIVED'].includes(form.value.status)
 })
 
 const handleProductPick = () => {

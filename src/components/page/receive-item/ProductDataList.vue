@@ -15,20 +15,37 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <plus-minus-field
-              v-if="form.status === 'IN_TRANSIT'"
-              v-model="product.qtyTransfer"
-              :allow-increase="false"
-              @increase="handleIncrease(index)"
-              @zero:confirm="handleZeroConfirm(index)"
-            />
-            <plus-minus-field
-              v-else
-              v-model="product.qty"
-              :allow-increase="false"
-              @increase="handleIncrease(index)"
-              @zero:confirm="handleZeroConfirm(index)"
-            />
+            <div v-if="form.status === 'IN_TRANSIT'" class="tw-flex tw-flex-col tw-space-y-2">
+              <div class="tw-text-xs">Input Qty Receive</div>
+              <plus-minus-field
+                v-model="product.qtyReceived"
+                :allow-increase="true"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+              />
+            </div>
+
+            <div v-else>
+              <plus-minus-field
+                v-model="product.qty"
+                :allow-increase="false"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-if="['IN_TRANSIT'].includes(form.status)"
+          class="tw-flex tw-items-center tw-space-x-6 tw-text-xs tw-mt-2"
+        >
+          <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
+            <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+            <div class="tw-text-secondary-text">Qty Send</div>
+          </div>
+          <div>
+            {{ format(product.qtyTransfer, { precision: 0 }) }}
           </div>
         </div>
       </q-card-section>
@@ -58,10 +75,11 @@
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="productValues[dialogIndex].qty"
+                  v-if="form.status === 'IN_TRANSIT'"
+                  v-model="productValues[dialogIndex].qtyReceived"
                   :allow-increase="true"
-                  :disable="isDisable"
                 />
+                <plus-minus-field v-else v-model="productValues[dialogIndex].qtyReject" :allow-increase="true" />
               </div>
             </div>
           </q-card-section>
@@ -88,6 +106,7 @@ import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
