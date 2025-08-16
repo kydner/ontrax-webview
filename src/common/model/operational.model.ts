@@ -46,6 +46,7 @@ export interface ShipmentGoodReceiveItem {
   goodsReceiveItemId: id | null
   itemId: id | null
   itemCode: string
+  skuCode?: string
   itemName: string
   qtyOrdered: number
   qtyReceived: number
@@ -118,6 +119,7 @@ export interface ShipmentQcGoodReceiveItem {
   qcGoodsReceiveItemId: id | null
   itemId: id | null
   itemName: string
+  itemCode: string
   skuCode: string
   qtyPass: number
   qtyOrdered: number
