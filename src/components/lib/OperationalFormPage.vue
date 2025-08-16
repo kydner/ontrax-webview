@@ -30,7 +30,7 @@
       </q-tab-panels>
     </div>
 
-    <template v-if="panel === PANEL_FORM" #footer>
+    <template v-if="!errorMessage && panel === PANEL_FORM" #footer>
       <slot name="footer">
         <div class="tw-flex tw-sticky tw-bottom-0 tw-flex-col tw-space-y-2 tw-pb-2">
           <k-btn
