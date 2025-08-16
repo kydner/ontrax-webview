@@ -20,6 +20,7 @@ export interface OperationalResponse {
   shippingDate: isoDate
   targetReceiveDate: isoDate
   referenceDocument: string
+  createdDate: isoDate
   attachmentUrl: string
   notes: string | null
   status: TStatus
