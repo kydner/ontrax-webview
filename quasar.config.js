@@ -149,8 +149,6 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
-        dark: true,
-
         brand: {
           base: '#0C0C0F',           // --color-base
           surface: '#1F1F23',        // --color-surface

@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-body-base tw-text-white;
+    @apply tw-bg-[#0c0c0f] tw-text-white;
   }
 
   hr.style1 {
