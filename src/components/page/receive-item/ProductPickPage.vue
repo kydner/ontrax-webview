@@ -44,7 +44,7 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
+                    <span class="tw-text-secondary-text">{{ product?.skuCode }}</span>
                     <span>{{ product?.itemName }}</span>
                   </div>
                 </div>
@@ -157,7 +157,7 @@ const fetchData = async () => {
 
       return {
         itemId: product.itemId,
-        itemCode: product.skuCode,
+        skuCode: product.skuCode,
         itemName: product.itemName,
         availableQty: product.availableQty,
         notes: existing?.notes ?? '',
@@ -200,7 +200,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         stockTransferItemId: product.stockTransferItemId,
         itemId: product.itemId,
         itemName: product.itemName,
-        itemCode: product.itemCode,
+        skuCode: product.skuCode,
         qtyTransfer: 0,
         qtyReceived: 0,
         notes: '',

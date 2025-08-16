@@ -46,7 +46,6 @@ export interface OperationalDataRequest extends OperationalResponse {}
 export interface ShipmentGoodReceiveItem {
   goodsReceiveItemId: id | null
   itemId: id | null
-  itemCode: string
   skuCode?: string
   itemName: string
   qtyOrdered: number
@@ -59,7 +58,7 @@ export interface TransferItem extends Partial<ProductAvailableItemResponse> {
   stockTransferItemId: id | null
   itemId: id
   itemName: string
-  itemCode: string
+  skuCode: string
   qtyTransfer: number
   qtyReceived: number | null
   notes: string | null
@@ -81,7 +80,7 @@ export interface ShipmentReceiveItem extends ShipmentGoodReceiveItem {
   itemId: id
   qtyOrdered: number
   notes: string
-  itemCode: string
+  skuCode: string
   itemName: string
   qtyReceived: number
   unitPrice: number
@@ -93,7 +92,6 @@ export interface ShipmentReceiveItem extends ShipmentGoodReceiveItem {
 export interface QcItem {
   itemId: id
   itemName?: string
-  itemCode?: string
   skuCode?: string
   qcGoodsReceiveItemId?: id
   qtyReject: number
@@ -120,7 +118,6 @@ export interface ShipmentQcGoodReceiveItem {
   qcGoodsReceiveItemId: id | null
   itemId: id | null
   itemName: string
-  itemCode: string
   skuCode: string
   qtyPass: number
   qtyOrdered: number

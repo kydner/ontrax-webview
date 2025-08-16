@@ -44,7 +44,7 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ product?.itemCode }}</span>
+                    <span class="tw-text-secondary-text">{{ product?.skuCode }}</span>
                     <span>{{ product?.itemName }}</span>
                   </div>
                 </div>
@@ -159,7 +159,6 @@ const fetchData = async () => {
 
       return {
         itemId: product.itemId,
-        itemCode: product.skuCode,
         itemName: product.itemName,
         skuCode: product.skuCode,
         description: product.description,
@@ -203,7 +202,7 @@ const toggleItem = (product: ShipmentGoodReceiveItem, checked: boolean) => {
       current.push({
         itemId: product.itemId,
         itemName: product.itemName,
-        itemCode: product.itemCode,
+        skuCode: product.skuCode,
         qtyOrdered: 1,
         notes: '',
         qtyReceived: 0,

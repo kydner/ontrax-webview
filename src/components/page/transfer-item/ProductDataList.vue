@@ -15,7 +15,7 @@
             <product-image />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product.itemCode || product?.skuCode || '-' }}</span>
+                <span class="tw-text-secondary-text">{{ product?.skuCode || '-' }}</span>
                 <span>{{ product.itemName || '-' }}</span>
               </div>
             </div>
@@ -51,7 +51,7 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ transferItems[dialogIndex]?.itemCode }}</span>
+                    <span class="tw-text-secondary-text">{{ transferItems[dialogIndex]?.skuCode }}</span>
                     <span>{{ transferItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>

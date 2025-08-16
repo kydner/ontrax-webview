@@ -48,7 +48,7 @@ export interface ReceiveItem {
   itemId: id
   qtyOrdered: number
   notes: string
-  itemCode: string
+  skuCode: string
   itemName: string
   qtyReceived: number | null
   unitPrice: number | null
@@ -57,7 +57,7 @@ export interface ReceiveItem {
 export interface GoodReceiveItem {
   goodsReceiveItemId: id
   itemId: id
-  itemCode: string
+  skuCode: string
   itemName: string
   qtyOrdered: number
   qtyReceived: number

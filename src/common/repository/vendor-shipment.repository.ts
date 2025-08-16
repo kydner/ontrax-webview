@@ -29,7 +29,7 @@ export const useVendorShipmentRepository = defineRepository({
             qtyOrdered: item.qtyOrdered,
             notes: item.notes,
             itemName: item.itemName,
-            itemCode: item.itemCode,
+            skuCode: item.skuCode,
             qtyReceived: item.qtyReceived ?? 0,
             unitPrice: item.unitPrice,
           }
