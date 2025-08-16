@@ -1,6 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[40vh]">
-    <k-card v-for="(product, index) in qcGoodsReceiveItems" :key="index" class="tw-my-2">
+    <k-card v-for="(product, index) in qcGoodsReceiveItems" :key="index" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
