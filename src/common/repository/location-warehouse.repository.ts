@@ -9,10 +9,11 @@ const warehouseEndpoint = useLocationWarehouseEndpoint()
 export const useLocationWarehouseRepository = defineRepository({
   getPage: (params?: LocationWarehouseRequestPage) => withRepository(() => warehouseEndpoint.getPage(params)),
 
-  getAll: (params?: LocationWarehouseRequestPage) =>
+  getAll: (params: LocationWarehouseRequestPage) =>
     withRepository(
       () => {
-        return warehouseEndpoint.getPage({ page: 1, size: 800, ...params })
+        const { isActive = true } = params
+        return warehouseEndpoint.getPage({ page: 1, size: 800, ...params, isActive })
       },
       (response) => {
         return response.content

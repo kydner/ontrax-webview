@@ -152,7 +152,7 @@ const fetchData = async () => {
     state.data = null
     state.errorMessage = null
 
-    const response = await productRepo.getAll()
+    const response = await productRepo.getAll({})
 
     state.data = response.map((product) => {
       const existing = receiveItems.value.find((item) => item.itemId === product.itemId)

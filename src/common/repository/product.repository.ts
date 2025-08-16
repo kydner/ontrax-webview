@@ -9,7 +9,11 @@ const productEndpoint = useProductEndpoint()
 export const useProductRepository = defineRepository({
   getPage: (params?: ProductRequestPage) => withRepository(() => productEndpoint.getPage(params)),
 
-  getAll: (params?: ProductRequest) => withRepository(() => productEndpoint.getAll(params)),
+  getAll: (params: ProductRequest) =>
+    withRepository(() => {
+      const { isActive = true } = params
+      return productEndpoint.getAll({ ...params, isActive })
+    }),
 
   getOne: (id: id) => withRepository(() => productEndpoint.getOne(id)),
 

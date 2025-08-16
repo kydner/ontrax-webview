@@ -1,7 +1,9 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { LocationSiteResponse } from './location-site.model'
 
-export interface LocationWarehouseRequest extends IListSortingRequest {}
+export interface LocationWarehouseRequest extends IListSortingRequest {
+  isActive?: boolean
+}
 
 export type LocationWarehouseRequestPage = IPaginationRequest & LocationWarehouseRequest
 

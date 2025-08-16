@@ -84,7 +84,7 @@
           <q-card-section>
             <div class="tw-flex tw-items-center tw-justify-between">
               <span class="tw-text-secondary tw-text-lg">
-                {{ stock?.movementNumber }}
+                {{ stock?.referenceId }}
               </span>
               <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
             </div>
@@ -113,14 +113,14 @@
                   <div class="tw-col-span-3">
                     <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
                       <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
-                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
+                      <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
                     </div>
                   </div>
 
                   <div class="tw-col-span-3">
                     <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
                       <span class="tw-text-secondary-text tw-text-xs">New Balance</span>
-                      <span>-</span>
+                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
                     </div>
                   </div>
                 </div>

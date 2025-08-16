@@ -1,6 +1,8 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 
-export interface ProductRequest extends IListSortingRequest {}
+export interface ProductRequest extends IListSortingRequest {
+  isActive?: boolean
+}
 
 export type ProductRequestPage = IPaginationRequest & ProductRequest
 
