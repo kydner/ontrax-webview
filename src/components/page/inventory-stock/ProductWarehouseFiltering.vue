@@ -69,7 +69,7 @@
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-4">
                       <div class="tw-basis-auto">
                         <div class="tw-flex tw-items-center tw-justify-between tw-space-x-2">
-                          <span>{{ format(warehouse.currentQty, { precision: 0 }) }}</span>
+                          <span>{{ format(warehouse.availableQty, { precision: 0 }) }}</span>
                           <span class="tw-text-secondary-text">{{ stock?.unit?.toLowerCase() }}</span>
                         </div>
                       </div>

@@ -61,7 +61,7 @@
                 <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
                   <div class="tw-basis-auto">
                     <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                      <span>{{ format(stock?.currentQty, { precision: 0 }) }}</span>
+                      <span>{{ format(stock?.availableQty, { precision: 0 }) }}</span>
                       <span class="tw-text-secondary-text">{{ 'unit'?.toLowerCase() }}</span>
                     </div>
                   </div>
