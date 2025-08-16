@@ -1,5 +1,5 @@
 <template>
-  <div v-if="allowAccess" :class="`k-page ${props.padding}`">
+  <div v-if="allowAccess" :class="`k-page ${props.padding} ${props.class}`">
     <slot name="header" />
 
     <div class="k-page-content">

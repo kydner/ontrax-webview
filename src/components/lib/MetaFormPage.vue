@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" :allow-access="allowAccess" class="tw-bg-transparent">
+  <k-page padding="normal" :allow-access="allowAccess" class="bg-body-base">
     <!-- Bagian Header -->
     <div class="tw-flex tw-flex-col">
       <slot name="toolbar">

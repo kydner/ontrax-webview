@@ -4,7 +4,7 @@
     v-bind="{ ...props }"
     :show-toolbar="false"
     :allow-access="allowAccessPage"
-    class="bg-body-base"
+    class=""
   >
     <div v-if="!!errorMessage" class="tw-min-h-[80vh] tw-flex tw-items-center tw-justify-center">
       <internal-error>

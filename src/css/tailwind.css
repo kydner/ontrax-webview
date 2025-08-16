@@ -40,10 +40,11 @@
     --color-inactive: 122, 122, 128; /* #7A7A80 */
     --color-active: 74, 144, 226; /* #4A90E2 */
     --color-line: 57, 57, 68; /* #393944 */
+    --color-dark-page: 13, 17, 23; /* #0d1117 */
   }
 
   body {
-    @apply bg-body-base tw-text-white;
+    @apply tw-text-white;
   }
 
   hr.style1 {

@@ -1,6 +1,6 @@
 <template>
   <scrollable-container suffix-event="operational-list">
-    <meta-list-page v-bind="{ ...props }" :allow-access="allowAccessPage" class="tw-relative bg-body-base tw-h-screen">
+    <meta-list-page v-bind="{ ...props }" :allow-access="allowAccessPage" class="tw-relative tw-h-screen">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />

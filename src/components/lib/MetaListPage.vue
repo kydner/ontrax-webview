@@ -1,5 +1,5 @@
 <template>
-  <k-page padding="normal" class="tw-h-screen" :class="props.class" :allow-access="allowAccess">
+  <k-page padding="normal" class="tw-h-screen bg-body-base" :class="props.class" :allow-access="allowAccess">
     <div class="tw-flex tw-flex-col tw-space-y-4">
       <slot name="toolbar">
         <k-toolbar :header-title="props.meta?.title" @back="handleBack" />
