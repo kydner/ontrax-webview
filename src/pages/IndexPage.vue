@@ -66,9 +66,22 @@ const menus = computed(() => {
 
 <style scoped lang="scss">
 .k-index-page {
+  position: relative;
+  min-height: 100vh;
+  position: relative;
+
   &::before {
+    content: '';
     background: url('~assets/images/home-background.svg');
-    @apply tw-content-['-'] tw-absolute tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain tw-text-surface tw-inset-0 tw-top-0;
+    @apply tw-absolute tw-inset-0 tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    @apply tw-absolute tw-inset-0;
+    background: linear-gradient(180deg, #2d2d33 0%, #0c0c0f 100%);
+    z-index: -2;
   }
 }
 </style>
