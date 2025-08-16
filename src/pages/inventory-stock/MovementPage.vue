@@ -218,6 +218,7 @@ const loadMore = async <T extends StockMovementResponse[]>(reset = false) => {
 const resetLoad = () => {
   state.items = []
   state.hasMore = true
+  state.isLoading = false
 }
 const handleBack = () => {
   router.back()
@@ -236,6 +237,7 @@ const fetchData = async () => {
 
     stateHeader.data = response
 
+    console.log('lm')
     loadMore(true)
   } catch (error) {
     Notify.error({
