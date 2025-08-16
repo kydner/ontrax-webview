@@ -21,6 +21,7 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
+            <div class="tw-text-xs">Available Qty: {{ format(product?.availableQty, { precision: 0 }) }}</div>
             <plus-minus-field
               v-if="form.status === undefined || form.status === 'DRAFT'"
               v-model="product.qty"
@@ -90,6 +91,7 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { Notify } from 'src/common/utils/plugin.utils'
+import { format } from 'src/common/utils/converter.utils'
 
 interface Props {
   modelValue: TransferItemDataRequest

@@ -120,6 +120,7 @@ export interface ShipmentQcGoodReceiveItem {
   itemName: string
   skuCode: string
   qtyPass: number
+  qtyOrdered: number
   qtyReject: number
   notes: string | null
 }

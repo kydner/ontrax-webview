@@ -1,6 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[40vh]">
-    <k-card v-for="(product, index) in goodReceiveItems" :key="index" class="tw-my-2">
+    <k-card v-for="(product, index) in qcGoodsReceiveItems" :key="index" class="tw-my-2">
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -30,7 +30,9 @@
                   <span class="tw-text-secondary-text tw-text-xs">Qty Order</span>
                 </div>
                 <div>
-                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyPass, { precision: 0 }) }}</span>
+                  <span class="tw-text-white tw-text-xs">{{
+                    format(goodsReceiveItem(product.itemId)?.qtyOrdered, { precision: 0 })
+                  }}</span>
                 </div>
               </div>
               <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
@@ -57,7 +59,7 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="goodReceiveItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="qcGoodsReceiveItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -74,14 +76,14 @@
                 <product-image />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ goodReceiveItems[dialogIndex]?.skuCode }}</span>
-                    <span>{{ goodReceiveItems[dialogIndex]?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ qcGoodsReceiveItems[dialogIndex]?.skuCode }}</span>
+                    <span>{{ qcGoodsReceiveItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
-                  v-model="goodReceiveItems[dialogIndex].qtyReject"
+                  v-model="qcGoodsReceiveItems[dialogIndex].qtyReject"
                   :allow-increase="true"
                   :disable="isDisable"
                 />
@@ -90,7 +92,7 @@
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="goodReceiveItems[dialogIndex].notes"
+          v-model="qcGoodsReceiveItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
@@ -120,6 +122,7 @@ import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { format } from 'src/common/utils/converter.utils'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
+import { id } from 'src/common/interfaces/response.interface'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
@@ -152,7 +155,10 @@ const form = computed({
   set: (value) => emit('updte:model-value', value),
 })
 
-const goodReceiveItems = computed({
+const goodsReceiveItem = (itemId: id | null) => {
+  return form.value.goodsReceiveItems?.find((item) => item.itemId === itemId)
+}
+const qcGoodsReceiveItems = computed({
   get: () => form.value.qcGoodsReceive.qcGoodsReceiveItems,
   set: (value) => {
     form.value.qcGoodsReceive.qcGoodsReceiveItems = value
@@ -164,7 +170,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  goodReceiveItems.value?.splice(index, 1)
+  qcGoodsReceiveItems.value?.splice(index, 1)
   dialogIndex.value = null
 }
 </script>
