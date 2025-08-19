@@ -1,143 +1,153 @@
 <template>
-  <k-page padding="normal" class="bg-body-base tw-min-h-screen">
-    <k-toolbar header-title="Inventory Stock Movement" @back="handleBack" />
+  <scrollable-container suffix-event="inventory-movement">
+    <k-page padding="normal" class="bg-body-base tw-min-h-screen">
+      <k-toolbar header-title="Inventory Stock Movement" @back="handleBack" />
 
-    <!-- HEADER -->
-    <div class="tw-flex tw-flex-col tw-space-y-2 tw-my-2">
-      <!-- Loading Skeleton -->
-      <template v-if="stateHeader.isLoading">
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2" v-for="n in 3" :key="n">
-          <div class="tw-col-span-4"><q-skeleton type="text" width="80%" /></div>
-          <div class="tw-col-span-8"><q-skeleton type="text" width="100%" /></div>
-        </div>
-      </template>
-
-      <!-- Data -->
-      <template v-else>
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-          <div class="tw-col-span-4">{{ t('product') }}</div>
-          <div class="tw-col-span-8">: {{ stateHeader.data?.item?.itemName }}</div>
-        </div>
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-          <div class="tw-col-span-4">{{ t('warehouse') }}</div>
-          <div class="tw-col-span-8">: {{ stateHeader.data?.locationWarehouse?.warehouseName }}</div>
-        </div>
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-          <div class="tw-col-span-4">{{ t('stock') }}</div>
-          <div class="tw-col-span-8">
-            : {{ format(stateHeader.data?.availableQty, { precision: 0 }) }} {{ stateHeader?.data?.unit || 'pcs' }}
+      <!-- HEADER -->
+      <div class="tw-flex tw-flex-col tw-space-y-2 tw-my-2">
+        <!-- Loading Skeleton -->
+        <template v-if="stateHeader.isLoading">
+          <div class="tw-grid tw-grid-cols-12 tw-gap-2" v-for="n in 3" :key="n">
+            <div class="tw-col-span-4"><q-skeleton type="text" width="80%" /></div>
+            <div class="tw-col-span-8"><q-skeleton type="text" width="100%" /></div>
           </div>
-        </div>
-      </template>
-    </div>
+        </template>
 
-    <!-- MOVEMENT LIST -->
-    <div class="tw-flex tw-flex-col tw-my-2 tw-space-y-2">
-      <!-- Skeleton Loading -->
-      <template v-if="state.isLoading && !state.items.length">
-        <k-card v-for="n in 3" :key="n">
-          <!-- HEADER -->
-          <q-card-section>
-            <div class="tw-flex tw-items-center tw-justify-between">
-              <q-skeleton type="text" width="60%" height="16px" />
-              <q-skeleton type="text" width="30%" height="14px" />
+        <!-- Data -->
+        <template v-else>
+          <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+            <div class="tw-col-span-4">{{ t('product') }}</div>
+            <div class="tw-col-span-8">: {{ stateHeader.data?.item?.itemName }}</div>
+          </div>
+          <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+            <div class="tw-col-span-4">{{ t('warehouse') }}</div>
+            <div class="tw-col-span-8">: {{ stateHeader.data?.locationWarehouse?.warehouseName }}</div>
+          </div>
+          <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+            <div class="tw-col-span-4">{{ t('stock') }}</div>
+            <div class="tw-col-span-8">
+              : {{ format(stateHeader.data?.availableQty, { precision: 0 }) }} {{ stateHeader?.data?.unit || 'pcs' }}
             </div>
-          </q-card-section>
+          </div>
+        </template>
+      </div>
 
-          <q-separator dark />
+      <!-- MOVEMENT LIST -->
+      <div class="tw-flex tw-flex-col tw-my-4 tw-space-y-2">
+        <!-- Skeleton Loading (first load only) -->
+        <template v-if="state.isFirstLoading && !state.items.length">
+          <k-card v-for="n in 3" :key="n">
+            <!-- HEADER -->
+            <q-card-section>
+              <div class="tw-flex tw-items-center tw-justify-between">
+                <q-skeleton type="text" width="60%" height="16px" />
+                <q-skeleton type="text" width="30%" height="14px" />
+              </div>
+            </q-card-section>
 
-          <!-- BODY -->
-          <q-card-section>
-            <div class="tw-flex tw-flex-col tw-space-y-4">
-              <div class="tw-basis-full">
-                <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-                  <div v-for="i in 4" :key="i" class="tw-col-span-3">
-                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                      <q-skeleton type="text" width="70%" height="10px" />
-                      <q-skeleton type="text" width="40%" height="14px" />
+            <q-separator dark />
+
+            <!-- BODY -->
+            <q-card-section>
+              <div class="tw-flex tw-flex-col tw-space-y-4">
+                <div class="tw-basis-full">
+                  <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+                    <div v-for="i in 4" :key="i" class="tw-col-span-3">
+                      <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                        <q-skeleton type="text" width="70%" height="10px" />
+                        <q-skeleton type="text" width="40%" height="14px" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="tw-basis-full">
-                <div class="tw-flex tw-flex-col tw-space-y-4">
-                  <q-skeleton type="text" width="50%" height="10px" />
-                  <q-skeleton type="text" width="70%" height="12px" />
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </k-card>
-      </template>
-
-      <!-- No Data -->
-      <template v-else-if="!state.isLoading && !state.items.length">
-        <div class="tw-text-center tw-text-secondary-text tw-my-4">
-          {{ t('noData') }}
-        </div>
-      </template>
-
-      <!-- Data -->
-      <template v-else>
-        <k-card v-for="(stock, index) in state.items" :key="index">
-          <q-card-section>
-            <div class="tw-flex tw-items-center tw-justify-between">
-              <span class="tw-text-secondary tw-text-lg">
-                {{ stock?.referenceId }}
-              </span>
-              <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
-            </div>
-          </q-card-section>
-
-          <q-separator dark />
-
-          <q-card-section>
-            <div class="tw-flex tw-flex-col tw-space-y-4">
-              <div class="tw-basis-full">
-                <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-                  <div class="tw-col-span-3">
-                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                      <span class="tw-text-secondary-text tw-text-xs">Adjustment</span>
-                      <span>{{ stock?.movementType?.toUpperCase() }}</span>
-                    </div>
-                  </div>
-
-                  <div class="tw-col-span-3">
-                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                      <span class="tw-text-secondary-text tw-text-xs">Last Balance</span>
-                      <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
-                    </div>
-                  </div>
-
-                  <div class="tw-col-span-3">
-                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                      <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
-                      <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
-                    </div>
-                  </div>
-
-                  <div class="tw-col-span-3">
-                    <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
-                      <span class="tw-text-secondary-text tw-text-xs">New Balance</span>
-                      <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
-                    </div>
+                <div class="tw-basis-full">
+                  <div class="tw-flex tw-flex-col tw-space-y-4">
+                    <q-skeleton type="text" width="50%" height="10px" />
+                    <q-skeleton type="text" width="70%" height="12px" />
                   </div>
                 </div>
               </div>
+            </q-card-section>
+          </k-card>
+        </template>
 
-              <div class="tw-basis-full">
-                <div class="tw-flex tw-flex-col tw-space-y-4">
-                  <span class="tw-text-secondary-text tw-text-xs">Remark</span>
-                  <span>{{ stock?.notes || '-' }}</span>
+        <!-- No Data -->
+        <template v-else-if="!state.isFirstLoading && !state.items.length">
+          <div class="tw-text-center tw-text-secondary-text tw-my-4">
+            {{ t('noData') }}
+          </div>
+        </template>
+
+        <!-- Data -->
+        <template v-else>
+          <k-card v-for="(stock, index) in state.items" :key="index">
+            <q-card-section>
+              <div class="tw-flex tw-items-center tw-justify-between">
+                <span class="tw-text-secondary tw-text-lg">
+                  {{ stock?.referenceId }}
+                </span>
+                <span class="tw-text-disable-text">{{ formatDate(stock?.movementDate) }}</span>
+              </div>
+            </q-card-section>
+
+            <q-separator dark />
+
+            <q-card-section>
+              <div class="tw-flex tw-flex-col tw-space-y-4">
+                <div class="tw-basis-full">
+                  <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+                    <div class="tw-col-span-3">
+                      <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                        <span class="tw-text-secondary-text tw-text-xs">Adjustment</span>
+                        <span>{{ stock?.movementType?.toUpperCase() }}</span>
+                      </div>
+                    </div>
+
+                    <div class="tw-col-span-3">
+                      <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                        <span class="tw-text-secondary-text tw-text-xs">Last Balance</span>
+                        <span>{{ format(stock?.qtyBefore, { precision: 0 }) }}</span>
+                      </div>
+                    </div>
+
+                    <div class="tw-col-span-3">
+                      <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                        <span class="tw-text-secondary-text tw-text-xs">Qty Change</span>
+                        <span>{{ format(stock?.qtyChange, { precision: 0 }) }}</span>
+                      </div>
+                    </div>
+
+                    <div class="tw-col-span-3">
+                      <div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                        <span class="tw-text-secondary-text tw-text-xs">New Balance</span>
+                        <span>{{ format(stock?.qtyAfter, { precision: 0 }) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tw-basis-full">
+                  <div class="tw-flex tw-flex-col tw-space-y-4">
+                    <span class="tw-text-secondary-text tw-text-xs">Remark</span>
+                    <span>{{ stock?.notes || '-' }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </q-card-section>
-        </k-card>
-      </template>
-    </div>
-  </k-page>
+            </q-card-section>
+          </k-card>
+
+          <!-- LOADING MORE -->
+          <div v-if="state.isLoading" class="tw-text-center tw-py-4 tw-text-secondary">{{ t('loadMore') }}...</div>
+
+          <!-- NO MORE ITEMS -->
+          <div v-else-if="!state.hasMore" class="tw-text-center tw-py-4 tw-text-secondary-text">
+            {{ t('noMoreItems') }}
+          </div>
+        </template>
+      </div>
+    </k-page>
+  </scrollable-container>
 </template>
 
 <script setup lang="ts">
@@ -155,21 +165,17 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
 import { useI18n } from 'vue-i18n'
 import { format, formatDate } from 'src/common/utils/converter.utils'
+import ScrollableContainer from 'src/components/ui/ScrollableContainer.vue'
 
 const router = useRouter()
-
 const route = useRoute()
-
 const { t } = useI18n()
 
 const stockCardRepository = useStockCardRepository()
-
 const movementRepository = useStockMovementRepository()
 
 const params = computed(() => route.params)
-
 const locationWarehouseParams = computed(() => params.value?.locationWarehouseId)
-
 const itemParams = computed(() => params.value?.itemId)
 
 const stateHeader = reactive<ResponseState<StockCardLocationWarehouseResponse>>({
@@ -180,7 +186,8 @@ const stateHeader = reactive<ResponseState<StockCardLocationWarehouseResponse>>(
 
 const state = reactive({
   items: [] as StockMovementResponse[],
-  isLoading: false,
+  isFirstLoading: false, // skeleton pertama kali
+  isLoading: false, // loading berikutnya
   hasMore: true,
   errorMessage: null as string | null,
   size: 10,
@@ -192,11 +199,20 @@ const loadMore = async <T extends StockMovementResponse[]>(reset = false) => {
   if (reset) resetLoad()
   try {
     if (state.isLoading || !state.hasMore) return
+
     const warehouseId = locationWarehouseParams.value as id
     const itemId = itemParams.value as id
+
     state.isLoading = true
     state.errorMessage = null
-    const data = await movementRepository.getPage({ itemId, warehouseId })
+
+    const data = await movementRepository.getPage({
+      itemId,
+      warehouseId,
+      page: state.page,
+      size: state.size,
+    })
+
     const content = data.content
     state.totalPages = data.totalPages
     state.items.push(...(content as T))
@@ -207,19 +223,19 @@ const loadMore = async <T extends StockMovementResponse[]>(reset = false) => {
       state.hasMore = false
     }
   } catch (error) {
-    Notify.error({
-      message: error as Error,
-    })
+    Notify.error({ message: error as Error })
   } finally {
     state.isLoading = false
+    state.isFirstLoading = false
   }
 }
 
 const resetLoad = () => {
   state.items = []
   state.hasMore = true
-  state.isLoading = false
+  state.page = 1
 }
+
 const handleBack = () => {
   router.back()
 }
@@ -229,30 +245,25 @@ const fetchData = async () => {
     const locationWarehouseId = locationWarehouseParams.value as id
     const itemId = itemParams.value as id
     stateHeader.isLoading = true
-    state.isLoading = true
+    state.isFirstLoading = true
     stateHeader.errorMessage = null
+
     if (!locationWarehouseId && !itemId) throw new Error('Invalid Params')
 
     const response = await stockCardRepository.locationWarehouseItem({ itemId, locationWarehouseId })
-
     stateHeader.data = response
 
-    console.log('lm')
-    loadMore(true)
+    await loadMore(true)
   } catch (error) {
-    Notify.error({
-      message: error as Error,
-    })
-  }
-  {
+    Notify.error({ message: error as Error })
+  } finally {
     stateHeader.isLoading = false
   }
 }
 
 onMounted(() => {
   fetchData()
-
-  bus.on('scroll:bottom-reached', () => {
+  bus.on('scroll:bottom-reached-inventory-movement', () => {
     loadMore()
   })
 })
