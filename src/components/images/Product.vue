@@ -1,7 +1,7 @@
 <template>
   <!-- loading from API -->
   <div v-if="isLoading" class="tw-flex tw-items-center tw-justify-center" style="width: 45px; height: 45px">
-    <q-spinner size="24px" color="secondary" />
+    <q-spinner-hourglass size="24px" color="secondary" />
   </div>
 
   <!-- success image -->
