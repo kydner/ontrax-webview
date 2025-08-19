@@ -44,6 +44,7 @@ import { ComponentPublicInstance, computed, defineAsyncComponent, ref } from 'vu
 import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/operational.enum'
 import { orderBy } from 'lodash'
+import { TBaseSortDirection } from 'src/common/interfaces/response.interface'
 
 interface Props {
   suffixScroll?: string
@@ -90,6 +91,8 @@ const buildPayload = (extra: Partial<typeof payload.value> = {}) => ({
   page: 1,
   receiveNumber: search.value || undefined,
   status: currentStatus.value || statuses,
+  sortColumn: 'CREATED_DATE',
+  sortDirection: 'DESC' as TBaseSortDirection,
   ...extra,
 })
 

@@ -40,7 +40,6 @@
 import { id } from 'src/common/interfaces/response.interface'
 import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
 import { onMounted, onBeforeUnmount, ref } from 'vue'
-import { QSpinner } from 'quasar'
 
 interface Props {
   itemId: id
