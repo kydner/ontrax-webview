@@ -54,7 +54,7 @@
         </q-card>
       </slot>
 
-      <div v-if="meta.name !== 'receive-item'" class="inventory-add-button">
+      <div v-if="meta.name !== 'receive-item' && tab === TAB_SEND" class="inventory-add-button">
         <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
       </div>
     </meta-list-page>
