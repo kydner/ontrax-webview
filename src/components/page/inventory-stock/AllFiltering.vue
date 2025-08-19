@@ -48,7 +48,7 @@
           <q-card-section class="tw-p-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-space-x-2">
-                <product-image />
+                <product-image :item-id="stock?.item.itemId" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ stock?.item?.skuCode }}</span>

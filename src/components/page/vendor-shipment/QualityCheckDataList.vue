@@ -4,7 +4,7 @@
       <q-card-section class="tw-p-2">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
-            <product-image />
+            <product-image :item-id="product?.itemId || ''" />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
                 <span class="tw-text-secondary-text">{{ product?.skuCode || '-' }}</span>
@@ -73,7 +73,7 @@
           <q-card-section class="tw-p-2">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-justify-between tw-space-x-2">
-                <product-image />
+                <product-image :item-id="qcGoodsReceiveItems[dialogIndex]?.itemId || ''" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ qcGoodsReceiveItems[dialogIndex]?.skuCode }}</span>

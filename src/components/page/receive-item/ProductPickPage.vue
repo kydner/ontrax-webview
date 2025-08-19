@@ -41,7 +41,7 @@
                   unchecked-icon="img:/icons/rectangle__unchecked.svg"
                   color="grey"
                 />
-                <product-image />
+                <product-image :item-id="product?.itemId" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
                     <span class="tw-text-secondary-text">{{ product?.skuCode }}</span>

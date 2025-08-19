@@ -7,7 +7,7 @@ import { defineRepository } from '../utils/plugin.utils'
 const uploadEndpoint = useFileUploadEndpoint()
 
 export const useFileUploadRepository = defineRepository({
-  getOne: (fileId: id) => uploadEndpoint.getOne(fileId),
+  getOne: (fileId: id) => withRepository(() => uploadEndpoint.getOne(fileId)),
 
   upload: (files: File[] | File, params: FileUploadRequest) =>
     withRepository(() => uploadEndpoint.upload(files, params)),

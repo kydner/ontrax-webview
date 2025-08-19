@@ -1,10 +1,17 @@
 import { FileUploadRequest, FileUploadResponse } from '../model/file-upload.model'
 import { defineEndpoint } from '../utils/plugin.utils'
-import { Get, Post } from '../services/api.service'
+import { Post } from '../services/api.service'
 import { id } from '../interfaces/response.interface'
+import { api } from 'src/boot/axios'
 
 export const useFileUploadEndpoint = defineEndpoint({
-  getOne: (fileId: id) => Get(`files/get/file/${fileId}`),
+  getOne: (fileId: id) =>
+    api<Blob>('files/get/file', {
+      params: {
+        id: fileId,
+      },
+      responseType: 'blob',
+    }),
 
   upload: (files: File[] | File, params?: FileUploadRequest) => {
     const formData = new FormData()
