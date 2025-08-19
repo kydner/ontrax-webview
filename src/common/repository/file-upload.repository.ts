@@ -9,13 +9,9 @@ const uploadEndpoint = useFileUploadEndpoint()
 
 export const useFileUploadRepository = defineRepository({
   getOne: (fileId: id) =>
-    withRepository(
-      () => uploadEndpoint.getOne(fileId),
-      async (blob) => {
-        // transform Blob to cached URL string
-        return await getCachedImageUrl(fileId, async () => blob)
-      },
-    ),
+    getCachedImageUrl(fileId, async () => {
+      return await withRepository(() => uploadEndpoint.getOne(fileId))
+    }),
 
   upload: (files: File[] | File, params: FileUploadRequest) =>
     withRepository(() => uploadEndpoint.upload(files, params)),

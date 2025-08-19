@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { id } from 'src/common/interfaces/response.interface'
 import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 interface Props {
   itemId: id
@@ -60,8 +60,6 @@ const imageUrl = ref<string | null>(null)
 const isLoading = ref(false)
 
 const showPreview = ref(false)
-
-let objectUrl: string | null = null
 
 const startY = ref(0)
 
@@ -102,13 +100,5 @@ const onError = () => {
   imageUrl.value = null // fallback ke default
 }
 
-onMounted(() => {
-  fetchData()
-})
-
-onBeforeUnmount(() => {
-  if (objectUrl) {
-    URL.revokeObjectURL(objectUrl)
-  }
-})
+onMounted(fetchData)
 </script>
