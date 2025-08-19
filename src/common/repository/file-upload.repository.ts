@@ -12,7 +12,7 @@ export const useFileUploadRepository = defineRepository({
     withRepository(
       () => uploadEndpoint.getOne(fileId),
       async (blob) => {
-        // transform Blob → cached URL string
+        // transform Blob to cached URL string
         return await getCachedImageUrl(fileId, async () => blob)
       },
     ),
