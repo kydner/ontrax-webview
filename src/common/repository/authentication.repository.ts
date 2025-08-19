@@ -9,6 +9,7 @@ import { useAppStore } from 'src/stores/app.store'
 import { useAuthenticationStore } from 'src/stores/authentication.store'
 import { getErrorMessage } from '../utils/error.utils'
 import { AxiosError } from 'axios'
+import { clearAllImages } from '../utils/image-cache.utils'
 
 const authEndpoint = useAuthenticationEndpoint()
 
@@ -39,6 +40,9 @@ export const actionProfile = () => {
 
         /// set isLoggedIn & idle time here for used to on change-role
         authStore.$state.isLoggedIn = true
+
+        /// clear all image cache
+        clearAllImages()
 
         setIdleTime()
 
