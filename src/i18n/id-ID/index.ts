@@ -1381,6 +1381,7 @@ export default {
   saveToReadyToSend: 'Simpan Sebagai Siap Kirim',
   remark: 'Komentar',
   remarkReceiver: 'Komentar Penerima',
+  uploadPhoto: 'Unggah Gambar',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

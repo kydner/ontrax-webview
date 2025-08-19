@@ -99,7 +99,7 @@
         />
         <k-file-upload
           model-value=""
-          t-label="note"
+          t-label="uploadPhoto"
           icon="upload"
           :payload="{ module: 'SHIPMENT' }"
           :show-label="false"

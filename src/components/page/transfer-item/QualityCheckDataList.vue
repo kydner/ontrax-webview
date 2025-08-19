@@ -77,6 +77,14 @@
           :show-label="false"
           :placeholder="t('note')"
         />
+        <k-file-upload
+          model-value=""
+          t-label="uploadPhoto"
+          icon="upload"
+          :payload="{ module: 'TRANSFER' }"
+          :show-label="false"
+          :placeholder="t('upload')"
+        />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -92,6 +100,7 @@ import { computed, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
+import KFileUpload from 'src/components/ui/KFileUpload.vue'
 
 interface Props {
   modelValue: TransferItemDataRequest

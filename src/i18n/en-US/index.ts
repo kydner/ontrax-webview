@@ -1381,6 +1381,7 @@ export default {
   saveToReadyToSend: 'Save to Ready to Send',
   remark: 'Remark',
   remarkReceiver: 'Remark Receiver',
+  uploadPhoto: 'Upload Photo',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

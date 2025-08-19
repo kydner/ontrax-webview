@@ -16,12 +16,12 @@
           <template #default="scope">
             <k-text-area
               v-model="scope.value"
-              :disable="['RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+              :disable="['IN_TRANSIT', 'RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
               t-label="remarkSender"
               :show-label="true"
             />
             <k-text-area
-              v-if="['RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'].includes(form.status)"
+              v-if="['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'].includes(form.status)"
               v-model="form.receiverNotes"
               :disable="['PARTIAL_PASSED'].includes(form.status)"
               t-label="remarkReceiver"
