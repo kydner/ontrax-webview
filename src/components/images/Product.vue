@@ -21,8 +21,15 @@
   <q-img v-else src="/images/no-image.svg" no-spinner width="45px" height="45px" />
 
   <!-- PREVIEW DIALOG -->
-  <q-dialog v-model="showPreview" maximized persistent position="bottom">
-    <q-card flat :bordered="false" class="bg-dark tw-flex tw-flex-col tw-h-[70vh]">
+  <q-dialog v-model="showPreview" maximized persistent position="bottom" transition-duration="300">
+    <q-card
+      flat
+      :bordered="false"
+      class="bg-dark tw-flex tw-flex-col tw-h-[75vh]"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
+    >
       <!-- close button -->
       <q-card-section class="tw-flex tw-justify-end">
         <q-btn dense flat round icon="close" color="white" v-close-popup />
@@ -49,10 +56,33 @@ const props = defineProps<Props>()
 const fileRepository = useFileUploadRepository()
 
 const imageUrl = ref<string | null>(null)
+
 const isLoading = ref(false)
+
 const showPreview = ref(false)
 
 let objectUrl: string | null = null
+
+const startY = ref(0)
+
+const deltaY = ref(0)
+
+const onTouchStart = (e: TouchEvent) => {
+  startY.value = e.touches[0].clientY
+}
+
+const onTouchMove = (e: TouchEvent) => {
+  deltaY.value = e.touches[0].clientY - startY.value
+}
+
+const onTouchEnd = () => {
+  // kalau swipe kebawah lebih dari 100px → close dialog
+  if (deltaY.value > 100) {
+    showPreview.value = false
+  }
+  startY.value = 0
+  deltaY.value = 0
+}
 
 const fetchData = async () => {
   isLoading.value = true
