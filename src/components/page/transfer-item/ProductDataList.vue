@@ -1,12 +1,6 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
-    <k-btn
-      v-if="showAddButton"
-      :disable="!form?.fromWarehouseId"
-      color="secondary"
-      label="Add Product"
-      @click="handleProductPick"
-    />
+    <k-btn v-if="showAddButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in transferItems" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2">
