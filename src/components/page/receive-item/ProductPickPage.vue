@@ -33,13 +33,13 @@
               <div class="tw-flex tw-justify-between tw-space-x-2">
                 <q-checkbox
                   :model-value="isChecked(product.itemId)"
-                  @update:model-value="(val) => toggleItem(product, val)"
                   :true-value="true"
                   :false-value="false"
                   class="tw-mr-2"
                   checked-icon="img:/icons/rectangle__checked.svg"
                   unchecked-icon="img:/icons/rectangle__unchecked.svg"
                   color="grey"
+                  @update:model-value="(val) => toggleItem(product, val)"
                 />
                 <product-image :item-id="product?.itemId" />
                 <div class="tw-basis-auto">
