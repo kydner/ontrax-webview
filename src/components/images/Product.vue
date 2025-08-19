@@ -55,18 +55,9 @@ const showPreview = ref(false)
 let objectUrl: string | null = null
 
 const fetchData = async () => {
+  isLoading.value = true
   try {
-    isLoading.value = true
-    const blob = await fileRepository.getOne(props.itemId)
-
-    if (blob instanceof Blob) {
-      objectUrl = URL.createObjectURL(blob)
-      imageUrl.value = objectUrl
-    } else {
-      console.warn('Response bukan Blob:', blob)
-    }
-  } catch (err) {
-    console.error('Fetch image error:', err)
+    imageUrl.value = await fileRepository.getOne(props.itemId)
   } finally {
     isLoading.value = false
   }
