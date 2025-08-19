@@ -31,6 +31,7 @@
               v-else
               v-model="product.qtyOrdered"
               :allow-increase="true"
+              zero-confirm
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />

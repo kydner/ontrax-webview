@@ -22,10 +22,21 @@
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
             <plus-minus-field
+              v-if="form.status === 'DRAFT' || !form.status"
               v-model="product.qty"
               :allow-increase="true"
               :max="product.availableQty"
-              :is-disable="isDisable || form.status !== 'DRAFT'"
+              :is-disable="isDisable"
+              zero-confirm
+              @increase="handleIncrease(index)"
+              @zero:confirm="handleZeroConfirm(index)"
+            />
+            <plus-minus-field
+              v-else
+              v-model="product.qty"
+              :allow-increase="true"
+              :max="product.availableQty"
+              :is-disable="isDisable"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
