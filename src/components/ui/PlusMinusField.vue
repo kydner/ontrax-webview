@@ -13,7 +13,7 @@
       v-model="currentValue"
       dense
       input-class="tw-text-right tw-py-0"
-      class="tw-flex input"
+      class="tw-flex input tw-rounded-none"
       borderless
       hide-underline
       :disabled="props.disableValue || props.disable"

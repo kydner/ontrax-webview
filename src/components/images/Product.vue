@@ -21,8 +21,8 @@
   <q-img v-else src="/images/no-image.svg" no-spinner width="45px" height="45px" />
 
   <!-- PREVIEW DIALOG -->
-  <q-dialog v-model="showPreview" maximized persistent>
-    <q-card class="bg-dark tw-flex tw-flex-col tw-h-screen">
+  <q-dialog v-model="showPreview" maximized persistent position="bottom">
+    <q-card flat :bordered="false" class="bg-dark tw-flex tw-flex-col tw-h-[70vh]">
       <!-- close button -->
       <q-card-section class="tw-flex tw-justify-end">
         <q-btn dense flat round icon="close" color="white" v-close-popup />
