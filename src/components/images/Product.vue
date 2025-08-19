@@ -36,7 +36,7 @@
       </q-card-section>
 
       <!-- centered images -->
-      <q-card-section class="tw-flex tw-items-center tw-justify-center tw-flex-1">
+      <q-card-section class="tw-flex tw-items-start tw-justify-center tw-flex-1">
         <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 90vh; max-width: 100%" />
       </q-card-section>
     </q-card>
