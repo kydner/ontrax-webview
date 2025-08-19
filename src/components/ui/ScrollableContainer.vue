@@ -9,7 +9,7 @@ import { bus } from 'src/common/event-bus'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 interface Props {
-  suffixEvent?: string
+  suffixEvent?: string | null
 }
 
 const props = withDefaults(defineProps<Props>(), {})

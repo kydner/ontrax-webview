@@ -1,5 +1,5 @@
 <template>
-  <scrollable-container suffix-event="inv-filter">
+  <scrollable-container :suffix-event="suffixEvent">
     <meta-list-page v-bind="{ ...props }" class="" :allow-access="allowAccessPage">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
@@ -85,6 +85,8 @@ const component = ref<Component | null>(null)
 
 const componentKey = ref(0)
 
+const suffixEvent = ref<string | null>(null)
+
 const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
@@ -98,10 +100,12 @@ defineSlots<Slots<T>>()
 const handleFilter = async () => {
   component.value = null
   if (!request.value.itemIds && !request.value.warehouseIds) {
+    suffixEvent.value = 'all-filtering'
     component.value = defineAsyncComponent({
       loader: () => import('../page/inventory-stock/AllFiltering.vue'),
     })
   } else {
+    suffixEvent.value = 'product-warehouse-filtering'
     component.value = defineAsyncComponent({
       loader: () => import('../page/inventory-stock/ProductWarehouseFiltering.vue'),
     })

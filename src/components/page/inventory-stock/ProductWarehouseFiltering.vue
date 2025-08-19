@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-flex-col tw-space-y-4 tw-my-4 tw-min-h-screen">
-    <!-- Loading State -->
-    <template v-if="state.isLoading">
+    <!-- Loading State (First Load Only) -->
+    <template v-if="state.isLoading && state.items.length === 0">
       <div v-for="n in 3" :key="n" class="tw-basis-full">
         <div class="tw-grid tw-grid-cols-12 tw-gap-2">
           <div class="tw-col-span-12">
@@ -85,9 +85,26 @@
           </div>
         </div>
       </div>
+
+      <!-- LOADING MORE -->
+      <div
+        v-if="state.isLoading && state.items.length > 0"
+        class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-4 tw-text-secondary"
+      >
+        {{ t('loadMore') }}...
+      </div>
+
+      <!-- NO MORE ITEMS -->
+      <div
+        v-else-if="!state.hasMore && state.items.length > 0"
+        class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-2 tw-text-secondary-text"
+      >
+        {{ t('noMoreItems') }}
+      </div>
     </template>
   </div>
 </template>
+
 <script setup lang="ts">
 import { Loading } from 'quasar'
 import { InventoryStock } from 'src/common/constants/meta.constant'
@@ -180,7 +197,7 @@ const resetLoad = () => {
 
 onMounted(() => {
   loadMore()
-  bus.on('scroll:bottom-reached-inv-filter', () => {
+  bus.on('scroll:bottom-reached-product-warehouse-filtering', () => {
     loadMore()
   })
 })

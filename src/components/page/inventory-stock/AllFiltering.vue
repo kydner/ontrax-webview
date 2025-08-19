@@ -6,7 +6,7 @@
     </div>
 
     <div class="tw-basis-full">
-      <!-- SKELETON LOADING -->
+      <!-- SKELETON LOADING (first load only) -->
       <template v-if="state.isLoading && state.items.length === 0">
         <k-card v-for="n in state.size" :key="'skeleton-' + n" class="tw-my-2">
           <q-card-section class="tw-p-2 tw-py-3">
@@ -59,24 +59,35 @@
 
               <div class="tw-basis-auto">
                 <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                  <div class="tw-basis-auto">
-                    <div class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
-                      <span>{{ format(stock?.availableQty, { precision: 0 }) }}</span>
-                      <span class="tw-text-secondary-text">{{ 'unit'?.toLowerCase() }}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <q-icon name="img:/icons/chevron-right.svg" size="1.35rem" />
-                  </div>
+                  <span>{{ format(stock?.availableQty, { precision: 0 }) }}</span>
+                  <span class="tw-text-secondary-text">{{ 'unit'?.toLowerCase() }}</span>
+                  <q-icon name="img:/icons/chevron-right.svg" size="1.35rem" />
                 </div>
               </div>
             </div>
           </q-card-section>
         </k-card>
+
+        <!-- LOADING MORE (next load only) -->
+        <div
+          v-if="state.isLoading && state.items.length > 0"
+          class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-4 tw-text-secondary"
+        >
+          {{ t('loadMore') }}...
+        </div>
+
+        <!-- NO MORE ITEMS -->
+        <div
+          v-else-if="!state.hasMore && state.items.length > 0"
+          class="tw-col-span-12 tw-text-center tw-py-4 tw-mb-2 tw-text-secondary-text"
+        >
+          {{ t('noMoreItems') }}
+        </div>
       </template>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import KCard from 'src/components/ui/KCard.vue'
@@ -155,7 +166,7 @@ const resetLoad = () => {
 
 onMounted(() => {
   loadMore()
-  bus.on('scroll:bottom-reached-inv-filter', () => {
+  bus.on('scroll:bottom-reached-all-filtering', () => {
     loadMore()
   })
 })

@@ -1,5 +1,5 @@
 <template>
-  <scrollable-container suffix-event="operational-list">
+  <scrollable-container :suffix-event="props.meta.name">
     <meta-list-page v-bind="{ ...props }" :allow-access="allowAccessPage" class="tw-relative tw-h-screen">
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
@@ -28,6 +28,7 @@
                 v-if="allowSend"
                 :is="SendListPage"
                 :meta="props.meta"
+                :suffix-scroll="props.meta.name"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')"
               />
               <access-denied v-else>
@@ -41,6 +42,7 @@
                 v-if="allowQC"
                 :is="QualityControlListPage"
                 :meta="props.meta"
+                :suffix-scroll="props.meta.name"
                 @click:item="(data: ListContentEvent) => handleUpdate(data, 'quality-control')"
               />
               <access-denied v-else>

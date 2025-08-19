@@ -76,6 +76,7 @@ interface KMetaListTableProps {
   meta: IMetaListModule<T>
   payload?: R
   itemMapper?: (items: T[]) => T[]
+  suffixScroll?: string
 }
 
 interface Emits {
@@ -112,6 +113,11 @@ const state = reactive({
 const mappedItems = computed(() =>
   props.itemMapper ? props.itemMapper(state.items as unknown as T[]) : (state.items as unknown as T[]),
 )
+
+const scrollEvent = computed(() => {
+  if (props.suffixScroll) return `scroll:bottom-reached-${props.suffixScroll}`
+  return 'scroll:bottom-reached'
+})
 
 const loadMore = async <T extends any[]>(reset = false) => {
   if (reset) resetLoad()
@@ -154,7 +160,7 @@ onMounted(() => {
   // Load awal
   loadMore()
 
-  bus.on('scroll:bottom-reached-operational-list', () => {
+  bus.on(scrollEvent.value, () => {
     loadMore()
   })
 })

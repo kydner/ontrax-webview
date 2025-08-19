@@ -15,6 +15,7 @@
     ref="metaListTableRef"
     :meta="metaTransferItem"
     :payload="payload"
+    :suffix-scroll="suffixScroll"
     :item-mapper="(items) => (sortDirection ? orderBy(items, (item) => item.createdDate, [sortDirection]) : items)"
   >
     <!-- prettier-ignore -->
@@ -44,9 +45,15 @@ import KMetaListTable from 'src/components/ui/KMetaListTable.vue'
 import { TStatus } from 'src/common/enum/operational.enum'
 import { orderBy } from 'lodash'
 
+interface Props {
+  suffixScroll?: string
+}
+
 interface ListItem {
   item: ReceiveItemResponsePage
 }
+
+defineProps<Props>()
 
 interface Emits {
   (event: 'click:item', data: ListItem): void
