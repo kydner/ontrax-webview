@@ -1,6 +1,11 @@
 <template>
-  <div @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
-    <slot />
+  <div class="tw-overflow-hidden" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
+    <div
+      class="tw-w-full tw-h-full tw-transition-transform"
+      :style="{ transform: `translate(${offsetX}px, ${offsetY}px)` }"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -14,13 +19,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  threshold: 100,
+  threshold: 100, // px minimal biar swipe dianggap valid
 })
 
 const startX = ref(0)
 const startY = ref(0)
-const deltaX = ref(0)
-const deltaY = ref(0)
+const offsetX = ref(0)
+const offsetY = ref(0)
 
 const onTouchStart = (e: TouchEvent) => {
   startX.value = e.touches[0].clientX
@@ -28,26 +33,24 @@ const onTouchStart = (e: TouchEvent) => {
 }
 
 const onTouchMove = (e: TouchEvent) => {
-  deltaX.value = e.touches[0].clientX - startX.value
-  deltaY.value = e.touches[0].clientY - startY.value
+  offsetX.value = e.touches[0].clientX - startX.value
+  offsetY.value = e.touches[0].clientY - startY.value
 }
 
 const onTouchEnd = () => {
-  if (Math.abs(deltaX.value) > Math.abs(deltaY.value)) {
-    // Horizontal swipe
-    if (deltaX.value > props.threshold && props.swipeRight) {
+  // swipe horizontal dominan
+  if (Math.abs(offsetX.value) > Math.abs(offsetY.value)) {
+    if (offsetX.value > props.threshold && props.swipeRight) {
       props.swipeRight()
     }
   } else {
-    // Vertical swipe
-    if (deltaY.value > props.threshold && props.swipeDown) {
+    if (offsetY.value > props.threshold && props.swipeDown) {
       props.swipeDown()
     }
   }
 
-  startX.value = 0
-  startY.value = 0
-  deltaX.value = 0
-  deltaY.value = 0
+  // reset posisi (bounce back)
+  offsetX.value = 0
+  offsetY.value = 0
 }
 </script>
