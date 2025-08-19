@@ -22,24 +22,19 @@
 
   <!-- PREVIEW DIALOG -->
   <q-dialog v-model="showPreview" maximized persistent position="bottom" transition-duration="300">
-    <q-card
-      flat
-      :bordered="false"
-      class="bg-dark tw-flex tw-flex-col tw-h-[75vh]"
-      @touchstart="onTouchStart"
-      @touchmove="onTouchMove"
-      @touchend="onTouchEnd"
-    >
-      <!-- close button -->
-      <q-card-section class="tw-flex tw-justify-end">
-        <q-btn dense flat round icon="close" color="white" v-close-popup />
-      </q-card-section>
+    <swipe-wrapper :swipe-down="() => (showPreview = false)">
+      <q-card flat :bordered="false" class="bg-dark tw-flex tw-flex-col tw-h-[75vh]">
+        <!-- close button -->
+        <q-card-section class="tw-flex tw-justify-end">
+          <q-btn dense flat round icon="close" color="white" v-close-popup />
+        </q-card-section>
 
-      <!-- centered images -->
-      <q-card-section class="tw-flex tw-items-start tw-justify-center tw-flex-1">
-        <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 90vh; max-width: 100%" />
-      </q-card-section>
-    </q-card>
+        <!-- centered images -->
+        <q-card-section class="tw-flex tw-items-start tw-justify-center tw-flex-1">
+          <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 90vh; max-width: 100%" />
+        </q-card-section>
+      </q-card>
+    </swipe-wrapper>
   </q-dialog>
 </template>
 
@@ -47,6 +42,7 @@
 import { id } from 'src/common/interfaces/response.interface'
 import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
 import { onMounted, ref } from 'vue'
+import SwipeWrapper from '../ui/SwipeWrapper.vue'
 
 interface Props {
   itemId: id
@@ -60,27 +56,6 @@ const imageUrl = ref<string | null>(null)
 const isLoading = ref(false)
 
 const showPreview = ref(false)
-
-const startY = ref(0)
-
-const deltaY = ref(0)
-
-const onTouchStart = (e: TouchEvent) => {
-  startY.value = e.touches[0].clientY
-}
-
-const onTouchMove = (e: TouchEvent) => {
-  deltaY.value = e.touches[0].clientY - startY.value
-}
-
-const onTouchEnd = () => {
-  // kalau swipe kebawah lebih dari 100px → close dialog
-  if (deltaY.value > 100) {
-    showPreview.value = false
-  }
-  startY.value = 0
-  deltaY.value = 0
-}
 
 const fetchData = async () => {
   isLoading.value = true

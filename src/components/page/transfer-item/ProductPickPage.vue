@@ -1,80 +1,82 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh] tw-h-screen tw-overflow-y-auto">
-    <div>
-      <k-toolbar class="tw-pb-1" @back="handleBack">
-        <template #title>
-          <q-input v-model="search" :show-label="false" placeholder="Search by Name" borderless class="fit" />
-        </template>
-      </k-toolbar>
-      <q-separator dark class="tw-mb-4"></q-separator>
-      <div v-if="state.isLoading">
-        <k-card v-for="i in 5" :key="i" class="tw-my-2">
-          <q-card-section class="tw-p-2">
-            <div class="tw-flex tw-items-center tw-justify-between">
-              <div class="tw-flex tw-items-center tw-space-x-2">
-                <q-skeleton type="rect" width="20px" height="20px" />
-                <q-skeleton type="rect" width="40px" height="40px" />
-                <div class="tw-flex tw-flex-col tw-gap-1">
-                  <q-skeleton type="text" width="100px" />
-                  <q-skeleton type="text" width="150px" />
-                </div>
-              </div>
-              <div>
-                <q-skeleton type="QInput" width="100px" />
-              </div>
-            </div>
-          </q-card-section>
-        </k-card>
-      </div>
-      <div v-else>
-        <k-card v-for="product in filteredProducts" :key="product.itemId" class="tw-my-2">
-          <q-card-section class="tw-p-2 tw-py-0">
-            <div class="tw-flex tw-items-center tw-justify-between">
-              <div class="tw-flex tw-justify-between tw-space-x-2">
-                <q-checkbox
-                  :model-value="isChecked(product.itemId)"
-                  :true-value="true"
-                  :false-value="false"
-                  class="tw-mr-2"
-                  checked-icon="img:/icons/rectangle__checked.svg"
-                  unchecked-icon="img:/icons/rectangle__unchecked.svg"
-                  color="grey"
-                  @update:model-value="(val) => toggleItem(product, val)"
-                />
-                <product-image :item-id="product?.itemId" />
-                <div class="tw-basis-auto">
-                  <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ product?.skuCode }}</span>
-                    <span>{{ product?.itemName }}</span>
+  <swipe-wrapper :swipe-right="handleBack">
+    <div class="tw-flex tw-flex-col tw-justify-between tw-min-h-[90vh] tw-h-screen tw-overflow-y-auto">
+      <div>
+        <k-toolbar class="tw-pb-1" @back="handleBack">
+          <template #title>
+            <q-input v-model="search" :show-label="false" placeholder="Search by Name" borderless class="fit" />
+          </template>
+        </k-toolbar>
+        <q-separator dark class="tw-mb-4"></q-separator>
+        <div v-if="state.isLoading">
+          <k-card v-for="i in 5" :key="i" class="tw-my-2">
+            <q-card-section class="tw-p-2">
+              <div class="tw-flex tw-items-center tw-justify-between">
+                <div class="tw-flex tw-items-center tw-space-x-2">
+                  <q-skeleton type="rect" width="20px" height="20px" />
+                  <q-skeleton type="rect" width="40px" height="40px" />
+                  <div class="tw-flex tw-flex-col tw-gap-1">
+                    <q-skeleton type="text" width="100px" />
+                    <q-skeleton type="text" width="150px" />
                   </div>
                 </div>
+                <div>
+                  <q-skeleton type="QInput" width="100px" />
+                </div>
               </div>
-              <div class="tw-basis-auto tw-text-right">
-                <span class="tw-text-xs">Available Qty: {{ format(product.availableQty, { precision: 0 }) }}</span>
-                <plus-minus-field
-                  v-model="product.qty"
-                  :allow-increase="true"
-                  :max="product?.availableQty"
-                  :disable="!isChecked(product.itemId)"
-                  @update:model-value="(val) => updateQty(product, val as number)"
-                />
+            </q-card-section>
+          </k-card>
+        </div>
+        <div v-else>
+          <k-card v-for="product in filteredProducts" :key="product.itemId" class="tw-my-2">
+            <q-card-section class="tw-p-2 tw-py-0">
+              <div class="tw-flex tw-items-center tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-space-x-2">
+                  <q-checkbox
+                    :model-value="isChecked(product.itemId)"
+                    :true-value="true"
+                    :false-value="false"
+                    class="tw-mr-2"
+                    checked-icon="img:/icons/rectangle__checked.svg"
+                    unchecked-icon="img:/icons/rectangle__unchecked.svg"
+                    color="grey"
+                    @update:model-value="(val) => toggleItem(product, val)"
+                  />
+                  <product-image :item-id="product?.itemId" />
+                  <div class="tw-basis-auto">
+                    <div class="tw-flex tw-flex-col">
+                      <span class="tw-text-secondary-text">{{ product?.skuCode }}</span>
+                      <span>{{ product?.itemName }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tw-basis-auto tw-text-right">
+                  <span class="tw-text-xs">Available Qty: {{ format(product.availableQty, { precision: 0 }) }}</span>
+                  <plus-minus-field
+                    v-model="product.qty"
+                    :allow-increase="true"
+                    :max="product?.availableQty"
+                    :disable="!isChecked(product.itemId)"
+                    @update:model-value="(val) => updateQty(product, val as number)"
+                  />
+                </div>
               </div>
-            </div>
-            <q-separator dark spaced></q-separator>
-          </q-card-section>
-        </k-card>
+              <q-separator dark spaced></q-separator>
+            </q-card-section>
+          </k-card>
+        </div>
+      </div>
+      <div class="tw-my-4">
+        <div class="tw-flex tw-flex-col tw-mb-2">
+          <span class="tw-text-xs">{{ t('items') }} : {{ receivedItemLength }}</span>
+          <span class="tw-text-xs">{{ t('quantity') }} : {{ totalQuantity }}</span>
+        </div>
+        <div>
+          <k-btn :label="t('save')" color="secondary" :disable="state.isLoading" class="fit" @click="handleBack" />
+        </div>
       </div>
     </div>
-    <div class="tw-my-4">
-      <div class="tw-flex tw-flex-col tw-mb-2">
-        <span class="tw-text-xs">{{ t('items') }} : {{ receivedItemLength }}</span>
-        <span class="tw-text-xs">{{ t('quantity') }} : {{ totalQuantity }}</span>
-      </div>
-      <div>
-        <k-btn :label="t('save')" color="secondary" :disable="state.isLoading" class="fit" @click="handleBack" />
-      </div>
-    </div>
-  </div>
+  </swipe-wrapper>
 </template>
 <script setup lang="ts">
 import { id, ResponseState } from 'src/common/interfaces/response.interface'
@@ -90,6 +92,7 @@ import ProductImage from 'src/components/images/Product.vue'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { TransferItem } from 'src/common/model/operational.model'
 import { format } from 'src/common/utils/converter.utils'
+import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 
 interface Props {
   modelValue: TransferItemResponse
