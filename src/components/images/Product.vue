@@ -23,12 +23,12 @@
   <!-- PREVIEW DIALOG -->
   <q-dialog v-model="showPreview" maximized persistent>
     <q-card class="bg-dark tw-flex tw-flex-col tw-h-screen">
-      <!-- tombol close -->
+      <!-- close button -->
       <q-card-section class="tw-flex tw-justify-end">
         <q-btn dense flat round icon="close" color="white" v-close-popup />
       </q-card-section>
 
-      <!-- gambar di tengah -->
+      <!-- centered images -->
       <q-card-section class="tw-flex tw-items-center tw-justify-center tw-flex-1">
         <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 90vh; max-width: 100%" />
       </q-card-section>
