@@ -1,23 +1,25 @@
-const imageCache = new Map<string, string>()
+// src/common/cache/image-cache.ts
+import { id } from '../interfaces/response.interface'
 
-export function getCachedImageUrl(key: string): string | undefined {
-  return imageCache.get(key)
-}
+const imageCache = new Map<id, string>()
 
-export function setCachedImageUrl(key: string, blob: Blob): string {
-  let url = imageCache.get(key)
-  if (!url) {
-    url = URL.createObjectURL(blob)
-    imageCache.set(key, url)
+export async function getCachedImageUrl(fileId: id, fetcher: () => Promise<Blob>): Promise<string> {
+  const cached = imageCache.get(fileId)
+  if (cached !== undefined) {
+    return cached
   }
+
+  const blob = await fetcher()
+  const url = URL.createObjectURL(blob)
+  imageCache.set(fileId, url)
   return url
 }
 
-export function clearImageUrl(key: string) {
-  const url = imageCache.get(key)
-  if (url) {
+export function clearImageUrl(fileId: id) {
+  const url = imageCache.get(fileId)
+  if (url !== undefined) {
     URL.revokeObjectURL(url)
-    imageCache.delete(key)
+    imageCache.delete(fileId)
   }
 }
 

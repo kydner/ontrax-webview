@@ -2,7 +2,7 @@ import { useFileUploadEndpoint } from '../endpoints/file-upload.endpoint'
 import { id } from '../interfaces/response.interface'
 import { FileUploadRequest } from '../model/file-upload.model'
 import { withRepository } from '../utils/converter.utils'
-import { getCachedImageUrl, setCachedImageUrl } from '../utils/image-cache.utils'
+import { getCachedImageUrl } from '../utils/image-cache.utils'
 import { defineRepository } from '../utils/plugin.utils'
 
 const uploadEndpoint = useFileUploadEndpoint()
@@ -11,13 +11,9 @@ export const useFileUploadRepository = defineRepository({
   getOne: (fileId: id) =>
     withRepository(
       () => uploadEndpoint.getOne(fileId),
-      (blob) => {
-        const key = String(fileId) // pastikan key selalu string
-        const cachedUrl = getCachedImageUrl(key)
-        if (cachedUrl) {
-          return cachedUrl
-        }
-        return setCachedImageUrl(key, blob)
+      async (blob) => {
+        // transform Blob → cached URL string
+        return await getCachedImageUrl(fileId, async () => blob)
       },
     ),
 

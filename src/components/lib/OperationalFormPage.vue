@@ -56,7 +56,7 @@
 <script setup lang="ts" generic="T extends OperationalDataRequest">
 import MetaFormPage from './MetaFormPage.vue'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
@@ -74,6 +74,7 @@ import { getErrorMessage } from 'src/common/utils/error.utils'
 import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import InternalError from '../images/InternalError.vue'
 import { id } from 'src/common/interfaces/response.interface'
+import { clearAllImages } from 'src/common/utils/image-cache.utils'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -260,6 +261,11 @@ onMounted(() => {
   bus.on('product:pick', () => {
     panel.value = PANEL_PRODUCT
   })
+})
+
+onUnmounted(() => {
+  /// clear all image cache when unmounted
+  clearAllImages()
 })
 
 defineExpose({
