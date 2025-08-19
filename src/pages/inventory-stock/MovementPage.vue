@@ -186,8 +186,8 @@ const stateHeader = reactive<ResponseState<StockCardLocationWarehouseResponse>>(
 
 const state = reactive({
   items: [] as StockMovementResponse[],
-  isFirstLoading: false, // skeleton pertama kali
-  isLoading: false, // loading berikutnya
+  isFirstLoading: false,
+  isLoading: false,
   hasMore: true,
   errorMessage: null as string | null,
   size: 10,
