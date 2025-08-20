@@ -21,17 +21,17 @@
   <q-img v-else src="/images/no-image.svg" no-spinner width="45px" height="45px" />
 
   <!-- PREVIEW DIALOG -->
-  <q-dialog v-model="showPreview" maximized persistent position="bottom" transition-duration="300">
+  <q-dialog v-model="showPreview" maximized persistent transition-duration="300" position="bottom">
     <swipe-wrapper :swipe-down="() => (showPreview = false)">
-      <q-card flat :bordered="false" class="bg-dark tw-flex tw-flex-col tw-h-[75vh]">
+      <q-card flat class="product-card">
         <!-- close button -->
         <q-card-section class="tw-flex tw-justify-end">
           <q-btn dense flat round icon="close" color="white" v-close-popup />
         </q-card-section>
 
         <!-- centered images -->
-        <q-card-section class="tw-flex tw-items-start tw-justify-center tw-flex-1">
-          <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 90vh; max-width: 100%" />
+        <q-card-section class="tw-flex tw-items-center tw-justify-center">
+          <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 70vh; max-width: 100%" />
         </q-card-section>
       </q-card>
     </swipe-wrapper>
@@ -77,3 +77,10 @@ const onError = () => {
 
 onMounted(fetchData)
 </script>
+<style scoped lang="scss">
+.product-card {
+  width: $max-page-width;
+  max-width: 100vw;
+  @apply tw-bg-dark tw-rounded-2xl tw-h-[75vh] bg-body-base;
+}
+</style>
