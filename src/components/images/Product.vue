@@ -81,6 +81,6 @@ onMounted(fetchData)
 .product-card {
   width: $max-page-width;
   max-width: 100vw;
-  @apply tw-bg-dark tw-rounded-2xl tw-h-[75vh] bg-body-base;
+  @apply tw-bg-dark tw-rounded-2xl tw-h-[75vh] bg-body-base tw-mx-auto;
 }
 </style>
