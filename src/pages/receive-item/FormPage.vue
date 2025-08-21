@@ -143,6 +143,7 @@ const handleUpdateToQcPass = () => {
                   qcStockTransferItemId: item.qcStockTransferItemId ?? null,
                   qtyReject: item.qtyReject ?? 0,
                   note: item.notes ?? null,
+                  fileId: item?.fileId ?? null,
                 }
               }) || [],
           }
