@@ -1,11 +1,16 @@
 import { FileUploadRequest, FileUploadResponse } from '../model/file-upload.model'
 import { defineEndpoint } from '../utils/plugin.utils'
 import { Post } from '../services/api.service'
+import { useFileDownloadEndpoint } from './file-download.endpoint'
 import { id } from '../interfaces/response.interface'
 import { api } from 'src/boot/axios'
 
+const fileDownloadEndpoint = useFileDownloadEndpoint()
+
 export const useFileUploadEndpoint = defineEndpoint({
-  getOne: (fileId: id) =>
+  ...fileDownloadEndpoint,
+
+  get: (fileId: id) =>
     api<Blob>('files/get/file', {
       params: {
         id: fileId,

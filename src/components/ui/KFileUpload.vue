@@ -71,21 +71,31 @@
           <template #append>
             <slot name="append">
               <q-btn
-                v-if="modelValue && !isMenu"
+                v-if="modelValue"
                 icon="download"
                 padding="none"
                 rounded
                 size="xs"
+                :loading="downloading"
                 flat
-                @click="emit('download')"
-              />
-              <k-menu
-                v-if="modelValue && isMenu"
-                :item-options="itemOptions"
-                @downloadOriginal="emit('downloadOriginal', $event)"
+                @click="handleDownload"
               />
               <q-spinner v-if="uploading" size="1rem" />
             </slot>
+          </template>
+
+          <template v-if="!selectedFile && props.attachmentInfo">
+            <div class="tw-absolute tw-left-0 tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-items-center tw-text-white">
+              <span>{{ truncate(props.attachmentInfo.filename, props.filenameMaxLength) }}</span>
+              <q-tooltip>{{ props.attachmentInfo?.filename }}</q-tooltip>
+            </div>
+          </template>
+
+          <template #file="{ file }">
+            <div class="tw-flex tw-items-center">
+              <span>{{ truncate(file.name, props.filenameMaxLength) }}</span>
+              <q-tooltip>{{ file.name }}</q-tooltip>
+            </div>
           </template>
         </q-file>
       </Field>
@@ -104,9 +114,12 @@ import { snakeCase } from 'lodash'
 import { watch } from 'vue'
 import { ref } from 'vue'
 import { useFileUploadRepository } from 'src/common/repository/file-upload.repository'
-import { FileUploadRequest } from 'src/common/model/file-upload.model'
+import { FileUploadRequest, FileUploadResponse } from 'src/common/model/file-upload.model'
 import { useForm } from 'vee-validate'
 import { getErrorMessage } from 'src/common/utils/error.utils'
+import { truncate } from 'src/common/utils/converter.utils'
+import { Notify } from 'src/common/utils/plugin.utils'
+import { useFileDownloadRepository } from 'src/common/repository/file-download.repository'
 
 export interface KInputProps extends KLabelProps {
   modelValue: id | null
@@ -127,6 +140,8 @@ export interface KInputProps extends KLabelProps {
   payload: FileUploadRequest
   inputClass?: string
   icon?: string
+  attachmentInfo?: FileUploadResponse
+  filenameMaxLength?: number
 }
 
 export interface KInputEmits {
@@ -153,6 +168,7 @@ const props = withDefaults(defineProps<KInputProps>(), {
   color: 'secondary',
   accept:
     'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,zip,application/zip,application/x-zip-compressed,application/x-rar-compressed,application/vnd.rar',
+  filenameMaxLength: 30,
 })
 
 const emit = defineEmits<KInputEmits>()
@@ -162,6 +178,8 @@ defineSlots<QFileSlots & KLabelSlots>()
 const { t } = useI18n()
 
 const uploadRepository = useFileUploadRepository()
+
+const downloadRepository = useFileDownloadRepository()
 
 const currentFor = computed(() => props.for || props.label)
 
@@ -190,14 +208,14 @@ const fileInputRef = ref<InstanceType<typeof QFile> | null>(null)
 
 const uploading = ref(false)
 
+const downloading = ref(false)
+
 watch(selectedFile, async (file) => {
   if (!file) return
   uploading.value = true
 
   try {
     const data = await uploadRepository.upload(file, props.payload)
-    // const x = await uploadRepository.getOne(data.fileId)
-
     emit('update:model-value', data.fileId)
   } catch (error) {
     const message = getErrorMessage(error as Error)
@@ -221,5 +239,38 @@ const handleClear = () => {
 
 const openFileDialog = () => {
   fileInputRef.value?.pickFiles()
+}
+
+const handleDownload = async () => {
+  try {
+    downloading.value = true
+
+    const fileId = props.modelValue as id
+    const response = await downloadRepository.get(fileId)
+
+    if (!response || response.size === 0) {
+      throw new Error('Empty response from server')
+    }
+
+    const url = window.URL.createObjectURL(response)
+    const link = document.createElement('a')
+
+    // Tentukan nama file
+    const fileName = selectedFile.value?.name || props.attachmentInfo?.filename || `attachment_${new Date().getTime()}`
+
+    link.href = url
+    link.setAttribute('download', fileName)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    window.URL.revokeObjectURL(url)
+  } catch (error) {
+    Notify.error({
+      message: error as Error,
+    })
+  } finally {
+    downloading.value = false
+  }
 }
 </script>

@@ -1,4 +1,4 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
 import {
   ShipmentGoodReceiveItem,
   OperationalRequest,
@@ -6,6 +6,7 @@ import {
   OperationalResponsePage,
   ShipmentQcGoodReceive,
 } from './operational.model'
+import { FileUploadResponse } from './file-upload.model'
 
 export interface VendorShipmentRequest extends IListSortingRequest, OperationalRequest {}
 
@@ -20,6 +21,9 @@ export interface VendorShipmentResponse extends OperationalResponse {
   goodsReceiveItems: ShipmentGoodReceiveItem[]
 
   qcGoodsReceive: ShipmentQcGoodReceive
+  attachmentId: id
+
+  attachmentInfo?: FileUploadResponse
 }
 
 export interface VendorShipmentResponsePage extends OperationalResponsePage {}

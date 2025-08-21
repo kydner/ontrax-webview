@@ -60,7 +60,7 @@ const showPreview = ref(false)
 const fetchData = async () => {
   isLoading.value = true
   try {
-    imageUrl.value = await fileRepository.getOne(props.itemId)
+    imageUrl.value = await fileRepository.get(props.itemId)
   } finally {
     isLoading.value = false
   }

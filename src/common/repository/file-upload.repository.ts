@@ -8,9 +8,14 @@ import { defineRepository } from '../utils/plugin.utils'
 const uploadEndpoint = useFileUploadEndpoint()
 
 export const useFileUploadRepository = defineRepository({
-  getOne: (fileId: id) =>
+  download: (fileId: id) =>
     getCachedImageUrl(fileId, async () => {
-      return await withRepository(() => uploadEndpoint.getOne(fileId))
+      return await withRepository(() => uploadEndpoint.download(fileId))
+    }),
+
+  get: (fileId: id) =>
+    getCachedImageUrl(fileId, async () => {
+      return await withRepository(() => uploadEndpoint.get(fileId))
     }),
 
   upload: (files: File[] | File, params: FileUploadRequest) =>

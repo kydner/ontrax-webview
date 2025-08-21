@@ -359,3 +359,18 @@ export function buildTree<T extends { id: string | number }>(
 
   return tree
 }
+
+export const truncate = (text: string, maxLength: number) => {
+  return text.length > maxLength ? text.slice(0, maxLength) + '…' : text
+}
+
+export function base64ToBlob(base64: string, mime = 'application/octet-stream') {
+  const byteCharacters = atob(base64)
+  const byteNumbers = new Array(byteCharacters.length)
+
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+  }
+
+  return new Blob([new Uint8Array(byteNumbers)], { type: mime })
+}

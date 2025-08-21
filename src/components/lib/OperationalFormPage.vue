@@ -179,7 +179,7 @@ const handleUpdate = async () => {
       Notify.success({
         message: t('notification.successUpdate'),
       })
-      router.back()
+      handleBack()
     } else {
       throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
     }
@@ -201,7 +201,7 @@ const handleCreate = async () => {
       Notify.success({
         message: t('notification.successCreate'),
       })
-      router.back()
+      handleBack()
     } else {
       throw new Error(ERROR_ENDPOINT_NOT_DEFINED)
     }

@@ -16,6 +16,7 @@ export const useVendorShipmentRepository = defineRepository({
       () => shipmentEndpoint.getOne(id),
       (response) => {
         const warehouseId = response.locationWarehouseId
+        const attachmentId = response?.attachmentInfo?.fileId
 
         /**
          * used for request data Post & Put
@@ -34,7 +35,7 @@ export const useVendorShipmentRepository = defineRepository({
             unitPrice: item.unitPrice,
           }
         })
-        return { ...response, warehouseId, receiveItems }
+        return { ...response, warehouseId, receiveItems, attachmentId }
       },
     ),
 
