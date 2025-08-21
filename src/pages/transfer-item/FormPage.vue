@@ -131,7 +131,7 @@ const handleUpdateToQc = () => {
 }
 const handleIntransit = () => {
   $confirm({
-    message: `${t('ReadyToSend')}?`,
+    message: `${t('inTransit')}?`,
     callback: async (confirm) => {
       if (confirm) {
         try {
