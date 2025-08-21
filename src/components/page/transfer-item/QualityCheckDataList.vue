@@ -81,7 +81,7 @@
           v-model="qcBeforeSend.qcStockTransferItems[dialogIndex].fileId"
           t-label="uploadPhoto"
           icon="upload"
-          :payload="{ module: 'TRANSFER' }"
+          :payload="{ module: 'QC_TRANSFER_ITEM' }"
           :show-label="false"
           :placeholder="t('upload')"
           :attachment-info="qcBeforeSend.qcStockTransferItems[dialogIndex].attachmentInfo"

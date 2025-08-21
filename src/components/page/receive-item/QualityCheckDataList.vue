@@ -118,7 +118,7 @@
         <k-file-upload
           v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].fileId"
           t-label="uploadPhoto"
-          :payload="{ module: 'TRANSFER' }"
+          :payload="{ module: 'QC_TRANSFER_ITEM' }"
           :show-label="false"
           :placeholder="t('uploadPhoto')"
           :attachment-info="qcAfterReceived.qcStockTransferItems[dialogIndex].attachmentInfo"

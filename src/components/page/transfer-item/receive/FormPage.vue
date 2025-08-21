@@ -151,7 +151,7 @@
       t-label="attachFile"
       borderless
       horizontal-align="base"
-      :payload="{ module: 'SHIPMENT' }"
+      :payload="{ module: 'TRANSFER' }"
       horizontal-label
       :disable="isDisable"
       :placeholder="t('empty')"

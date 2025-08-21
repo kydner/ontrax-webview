@@ -101,7 +101,7 @@
           v-model="qcGoodsReceiveItems[dialogIndex].fileId"
           t-label="uploadPhoto"
           icon="upload"
-          :payload="{ module: 'SHIPMENT' }"
+          :payload="{ module: 'QC_SHIPMENT_ITEM' }"
           :show-label="false"
           :placeholder="t('upload')"
           :attachment-info="qcGoodsReceiveItems[dialogIndex].attachmentInfo"
