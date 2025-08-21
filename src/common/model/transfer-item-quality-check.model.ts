@@ -19,4 +19,5 @@ export interface QcStockTransferItem extends Partial<TransferItem> {
   /// same as stockTransferItemId
   qcStockTransferItemId: id | null
   note?: string | null
+  fileId?: id
 }

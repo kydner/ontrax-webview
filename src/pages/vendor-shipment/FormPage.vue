@@ -163,6 +163,7 @@ const handleSubmitQcPass = () => {
                 qcGoodsReceiveItemId: item.qcGoodsReceiveItemId || null,
                 qtyReject: item.qtyReject,
                 note: item.notes,
+                fileId: item.fileId,
               }
             }),
           }

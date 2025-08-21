@@ -27,6 +27,8 @@ export const useTransferItemRepository = defineRepository({
             qtyTransfer: item.qtyTransfer,
             qtyReceived: item.qtyReceived ?? 0,
             stockTransferItemId: item?.stockTransferItemId,
+            fileId: item?.fileId,
+            attachmentInfo: item?.attachmentInfo,
           }
         })
         return {

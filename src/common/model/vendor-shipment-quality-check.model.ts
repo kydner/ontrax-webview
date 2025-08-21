@@ -21,4 +21,5 @@ export interface QcItemDetail {
   qtyReject: number
   note: string | null
   attachmentUrl?: string
+  fileId?: id
 }

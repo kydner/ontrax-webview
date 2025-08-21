@@ -98,7 +98,7 @@
           :placeholder="t('note')"
         />
         <k-file-upload
-          model-value=""
+          v-model="qcGoodsReceiveItems[dialogIndex].fileId"
           t-label="uploadPhoto"
           icon="upload"
           :payload="{ module: 'SHIPMENT' }"

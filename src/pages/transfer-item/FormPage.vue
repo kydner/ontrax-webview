@@ -109,6 +109,7 @@ const handleUpdateToQc = () => {
                 itemId: item.itemId,
                 qtyReject: item.qtyReject,
                 note: item.notes,
+                fileId: item.fileId,
               }
             }),
           }

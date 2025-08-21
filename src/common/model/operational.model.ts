@@ -1,6 +1,7 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { TStatus } from '../enum/operational.enum'
 import { ProductAvailableItemResponse } from './product-available-item.model'
+import { FileUploadResponse } from './file-upload.model'
 
 export interface OperationalRequest extends IListSortingRequest {
   status?: TStatus | TStatus[]
@@ -52,6 +53,8 @@ export interface ShipmentGoodReceiveItem {
   qtyReceived: number
   unitPrice: number
   notes: string
+  fileId: id
+  attachmentInfo?: FileUploadResponse
 }
 
 export interface TransferItem extends Partial<ProductAvailableItemResponse> {
@@ -67,6 +70,8 @@ export interface TransferItem extends Partial<ProductAvailableItemResponse> {
   qty?: number
   qtyReject?: number
   qcStockTransferItemId?: id | null
+  fileId: id
+  attachmentInfo?: FileUploadResponse
 }
 
 /**
@@ -123,4 +128,5 @@ export interface ShipmentQcGoodReceiveItem {
   qtyOrdered: number
   qtyReject: number
   notes: string | null
+  fileId: id
 }
