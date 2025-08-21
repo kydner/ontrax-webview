@@ -164,7 +164,7 @@ module.exports = configure(function (ctx) {
         },
         loading: {
           boxClass: 'bg-overlay text-grey-1',
-          spinnerColor: 'secondary',
+          spinnerColor: 'primary',
           spinnerSize: 40,
           spinner: 'QSpinnerCube'
         },
