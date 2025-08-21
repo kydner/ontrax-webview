@@ -169,6 +169,7 @@ const fetchData = async () => {
         qtyReceived: 0,
         qtyTransfer: 0,
         qcStockTransferItemId: existing?.qcStockTransferItemId ?? null,
+        fileId: existing?.fileId ?? '',
       }
     })
   } catch (error) {
@@ -208,6 +209,7 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         qtyReceived: 0,
         notes: '',
         qty: 1,
+        fileId: product?.fileId,
       })
     }
   } else {

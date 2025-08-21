@@ -172,6 +172,7 @@ const fetchData = async () => {
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
         goodsReceiveItemId: existing?.goodsReceiveItemId ?? null,
+        fileId: existing?.fileId ?? '',
       }
     })
   } catch (error) {
@@ -211,6 +212,7 @@ const toggleItem = (product: ShipmentGoodReceiveItem, checked: boolean) => {
         qtyReceived: 0,
         unitPrice: 0,
         goodsReceiveItemId: product.goodsReceiveItemId,
+        fileId: product?.fileId,
       })
     }
   } else {
