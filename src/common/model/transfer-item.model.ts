@@ -3,6 +3,7 @@ import { OperationalResponse, TransferItem } from './operational.model'
 import { TStatus } from '../enum/operational.enum'
 import { TransferItemBeforeSendResponse } from './transfer-item-before-send.model'
 import { TransferItemAfterSendResponse } from './transfer-item-after-send.model'
+import { FileUploadResponse } from './file-upload.model'
 
 export interface TransferItemRequest extends IListSortingRequest {}
 
@@ -24,7 +25,8 @@ export interface TransferItemResponse extends OperationalResponse {
   stockTransferItems: TransferItem[]
   senderNotes: string | null
   receiverNotes?: string | null
-  attachmentId?: id
+  attachmentId: id
+  attachmentInfo?: FileUploadResponse
   transferItems: TransferItem[]
   qcBeforeSend: TransferItemBeforeSendResponse
   qcAfterReceived: TransferItemAfterSendResponse

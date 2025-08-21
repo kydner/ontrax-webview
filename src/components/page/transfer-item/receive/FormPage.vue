@@ -147,7 +147,7 @@
     </k-select-module>
 
     <k-file-upload
-      v-model="form.fileId"
+      v-model="form.attachmentId"
       t-label="attachFile"
       borderless
       horizontal-align="base"
@@ -156,6 +156,8 @@
       :disable="isDisable"
       :placeholder="t('empty')"
       input-class="inventory__field"
+      :attachment-info="form.attachmentInfo"
+      :filename-max-length="20"
     >
       <template #additional:prefix-label>
         <q-icon name="img:/icons/upload.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />

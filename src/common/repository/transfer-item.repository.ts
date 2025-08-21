@@ -16,6 +16,7 @@ export const useTransferItemRepository = defineRepository({
     withRepository(
       () => transferEndpoint.getOne(id),
       (response) => {
+        const attachmentId = response?.attachmentInfo?.fileId
         const transferItems: TransferItem[] = [...(response?.stockTransferItems || [])]?.map((item) => {
           return {
             itemId: item.itemId,
@@ -28,7 +29,6 @@ export const useTransferItemRepository = defineRepository({
             qtyReceived: item.qtyReceived ?? 0,
             stockTransferItemId: item?.stockTransferItemId,
             fileId: item?.fileId,
-            attachmentInfo: item?.attachmentInfo,
           }
         })
         return {
@@ -36,6 +36,7 @@ export const useTransferItemRepository = defineRepository({
           transferItems,
           fromWarehouseId: response?.fromLocationWarehouseId,
           toWarehouseId: response?.toLocationWarehouseId,
+          attachmentId,
         }
       },
     ),
