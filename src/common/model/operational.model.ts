@@ -129,4 +129,5 @@ export interface ShipmentQcGoodReceiveItem {
   qtyReject: number
   notes: string | null
   fileId: id
+  attachmentInfo?: FileUploadResponse
 }

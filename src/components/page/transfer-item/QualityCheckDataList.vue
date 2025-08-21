@@ -84,6 +84,8 @@
           :payload="{ module: 'TRANSFER' }"
           :show-label="false"
           :placeholder="t('upload')"
+          :attachment-info="qcBeforeSend.qcStockTransferItems[dialogIndex].attachmentInfo"
+          :filename-max-length="20"
         />
       </q-card-section>
 

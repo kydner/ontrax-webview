@@ -116,11 +116,13 @@
           :placeholder="t('note')"
         />
         <k-file-upload
-          v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].notes"
-          t-label="note"
+          v-model="qcAfterReceived.qcStockTransferItems[dialogIndex].fileId"
+          t-label="uploadPhoto"
           :payload="{ module: 'TRANSFER' }"
           :show-label="false"
-          :placeholder="t('note')"
+          :placeholder="t('uploadPhoto')"
+          :attachment-info="qcAfterReceived.qcStockTransferItems[dialogIndex].attachmentInfo"
+          :filename-max-length="20"
         />
       </q-card-section>
 
