@@ -43,7 +43,7 @@
           :rules="undefined"
           dense
           :error-message="errorMessage"
-          :clearable="isRequired ? false : props.clearable"
+          :clearable="false"
           :class="`${!!errorMessage ? 'tw-animate-shake-invalid' : ''} ${!!errorMessage ? 'show-error' : ''} ${inputClass}`"
           :placeholder="currentPlaceholder"
           :outlined="borderless ? false : props.outlined"
@@ -71,6 +71,16 @@
           <template #append>
             <slot name="append">
               <q-btn
+                v-if="(selectedFile || props.modelValue) && !isRequired && props.clearable"
+                icon="highlight_off"
+                padding="none"
+                rounded
+                size="xs"
+                color="grey-6"
+                flat
+                @click="handleClear"
+              />
+              <q-btn
                 v-if="modelValue"
                 icon="download"
                 padding="none"
@@ -84,10 +94,10 @@
             </slot>
           </template>
 
-          <template v-if="!selectedFile && props.attachmentInfo">
+          <template v-if="!selectedFile && showAttachmentInfo">
             <div class="tw-absolute tw-left-0 tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-items-center tw-text-white">
-              <span>{{ truncate(props.attachmentInfo.filename, props.filenameMaxLength) }}</span>
-              <q-tooltip>{{ props.attachmentInfo?.filename }}</q-tooltip>
+              <span>{{ truncate(showAttachmentInfo.filename, props.filenameMaxLength) }}</span>
+              <q-tooltip>{{ showAttachmentInfo?.filename }}</q-tooltip>
             </div>
           </template>
 
@@ -146,8 +156,6 @@ export interface KInputProps extends KLabelProps {
 
 export interface KInputEmits {
   (e: 'update:model-value', value: KInputProps['modelValue']): void
-  (e: 'download', event?: Event): void
-  (e: 'downloadOriginal', value: boolean): void
 }
 
 // interface Emit extends QInputProps
@@ -210,6 +218,12 @@ const uploading = ref(false)
 
 const downloading = ref(false)
 
+const showAttachmentInfo = computed(() => {
+  // kalau modelValue kosong atau sudah di-clear, jangan tampilkan attachmentInfo
+  if (!props.modelValue) return null
+  return props.attachmentInfo
+})
+
 watch(selectedFile, async (file) => {
   if (!file) return
   uploading.value = true
@@ -234,6 +248,7 @@ const handleRejected = (entries: QRejectedEntry[]) => {
 }
 
 const handleClear = () => {
+  selectedFile.value = null
   emit('update:model-value', null)
 }
 
