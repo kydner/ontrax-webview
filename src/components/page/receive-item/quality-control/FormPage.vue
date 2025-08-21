@@ -130,7 +130,7 @@
     </k-select-module>
 
     <k-file-upload
-      v-model="form.fileId"
+      v-model="form.attachmentId"
       t-label="attachFile"
       borderless
       horizontal-align="base"
