@@ -90,7 +90,14 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn :label="t('save')" color="secondary" dense v-close-popup @click="dialogIndex = null" />
+        <q-btn
+          :label="t('save')"
+          color="secondary"
+          :disable="globalLoading"
+          dense
+          v-close-popup
+          @click="dialogIndex = null"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -103,6 +110,7 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
+import { useAppStore } from '../../../stores/app.store'
 
 interface Props {
   modelValue: TransferItemDataRequest
@@ -120,6 +128,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+
+const globalLoading = computed(() => appStore.$state?.loading)
 
 const dialogIndex = ref<number | null>(null)
 

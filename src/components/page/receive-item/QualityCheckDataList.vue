@@ -127,7 +127,14 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn :label="t('save')" color="secondary" dense v-close-popup @click="dialogIndex = null" />
+        <q-btn
+          :label="t('save')"
+          color="secondary"
+          :disable="globalLoading"
+          dense
+          v-close-popup
+          @click="dialogIndex = null"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -142,6 +149,7 @@ import ProductImage from 'src/components/images/Product.vue'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
 import { format } from 'src/common/utils/converter.utils'
 import { id } from 'src/common/interfaces/response.interface'
+import { useAppStore } from 'src/stores/app.store'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
@@ -159,6 +167,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+
+const globalLoading = computed(() => appStore.$state?.loading)
 
 const dialogIndex = ref<number | null>(null)
 

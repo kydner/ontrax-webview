@@ -38,13 +38,13 @@
             :label="form.status === 'DRAFT' ? t('saveDraft') : t('button.save')"
             class="fit tw-text-white"
             :class="form.status === 'DRAFT' ? 'tw-bg-secondary-text' : 'tw-bg-secondary'"
-            :disable="loadingPage || !!errorMessage"
+            :disable="loadingPage || !!errorMessage || globalLoading"
             @click="handleSubmitDraft"
           />
 
           <slot
             name="footer:button"
-            :loading="loadingPage"
+            :loading="loadingPage || globalLoading"
             :error-message="errorMessage"
             :route-path="routePath"
           ></slot>
@@ -74,6 +74,7 @@ import { getErrorMessage } from 'src/common/utils/error.utils'
 import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import InternalError from '../images/InternalError.vue'
 import { id } from 'src/common/interfaces/response.interface'
+import { useAppStore } from 'src/stores/app.store'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
@@ -115,6 +116,10 @@ const emit = defineEmits<Emits<T>>()
 const { t } = useI18n()
 
 const metaService = new MetaService(props.meta)
+
+const appStore = useAppStore()
+
+const globalLoading = computed(() => appStore.$state?.loading)
 
 const formId = computed(() => route.params?.id)
 
