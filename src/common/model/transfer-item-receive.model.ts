@@ -11,4 +11,5 @@ export interface TransferItemReceiveResponsePage extends TransferItemReceiveResp
 
 export interface TransferItemReceiveDataRequest extends TransferItemReceiveResponse {
   receivedItems: Pick<ReceiveItem, 'stockTransferItemId' | 'qtyReceived'>[]
+  receiverNotes?: string | null
 }

@@ -71,6 +71,7 @@ const handleUpdateToReceive = () => {
           if (!transferId) throw new ErrorId('transferId')
           Loading.show()
           const data: TransferItemReceiveDataRequest = {
+            receiverNotes: form.value?.receiverNotes,
             receivedItems: form.value?.transferItems?.map((item) => {
               return {
                 qtyReceived: item.qtyTransfer,

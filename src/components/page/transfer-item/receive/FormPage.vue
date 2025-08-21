@@ -19,13 +19,15 @@
               :disable="['RECEIVED', 'QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
               t-label="remarkSender"
               :show-label="true"
+              :horizontal-label="false"
             />
             <k-text-area
               v-if="['RECEIVED'].includes(form.status)"
-              v-model="scope.value"
+              v-model="form.receiverNotes"
               :disable="['PARTIAL_PASSED'].includes(form.status)"
               t-label="remarkReceiver"
               :show-label="true"
+              :horizontal-label="false"
             />
           </template>
           <template #preview:prefix>
@@ -33,6 +35,21 @@
           </template>
         </k-popup-edit>
       </k-label>
+      <k-popup-edit
+        v-else
+        v-model="form.senderNotes"
+        t-label="remark"
+        horizontal-label
+        :placeholder="t('inputRemark')"
+        input-class="inventory__field"
+      >
+        <template #default="scope">
+          <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+        </template>
+        <template #preview:prefix>
+          <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
+        </template>
+      </k-popup-edit>
     </div>
     <k-date
       v-model="form.transferDate"
