@@ -246,7 +246,8 @@ const handleDownload = async () => {
     downloading.value = true
 
     const fileId = props.modelValue as id
-    const response = await downloadRepository.get(fileId)
+
+    const response = await downloadRepository.download(fileId)
 
     if (!response || response.size === 0) {
       throw new Error('Empty response from server')

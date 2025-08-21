@@ -11,7 +11,7 @@ export const useFileUploadEndpoint = defineEndpoint({
   ...fileDownloadEndpoint,
 
   get: (fileId: id) =>
-    api<Blob>('files/get/file', {
+    api.get<Blob>('files/get/file', {
       params: {
         id: fileId,
       },

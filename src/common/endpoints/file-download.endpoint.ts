@@ -3,5 +3,5 @@ import { id } from '../interfaces/response.interface'
 import { api } from 'src/boot/axios'
 
 export const useFileDownloadEndpoint = defineEndpoint({
-  download: (fileId: id) => api<string>(`files/download/${fileId}`, { responseType: 'text' }),
+  download: (fileId: id) => api.get<Blob>(`files/download/${fileId}`, { responseType: 'blob' }),
 })

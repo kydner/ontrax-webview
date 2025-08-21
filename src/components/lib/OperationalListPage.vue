@@ -19,11 +19,11 @@
             no-caps
             narrow-indicator
           >
-            <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
+            <q-tab :name="TAB_RECEIVE" :label="t('receive')" class="tw-flex-1" />
             <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
           </q-tabs>
           <q-tab-panels v-model="tab" keep-alive animated class="tw-bg-transparent">
-            <q-tab-panel :name="TAB_SEND" class="tw-px-0">
+            <q-tab-panel :name="TAB_RECEIVE" class="tw-px-0">
               <component
                 v-if="allowSend"
                 :is="SendListPage"
@@ -54,7 +54,7 @@
         </q-card>
       </slot>
 
-      <div v-if="meta.name !== 'receive-item' && tab === TAB_SEND" class="inventory-add-button">
+      <div v-if="meta.name !== 'receive-item' && tab === TAB_RECEIVE" class="inventory-add-button">
         <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
       </div>
     </meta-list-page>
@@ -74,7 +74,7 @@ import ScrollableContainer from '../ui/ScrollableContainer.vue'
 import AccessDenied from '../images/AccessDenied.vue'
 import { Loading } from 'quasar'
 
-const TAB_SEND = 'send'
+const TAB_RECEIVE = 'receive'
 
 const TAB_QUALITY_CONTROL = 'quality-control'
 
@@ -84,7 +84,7 @@ interface ListContentEvent {
 
 const { t } = useI18n()
 
-const tab = ref(TAB_SEND)
+const tab = ref(TAB_RECEIVE)
 
 interface Props {
   meta: IMetaListModule<T>
