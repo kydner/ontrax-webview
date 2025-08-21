@@ -64,23 +64,23 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'send/form',
+            path: 'receive/form',
             component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {
-            path: 'send/form/:id',
+            path: 'receive/form/:id',
             component: () => import('pages/vendor-shipment/FormPage.vue'),
-            name: `${Meta.VendorShipment.name}-send-form-update`,
+            name: `${Meta.VendorShipment.name}-receive-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {
@@ -111,23 +111,23 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'send/form',
+            path: 'receive/form',
             component: () => import('pages/transfer-item/FormPage.vue'),
             name: `${Meta.TransferItem.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {
-            path: 'send/form/:id',
+            path: 'receive/form/:id',
             component: () => import('pages/transfer-item/FormPage.vue'),
-            name: `${Meta.TransferItem.name}-send-form-update`,
+            name: `${Meta.TransferItem.name}-receive-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {
@@ -158,23 +158,23 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'send/form',
+            path: 'receive/form',
             component: () => import('pages/receive-item/FormPage.vue'),
             name: `${Meta.ReceiveItem.name}-form-create`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {
-            path: 'send/form/:id',
+            path: 'receive/form/:id',
             component: () => import('pages/receive-item/FormPage.vue'),
-            name: `${Meta.ReceiveItem.name}-send-form-update`,
+            name: `${Meta.ReceiveItem.name}-receive-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
-              routePath: 'send',
+              routePath: 'receive',
             },
           },
           {

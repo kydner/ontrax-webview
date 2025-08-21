@@ -1371,6 +1371,7 @@ export default {
   receive: 'Receive',
   qcPass: 'QC Pass',
   readyToSend: 'Ready to Send',
+  updateToQc: 'Update to QC',
   inTransit: 'In Transit',
   updateToReceive: 'Update to Receive',
   updateToQcReceive: 'Update to QC Receive',

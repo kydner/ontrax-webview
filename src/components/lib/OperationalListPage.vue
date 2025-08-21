@@ -26,10 +26,10 @@
             <q-tab-panel :name="TAB_RECEIVE" class="tw-px-0">
               <component
                 v-if="allowSend"
-                :is="SendListPage"
+                :is="ReceiveListPage"
                 :meta="props.meta"
                 :suffix-scroll="props.meta.name"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'send')"
+                @click:item="(data: ListContentEvent) => handleUpdate(data, 'receive')"
               />
               <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
@@ -101,9 +101,9 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
-const SendListPage = computed(() =>
+const ReceiveListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/send/ListPage.vue`),
+    loader: () => import(`src/components/page/${props.meta.name}/receive/ListPage.vue`),
     errorComponent: ErrorNotFound,
   }),
 )
@@ -145,7 +145,7 @@ const handleCreate = async () => {
   }
 }
 
-const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'quality-control') => {
+const handleUpdate = async (data: ListContentEvent, routePath: 'receive' | 'quality-control') => {
   try {
     const { item } = data
     const keyName = item[props.keyName]

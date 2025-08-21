@@ -11,4 +11,4 @@ export enum Status {
 
 export type TStatus = `${Status}`
 
-export type OperationalRoutePath = 'quality-control' | 'send'
+export type OperationalRoutePath = 'quality-control' | 'receive'

@@ -1371,6 +1371,7 @@ export default {
   receive: 'Terima',
   qcPass: 'Lolos QC',
   readyToSend: 'Siap Kirim',
+  updateToQc: 'Perbaharui ke QC',
   inTransit: 'Dalam Transit',
   updateToReceive: 'Perbarui ke Terima',
   updateToQcReceive: 'Perbarui ke Terima QC',

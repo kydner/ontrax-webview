@@ -11,11 +11,11 @@
       />
       <k-btn
         v-if="form.status === 'QC_SEND'"
-        :label="t('readyToSend')"
+        :label="t('updateToQc')"
         color="secondary"
         class="fit"
         :disable="loading || !!errorMessage"
-        @click="handleReadyToSend"
+        @click="handleUpdateToQc"
       />
 
       <k-btn
@@ -89,7 +89,7 @@ const handleSaveToReadyToSend = () => {
   })
 }
 
-const handleReadyToSend = () => {
+const handleUpdateToQc = () => {
   $confirm({
     message: `${t('ReadyToSend')}?`,
     callback: async (confirm) => {
