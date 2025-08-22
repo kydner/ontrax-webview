@@ -27,7 +27,6 @@ export interface OperationalResponse {
   status: TStatus
   totalItems: number
   totalItemQty: number
-  fileId: id
   purchaseOrderId: string
   purchaseOrderNumber: string
   locationWarehouseName: string
