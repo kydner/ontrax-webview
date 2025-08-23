@@ -19,7 +19,11 @@
             no-caps
             narrow-indicator
           >
-            <q-tab :name="TAB_RECEIVE" :label="t('receive')" class="tw-flex-1" />
+            <q-tab
+              :name="TAB_RECEIVE"
+              :label="meta.name === 'receive-item' ? t('receive') : t('send')"
+              class="tw-flex-1"
+            />
             <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
           </q-tabs>
           <q-tab-panels v-model="tab" keep-alive animated class="tw-bg-transparent">
