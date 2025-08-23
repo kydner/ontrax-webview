@@ -11,14 +11,14 @@
     no-spinner
     width="45px"
     height="45px"
-    class="tw-cursor-pointer"
+    class="tw-cursor-pointer tw-rounded-base"
     @click.stop="showPreview = true"
     @load="onLoad"
     @error="onError"
   />
 
   <!-- fallback image -->
-  <q-img v-else src="/images/no-image.svg" no-spinner width="45px" height="45px" />
+  <q-img v-else src="/images/no-image.svg" no-spinner width="45px" class="tw-rounded-base" height="45px" />
 
   <!-- PREVIEW DIALOG -->
   <q-dialog v-model="showPreview" maximized persistent transition-duration="300" position="bottom">
