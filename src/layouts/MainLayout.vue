@@ -21,6 +21,7 @@ import { ERROR_SESSION_TIMEOUT } from 'src/common/constants/error.constant'
 import { debounce } from 'lodash'
 import { useCancelTokenStore } from 'src/stores/cancel-token.store'
 import { useAuthenticationRepository } from 'src/common/repository/authentication.repository'
+import { useAuthenticationStore } from 'src/stores/authentication.store'
 
 const events = ['scroll', 'visibilitychange'] as const
 
@@ -35,6 +36,8 @@ const listeners: [string, EventListenerOrEventListenerObject][] = []
 
 const authRepo = useAuthenticationRepository()
 
+const authStore = useAuthenticationStore()
+
 const cancelTokenStore = useCancelTokenStore()
 
 // const { t } = useI18n()
@@ -43,7 +46,7 @@ const cancelTokenStore = useCancelTokenStore()
 
 const router = useRouter()
 
-const logout = async () => {
+const handleLogout = async () => {
   try {
     Loading.show()
     await authRepo.logout()
@@ -62,20 +65,41 @@ const handleBeforeUnload = () => {
   cancelTokenStore.cancelAll()
 }
 
+let isRefreshing = false
+
+const handleRefreshToken = async () => {
+  if (isRefreshing) return
+  isRefreshing = true
+  try {
+    const lastRefreshToken = authStore.$state.refreshToken || ''
+    await authRepo.refreshToken({ refreshToken: lastRefreshToken })
+  } catch (error) {
+    $showNotif({
+      message: ERROR_SESSION_TIMEOUT,
+      type: 'negative',
+      callback: (confirm) => {
+        if (confirm) handleLogout()
+      },
+    })
+  } finally {
+    isRefreshing = false
+  }
+}
+
 onMounted(() => {
   const showAlert = () => {
     $showNotif({
       message: ERROR_SESSION_TIMEOUT,
       type: 'negative',
       callback: (confirm) => {
-        if (confirm) logout()
+        if (confirm) handleLogout()
       },
     })
   }
   let time: any = null
   time = setInterval(() => {
     /** force logout if idle time morethan 8 hours */
-    if (idleTime() > 60 * 60 * 8) return logout()
+    if (idleTime() > 60 * 60 * 8) return handleLogout()
 
     if (isIdle()) {
       showAlert()
@@ -100,6 +124,12 @@ onMounted(() => {
   })
 
   window.addEventListener('beforeunload', handleBeforeUnload)
+
+  setInterval(async () => {
+    if (authStore.isExpiredRefresh() && !isRefreshing) {
+      await handleRefreshToken()
+    }
+  }, 1000 * 30) // cek tiap 30 detik
 })
 
 onUnmounted(() => {

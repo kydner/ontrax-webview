@@ -11,6 +11,7 @@ import { getErrorMessage } from '../utils/error.utils'
 import { AxiosError } from 'axios'
 import { clearAllImages } from '../utils/image-cache.utils'
 import { uid } from 'quasar'
+import { AuthenticationRefreshTokenDataRequest } from '../model/authentication-refresh-token.model'
 
 const authEndpoint = useAuthenticationEndpoint()
 
@@ -69,6 +70,8 @@ export const useAuthenticationRepository = defineRepository({
 
           const refreshToken = data.refreshToken
 
+          const startRefreshTime = new Date().getTime()
+
           const expireDuration = data.expireDuration
 
           const accessTokenExpired = 60 * 60 * 1 /// set jadi 1 jam,  data.accessTokenExpired || 0
@@ -78,6 +81,8 @@ export const useAuthenticationRepository = defineRepository({
           authStore.$state.refreshToken = refreshToken
 
           authStore.$state.expireDuration = expireDuration
+
+          authStore.$state.startRefreshTime = startRefreshTime
 
           /** access token from backend is millisecond then convert to second */
           authStore.$state.accessTokenExpired = accessTokenExpired /// 1000
@@ -107,5 +112,18 @@ export const useAuthenticationRepository = defineRepository({
 
   changeRole: (data: ChangeRoleRequest) => withRepository<ChangeRoleResponse>(() => authEndpoint.changeRole(data)),
 
-  refreshToken: () => withRepository(() => authEndpoint.refreshToken()),
+  refreshToken: (data: AuthenticationRefreshTokenDataRequest) =>
+    withRepository(
+      () => authEndpoint.refreshToken(data),
+      (response) => {
+        const expireDuration = response?.expireDuration
+        const refreshToken = response?.refreshToken
+        const startRefreshTime = new Date().getTime()
+
+        authStore.$state.expireDuration = expireDuration
+        authStore.$state.refreshToken = refreshToken
+        authStore.$state.startRefreshTime = startRefreshTime
+        return response
+      },
+    ),
 })

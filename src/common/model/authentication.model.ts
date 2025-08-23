@@ -17,6 +17,8 @@ export interface LoginDataResponse {
 
   refreshToken: string | null
 
+  startRefreshTime: number
+
   /** value as seconds */
   accessTokenExpired: number
 

@@ -12,4 +12,5 @@ export interface AuthenticationRefreshTokenResponse {
 
 export interface AuthenticationRefreshTokenResponsePage extends AuthenticationRefreshTokenResponse {}
 
-export interface AuthenticationRefreshTokenDataRequest extends AuthenticationRefreshTokenResponse {}
+export interface AuthenticationRefreshTokenDataRequest
+  extends Pick<AuthenticationRefreshTokenResponse, 'refreshToken'> {}
