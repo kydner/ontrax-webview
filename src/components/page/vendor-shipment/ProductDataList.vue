@@ -15,6 +15,15 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
+            <div v-if="['IN_TRANSIT'].includes(form.status)" class="tw-flex tw-items-center tw-space-x-6 tw-text-xs">
+              <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
+                <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                <div class="tw-text-secondary-text">Qty Ordered</div>
+              </div>
+              <div>
+                {{ format(product.qtyOrdered, { precision: 0 }) }}
+              </div>
+            </div>
             <span v-if="form.status === 'RECEIVED'" class="tw-text-xs"
               >Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}</span
             >
@@ -35,18 +44,6 @@
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
             />
-          </div>
-        </div>
-        <div
-          v-if="['IN_TRANSIT'].includes(form.status)"
-          class="tw-flex tw-items-center tw-space-x-6 tw-text-xs tw-mt-2"
-        >
-          <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
-            <q-icon name="img:/icons/qty-order__secondary-text.svg" />
-            <div class="tw-text-secondary-text">Qty Ordered</div>
-          </div>
-          <div>
-            {{ format(product.qtyOrdered, { precision: 0 }) }}
           </div>
         </div>
       </q-card-section>
