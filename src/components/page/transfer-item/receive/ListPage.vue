@@ -127,6 +127,7 @@ const handleStatus = (value?: TStatus) => {
   payload.value = buildPayload()
   metaListTableRef.value?.loadMore(true)
 }
+
 const handleWarehouse = (value?: id) => {
   fromWarehouseId.value = value
   payload.value = buildPayload()
