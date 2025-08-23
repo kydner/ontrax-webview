@@ -12,3 +12,12 @@ export enum Status {
 export type TStatus = `${Status}`
 
 export type OperationalRoutePath = 'quality-control' | 'receive'
+
+export enum AccessCode {
+  VendorShipmentSend = '111100000',
+  VendorShipmentQc = '111200000',
+  TransferItemSend = '211100000',
+  TransferItemQc = '211200000',
+  ReceiveItemReceive = '311100000',
+  ReceiveItemQc = '311200000',
+}
