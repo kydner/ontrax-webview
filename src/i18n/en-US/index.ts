@@ -1383,6 +1383,8 @@ export default {
   remark: 'Remark',
   remarkReceiver: 'Remark Receiver',
   uploadPhoto: 'Upload Photo',
+  warehouseFrom: 'Warehouse From',
+  warehouseTo: 'Warehouse To',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

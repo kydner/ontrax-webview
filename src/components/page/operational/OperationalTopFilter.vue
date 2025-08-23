@@ -19,7 +19,16 @@
 
       <!-- Other left component -->
       <slot name="other-left">
-        <q-btn-dropdown icon="list" outline :label="t('status')" size="sm" class="tw-p-1 tw-py-0">
+        <slot name="other-left:prefix"></slot>
+        <q-btn-dropdown
+          icon="list"
+          outline
+          :label="t('status')"
+          no-caps
+          size="sm"
+          class="tw-p-1 tw-py-0"
+          style="--q-primary: #b0b0b5; border-color: #b0b0b5; color: #b0b0b5"
+        >
           <q-list dark flat :bordered="false">
             <q-item
               v-for="status in statuses"
@@ -39,6 +48,7 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
+        <slot name="other-left:suffix"></slot>
       </slot>
     </div>
 

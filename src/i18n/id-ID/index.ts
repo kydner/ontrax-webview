@@ -1383,6 +1383,8 @@ export default {
   remark: 'Komentar',
   remarkReceiver: 'Komentar Penerima',
   uploadPhoto: 'Unggah Gambar',
+  warehouseFrom: 'Dari Gudang',
+  warehouseTo: 'Ke Gudang',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

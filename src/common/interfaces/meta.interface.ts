@@ -47,7 +47,7 @@ export interface IMetaEndpoint {
    * @param params model
    * @param id
    */
-  getAll?(params?: unknown, id?: unknown): Promise<unknown[]>
+  getAll<T, R>(params?: R): Promise<T[]>
 
   /**
    * Get pagination from api

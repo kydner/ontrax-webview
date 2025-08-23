@@ -5,7 +5,12 @@ import { TransferItemBeforeSendResponse } from './transfer-item-before-send.mode
 import { TransferItemAfterSendResponse } from './transfer-item-after-send.model'
 import { FileUploadResponse } from './file-upload.model'
 
-export interface TransferItemRequest extends IListSortingRequest {}
+export interface TransferItemRequest extends IListSortingRequest {
+  trfNumber?: string
+  fromWarehouseId?: id
+  toWarehouseId?: id
+  status?: TStatus | TStatus[]
+}
 
 export type TransferItemRequestPage = IPaginationRequest & TransferItemRequest
 
