@@ -10,6 +10,7 @@ import { useAuthenticationStore } from 'src/stores/authentication.store'
 import { getErrorMessage } from '../utils/error.utils'
 import { AxiosError } from 'axios'
 import { clearAllImages } from '../utils/image-cache.utils'
+import { uid } from 'quasar'
 
 const authEndpoint = useAuthenticationEndpoint()
 
@@ -26,6 +27,7 @@ export const actionProfile = () => {
         if (!isValidAll) {
           authStore.$state.isLoggedIn = false
           authStore.$state.token = null
+          authStore.$state.xRequestId = null
 
           const rejected = responses?.find(({ status }) => status === 'rejected')
           throw new Error(getErrorMessage((rejected as { reason: AxiosError })?.reason))
@@ -56,6 +58,7 @@ const profile = () => withRepository<ProfileResponse>(() => authEndpoint.profile
 
 export const useAuthenticationRepository = defineRepository({
   login: (params: LoginDataRequest) => {
+    authStore.$state.xRequestId = uid()
     return new Promise((resolve, reject) => {
       authEndpoint
         .login(params)

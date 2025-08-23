@@ -57,15 +57,21 @@ api.interceptors.request.use(function (config) {
   const cancelTokenStore = useCancelTokenStore()
   const token = authStore.$state.token
 
+  const xRequestId = authStore.$state.xRequestId
+
   if (token) {
     config.headers.Authorization = 'Bearer ' + token
+  }
+
+  if (xRequestId) {
+    config.headers['X-Request-Id'] = xRequestId
   }
 
   if (requestCount === 0) {
     appStore.setLoading(true)
   }
 
-  config.headers['x-source-web'] = 'C5EE58DA23B3465690906C10E730A22D'
+  config.headers['X-Source-Web'] = 'C5EE58DA23B3465690906C10E730A22D'
 
   requestCount++
 

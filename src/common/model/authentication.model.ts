@@ -11,6 +11,8 @@ export interface ChangeRoleRequest {
 export interface LoginDataResponse {
   token: string | null
 
+  xRequestId: string | null
+
   /** value as seconds */
   accessTokenExpired: number
 
