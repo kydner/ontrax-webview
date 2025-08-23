@@ -9,8 +9,8 @@
     v-else-if="imageUrl"
     :src="imageUrl"
     no-spinner
-    width="45px"
-    height="45px"
+    :width="size"
+    :height="size"
     class="tw-cursor-pointer tw-rounded-base"
     @click.stop="showPreview = true"
     @load="onLoad"
@@ -18,7 +18,7 @@
   />
 
   <!-- fallback image -->
-  <q-img v-else src="/images/no-image.svg" no-spinner width="45px" class="tw-rounded-base" height="45px" />
+  <q-img v-else src="/images/no-image.svg" no-spinner :width="size" class="tw-rounded-base" :height="size" />
 
   <!-- PREVIEW DIALOG -->
   <q-dialog v-model="showPreview" maximized persistent transition-duration="300" position="bottom">
@@ -51,8 +51,11 @@ import SwipeWrapper from '../ui/SwipeWrapper.vue'
 
 interface Props {
   itemId: id
+  size?: string
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  size: '45px',
+})
 
 const fileRepository = useFileUploadRepository()
 
@@ -72,11 +75,11 @@ const fetchData = async () => {
 }
 
 const onLoad = () => {
-  console.log('Image loaded ✅')
+  console.log('Image loaded')
 }
 
 const onError = () => {
-  console.warn('Image gagal dimuat ❌')
+  console.warn('Image gagal dimuat')
   imageUrl.value = null // fallback ke default
 }
 

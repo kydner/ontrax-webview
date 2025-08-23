@@ -1385,6 +1385,11 @@ export default {
   uploadPhoto: 'Upload Photo',
   warehouseFrom: 'Warehouse From',
   warehouseTo: 'Warehouse To',
+  qtyOrdered: 'Qty Ordered',
+  qtyOrder: 'Qty Order',
+  qtyPass: 'Qty Pass',
+  qtyReject: 'Qty Reject',
+  qtyReceive: 'Qty Receive',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

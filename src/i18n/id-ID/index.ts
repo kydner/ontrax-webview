@@ -1385,6 +1385,11 @@ export default {
   uploadPhoto: 'Unggah Gambar',
   warehouseFrom: 'Dari Gudang',
   warehouseTo: 'Ke Gudang',
+  qtyOrdered: 'Qty Ordered',
+  qtyOrder: 'Qty Order',
+  qtyPass: 'Qty Pass',
+  qtyReject: 'Qty Reject',
+  qtyReceive: 'Qty Diterima',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',
