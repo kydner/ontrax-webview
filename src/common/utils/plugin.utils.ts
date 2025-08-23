@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { Notify as QNotify, QNotifyCreateOptions, copyToClipboard as copyClipboard } from 'quasar'
 import { ERROR_NO_COPY_CLIPBOARD } from '../constants/error.constant'
+import { UserMenu } from '../model/profile.model'
 interface INotifyCreateOptions extends Omit<QNotifyCreateOptions, 'message'> {
   message: AxiosError<BaseResponse> | BaseResponse | Error
 }
@@ -187,4 +188,18 @@ export const scrollToClass = (targetClass: string, headerOffset = 0) => {
       behavior: 'smooth',
     })
   }
+}
+
+export function findMenuByCode(menus: UserMenu[], code: string): UserMenu | null {
+  for (const menu of menus) {
+    if (menu.code === code) {
+      return menu
+    }
+
+    if (menu.childMenus?.length) {
+      const found = findMenuByCode(menu.childMenus, code)
+      if (found) return found
+    }
+  }
+  return null
 }

@@ -58,7 +58,7 @@
         </q-card>
       </slot>
 
-      <div v-if="meta.name !== 'receive-item' && tab === TAB_RECEIVE" class="inventory-add-button">
+      <div v-if="allowCreate" class="inventory-add-button">
         <k-btn fab icon="add" color="secondary" rounded @click="handleCreate" />
       </div>
     </meta-list-page>
@@ -71,12 +71,14 @@ import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { Notify } from 'src/common/utils/plugin.utils'
+import { findMenuByCode, Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ScrollableContainer from '../ui/ScrollableContainer.vue'
 import AccessDenied from '../images/AccessDenied.vue'
 import { Loading } from 'quasar'
+import { useAppStore } from 'src/stores/app.store'
+import { AccessCode } from 'src/common/enum/operational.enum'
 
 const TAB_RECEIVE = 'receive'
 
@@ -105,6 +107,12 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
+const appStore = useAppStore()
+
+const profile = computed(() => appStore.$state.profile)
+
+const menus = computed(() => profile.value?.menus || [])
+
 const ReceiveListPage = computed(() =>
   defineAsyncComponent({
     loader: () => import(`src/components/page/${props.meta.name}/receive/ListPage.vue`),
@@ -119,9 +127,34 @@ const QualityControlListPage = computed(() =>
   }),
 )
 
-const allowSend = computed(() => true)
+const allowSend = computed(() => {
+  const accessCodeMap: Record<string, string> = {
+    'vendor-shipment': AccessCode.VendorShipmentSend,
+    'transfer-item': AccessCode.TransferItemSend,
+    'receive-item': AccessCode.ReceiveItemReceive,
+  }
 
-const allowQC = computed(() => true)
+  const code = accessCodeMap[props.meta.name]
+  return code ? !!findMenuByCode(menus.value, code) : false
+})
+
+const allowQC = computed(() => {
+  const accessCodeMap: Record<string, string> = {
+    'vendor-shipment': AccessCode.VendorShipmentQc,
+    'transfer-item': AccessCode.TransferItemQc,
+    'receive-item': AccessCode.ReceiveItemQc,
+  }
+
+  const code = accessCodeMap[props.meta.name]
+  return code ? !!findMenuByCode(menus.value, code) : false
+})
+
+const allowCreate = computed(() => {
+  const isReceiveTab = tab.value === TAB_RECEIVE
+  const notReceiveItem = props.meta.name !== 'receive-item'
+
+  return notReceiveItem && isReceiveTab && (allowQC.value || allowSend.value)
+})
 
 const props = withDefaults(defineProps<Props>(), {
   keyName: 'id',

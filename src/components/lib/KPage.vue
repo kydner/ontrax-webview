@@ -13,7 +13,7 @@
     </q-inner-loading>
   </div>
 
-  <div v-else class="tw-min-h-screen tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
+  <div v-else class="bg-body-base tw-min-h-screen tw-flex tw-flex-col tw-items-center tw-justify-center tw-space-y-2">
     <div>
       <k-lottie
         animation-link="/lotties/access_denied.json"

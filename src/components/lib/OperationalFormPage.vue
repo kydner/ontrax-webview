@@ -62,7 +62,7 @@ import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { $confirm, Notify } from 'src/common/utils/plugin.utils'
+import { $confirm, findMenuByCode, Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
@@ -71,7 +71,7 @@ import { bus } from 'src/common/event-bus'
 import { OperationalDataRequest } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import { getErrorMessage } from 'src/common/utils/error.utils'
-import { OperationalRoutePath } from 'src/common/enum/operational.enum'
+import { AccessCode, OperationalRoutePath } from 'src/common/enum/operational.enum'
 import InternalError from '../images/InternalError.vue'
 import { id } from 'src/common/interfaces/response.interface'
 import { useAppStore } from 'src/stores/app.store'
@@ -119,6 +119,10 @@ const metaService = new MetaService(props.meta)
 
 const appStore = useAppStore()
 
+const profile = computed(() => appStore.$state.profile)
+
+const menus = computed(() => profile.value?.menus || [])
+
 const globalLoading = computed(() => appStore.$state?.loading)
 
 const formId = computed(() => route.params?.id)
@@ -127,7 +131,16 @@ const fromWarehouseId = computed(() => (form.value as unknown as { fromWarehouse
 
 const loadingPage = ref(false)
 
-const allowAccessPage = computed(() => true)
+const allowAccessPage = computed(() => {
+  const accessCodeMap: Record<string, string> = {
+    'vendor-shipment': AccessCode.VendorShipmentSend,
+    'transfer-item': AccessCode.TransferItemSend,
+    'receive-item': AccessCode.ReceiveItemReceive,
+  }
+
+  const code = accessCodeMap[props.meta.name]
+  return code ? !!findMenuByCode(menus.value, code) : false
+})
 
 const errorMessage = ref<string | null>(null)
 
