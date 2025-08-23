@@ -6,10 +6,11 @@
           <q-avatar
             size="60px"
             class="overlapping tw-cursor-pointer"
+            :color="avatarColor(fullName)"
             v-ripple
             @click="router.push({ name: 'profile' })"
           >
-            <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
+            {{ fullName?.charAt(0)?.toUpperCase() }}
           </q-avatar>
           <div class="tw-text-3xl tw-font-semibold">Welcome Back,</div>
           <div class="tw-text-3xl tw-font-semibold tw-text-primary">{{ fullName }}</div>
@@ -27,6 +28,7 @@ import HomeMenu from 'src/components/lib/HomeMenu.vue'
 import { computed } from 'vue'
 import { useAppStore } from 'src/stores/app.store'
 import { useRouter } from 'vue-router'
+import { avatarColor } from 'src/common/utils/converter.utils'
 
 const appStore = useAppStore()
 

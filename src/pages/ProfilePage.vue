@@ -14,10 +14,11 @@
           <q-avatar
             size="80px"
             class="overlapping tw-cursor-pointer"
+            :color="avatarColor(fullName)"
             v-ripple
             @click="router.push({ name: 'profile' })"
           >
-            <img :src="`https://cdn.quasar.dev/img/avatar1.jpg`" />
+            {{ fullName?.charAt(0)?.toUpperCase() }}
           </q-avatar>
         </template>
       </div>
@@ -139,6 +140,7 @@ import { ErrorId } from 'src/common/exceptions/error-id'
 import { UserResponse } from 'src/common/model/user.model'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { MASK_MOBILE_PHONE } from 'src/common/constants/mask-input.constant'
+import { avatarColor } from 'src/common/utils/converter.utils'
 
 const { t } = useI18n()
 

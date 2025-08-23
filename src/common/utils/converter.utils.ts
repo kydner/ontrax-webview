@@ -374,3 +374,31 @@ export function base64ToBlob(base64: string, mime = 'application/octet-stream') 
 
   return new Blob([new Uint8Array(byteNumbers)], { type: mime })
 }
+
+export const avatarColor = (value?: string) => {
+  if (!value) return 'grey-7'
+
+  const colors = [
+    'primary',
+    'secondary',
+    'accent',
+    'red',
+    'pink',
+    'purple',
+    'deep-purple',
+    'indigo',
+    'blue',
+    'light-blue',
+    'cyan',
+    'teal',
+    'green',
+    'light-green',
+    'lime',
+    'yellow',
+    'amber',
+    'orange',
+    'deep-orange',
+  ]
+  const index = value.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length
+  return colors[index]
+}
