@@ -129,7 +129,7 @@
   <!-- PREVIEW DIALOG -->
   <q-dialog v-model="isDialogPreview" maximized persistent transition-duration="300" position="bottom">
     <swipe-wrapper :swipe-down="() => (previewIndex = null)">
-      <q-card flat class="quality-check-card">
+      <q-card flat class="preview-check-card">
         <!-- close button -->
         <q-card-section class="tw-flex tw-justify-between tw-pb-0 tw-mb-0">
           <span class="tw-text-lg tw-font-semibold">{{ t('detail') }}</span>
@@ -264,11 +264,3 @@ const handlePreview = (index: number) => {
   previewIndex.value = index
 }
 </script>
-
-<style scoped lang="scss">
-.quality-check-card {
-  width: $max-page-width;
-  max-width: 100vw;
-  @apply tw-bg-dark tw-rounded-2xl tw-h-[75vh] bg-body-base tw-mx-auto;
-}
-</style>

@@ -3,7 +3,7 @@
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in receiveItems" :key="index" class="gradient-card tw-my-2">
-      <q-card-section class="tw-p-2">
+      <q-card-section class="tw-p-2" v-ripple @click="handlePreview(index)">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
             <product-image :item-id="product?.itemId || ''" />
@@ -102,6 +102,56 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <!-- PREVIEW DIALOG -->
+  <q-dialog v-model="isDialogPreview" maximized persistent transition-duration="300" position="bottom">
+    <swipe-wrapper :swipe-down="() => (previewIndex = null)">
+      <q-card flat class="preview-check-card">
+        <!-- close button -->
+        <q-card-section class="tw-flex tw-justify-between tw-pb-0 tw-mb-0">
+          <span class="tw-text-lg tw-font-semibold">{{ t('detail') }}</span>
+          <q-btn dense flat round icon="close" color="white" v-close-popup />
+        </q-card-section>
+
+        <!-- centered images -->
+        <q-card-section v-if="previewIndex !== null && previewIndex !== undefined">
+          <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+            <div class="tw-col-span-12 tw-flex tw-space-x-4">
+              <product-image :item-id="receiveItems[previewIndex].itemId || ''" size="60px" />
+              <div class="tw-flex tw-flex-col">
+                <span class="tw-font-semibold tw-text-lg">{{ receiveItems[previewIndex].itemName || '-' }}</span>
+                <span>{{ receiveItems[previewIndex].skuCode || '-' }}</span>
+              </div>
+            </div>
+
+            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyOrdered') }}</div>
+            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+              {{ format(receiveItems[previewIndex].qtyOrdered, { precision: 0 }) || '-' }}
+            </div>
+
+            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceive') }}</div>
+            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+              {{ format(receiveItems[previewIndex].qtyReceived, { precision: 0 }) || '-' }}
+            </div>
+
+            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+              <attachment-file-preview :attachment-info="receiveItems[previewIndex]?.attachmentInfo" />
+            </div>
+
+            <div class="tw-col-span-12 tw-py-2">
+              <div class="tw-text-secondary-text tw-text-xs">
+                {{ t('remark') }}
+              </div>
+              <div>
+                {{ receiveItems[previewIndex].notes || '-' }}
+              </div>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </swipe-wrapper>
+  </q-dialog>
 </template>
 <script setup lang="ts">
 import { bus } from 'src/common/event-bus'
@@ -112,6 +162,8 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { format } from 'src/common/utils/converter.utils'
+import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
+import AttachmentFilePreview from 'src/components/ui/AttachmentFilePreview.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
@@ -132,10 +184,19 @@ const { t } = useI18n()
 
 const dialogIndex = ref<number | null>(null)
 
+const previewIndex = ref<number | null>(null)
+
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,
   set: (val: boolean) => {
     if (!val) dialogIndex.value = null
+  },
+})
+
+const isDialogPreview = computed({
+  get: () => previewIndex.value !== null,
+  set: (val: boolean) => {
+    if (!val) previewIndex.value = null
   },
 })
 
@@ -167,5 +228,9 @@ const handleIncrease = (index: number) => {
 const handleZeroConfirm = (index: number) => {
   receiveItems.value?.splice(index, 1)
   dialogIndex.value = null
+}
+
+const handlePreview = (index: number) => {
+  previewIndex.value = index
 }
 </script>
