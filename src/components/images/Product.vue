@@ -31,7 +31,12 @@
 
         <!-- centered images -->
         <q-card-section class="tw-flex tw-items-center tw-justify-center">
-          <q-img :src="imageUrl || '/images/no-image.svg'" fit="contain" style="max-height: 70vh; max-width: 100%" />
+          <q-img
+            :src="imageUrl || '/images/no-image.svg'"
+            fit="contain"
+            class="tw-rounded-base"
+            style="max-height: 70vh; max-width: 100%"
+          />
         </q-card-section>
       </q-card>
     </swipe-wrapper>
