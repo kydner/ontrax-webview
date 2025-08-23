@@ -28,6 +28,7 @@ export const useAuthenticationStore = defineStore('authentication', {
       if (!this.$state.startRefreshTime) return true
 
       const start = this.$state.startRefreshTime
+
       const now = Date.now()
 
       return now - start > this.$state.expireDuration
