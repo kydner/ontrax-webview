@@ -10,7 +10,7 @@
     <template #other-left:suffix>
       <k-meta-top-filter
         v-model="toWarehouseId"
-        :label="t('warehouseTo')"
+        :label="t('warehouseReceive')"
         icon="img:/icons/download__secondary-text.svg"
         :meta="metaLocationWarehouse"
         option-label="warehouseName"

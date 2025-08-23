@@ -1385,6 +1385,7 @@ export default {
   uploadPhoto: 'Unggah Gambar',
   warehouseFrom: 'Dari Gudang',
   warehouseTo: 'Ke Gudang',
+  warehouseReceive: 'Gudang Diterima',
   qtyOrdered: 'Qty Ordered',
   qtyOrder: 'Qty Order',
   qtyPass: 'Qty Pass',

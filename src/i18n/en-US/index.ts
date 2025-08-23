@@ -1385,6 +1385,7 @@ export default {
   uploadPhoto: 'Upload Photo',
   warehouseFrom: 'Warehouse From',
   warehouseTo: 'Warehouse To',
+  warehouseReceive: 'Warehouse Receive',
   qtyOrdered: 'Qty Ordered',
   qtyOrder: 'Qty Order',
   qtyPass: 'Qty Pass',
