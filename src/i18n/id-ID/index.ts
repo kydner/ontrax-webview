@@ -1390,6 +1390,10 @@ export default {
   qtyPass: 'Qty Pass',
   qtyReject: 'Qty Reject',
   qtyReceive: 'Qty Diterima',
+  qtyReceived: 'Qty Diterima',
+  qtyTransfer: 'Qty Transfer',
+  qtySend: 'Qty Send',
+  qtyAvailable: 'Qty Available',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

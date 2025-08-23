@@ -63,6 +63,7 @@ export interface TransferItem extends Partial<ProductAvailableItemResponse> {
   skuCode: string
   qtyTransfer: number
   qtyReceived: number | null
+  qtyAvailable: number | null
   notes: string | null
 
   // used for send Post & Put

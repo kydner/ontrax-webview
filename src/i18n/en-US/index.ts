@@ -1390,6 +1390,10 @@ export default {
   qtyPass: 'Qty Pass',
   qtyReject: 'Qty Reject',
   qtyReceive: 'Qty Receive',
+  qtyReceived: 'Qty Receive',
+  qtyTransfer: 'Qty Transfer',
+  qtySend: 'Qty Send',
+  qtyAvailable: 'Qty Available',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',

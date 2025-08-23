@@ -35,6 +35,7 @@
               :disable="form.status === 'RECEIVED'"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
+              @click.stop
             />
             <plus-minus-field
               v-else
@@ -43,6 +44,7 @@
               zero-confirm
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
+              @click.stop
             />
           </div>
         </div>
@@ -78,12 +80,14 @@
                   :allow-increase="true"
                   :max="receiveItems[dialogIndex]?.qtyOrdered"
                   :disable="isDisable"
+                  @click.stop
                 />
                 <plus-minus-field
                   v-else
                   v-model="receiveItems[dialogIndex].qtyOrdered"
                   :allow-increase="true"
                   :disable="isDisable"
+                  @click.stop
                 />
               </div>
             </div>
