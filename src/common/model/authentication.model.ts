@@ -13,6 +13,10 @@ export interface LoginDataResponse {
 
   xRequestId: string | null
 
+  expireDuration: number
+
+  refreshToken: string | null
+
   /** value as seconds */
   accessTokenExpired: number
 

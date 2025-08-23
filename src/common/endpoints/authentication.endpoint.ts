@@ -7,6 +7,7 @@ import {
 import { Delete, Get, Post } from '../services/api.service'
 import { ProfileResponse } from '../model/profile.model'
 import { defineEndpoint } from '../utils/plugin.utils'
+import { AuthenticationRefreshTokenResponse } from '../model/authentication-refresh-token.model'
 
 export const useAuthenticationEndpoint = defineEndpoint({
   login: (data: LoginDataRequest) => Post<LoginDataResponse, LoginDataRequest>('auth/login', data),
@@ -19,4 +20,6 @@ export const useAuthenticationEndpoint = defineEndpoint({
   logout: () => Delete<unknown>('auth/logout'),
 
   changeRole: (data: ChangeRoleRequest) => Post<ChangeRoleResponse>('auth/change-role', data),
+
+  refreshToken: () => Post<AuthenticationRefreshTokenResponse>('auth/refresh'),
 })

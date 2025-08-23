@@ -27,6 +27,7 @@ export const actionProfile = () => {
         if (!isValidAll) {
           authStore.$state.isLoggedIn = false
           authStore.$state.token = null
+          authStore.$state.refreshToken = null
           authStore.$state.xRequestId = null
 
           const rejected = responses?.find(({ status }) => status === 'rejected')
@@ -65,9 +66,18 @@ export const useAuthenticationRepository = defineRepository({
         .then(({ data }) => {
           const authStore = useAuthenticationStore()
           const token = data.token
+
+          const refreshToken = data.refreshToken
+
+          const expireDuration = data.expireDuration
+
           const accessTokenExpired = 60 * 60 * 1 /// set jadi 1 jam,  data.accessTokenExpired || 0
 
           authStore.$state.token = token
+
+          authStore.$state.refreshToken = refreshToken
+
+          authStore.$state.expireDuration = expireDuration
 
           /** access token from backend is millisecond then convert to second */
           authStore.$state.accessTokenExpired = accessTokenExpired /// 1000
@@ -96,4 +106,6 @@ export const useAuthenticationRepository = defineRepository({
       }),
 
   changeRole: (data: ChangeRoleRequest) => withRepository<ChangeRoleResponse>(() => authEndpoint.changeRole(data)),
+
+  refreshToken: () => withRepository(() => authEndpoint.refreshToken()),
 })
