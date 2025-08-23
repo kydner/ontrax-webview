@@ -147,25 +147,25 @@
               </div>
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyOrdered') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyOrdered') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{
                 format(goodsReceiveItem(qcGoodsReceiveItems[previewIndex].itemId)?.qtyOrdered, { precision: 0 }) || '-'
               }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceive') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceive') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(qcGoodsReceiveItems[previewIndex].qtyPass, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(qcGoodsReceiveItems[previewIndex].qtyReject, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               <attachment-file-preview :attachment-info="qcGoodsReceiveItems[previewIndex]?.attachmentInfo" />
             </div>
 

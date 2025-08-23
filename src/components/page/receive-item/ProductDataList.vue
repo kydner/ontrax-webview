@@ -123,23 +123,23 @@
               </div>
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyAvailable') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyAvailable') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(transferItems[previewIndex].qtyAvailable, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(transferItems[previewIndex].qtyTransfer, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(transferItems[previewIndex].qtyReject, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               <attachment-file-preview :attachment-info="transferItems[previewIndex]?.attachmentInfo" />
             </div>
 

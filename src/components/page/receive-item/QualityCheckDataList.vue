@@ -165,17 +165,8 @@
               </div>
             </div>
 
-            <!-- <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyOrdered') }}</div> -->
-            <!-- <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
-              {{
-                format(goodsReceiveItem(qcAfterReceived.qcStockTransferItems[previewIndex].itemId)?.qtyOrdered, {
-                  precision: 0,
-                }) || '-'
-              }}
-            </div> -->
-
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{
                 format(stockTransferItem(qcAfterReceived.qcStockTransferItems[previewIndex].itemId)?.qtyTransfer, {
                   precision: 0,
@@ -183,18 +174,18 @@
               }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceived') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceived') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(qcAfterReceived.qcStockTransferItems[previewIndex].qtyReceived, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               {{ format(qcAfterReceived.qcStockTransferItems[previewIndex].qtyReject, { precision: 0 }) || '-' }}
             </div>
 
-            <div class="tw-col-span-12 md:tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
-            <div class="tw-col-span-12 md:tw-col-span-8 tw-text-xs">
+            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+            <div class="tw-col-span-8 tw-text-xs">
               <attachment-file-preview
                 :attachment-info="qcAfterReceived.qcStockTransferItems[previewIndex]?.attachmentInfo"
               />
