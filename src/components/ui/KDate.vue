@@ -181,7 +181,7 @@ const isRequired = computed(() => {
 })
 
 const isClearable = computed(() => {
-  return isRequired.value ? false : !!currentValue.value
+  return isRequired.value || props.disable ? false : !!currentValue.value
 })
 
 const currentRules = computed(() => {
