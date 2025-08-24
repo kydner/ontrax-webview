@@ -1386,6 +1386,7 @@ export default {
   warehouseFrom: 'Dari Gudang',
   warehouseTo: 'Ke Gudang',
   warehouseReceive: 'Gudang Diterima',
+  receiveDate: 'Tanggal Diterima',
   qtyOrdered: 'Qty Ordered',
   qtyOrder: 'Qty Order',
   qtyPass: 'Qty Pass',

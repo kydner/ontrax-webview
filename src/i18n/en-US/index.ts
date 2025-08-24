@@ -1386,6 +1386,7 @@ export default {
   warehouseFrom: 'Warehouse From',
   warehouseTo: 'Warehouse To',
   warehouseReceive: 'Warehouse Receive',
+  receiveDate: 'Receive Date',
   qtyOrdered: 'Qty Ordered',
   qtyOrder: 'Qty Order',
   qtyPass: 'Qty Pass',
