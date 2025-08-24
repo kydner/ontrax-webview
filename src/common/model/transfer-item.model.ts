@@ -20,6 +20,7 @@ export interface TransferItemResponse extends OperationalResponse {
   fromLocationWarehouseName: string
   toLocationWarehouseName: string
   transferDate: isoDate
+  receiveDate?: isoDate
   status: TStatus
   totalItems: number
   totalItemQty: number

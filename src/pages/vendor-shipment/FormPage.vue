@@ -124,7 +124,7 @@ const handleSubmitReceive = () => {
           }
 
           const params: VendorShipmentReceiveRequest = {
-            receiveDate: new Date().toISOString() as isoDate,
+            receiveDate: form.value?.receiveDate as isoDate,
           }
           await repository.received(shipmentId, data, params)
 

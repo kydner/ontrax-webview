@@ -113,6 +113,7 @@ import { isIsoStringDate, isRequiredField, validationRules } from 'src/common/ut
 import { DATE_PREVIEW, DATE_VALUE, DATE_ISO } from 'src/common/constants/date.constant'
 import { snakeCase } from 'lodash'
 import { formatDate } from 'src/common/utils/converter.utils'
+import { onMounted } from 'vue'
 
 export interface KDateProps extends Omit<QDateProps, 'rules' | 'clearable' | 'modelValue'>, KLabelProps {
   labelInput?: boolean
@@ -127,6 +128,7 @@ export interface KDateProps extends Omit<QDateProps, 'rules' | 'clearable' | 'mo
   hint?: QInputProps['hint']
   inputClass?: string
   calendarIconSize?: string
+  defaultValue?: KDateProps['modelValue']
 }
 
 export type KDateEmits = (e: 'update:model-value', value: KDateProps['modelValue']) => void
@@ -195,6 +197,12 @@ const onDateChange = (date: string) => {
   popupProxyRef.value?.hide()
   emit('update:model-value', date ? formatDate(date, { format: DATE_ISO }) : undefined)
 }
+
+onMounted(() => {
+  if (!props.modelValue) {
+    if (props.defaultValue !== null) emit('update:model-value', props.defaultValue)
+  }
+})
 </script>
 
 <style lang="scss">

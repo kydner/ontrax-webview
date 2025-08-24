@@ -1,4 +1,4 @@
-import { IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { ReceiveItem } from './operational.model'
 
 export interface TransferItemReceiveRequest extends IListSortingRequest {}
@@ -12,4 +12,5 @@ export interface TransferItemReceiveResponsePage extends TransferItemReceiveResp
 export interface TransferItemReceiveDataRequest extends TransferItemReceiveResponse {
   receivedItems: Pick<ReceiveItem, 'stockTransferItemId' | 'qtyReceived'>[]
   receiverNotes?: string | null
+  receiveDate?: isoDate
 }

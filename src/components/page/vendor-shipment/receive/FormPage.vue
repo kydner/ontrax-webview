@@ -49,7 +49,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -70,7 +70,30 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/calendar.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+      </template>
+
+      <template #label="{ label }">
+        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
+      </template>
+    </k-date>
+
+    <k-date
+      v-if="['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'].includes(form.status)"
+      v-model="form.receiveDate"
+      t-label="receiveDate"
+      horizontal-align="base"
+      :options="(date: string) => date >= formatDate(new Date().toISOString(), { format: DATE_VALUE })"
+      horizontal-label
+      borderless
+      :disable="['RECEIVED'].includes(form.status)"
+      :default-value="new Date().toISOString()"
+      required
+      :placeholder="t('empty')"
+      input-class="inventory__field"
+    >
+      <template #additional:prefix-label>
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">

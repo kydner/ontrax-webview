@@ -1,4 +1,4 @@
-import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import {
   ShipmentGoodReceiveItem,
   OperationalRequest,
@@ -20,7 +20,10 @@ export interface VendorShipmentResponse extends OperationalResponse {
 
   goodsReceiveItems: ShipmentGoodReceiveItem[]
 
+  receiveDate?: isoDate
+
   qcGoodsReceive: ShipmentQcGoodReceive
+
   attachmentId: id
 
   attachmentInfo?: FileUploadResponse

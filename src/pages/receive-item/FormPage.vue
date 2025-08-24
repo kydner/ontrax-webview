@@ -72,6 +72,7 @@ const handleUpdateToReceive = () => {
           Loading.show()
           const data: TransferItemReceiveDataRequest = {
             receiverNotes: form.value?.receiverNotes,
+            receiveDate: form.value?.receiveDate,
             receivedItems: form.value?.transferItems?.map((item) => {
               return {
                 qtyReceived: item.qtyTransfer,

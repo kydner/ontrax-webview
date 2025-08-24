@@ -75,6 +75,29 @@
       </template>
     </k-date>
 
+    <k-date
+      v-if="['QC_RECEIVE', 'QC_PASSED', 'PARTIAL_PASSED'].includes(form.status)"
+      v-model="form.receiveDate"
+      t-label="receiveDate"
+      horizontal-align="base"
+      :options="(date: string) => date >= formatDate(new Date().toISOString(), { format: DATE_VALUE })"
+      horizontal-label
+      borderless
+      disable
+      :default-value="new Date().toISOString()"
+      required
+      :placeholder="t('empty')"
+      input-class="inventory__field"
+    >
+      <template #additional:prefix-label>
+        <q-icon name="img:/icons/calendar__secondary-text.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+      </template>
+
+      <template #label="{ label }">
+        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
+      </template>
+    </k-date>
+
     <k-select-module
       v-model="form.fromWarehouseId"
       t-label="from"
