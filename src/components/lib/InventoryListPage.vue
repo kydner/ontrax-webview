@@ -39,13 +39,11 @@ const movementPayload = ref<MovementPayload>({} as MovementPayload)
 defineSlots<Slots<T>>()
 
 const handleActionDetail = (payload: MovementPayload) => {
-  console.log(payload)
   panel.value = PANEL_MOVEMENT
   movementPayload.value = payload
 }
 
 const handleBackMovement = () => {
-  console.log('back')
   panel.value = PANEL_FILTER
 }
 </script>

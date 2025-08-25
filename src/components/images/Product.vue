@@ -75,7 +75,7 @@ const fetchData = async () => {
 }
 
 const onLoad = () => {
-  console.log('Image loaded')
+  // console.log('Image loaded')
 }
 
 const onError = () => {
