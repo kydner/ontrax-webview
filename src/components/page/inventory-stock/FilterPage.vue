@@ -67,6 +67,8 @@ import { InventoryStockResponsePage } from 'src/common/model/inventory-stock.mod
 import KToolbar from 'src/components/ui/KToolbar.vue'
 import { useRouter } from 'vue-router'
 import { MovementPayload } from './MovementPage.vue'
+import AllFilteringSkeleton from './AllFilteringSkeleton.vue'
+import ProductWarehouseFilteringSkeleton from './ProductWarehouseFilteringSkeleton.vue'
 
 interface Emits {
   (event: 'action:detail', payload: MovementPayload): void
@@ -100,11 +102,13 @@ const handleFilter = async () => {
     suffixEvent.value = 'all-filtering'
     component.value = defineAsyncComponent({
       loader: () => import('./AllFiltering.vue'),
+      loadingComponent: AllFilteringSkeleton,
     })
   } else {
     suffixEvent.value = 'product-warehouse-filtering'
     component.value = defineAsyncComponent({
       loader: () => import('./ProductWarehouseFiltering.vue'),
+      loadingComponent: ProductWarehouseFilteringSkeleton,
     })
   }
 
