@@ -4,7 +4,7 @@
       <filter-page @action:detail="(payload) => handleActionDetail(payload)" />
     </q-tab-panel>
     <q-tab-panel :name="PANEL_MOVEMENT" class="tw-p-0 tw-overflow-hidden">
-      <movement-page @back="panel = PANEL_FILTER" :payload="movementPayload" />
+      <movement-page @back="handleBackMovement" :payload="movementPayload" />
     </q-tab-panel>
   </q-tab-panels>
 </template>
@@ -42,5 +42,10 @@ const handleActionDetail = (payload: MovementPayload) => {
   console.log(payload)
   panel.value = PANEL_MOVEMENT
   movementPayload.value = payload
+}
+
+const handleBackMovement = () => {
+  console.log('back')
+  panel.value = PANEL_FILTER
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <scrollable-container suffix-event="inventory-movement">
-    <swipe-wrapper :swipe-left="() => emit('back')">
+  <swipe-wrapper :swipe-right="() => emit('back')">
+    <scrollable-container suffix-event="inventory-movement">
       <k-page padding="normal" class="bg-body-base tw-min-h-screen">
         <k-toolbar header-title="Inventory Stock Movement" @back="handleBack" />
 
@@ -148,8 +148,8 @@
           </template>
         </div>
       </k-page>
-    </swipe-wrapper>
-  </scrollable-container>
+    </scrollable-container>
+  </swipe-wrapper>
 </template>
 
 <script setup lang="ts">

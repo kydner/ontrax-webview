@@ -1,6 +1,6 @@
 <template>
   <scrollable-container :suffix-event="suffixEvent">
-    <k-page :allow-access="allowAccessPage" class="bg-body-base">
+    <k-page :allow-access="allowAccessPage" class="filter-page bg-body-base">
       <k-toolbar :header-title="metaInventoryStock?.title" @back="router.push('/')" />
 
       <slot>
@@ -40,7 +40,12 @@
           </div>
 
           <div class="target-section-operational__list tw-col-span-12">
-            <component :is="component" :key="componentKey" :payload="{ ...request }" @action:detail="handleDetail" />
+            <component
+              :is="component"
+              :key="componentKey"
+              :payload="{ ...request }"
+              @action:detail="handleActionDetail"
+            />
           </div>
         </div>
       </slot>
@@ -110,7 +115,8 @@ const handleFilter = async () => {
   }, 200)
 }
 
-const handleDetail = (detail: MovementPayload) => {
+const handleActionDetail = (detail: MovementPayload) => {
+  scrollToClass('.filter-page')
   emit('action:detail', detail)
 }
 </script>
