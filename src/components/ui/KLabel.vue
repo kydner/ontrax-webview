@@ -145,7 +145,7 @@ const currentHorizontalAlign = computed<KLabelHorizontalAlign>(() => {
   @apply tw-text-lg;
 }
 .horizontal {
-  @apply tw-flex tw-flex-row tw-items-start;
+  @apply tw-flex tw-flex-row tw-items-center;
 }
 .horizontal-align {
   @apply tw-w-auto md:tw-w-[200px];
