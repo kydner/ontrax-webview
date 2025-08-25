@@ -204,15 +204,6 @@ const routes: RouteRecordRaw[] = [
               middlewares: [auth],
             },
           },
-          {
-            path: 'movement/:locationWarehouseId/:itemId',
-            component: () => import('pages/inventory-stock/MovementPage.vue'),
-            name: `${Meta.InventoryStock.name}-filter-detail`,
-            meta: {
-              middlewares: [auth],
-              t: 'form',
-            },
-          },
         ],
       },
     ],
