@@ -7,11 +7,13 @@
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-basis-auto">
             <div class="tw-flex tw-items-center tw-space-x-2">
               <q-icon name="img:/icons/upload-box__primary.svg" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ item?.fromLocationWarehouseName }}</span>
+              <span class="tw-text-xs tw-text-secondary-text"
+                >{{ t('from') }} {{ item?.fromLocationWarehouseName }}</span
+              >
             </div>
             <div class="tw-flex tw-items-center tw-space-x-2">
               <q-icon name="img:/icons/download__primary.svg" color="primary" />
-              <span class="tw-text-xs tw-text-secondary-text">{{ item?.toLocationWarehouseName }}</span>
+              <span class="tw-text-xs tw-text-secondary-text"> {{ t('to') }} {{ item?.toLocationWarehouseName }}</span>
             </div>
             <div class="tw-flex tw-items-center tw-space-x-2">
               <q-icon name="calendar_today" color="primary" />
@@ -36,6 +38,7 @@ import { TStatus } from 'src/common/enum/operational.enum'
 import { TransferItemResponsePage } from 'src/common/model/transfer-item.model'
 import { format, formatDate } from 'src/common/utils/converter.utils'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
   item: TransferItemResponsePage
@@ -49,6 +52,8 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const props = withDefaults(defineProps<Props>(), {})
+
+const { t } = useI18n()
 
 const getColor = (status: TStatus): Colors => {
   switch (status) {
