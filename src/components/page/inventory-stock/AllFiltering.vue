@@ -43,7 +43,7 @@
           :key="index"
           v-ripple
           class="tw-cursor-pointer"
-          @click="handleDetailPage(stock.locationWarehouseId, stock.itemId)"
+          @click="handleDetailPage({ locationWarehouseId: stock.locationWarehouseId, itemId: stock.itemId })"
         >
           <q-card-section class="tw-p-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-justify-between">
@@ -91,21 +91,22 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import KCard from 'src/components/ui/KCard.vue'
-import { useRouter } from 'vue-router'
-import { InventoryStock } from 'src/common/constants/meta.constant'
 import { useStockCardRepository } from 'src/common/repository/stock-card.repository'
-import { nextTick, onMounted, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { bus } from 'src/common/event-bus'
-import { id } from 'src/common/interfaces/response.interface'
 import { StockCardResponsePage } from 'src/common/model/stock-card.model'
 import { format } from 'src/common/utils/converter.utils'
 import ProductImage from 'src/components/images/Product.vue'
-import { Loading } from 'quasar'
+import { MovementPayload } from './MovementPage.vue'
+
+interface Emits {
+  (event: 'action:detail', payload: MovementPayload): void
+}
+
+const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
-
-const router = useRouter()
 
 const stockRepository = useStockCardRepository()
 
@@ -119,18 +120,8 @@ const state = reactive({
   totalPages: 1,
 })
 
-const handleDetailPage = async (locationWarehouseId: id, itemId: id) => {
-  try {
-    Loading.show()
-    await router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
-  } catch (error) {
-    Notify.error({
-      message: error as Error,
-    })
-  } finally {
-    await nextTick()
-    Loading.hide()
-  }
+const handleDetailPage = async (payload: MovementPayload) => {
+  emit('action:detail', payload)
 }
 
 const loadMore = async <T extends StockCardResponsePage[]>(reset = false) => {

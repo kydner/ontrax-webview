@@ -101,10 +101,6 @@ const fromWarehouseId = ref<id | undefined>()
 
 const payload = ref({
   status: currentStatus.value || statuses,
-  receiveNumber: search.value || undefined,
-  fromWarehouseId: fromWarehouseId.value,
-  sortColumn: 'CREATED_DATE',
-  sortDirection: 'DESC' as TBaseSortDirection,
 } as TransferItemRequestPage)
 
 const metaListTableRef = ref<ComponentPublicInstance<MetaListTableExposed> | null>(null)

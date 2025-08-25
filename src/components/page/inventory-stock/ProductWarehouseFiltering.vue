@@ -58,7 +58,7 @@
               :key="index"
               class="tw-my-2 tw-cursor-pointer"
               v-ripple
-              @click="handleDetailPage(warehouse.locationWarehouseId, stock.itemId)"
+              @click="handleDetailPage({ locationWarehouseId: warehouse.locationWarehouseId, itemId: stock.itemId })"
             >
               <q-card-section class="tw-px-2">
                 <div class="tw-flex tw-items-center tw-justify-between">
@@ -106,10 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { Loading } from 'quasar'
-import { InventoryStock } from 'src/common/constants/meta.constant'
 import { bus } from 'src/common/event-bus'
-import { id } from 'src/common/interfaces/response.interface'
 import {
   StockCardAggregationRequest,
   StockCardAggregationResponsePage,
@@ -118,17 +115,21 @@ import { useStockCardRepository } from 'src/common/repository/stock-card.reposit
 import { format } from 'src/common/utils/converter.utils'
 import { Notify } from 'src/common/utils/plugin.utils'
 import KCard from 'src/components/ui/KCard.vue'
-import { nextTick, onMounted, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { MovementPayload } from './MovementPage.vue'
 
 interface Props {
   payload: StockCardAggregationRequest
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+interface Emits {
+  (event: 'action:detail', payload: MovementPayload): void
+}
 
-const router = useRouter()
+const emit = defineEmits<Emits>()
+
+const props = withDefaults(defineProps<Props>(), {})
 
 const { t } = useI18n()
 
@@ -144,18 +145,8 @@ const state = reactive({
   totalPages: 1,
 })
 
-const handleDetailPage = async (locationWarehouseId: id, itemId: id) => {
-  try {
-    Loading.show()
-    await router.push(`${InventoryStock.name}/movement/${locationWarehouseId}/${itemId}`)
-  } catch (error) {
-    Notify.error({
-      message: error as Error,
-    })
-  } finally {
-    await nextTick()
-    Loading.hide()
-  }
+const handleDetailPage = async (payload: MovementPayload) => {
+  emit('action:detail', payload)
 }
 
 const loadMore = async <T extends StockCardAggregationResponsePage[]>(reset = false) => {

@@ -106,4 +106,6 @@ const handleStatus = (value?: TStatus) => {
   payload.value = buildPayload()
   metaListTableRef.value?.loadMore(true)
 }
+
+payload.value = buildPayload()
 </script>
