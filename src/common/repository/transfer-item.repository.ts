@@ -21,7 +21,9 @@ export const useTransferItemRepository = defineRepository({
         const qcStockTransferItems = response.qcBeforeSend?.qcStockTransferItems
 
         const transferItems: TransferItem[] = [...(response?.stockTransferItems || [])]?.map((item) => {
-          const attachmentInfo = qcStockTransferItems.find((stock) => stock.itemId === item.itemId)?.attachmentInfo
+          const qcStockTransferItem = qcStockTransferItems.find((stock) => stock.itemId === item.itemId)
+          const attachmentInfo = qcStockTransferItem?.attachmentInfo
+          const qtyReject = qcStockTransferItem?.qtyReject ?? 0
           return {
             itemId: item.itemId,
             itemName: item.itemName,
@@ -32,6 +34,7 @@ export const useTransferItemRepository = defineRepository({
             qtyTransfer: item.qtyTransfer,
             qtyReceived: item.qtyReceived ?? 0,
             qtyAvailable: item.qtyAvailable ?? 0,
+            qtyReject,
             stockTransferItemId: item?.stockTransferItemId,
             fileId: item?.fileId,
             attachmentInfo,
