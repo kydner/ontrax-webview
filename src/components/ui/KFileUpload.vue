@@ -230,13 +230,21 @@ watch(selectedFile, async (file) => {
 
   try {
     const maxSize = 10 * 1024 * 1024 // 10MB
+
     if (file.size > maxSize) {
-      throw new Error(`File size to long ${(file.size / 1024 / 1024).toFixed(2)}MB`)
+      throw new Error(`File size to long: ${(file.size / 1024 / 1024).toFixed(2)}MB (maks 10MB)`)
     }
+
     let fileToUpload: File = file
 
     if (file.type.startsWith('image/')) {
       fileToUpload = await resizeImage(file, 1024, 1024)
+
+      if (fileToUpload.size > maxSize) {
+        throw new Error(
+          `File masih terlalu besar setelah resize: ${(fileToUpload.size / 1024 / 1024).toFixed(2)}MB (maks 10MB)`,
+        )
+      }
     }
 
     const data = await uploadRepository.upload(fileToUpload, props.payload)
