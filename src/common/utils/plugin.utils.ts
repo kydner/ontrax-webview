@@ -207,3 +207,7 @@ export function findMenuByKey<T extends keyof UserMenu>(
   }
   return null
 }
+
+export function removeLeadingSlash(path: string): string {
+  return path.startsWith('/') ? path.slice(1) : path
+}
