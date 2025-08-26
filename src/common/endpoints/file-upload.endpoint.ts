@@ -34,6 +34,7 @@ export const useFileUploadEndpoint = defineEndpoint({
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      timeout: 0,
     })
   },
 })

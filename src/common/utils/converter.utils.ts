@@ -402,3 +402,58 @@ export const avatarColor = (value?: string) => {
   const index = value.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length
   return colors[index]
 }
+
+export async function resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<File> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      img.src = e.target?.result as string
+    }
+
+    img.onload = () => {
+      let { width, height } = img
+
+      // Kalau tidak perlu resize
+      if (width <= maxWidth && height <= maxHeight) {
+        return resolve(file)
+      }
+
+      // Hitung aspect ratio
+      const aspectRatio = width / height
+      if (width > height) {
+        width = maxWidth
+        height = Math.round(maxWidth / aspectRatio)
+      } else {
+        height = maxHeight
+        width = Math.round(maxHeight * aspectRatio)
+      }
+
+      // Render ke canvas
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return reject(new Error('Canvas not supported'))
+
+      ctx.drawImage(img, 0, 0, width, height)
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return reject(new Error('Failed to resize image'))
+          const resizedFile = new File([blob], file.name, { type: file.type })
+          resolve(resizedFile)
+        },
+        file.type,
+        0.9, // kualitas (0.9 = 90%)
+      )
+    }
+
+    img.onerror = reject
+    reader.onerror = reject
+
+    reader.readAsDataURL(file)
+  })
+}

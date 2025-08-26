@@ -127,7 +127,7 @@ import { useFileUploadRepository } from 'src/common/repository/file-upload.repos
 import { FileUploadRequest, FileUploadResponse } from 'src/common/model/file-upload.model'
 import { useForm } from 'vee-validate'
 import { getErrorMessage } from 'src/common/utils/error.utils'
-import { truncate } from 'src/common/utils/converter.utils'
+import { resizeImage, truncate } from 'src/common/utils/converter.utils'
 import { Notify } from 'src/common/utils/plugin.utils'
 import { useFileDownloadRepository } from 'src/common/repository/file-download.repository'
 
@@ -229,13 +229,22 @@ watch(selectedFile, async (file) => {
   uploading.value = true
 
   try {
-    const data = await uploadRepository.upload(file, props.payload)
+    let fileToUpload: File = file
+
+    if (file.type.startsWith('image/')) {
+      fileToUpload = await resizeImage(file, 1024, 1024)
+    }
+
+    const data = await uploadRepository.upload(fileToUpload, props.payload)
     emit('update:model-value', data.fileId)
   } catch (error) {
     const message = getErrorMessage(error as Error)
     uploadError.value = message
     setFieldError(props.name || props.tLabel, message)
     emit('update:model-value', null)
+    Notify.error({
+      message: error as Error,
+    })
   } finally {
     uploading.value = false
   }
