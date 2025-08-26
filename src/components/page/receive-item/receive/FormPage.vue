@@ -80,7 +80,6 @@
       v-model="form.receiveDate"
       t-label="receiveDate"
       horizontal-align="base"
-      :options="(date: string) => date >= formatDate(new Date().toISOString(), { format: DATE_VALUE })"
       horizontal-label
       borderless
       :disable="['RECEIVED'].includes(form.status)"
