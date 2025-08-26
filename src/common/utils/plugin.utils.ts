@@ -190,14 +190,18 @@ export const scrollToClass = (targetClass: string, headerOffset = 0) => {
   }
 }
 
-export function findMenuByCode(menus: UserMenu[], code: string): UserMenu | null {
+export function findMenuByKey<T extends keyof UserMenu>(
+  menus: UserMenu[],
+  key: T,
+  value: UserMenu[T],
+): UserMenu | null {
   for (const menu of menus) {
-    if (menu.code === code) {
+    if (menu[key] === value) {
       return menu
     }
 
     if (menu.childMenus?.length) {
-      const found = findMenuByCode(menu.childMenus, code)
+      const found = findMenuByKey(menu.childMenus, key, value)
       if (found) return found
     }
   }

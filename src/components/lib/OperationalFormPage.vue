@@ -62,7 +62,7 @@ import { ComponentPublicInstance } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { $confirm, findMenuByCode, Notify } from 'src/common/utils/plugin.utils'
+import { $confirm, findMenuByKey, Notify } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
@@ -139,7 +139,7 @@ const allowAccessPage = computed(() => {
   }
 
   const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByCode(menus.value, code) : false
+  return code ? !!findMenuByKey(menus.value, 'code', code) : false
 })
 
 const errorMessage = ref<string | null>(null)

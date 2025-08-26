@@ -14,7 +14,7 @@ import { computed, ref, VNode } from 'vue'
 import FilterPage from '../page/inventory-stock/FilterPage.vue'
 import MovementPage, { MovementPayload } from 'src/components/page/inventory-stock/MovementPage.vue'
 import { AccessCode } from 'src/common/enum/inventory.enum'
-import { findMenuByCode } from 'src/common/utils/plugin.utils'
+import { findMenuByKey } from 'src/common/utils/plugin.utils'
 import { useAppStore } from 'src/stores/app.store'
 
 const PANEL_FILTER = 'panel-filter'
@@ -54,7 +54,7 @@ const allowAccessPage = computed(() => {
   }
 
   const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByCode(menus.value, code) : false
+  return code ? !!findMenuByKey(menus.value, 'code', code) : false
 })
 
 const handleActionDetail = (payload: MovementPayload) => {

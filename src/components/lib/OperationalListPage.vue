@@ -71,7 +71,7 @@ import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { findMenuByCode, Notify } from 'src/common/utils/plugin.utils'
+import { findMenuByKey, Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ScrollableContainer from '../ui/ScrollableContainer.vue'
@@ -135,7 +135,7 @@ const allowSend = computed(() => {
   }
 
   const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByCode(menus.value, code) : false
+  return code ? !!findMenuByKey(menus.value, 'code', code) : false
 })
 
 const allowQC = computed(() => {
@@ -146,7 +146,7 @@ const allowQC = computed(() => {
   }
 
   const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByCode(menus.value, code) : false
+  return code ? !!findMenuByKey(menus.value, 'code', code) : false
 })
 
 const allowCreate = computed(() => {
