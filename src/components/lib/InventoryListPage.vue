@@ -1,7 +1,7 @@
 <template>
   <q-tab-panels v-model="panel" keep-alive animated class="tw-bg-transparent">
     <q-tab-panel :name="PANEL_FILTER" class="tw-p-0 tw-overflow-hidden">
-      <filter-page @action:detail="(payload) => handleActionDetail(payload)" />
+      <filter-page :allow-access="allowAccessPage" @action:detail="(payload) => handleActionDetail(payload)" />
     </q-tab-panel>
     <q-tab-panel :name="PANEL_MOVEMENT" class="tw-p-0 tw-overflow-hidden">
       <movement-page @back="handleBackMovement" :payload="movementPayload" />
@@ -10,9 +10,13 @@
 </template>
 <script setup lang="ts" generic="T">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { ref, VNode } from 'vue'
+import { computed, ref, VNode } from 'vue'
 import FilterPage from '../page/inventory-stock/FilterPage.vue'
 import MovementPage, { MovementPayload } from 'src/components/page/inventory-stock/MovementPage.vue'
+import { AccessCode } from 'src/common/enum/inventory.enum'
+import { findMenuByCode } from 'src/common/utils/plugin.utils'
+import { useAppStore } from 'src/stores/app.store'
+
 const PANEL_FILTER = 'panel-filter'
 const PANEL_MOVEMENT = 'panel-detail'
 
@@ -30,13 +34,28 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
-withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {})
+
+const appStore = useAppStore()
+
+const profile = computed(() => appStore.$state.profile)
+
+const menus = computed(() => profile.value?.menus || [])
 
 const panel = ref(PANEL_FILTER)
 
 const movementPayload = ref<MovementPayload>({} as MovementPayload)
 
 defineSlots<Slots<T>>()
+
+const allowAccessPage = computed(() => {
+  const accessCodeMap: Record<string, string> = {
+    'inventory-stock': AccessCode.InventoryStock,
+  }
+
+  const code = accessCodeMap[props.meta.name]
+  return code ? !!findMenuByCode(menus.value, code) : false
+})
 
 const handleActionDetail = (payload: MovementPayload) => {
   panel.value = PANEL_MOVEMENT

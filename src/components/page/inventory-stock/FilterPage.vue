@@ -1,6 +1,6 @@
 <template>
   <scrollable-container :suffix-event="suffixEvent">
-    <k-page :allow-access="allowAccessPage" class="filter-page bg-body-base">
+    <k-page :allow-access="props.allowAccess" class="filter-page bg-body-base">
       <k-toolbar :header-title="metaInventoryStock?.title" @back="router.push('/')" />
 
       <slot>
@@ -60,7 +60,7 @@ import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
 import { InventoryStock, LocationWarehouse, Product } from 'src/common/constants/meta.constant'
 import { ProductResponsePage } from 'src/common/model/product.model'
-import { computed, defineAsyncComponent, nextTick, ref, type Component } from 'vue'
+import { defineAsyncComponent, nextTick, ref, type Component } from 'vue'
 import { StockCardAggregationRequest } from 'src/common/model/stock-card-aggregation.model'
 import { scrollToClass } from 'src/common/utils/plugin.utils'
 import { InventoryStockResponsePage } from 'src/common/model/inventory-stock.model'
@@ -70,9 +70,15 @@ import { MovementPayload } from './MovementPage.vue'
 import AllFilteringSkeleton from './AllFilteringSkeleton.vue'
 import ProductWarehouseFilteringSkeleton from './ProductWarehouseFilteringSkeleton.vue'
 
+interface Props {
+  allowAccess?: boolean
+}
+
 interface Emits {
   (event: 'action:detail', payload: MovementPayload): void
 }
+
+const props = withDefaults(defineProps<Props>(), {})
 
 const emit = defineEmits<Emits>()
 
@@ -85,8 +91,6 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const metaProduct: IMetaListModule<ProductResponsePage> = Product
 
 const metaInventoryStock: IMetaListModule<InventoryStockResponsePage> = InventoryStock
-
-const allowAccessPage = computed(() => true)
 
 const component = ref<Component | null>(null)
 
