@@ -229,6 +229,10 @@ watch(selectedFile, async (file) => {
   uploading.value = true
 
   try {
+    const maxSize = 10 * 1024 * 1024 // 10MB
+    if (file.size > maxSize) {
+      throw new Error(`File size to long ${(file.size / 1024 / 1024).toFixed(2)}MB`)
+    }
     let fileToUpload: File = file
 
     if (file.type.startsWith('image/')) {
