@@ -17,6 +17,7 @@ export const useVendorShipmentRepository = defineRepository({
       (response) => {
         const warehouseId = response.locationWarehouseId
         const attachmentId = response?.attachmentInfo?.fileId
+        const receiveDate = response?.actualReceiveDate
 
         /**
          * used for request data Post & Put
@@ -37,7 +38,7 @@ export const useVendorShipmentRepository = defineRepository({
             attachmentInfo: item.attachmentInfo,
           }
         })
-        return { ...response, warehouseId, receiveItems, attachmentId }
+        return { ...response, warehouseId, receiveItems, attachmentId, receiveDate }
       },
     ),
 
