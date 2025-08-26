@@ -143,7 +143,7 @@
   </q-dialog>
 
   <!-- PREVIEW DIALOG -->
-  <q-dialog v-model="isDialogPreview" maximized persistent transition-duration="300" position="bottom">
+  <q-dialog v-model="isDialogPreview" maximized transition-duration="300" position="bottom">
     <swipe-wrapper :swipe-down="() => (previewIndex = null)">
       <q-card flat class="preview-check-card">
         <!-- close button -->
