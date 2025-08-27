@@ -14,7 +14,12 @@
           input-class="inventory__field"
         >
           <template #default="scope">
-            <k-text-area v-model="scope.value" t-label="note" :show-label="false" />
+            <k-text-area
+              v-model="scope.value"
+              t-label="note"
+              :disable="!['DRAFT', 'IN_TRANSIT'].includes(form.status) || form.status === undefined"
+              :show-label="false"
+            />
           </template>
           <template #preview:prefix>
             <q-icon name="img:/icons/edit__secondary-text.svg" size="1rem" class="tw-pb-1 tw-pr-2" />
