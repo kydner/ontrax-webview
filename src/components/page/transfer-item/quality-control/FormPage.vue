@@ -203,7 +203,7 @@ const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = Lo
 const formId = computed(() => route.params?.id)
 
 const isDisable = computed(() => {
-  return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'] as TStatus[]).includes(form.value.status)
+  return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED', 'QC_SEND'] as TStatus[]).includes(form.value.status)
 })
 
 const { t } = useI18n()
