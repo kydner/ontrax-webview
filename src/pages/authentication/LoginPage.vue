@@ -34,7 +34,7 @@
         </template>
       </k-password>
     </div>
-    <div class="tw-basis-full tw-my-3 tw-mb-8">
+    <div class="tw-basis-full tw-mt-8">
       <k-btn
         :label="t('button.enter')"
         color="secondary"
@@ -105,7 +105,7 @@ const invalidSubmit = (
 
 /* hanya untuk login-field */
 .login-field :deep(.q-field__control) {
-  background: linear-gradient(to right, rgba(#0c0c0f, 0.5), rgba(#2d2d33, 0.5));
+  background: linear-gradient(to right, rgba(#0c0c0f, 0.8), rgba(#2d2d33, 0.8));
   border-radius: 0.5rem;
 }
 </style>
