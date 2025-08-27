@@ -144,9 +144,7 @@
             </div>
 
             <div class="tw-col-span-12 tw-py-2">
-              <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remarkShipmentItem') }}
-              </div>
+              <div class="tw-text-secondary-text tw-text-xs">Remark Receive</div>
               <div>
                 {{ receiveItems[previewIndex].notes || '-' }}
               </div>
