@@ -3,7 +3,7 @@
     <k-btn v-if="showAddButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <k-card v-for="(product, index) in transferItems" :key="product.itemId" class="gradient-card tw-my-2">
-      <q-card-section class="tw-p-2" v-ripple @click="handlePreview(index)">
+      <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
             <product-image :item-id="product?.itemId" />
@@ -103,68 +103,57 @@
   </q-dialog>
 
   <!-- PREVIEW DIALOG -->
-  <q-dialog v-model="isDialogPreview" maximized transition-duration="300" position="bottom">
-    <swipe-wrapper :swipe-down="() => (previewIndex = null)">
-      <q-card flat class="preview-check-card">
-        <!-- close button -->
-        <q-card-section class="tw-flex tw-justify-between tw-pb-0 tw-mb-0">
-          <span class="tw-text-lg tw-font-semibold">{{ t('detail') }}</span>
-          <q-btn dense flat round icon="close" color="white" v-close-popup />
-        </q-card-section>
-
-        <!-- centered images -->
-        <q-card-section v-if="previewIndex !== null && previewIndex !== undefined">
-          <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-            <div class="tw-col-span-12 tw-flex tw-space-x-4">
-              <product-image :item-id="transferItems[previewIndex].itemId || ''" size="60px" />
-              <div class="tw-flex tw-flex-col">
-                <span class="tw-font-semibold tw-text-lg">{{ transferItems[previewIndex].itemName || '-' }}</span>
-                <span>{{ transferItems[previewIndex].skuCode || '-' }}</span>
-              </div>
-            </div>
-
-            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyAvailable') }}</div>
-            <div class="tw-col-span-8 tw-text-xs">
-              {{ format(transferItems[previewIndex].qtyAvailable, { precision: 0 }) || '-' }}
-            </div>
-
-            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
-            <div class="tw-col-span-8 tw-text-xs">
-              {{ format(transferItems[previewIndex].qtyTransfer, { precision: 0 }) || '-' }}
-            </div>
-
-            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
-            <div class="tw-col-span-8 tw-text-xs">
-              {{ format(transferItems[previewIndex].qtyReject, { precision: 0 }) || '-' }}
-            </div>
-
-            <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
-            <div class="tw-col-span-8 tw-text-xs">
-              <attachment-file-preview :attachment-info="transferItems[previewIndex]?.attachmentInfo" />
-            </div>
-
-            <div class="tw-col-span-12 tw-py-2">
-              <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remarkTransferItem') }}
-              </div>
-              <div>
-                {{ transferItems[previewIndex]?.notes || '-' }}
-              </div>
-            </div>
-
-            <div class="tw-col-span-12 tw-py-2">
-              <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remarkTransferQcItem') }}
-              </div>
-              <div>
-                {{ qcStockTransferItems(transferItems[previewIndex].itemId)?.notes || '-' }}
-              </div>
-            </div>
+  <detail-preview v-model="previewItem">
+    <template #default="{ item }">
+      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+        <div class="tw-col-span-12 tw-flex tw-space-x-4">
+          <product-image :item-id="item?.itemId || ''" size="60px" />
+          <div class="tw-flex tw-flex-col">
+            <span class="tw-font-semibold tw-text-lg">{{ item?.itemName || '-' }}</span>
+            <span>{{ item?.skuCode || '-' }}</span>
           </div>
-        </q-card-section>
-      </q-card>
-    </swipe-wrapper>
-  </q-dialog>
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyAvailable') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          {{ format(item?.qtyAvailable, { precision: 0 }) || '-' }}
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          {{ format(item?.qtyTransfer, { precision: 0 }) || '-' }}
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          {{ format(item?.qtyReject, { precision: 0 }) || '-' }}
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          <attachment-file-preview :attachment-info="item?.attachmentInfo" />
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">
+            {{ t('remarkTransferItem') }}
+          </div>
+          <div>
+            {{ item?.notes || '-' }}
+          </div>
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">
+            {{ t('remarkTransferQcItem') }}
+          </div>
+          <div>
+            {{ qcStockTransferItems(item?.itemId)?.notes || '-' }}
+          </div>
+        </div>
+      </div>
+    </template>
+  </detail-preview>
 </template>
 <script setup lang="ts">
 import { bus } from 'src/common/event-bus'
@@ -175,9 +164,10 @@ import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import ProductImage from 'src/components/images/Product.vue'
 import { format } from 'src/common/utils/converter.utils'
-import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 import AttachmentFilePreview from 'src/components/ui/AttachmentFilePreview.vue'
 import { id } from 'src/common/interfaces/response.interface'
+import DetailPreview from '../operational/DetailPreview.vue'
+import { TransferItem } from 'src/common/model/operational.model'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
@@ -198,7 +188,7 @@ const { t } = useI18n()
 
 const dialogIndex = ref<number | null>(null)
 
-const previewIndex = ref<number | null>(null)
+const previewItem = ref<any | null>(null)
 
 const showAddButton = computed(() => {
   if (!form.value.status) return true
@@ -210,13 +200,6 @@ const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,
   set: (val: boolean) => {
     if (!val) dialogIndex.value = null
-  },
-})
-
-const isDialogPreview = computed({
-  get: () => previewIndex.value !== null,
-  set: (val: boolean) => {
-    if (!val) previewIndex.value = null
   },
 })
 
@@ -250,7 +233,7 @@ const handleZeroConfirm = (index: number) => {
   dialogIndex.value = null
 }
 
-const handlePreview = (index: number) => {
-  previewIndex.value = index
+const handlePreview = (item: TransferItem) => {
+  previewItem.value = item
 }
 </script>
