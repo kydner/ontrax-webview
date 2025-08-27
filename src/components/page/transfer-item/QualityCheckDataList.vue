@@ -130,7 +130,11 @@
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceived') }}</div>
             <div class="tw-col-span-8 tw-text-xs">
-              {{ format(qcBeforeSend.qcStockTransferItems[previewIndex].qtyReceived, { precision: 0 }) || '-' }}
+              {{
+                format(stockTransferItem(qcBeforeSend.qcStockTransferItems[previewIndex].itemId)?.qtyReceived, {
+                  precision: 0,
+                }) || '-'
+              }}
             </div>
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
@@ -140,7 +144,11 @@
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyTransfer') }}</div>
             <div class="tw-col-span-8 tw-text-xs">
-              {{ format(qcBeforeSend.qcStockTransferItems[previewIndex].qtyTransfer, { precision: 0 }) || '-' }}
+              {{
+                format(stockTransferItem(qcBeforeSend.qcStockTransferItems[previewIndex].itemId)?.qtyTransfer, {
+                  precision: 0,
+                }) || '-'
+              }}
             </div>
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
@@ -176,6 +184,7 @@ import { useAppStore } from '../../../stores/app.store'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 import AttachmentFilePreview from 'src/components/ui/AttachmentFilePreview.vue'
 import { format } from 'src/common/utils/converter.utils'
+import { id } from 'src/common/interfaces/response.interface'
 
 interface Props {
   modelValue: TransferItemDataRequest
@@ -201,6 +210,10 @@ const globalLoading = computed(() => appStore.$state?.loading)
 const dialogIndex = ref<number | null>(null)
 
 const previewIndex = ref<number | null>(null)
+
+const stockTransferItem = (itemId: id | null) => {
+  return form.value.stockTransferItems?.find((item) => item.itemId === itemId)
+}
 
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,

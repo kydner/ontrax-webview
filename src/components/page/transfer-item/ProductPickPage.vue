@@ -180,6 +180,7 @@ const fetchData = async () => {
         qtyTransfer: 0,
         qcStockTransferItemId: existing?.qcStockTransferItemId ?? null,
         fileId: existing?.fileId ?? '',
+        qtyAvailable: existing?.availableQty ?? 0,
       }
     })
   } catch (error) {
@@ -221,6 +222,8 @@ const toggleItem = (product: ReceiveItem, checked: boolean) => {
         notes: '',
         qty: 1,
         fileId: product?.fileId,
+        qtyAvailable: product?.availableQty ?? 0,
+        attachmentInfo: product?.attachmentInfo,
       })
     }
   } else {

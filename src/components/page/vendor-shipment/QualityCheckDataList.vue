@@ -244,6 +244,7 @@ const form = computed({
 const goodsReceiveItem = (itemId: id | null) => {
   return form.value.goodsReceiveItems?.find((item) => item.itemId === itemId)
 }
+
 const qcGoodsReceiveItems = computed({
   get: () => form.value.qcGoodsReceive.qcGoodsReceiveItems,
   set: (value) => {
