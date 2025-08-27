@@ -40,7 +40,7 @@
         color="secondary"
         type="submit"
         size="lg"
-        class="fit login-button"
+        class="fit login-button tw-rounded-base"
         :loading="loading"
       />
     </div>
