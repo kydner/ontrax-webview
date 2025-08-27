@@ -1,11 +1,11 @@
 <template>
   <div class="auth-layout__container">
-    <div class="tw-w-full tw-h-screen tw-overflow-y-auto">
+    <div class="auth-layout__inner">
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full">
         <!-- Title -->
-        <div class="tw-text-center tw-mb-6">
-          <div class="tw-font-semibold tw-text-4xl md:tw-text-5xl tw-mb-3">Login</div>
-          <p class="tw-text-sm md:tw-text-base tw-text-secondary-text">Welcome Back, You’ve been Missed !</p>
+        <div class="auth-layout__title">
+          <h1 class="tw-font-semibold tw-text-4xl tw-text-white md:tw-text-5xl tw-mb-8">Login</h1>
+          <p class="tw-text-sm md:tw-text-secondary-text">Welcome Back, You’ve been Missed !</p>
         </div>
 
         <!-- Form -->
@@ -16,19 +16,38 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .auth-layout__container {
-  @apply tw-relative tw-flex md:tw-flex-row tw-h-screen tw-items-center tw-justify-start;
+  max-width: $max-page-width !important;
+  @apply tw-relative tw-container tw-mx-auto tw-w-full tw-min-h-screen tw-px-6;
+
   &::before {
-    background: url('~assets/images/base-background.svg');
-    @apply tw-content-['-'] tw-absolute tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-cover tw-text-surface tw-inset-0 tw-top-0;
+    content: '';
+    background: url('~assets/images/home-background.svg');
+    @apply tw-absolute tw-inset-0 tw-bg-no-repeat md:tw-bg-repeat-x tw-bg-contain;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    background: linear-gradient(180deg, #2d2d33 0%, #0c0c0f 100%);
+    @apply tw-absolute tw-inset-0;
+    z-index: -2;
   }
 }
 
+.auth-layout__inner {
+  @apply tw-w-full tw-h-screen tw-overflow-y-auto;
+}
+
+.auth-layout__title {
+  @apply tw-text-center tw-mb-6 tw-text-secondary-text;
+}
+
 .auth-layout__form {
-  max-width: $max-page-width;
-  @apply tw-w-full tw-p-4 md:tw-p-0;
+  @apply tw-w-full tw-my-8;
 }
 </style>

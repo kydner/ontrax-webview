@@ -4,6 +4,7 @@
       <k-input
         v-model="form.username"
         t-label="username"
+        class="login-field"
         required
         :disable="loading"
         label-padding="none"
@@ -20,6 +21,7 @@
       <k-password
         v-model="form.password"
         t-label="password"
+        class="login-field"
         required
         :disable="loading"
         :autocomplete="false"
@@ -99,5 +101,11 @@ const invalidSubmit = (
 <style scoped lang="scss">
 .login-button::before {
   background: linear-gradient(133deg, rgb(var(--color-secondary)) 0%, rgb(var(--color-secondary)) 100%);
+}
+
+/* hanya untuk login-field */
+.login-field :deep(.q-field__control) {
+  background: linear-gradient(to right, rgba(#0c0c0f, 0.5), rgba(#2d2d33, 0.5));
+  border-radius: 0.5rem;
 }
 </style>
