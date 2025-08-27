@@ -131,7 +131,7 @@
 
             <div class="tw-col-span-12 tw-py-2">
               <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remark') }}
+                {{ t('remarkTransferItem') }}
               </div>
               <div>
                 {{ transferItems[previewIndex].notes || '-' }}

@@ -145,10 +145,19 @@
 
             <div class="tw-col-span-12 tw-py-2">
               <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remark') }}
+                {{ t('remarkTransferItem') }}
               </div>
               <div>
-                {{ transferItems[previewIndex].notes || '-' }}
+                {{ transferItems[previewIndex]?.notes || '-' }}
+              </div>
+            </div>
+
+            <div class="tw-col-span-12 tw-py-2">
+              <div class="tw-text-secondary-text tw-text-xs">
+                {{ t('remarkTransferQcItem') }}
+              </div>
+              <div>
+                {{ qcStockTransferItems(transferItems[previewIndex].itemId)?.notes || '-' }}
               </div>
             </div>
           </div>
@@ -168,6 +177,7 @@ import ProductImage from 'src/components/images/Product.vue'
 import { format } from 'src/common/utils/converter.utils'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 import AttachmentFilePreview from 'src/components/ui/AttachmentFilePreview.vue'
+import { id } from 'src/common/interfaces/response.interface'
 
 interface Props {
   modelValue: ReceiveItemDataRequest
@@ -222,6 +232,10 @@ const transferItems = computed({
     emit('update:model-value', form.value)
   },
 })
+
+const qcStockTransferItems = (itemId: id) => {
+  return form.value.qcBeforeSend.qcStockTransferItems?.find((product) => product.itemId === itemId)
+}
 
 const handleProductPick = () => {
   bus.emit('product:pick')

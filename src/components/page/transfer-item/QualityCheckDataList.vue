@@ -160,7 +160,16 @@
 
             <div class="tw-col-span-12 tw-py-2">
               <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remark') }}
+                {{ t('remarkTransferItem') }}
+              </div>
+              <div>
+                {{ stockTransferItem(qcBeforeSend.qcStockTransferItems[previewIndex].itemId)?.notes || '-' }}
+              </div>
+            </div>
+
+            <div class="tw-col-span-12 tw-py-2">
+              <div class="tw-text-secondary-text tw-text-xs">
+                {{ t('remarkQcItem') }}
               </div>
               <div>
                 {{ qcBeforeSend.qcStockTransferItems[previewIndex].notes || '-' }}

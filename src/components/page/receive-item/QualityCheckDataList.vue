@@ -193,7 +193,25 @@
 
             <div class="tw-col-span-12 tw-py-2">
               <div class="tw-text-secondary-text tw-text-xs">
-                {{ t('remark') }}
+                {{ t('remarkTransferItem') }}
+              </div>
+              <div>
+                {{ stockTransferItem(qcAfterReceived.qcStockTransferItems[previewIndex].itemId)?.notes || '-' }}
+              </div>
+            </div>
+
+            <div class="tw-col-span-12 tw-py-2">
+              <div class="tw-text-secondary-text tw-text-xs">
+                {{ t('remarkTransferQcItem') }}
+              </div>
+              <div>
+                {{ qcStockTransferItems(qcAfterReceived.qcStockTransferItems[previewIndex].itemId)?.notes || '-' }}
+              </div>
+            </div>
+
+            <div class="tw-col-span-12 tw-py-2">
+              <div class="tw-text-secondary-text tw-text-xs">
+                {{ t('remarkReceiverQcItem') }}
               </div>
               <div>
                 {{ qcAfterReceived.qcStockTransferItems[previewIndex].notes || '-' }}
@@ -276,6 +294,11 @@ const stockTransferItems = computed(() => form.value?.stockTransferItems || [])
 const stockTransferItem = (itemId: id) => {
   return stockTransferItems.value?.find((product) => product.itemId === itemId)
 }
+
+const qcStockTransferItems = (itemId: id) => {
+  return form.value.qcBeforeSend.qcStockTransferItems?.find((product) => product.itemId === itemId)
+}
+
 const handleIncrease = (index: number) => {
   dialogIndex.value = index
 }
