@@ -176,7 +176,11 @@
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReceived') }}</div>
             <div class="tw-col-span-8 tw-text-xs">
-              {{ format(qcAfterReceived.qcStockTransferItems[previewIndex].qtyReceived, { precision: 0 }) || '-' }}
+              {{
+                format(stockTransferItem(qcAfterReceived.qcStockTransferItems[previewIndex].itemId)?.qtyReceived, {
+                  precision: 0,
+                }) || '-'
+              }}
             </div>
 
             <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyReject') }}</div>
