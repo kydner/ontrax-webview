@@ -20,7 +20,6 @@
               v-model="product.qty"
               :allow-increase="true"
               :max="product.availableQty"
-              :is-disable="isDisable"
               zero-confirm
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
@@ -31,7 +30,7 @@
               v-model="product.qty"
               :allow-increase="true"
               :max="product.availableQty"
-              :is-disable="isDisable"
+              :disable="true"
               @increase="handleIncrease(index)"
               @zero:confirm="handleZeroConfirm(index)"
               @click.stop

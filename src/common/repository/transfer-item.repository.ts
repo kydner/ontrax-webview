@@ -21,7 +21,7 @@ export const useTransferItemRepository = defineRepository({
         const qcStockTransferItems = response.qcBeforeSend?.qcStockTransferItems
 
         const transferItems: TransferItem[] = [...(response?.stockTransferItems || [])]?.map((item) => {
-          const qcStockTransferItem = qcStockTransferItems.find((stock) => stock.itemId === item.itemId)
+          const qcStockTransferItem = qcStockTransferItems?.find((stock) => stock.itemId === item.itemId)
           const attachmentInfo = qcStockTransferItem?.attachmentInfo
           const qtyReject = qcStockTransferItem?.qtyReject ?? 0
           return {
