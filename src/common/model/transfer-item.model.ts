@@ -34,6 +34,7 @@ export interface TransferItemResponse extends OperationalResponse {
   attachmentId: id
   attachmentInfo?: FileUploadResponse
   transferItems: TransferItem[]
+  receiveItems: TransferItem[]
   qcBeforeSend: TransferItemBeforeSendResponse
   qcAfterReceived: TransferItemAfterSendResponse
 }

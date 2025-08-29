@@ -183,29 +183,30 @@
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Transfer Item</div>
           <div>
             {{ stockTransferItem(item?.itemId)?.notes || '-' }}
           </div>
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferQcItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark QC Before Send</div>
           <div>
-            {{ qcStockTransferItems(item?.itemId)?.notes || '-' }}
+            {{ transferItemBeforeQc(item?.itemId)?.notes || '-' }}
           </div>
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkReceiverQcItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Receive</div>
           <div>
-            {{ item?.notes || '-' }}
+            {{ receiveItem(item.itemId)?.notes || '-' }}
+          </div>
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">Remark Receive Item After QC</div>
+          <div>
+            {{ receiveItemAfterQc(item?.itemId)?.notes || '-' }}
           </div>
         </div>
       </div>
@@ -250,7 +251,7 @@ const globalLoading = computed(() => appStore.$state?.loading)
 
 const dialogIndex = ref<number | null>(null)
 
-const previewItem = ref<any | null>(null)
+const previewItem = ref<TransferItem | null>(null)
 
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,
@@ -278,8 +279,16 @@ const stockTransferItem = (itemId: id) => {
   return stockTransferItems.value?.find((product) => product.itemId === itemId)
 }
 
-const qcStockTransferItems = (itemId: id) => {
+const receiveItem = (itemId: id) => {
+  return form.value.receiveItems?.find((product) => product.itemId === itemId)
+}
+
+const transferItemBeforeQc = (itemId: id) => {
   return form.value.qcBeforeSend.qcStockTransferItems?.find((product) => product.itemId === itemId)
+}
+
+const receiveItemAfterQc = (itemId: id) => {
+  return form.value.qcAfterReceived.qcStockTransferItems?.find((product) => product.itemId === itemId)
 }
 
 const handleIncrease = (index: number) => {

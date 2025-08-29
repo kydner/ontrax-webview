@@ -91,7 +91,7 @@ const handleSaveToReadyToSend = () => {
 
 const handleUpdateToQc = () => {
   $confirm({
-    message: `${t('ReadyToSend')}?`,
+    message: `${t('updateToQc')}?`,
     callback: async (confirm) => {
       if (confirm) {
         try {

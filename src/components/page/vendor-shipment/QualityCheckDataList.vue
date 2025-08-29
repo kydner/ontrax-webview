@@ -159,16 +159,14 @@
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">Remark Receive</div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Good Receive</div>
           <div>
             {{ goodsReceiveItem(item?.fileId)?.notes || '-' }}
           </div>
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkQcItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark QC</div>
           <div>
             {{ item?.notes || '-' }}
           </div>
@@ -215,7 +213,7 @@ const globalLoading = computed(() => appStore.$state?.loading)
 
 const dialogIndex = ref<number | null>(null)
 
-const previewItem = ref<any | null>(null)
+const previewItem = ref<ShipmentQcGoodReceiveItem | null>(null)
 
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,

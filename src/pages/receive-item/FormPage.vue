@@ -63,7 +63,7 @@ const formId = computed(() => form.value?.stockTransferId as id)
 
 const handleUpdateToReceive = () => {
   $confirm({
-    message: `${t('saveToReadyToSend')}?`,
+    message: `${t('updateToReceive')}?`,
     callback: async (confirm) => {
       if (confirm) {
         try {
@@ -73,10 +73,11 @@ const handleUpdateToReceive = () => {
           const data: TransferItemReceiveDataRequest = {
             receiverNotes: form.value?.receiverNotes,
             receiveDate: form.value?.receiveDate,
-            receivedItems: form.value?.transferItems?.map((item) => {
+            receivedItems: form.value?.receiveItems?.map((item) => {
               return {
                 qtyReceived: item.qtyTransfer,
                 stockTransferItemId: item.stockTransferItemId,
+                notes: item.notes,
               }
             }),
           }
@@ -99,7 +100,7 @@ const handleUpdateToReceive = () => {
 
 const handleUpdateToQcReceive = () => {
   $confirm({
-    message: `${t('saveToReadyToSend')}?`,
+    message: `${t('updateToQcReceive')}?`,
     callback: async (confirm) => {
       if (confirm) {
         try {
@@ -125,7 +126,7 @@ const handleUpdateToQcReceive = () => {
 
 const handleUpdateToQcPass = () => {
   $confirm({
-    message: `${t('saveToReadyToSend')}?`,
+    message: `${t('updateToQcPass')}?`,
     callback: async (confirm) => {
       if (confirm) {
         try {

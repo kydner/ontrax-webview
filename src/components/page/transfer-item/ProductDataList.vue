@@ -120,11 +120,16 @@
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Transfer Item</div>
           <div>
             {{ item.notes || '-' }}
+          </div>
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">Remark QC Before Send</div>
+          <div>
+            {{ qcStockTransferItem(item.itemId)?.notes || '-' }}
           </div>
         </div>
       </div>
@@ -143,6 +148,7 @@ import { Notify } from 'src/common/utils/plugin.utils'
 import DetailPreview from '../operational/DetailPreview.vue'
 import { format } from 'src/common/utils/converter.utils'
 import { TransferItem } from 'src/common/model/operational.model'
+import { id } from 'src/common/interfaces/response.interface'
 
 interface Props {
   modelValue: TransferItemDataRequest
@@ -163,7 +169,11 @@ const { t } = useI18n()
 
 const dialogIndex = ref<number | null>(null)
 
-const previewItem = ref<any | null>(null)
+const previewItem = ref<TransferItem | null>(null)
+
+const qcStockTransferItem = (itemId: id) => {
+  return form.value?.qcBeforeSend?.qcStockTransferItems?.find((stock) => stock.itemId === itemId)
+}
 
 const showAddButton = computed(() => {
   if (!form.value.status) return true

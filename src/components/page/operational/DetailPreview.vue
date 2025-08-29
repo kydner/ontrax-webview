@@ -17,12 +17,12 @@
   </q-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { computed } from 'vue'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 
 interface Props {
-  modelValue: any | null
+  modelValue: T | null
   title?: string
 }
 interface Emits {

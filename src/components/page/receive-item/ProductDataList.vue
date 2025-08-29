@@ -2,7 +2,7 @@
   <div class="tw-my-4 tw-min-h-[60vh]">
     <k-btn v-if="showAddButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
-    <k-card v-for="(product, index) in transferItems" :key="product.itemId" class="gradient-card tw-my-2">
+    <k-card v-for="(product, index) in receiveItems" :key="product.itemId" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -54,7 +54,7 @@
       </q-card-section>
     </k-card>
 
-    <div v-if="transferItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="receiveItems?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 
   <!-- Single Dialog reused for all items -->
@@ -68,28 +68,28 @@
           <q-card-section class="tw-p-2">
             <div class="tw-flex tw-items-center tw-justify-between">
               <div class="tw-flex tw-justify-between tw-space-x-2">
-                <product-image :item-id="transferItems[dialogIndex]?.itemId" />
+                <product-image :item-id="receiveItems[dialogIndex]?.itemId" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ transferItems[dialogIndex]?.skuCode }}</span>
-                    <span>{{ transferItems[dialogIndex]?.itemName }}</span>
+                    <span class="tw-text-secondary-text">{{ receiveItems[dialogIndex]?.skuCode }}</span>
+                    <span>{{ receiveItems[dialogIndex]?.itemName }}</span>
                   </div>
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
                 <plus-minus-field
                   v-if="form.status === 'IN_TRANSIT'"
-                  v-model="transferItems[dialogIndex].qtyReceived"
+                  v-model="receiveItems[dialogIndex].qtyReceived"
                   :allow-increase="true"
                   @click.stop
                 />
-                <plus-minus-field v-else v-model="transferItems[dialogIndex].qtyReject" :allow-increase="true" />
+                <plus-minus-field v-else v-model="receiveItems[dialogIndex].qtyReject" :allow-increase="true" />
               </div>
             </div>
           </q-card-section>
         </k-card>
         <k-text-area
-          v-model="transferItems[dialogIndex].notes"
+          v-model="receiveItems[dialogIndex].notes"
           t-label="note"
           :show-label="false"
           :placeholder="t('note')"
@@ -135,18 +135,28 @@
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferItem') }}
+          <div class="tw-text-secondary-text tw-text-xs">Remark Transfer Item</div>
+          <div>
+            {{ transferItem(item.itemId)?.notes || '-' }}
           </div>
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">Remark Transfer Item Before QC</div>
+          <div>
+            {{ transferItemBeforeQc(item.itemId)?.notes || '-' }}
+          </div>
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">Remark Receive</div>
           <div>
             {{ item?.notes || '-' }}
           </div>
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferQcItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Receive QC</div>
           <div>
             {{ qcStockTransferItems(item?.itemId)?.notes || '-' }}
           </div>
@@ -188,7 +198,7 @@ const { t } = useI18n()
 
 const dialogIndex = ref<number | null>(null)
 
-const previewItem = ref<any | null>(null)
+const previewItem = ref<TransferItem | null>(null)
 
 const showAddButton = computed(() => {
   if (!form.value.status) return true
@@ -208,15 +218,23 @@ const form = computed({
   set: (value) => emit('update:model-value', value),
 })
 
-const transferItems = computed({
-  get: () => form.value?.transferItems || [],
+const receiveItems = computed({
+  get: () => form.value?.receiveItems || [],
   set: (value) => {
-    form.value.transferItems = value
+    form.value.receiveItems = value
     emit('update:model-value', form.value)
   },
 })
 
 const qcStockTransferItems = (itemId: id) => {
+  return form.value.qcBeforeSend.qcStockTransferItems?.find((product) => product.itemId === itemId)
+}
+
+const transferItem = (itemId: id) => {
+  return form.value.transferItems?.find((product) => product.itemId === itemId)
+}
+
+const transferItemBeforeQc = (itemId: id) => {
   return form.value.qcBeforeSend.qcStockTransferItems?.find((product) => product.itemId === itemId)
 }
 
@@ -229,7 +247,7 @@ const handleIncrease = (index: number) => {
 }
 
 const handleZeroConfirm = (index: number) => {
-  transferItems.value?.splice(index, 1)
+  receiveItems.value?.splice(index, 1)
   dialogIndex.value = null
 }
 

@@ -146,18 +146,14 @@
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkTransferItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark Transfer Item</div>
           <div>
             {{ stockTransferItem(item.itemId)?.notes || '-' }}
           </div>
         </div>
 
         <div class="tw-col-span-12 tw-py-2">
-          <div class="tw-text-secondary-text tw-text-xs">
-            {{ t('remarkQcItem') }}
-          </div>
+          <div class="tw-text-secondary-text tw-text-xs">Remark QC Before Send</div>
           <div>
             {{ item.notes || '-' }}
           </div>
@@ -204,7 +200,7 @@ const globalLoading = computed(() => appStore.$state?.loading)
 
 const dialogIndex = ref<number | null>(null)
 
-const previewItem = ref<any | null>(null)
+const previewItem = ref<TransferItem | null>(null)
 
 const stockTransferItem = (itemId: id | null) => {
   return form.value.stockTransferItems?.find((item) => item.itemId === itemId)
@@ -229,6 +225,7 @@ const qcBeforeSend = computed({
     emit('updte:model-value', form.value)
   },
 })
+
 const handleIncrease = (index: number) => {
   dialogIndex.value = index
 }

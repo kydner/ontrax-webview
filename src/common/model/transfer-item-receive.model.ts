@@ -10,7 +10,7 @@ export interface TransferItemReceiveResponse {}
 export interface TransferItemReceiveResponsePage extends TransferItemReceiveResponse {}
 
 export interface TransferItemReceiveDataRequest extends TransferItemReceiveResponse {
-  receivedItems: Pick<ReceiveItem, 'stockTransferItemId' | 'qtyReceived'>[]
+  receivedItems: Pick<ReceiveItem, 'stockTransferItemId' | 'qtyReceived' | 'notes'>[]
   receiverNotes?: string | null
   receiveDate?: isoDate
 }

@@ -43,6 +43,9 @@ export const useTransferItemRepository = defineRepository({
         return {
           ...response,
           transferItems,
+          receiveItems: [...transferItems]?.map((item) => {
+            return { ...item, notes: '' }
+          }),
           fromWarehouseId: response?.fromLocationWarehouseId,
           toWarehouseId: response?.toLocationWarehouseId,
           attachmentId,
