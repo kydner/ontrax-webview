@@ -10,10 +10,17 @@ export const useProductRepository = defineRepository({
   getPage: (params?: ProductRequestPage) => withRepository(() => productEndpoint.getPage(params)),
 
   getAll: (params: ProductRequest) =>
-    withRepository(() => {
-      const { isActive = true } = params
-      return productEndpoint.getAll({ ...params, isActive })
-    }),
+    withRepository(
+      () => {
+        const { isActive = true } = params
+        return productEndpoint.getAll({ ...params, isActive })
+      },
+      (response) => {
+        return [...response]?.map((item) => {
+          return { ...item, isHasSerial: true }
+        })
+      },
+    ),
 
   getOne: (id: id) => withRepository(() => productEndpoint.getOne(id)),
 

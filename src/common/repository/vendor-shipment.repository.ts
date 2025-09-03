@@ -36,6 +36,7 @@ export const useVendorShipmentRepository = defineRepository({
             unitPrice: item.unitPrice,
             fileId: item.fileId,
             attachmentInfo: item.attachmentInfo,
+            isHasSerial: true, /// FIXME: fix it next
           }
         })
         return { ...response, warehouseId, receiveItems, attachmentId, receiveDate }

@@ -24,9 +24,9 @@
                 {{ format(product.qtyOrdered, { precision: 0 }) }}
               </div>
             </div>
-            <span v-if="form.status === 'RECEIVED'" class="tw-text-xs"
-              >Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}</span
-            >
+            <span v-if="form.status === 'RECEIVED'" class="tw-text-xs">
+              Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}
+            </span>
             <plus-minus-field
               v-if="['IN_TRANSIT', 'RECEIVED'].includes(form.status)"
               v-model="product.qtyReceived"
@@ -37,15 +37,28 @@
               @zero:confirm="handleZeroConfirm(index)"
               @click.stop
             />
-            <plus-minus-field
-              v-else
-              v-model="product.qtyOrdered"
-              :allow-increase="true"
-              zero-confirm
-              @increase="handleIncrease(index)"
-              @zero:confirm="handleZeroConfirm(index)"
-              @click.stop
-            />
+            <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSerial">
+              <plus-minus-field
+                v-model="product.qtyOrdered"
+                :allow-increase="true"
+                :disable="true"
+                :zero-confirm="false"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+                @click.stop
+              />
+            </template>
+            <template v-else>
+              <plus-minus-field
+                v-model="product.qtyOrdered"
+                :allow-increase="true"
+                :disable="!!product.isHasSerial"
+                :zero-confirm="!product.isHasSerial"
+                @increase="handleIncrease(index)"
+                @zero:confirm="handleZeroConfirm(index)"
+                @click.stop
+              />
+            </template>
           </div>
         </div>
       </q-card-section>
@@ -110,7 +123,10 @@
   <!-- PREVIEW DIALOG -->
   <detail-preview v-model="previewItem">
     <template #default="{ item }">
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+      <div v-if="form.status === 'DRAFT' || !form.status" class="tw-grid tw-grid-cols-12 tw-gap-2">
+        <barcode-scan-list :item="item" />
+      </div>
+      <div v-else>
         <div class="tw-col-span-12 tw-flex tw-space-x-4">
           <product-image :item-id="item.itemId || ''" size="60px" />
           <div class="tw-flex tw-flex-col">
@@ -156,6 +172,7 @@ import { format } from 'src/common/utils/converter.utils'
 import AttachmentFilePreview from 'src/components/ui/AttachmentFilePreview.vue'
 import { ShipmentGoodReceiveItem } from 'src/common/model/operational.model'
 import DetailPreview from '../operational/DetailPreview.vue'
+import BarcodeScanList from './BarcodeScanList.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest

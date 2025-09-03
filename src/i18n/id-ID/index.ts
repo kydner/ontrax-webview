@@ -1402,6 +1402,7 @@ export default {
   qtyTransfer: 'Qty Transfer',
   qtySend: 'Qty Send',
   qtyAvailable: 'Qty Available',
+  serialNumber: 'Nomor Seri',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

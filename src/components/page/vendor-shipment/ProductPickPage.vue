@@ -54,7 +54,7 @@
                   <plus-minus-field
                     v-model="product.qtyOrdered"
                     :allow-increase="true"
-                    :disable="!isChecked(product.itemId)"
+                    :disable="!isChecked(product.itemId) || product.isHasSerial"
                     @update:model-value="(val) => updateQty(product, val as number)"
                   />
                 </div>
@@ -168,10 +168,11 @@ const fetchData = async () => {
         unit: product.unit,
         unitPrice: product.unitPrice,
         isActive: product.isActive,
-        qtyOrdered: existing?.qtyOrdered ?? 1,
+        qtyOrdered: (existing?.qtyOrdered ?? product?.isHasSerial) ? 0 : 1, // if product with serial number set default qty = 1
         qtyReceived: existing?.qtyReceived ?? 0,
         notes: existing?.notes ?? '',
         goodsReceiveItemId: existing?.goodsReceiveItemId ?? null,
+        isHasSerial: product.isHasSerial,
         fileId: existing?.fileId ?? '',
       }
     })
@@ -207,10 +208,11 @@ const toggleItem = (product: ShipmentGoodReceiveItem, checked: boolean) => {
         itemId: product.itemId,
         itemName: product.itemName,
         skuCode: product.skuCode,
-        qtyOrdered: 1,
+        qtyOrdered: product.isHasSerial ? 0 : 1,
         notes: '',
         qtyReceived: 0,
         unitPrice: 0,
+        isHasSerial: product.isHasSerial,
         goodsReceiveItemId: product.goodsReceiveItemId,
         fileId: product?.fileId,
       })

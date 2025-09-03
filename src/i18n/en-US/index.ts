@@ -1402,6 +1402,7 @@ export default {
   qtyTransfer: 'Qty Transfer',
   qtySend: 'Qty Send',
   qtyAvailable: 'Qty Available',
+  serialNumber: 'Serial Number',
   title: {
     selectCustomerType: 'Select Customer Type',
     selectProduct: 'Select Product',
