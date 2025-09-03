@@ -59,7 +59,7 @@ const close = () => emit('update:modelValue', null)
   }
 
   &::-webkit-scrollbar {
-    @apply tw-w-2;
+    @apply tw-w-1;
   }
 
   &::-webkit-scrollbar-track {

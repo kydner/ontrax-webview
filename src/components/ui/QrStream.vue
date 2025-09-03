@@ -20,13 +20,30 @@
       <!-- Scanner aktif -->
       <div v-else class="qr-wrapper">
         <QrStream
-          class="qr-stream tw-rounded-base tw-object-cover"
+          class="qr-stream tw-object-cover"
+          :paused="props.loading"
           @detect="onDecode"
           @camera-on="onCameraOn"
           @error="onError"
           :constraints="{ audio: false, video: true }"
         >
-          <span v-if="props.loading">On Process</span>
+          <!-- Overlay saat loading / paused -->
+          <div
+            v-if="props.loading"
+            class="tw-absolute tw-inset-0 tw-bg-black/50 tw-flex tw-items-center tw-justify-center tw-text-white tw-font-medium"
+          >
+            Processing...
+          </div>
+
+          <!-- Lottie animasi scanning (hanya kalau aktif, tidak paused, & tidak error) -->
+          <!-- <k-lottie
+            v-if="scannerActive && !props.loading && !errorMessage"
+            animation-link="/lotties/scanning_qr_code.json"
+            auto-play
+            loop
+            renderer="svg"
+            class="qr-lottie"
+          /> -->
         </QrStream>
       </div>
 
@@ -41,6 +58,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { QrStream } from 'vue3-qr-reader'
+// import KLottie from 'src/components/ui/KLottie.vue'
 
 interface Props {
   loading?: boolean
@@ -76,7 +94,7 @@ const requestCameraAccess = async () => {
   errorMessage.value = null
   isRequesting.value = true
   try {
-    const isCameraSupported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    const isCameraSupported = !!(navigator?.mediaDevices && navigator.mediaDevices?.getUserMedia)
 
     if (!isCameraSupported) {
       errorMessage.value = 'Camera API not supported. Use HTTPS or update browser.'
