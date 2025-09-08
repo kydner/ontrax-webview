@@ -5,12 +5,15 @@
     <k-card v-for="(product, index) in receiveItems" :key="index" class="gradient-card tw-my-2">
       <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
         <div class="tw-flex tw-items-center tw-justify-between">
-          <div class="tw-flex tw-justify-between tw-space-x-2">
-            <product-image :item-id="product?.itemId || ''" />
-            <div class="tw-basis-auto">
-              <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product?.skuCode || '-' }}</span>
-                <span>{{ product.itemName || '-' }}</span>
+          <div class="tw-flex tw-flex-col tw-space-y-1 tw-mb-1">
+            <div v-if="product.isHasSerial">SN: 99012323333</div>
+            <div class="tw-flex tw-justify-between tw-space-x-2">
+              <product-image :item-id="product?.itemId || ''" />
+              <div class="tw-basis-auto">
+                <div class="tw-flex tw-flex-col">
+                  <span class="tw-text-secondary-text">{{ product?.skuCode || '-' }}</span>
+                  <span>{{ product.itemName || '-' }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -40,10 +43,11 @@
             <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSerial">
               <plus-minus-field
                 v-model="product.qtyOrdered"
-                :allow-increase="true"
-                :disable="true"
+                :allow-increase="false"
+                :disable-value="true"
+                :disable-decrease="true"
                 :zero-confirm="false"
-                @increase="handleIncrease(index)"
+                @increase="handlePreview(product)"
                 @zero:confirm="handleZeroConfirm(index)"
                 @click.stop
               />

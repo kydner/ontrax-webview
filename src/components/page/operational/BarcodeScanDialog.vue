@@ -33,7 +33,7 @@
                 <q-item-section avatar>
                   <q-btn
                     color="negative"
-                    icon="img:/icons/remove__negative.svg"
+                    icon="img:/icons/circle-check__positive.svg"
                     size="0.65rem"
                     flat
                     rounded

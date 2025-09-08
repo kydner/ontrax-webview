@@ -6,7 +6,7 @@
       :repeat-timeout="1000"
       dense
       class="btn left tw-text-white"
-      :disable="props.disable"
+      :disable="props.disable || props.disableDecrease"
       @click="decrease"
     />
     <k-money
@@ -31,7 +31,7 @@
       :repeat-timeout="1000"
       dense
       class="btn right tw-text-white"
-      :disable="props.disable"
+      :disable="props.disable || props.disableIncrease"
       @click="increase"
     />
   </div>
@@ -45,8 +45,11 @@ import { Money3Component as kMoney } from 'v-money3'
 interface Props extends Omit<QInputProps, 'modelValue'> {
   modelValue?: number | null
   allowIncrease?: boolean
+  allowDecrease?: boolean
   zeroConfirm?: boolean
   disableValue?: boolean
+  disableIncrease?: boolean
+  disableDecrease?: boolean
   zeroConfirmMessage?: string
   precision?: number
   max?: string | number
@@ -78,6 +81,7 @@ const decrease = () => {
   if (props.min) {
     if (currentValue.value <= Number(props.min)) return
   }
+  if (!props.allowDecrease) return
   if (currentValue.value <= 1) {
     if (props.zeroConfirm) {
       $confirm({
@@ -98,11 +102,12 @@ const decrease = () => {
 }
 
 const increase = () => {
+  emit('increase', currentValue.value)
+
   if (props.max) {
     if (currentValue.value >= Number(props.max)) return
   }
   if (!props.allowIncrease) return
-  emit('increase', currentValue.value)
   currentValue.value++
 }
 
