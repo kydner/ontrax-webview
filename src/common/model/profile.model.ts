@@ -30,7 +30,7 @@ export interface UserMenu {
   page: string
   sequence: number
   parentMenuId?: id | null
-  sourceType: 'INTERNAL' | 'EXTERNAL'
+  sourceType: 'MOBILE' | 'WEB'
   componentType: string
   childMenus: UserMenu[]
 }

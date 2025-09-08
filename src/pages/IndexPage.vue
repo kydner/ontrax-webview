@@ -39,7 +39,7 @@ const profile = computed(() => appStore.$state?.profile)
 const fullName = computed(() => profile.value?.fullName)
 
 const menus = computed(() => {
-  return profile.value?.menus || []
+  return profile.value?.menus?.filter((menu) => menu.sourceType === 'MOBILE') || []
 })
 
 // const menu = [
