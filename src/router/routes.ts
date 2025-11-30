@@ -222,9 +222,9 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'delivery-send/form/:id',
+            path: 'form/:id',
             component: () => import('pages/delivery-send/FormPage.vue'),
-            name: `${Meta.DeliverySend.name}-delivery-send-form-update`,
+            name: `${Meta.DeliverySend.name}-form-update`,
             meta: {
               middlewares: [auth],
               t: 'form',
