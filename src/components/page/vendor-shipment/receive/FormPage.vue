@@ -179,9 +179,9 @@
       borderless
       horizontal-align="base"
       :payload="{ module: 'SHIPMENT' }"
-      horizontal-label
+      :horizontal-label="false"
       :disable="isDisable"
-      :placeholder="t('empty')"
+      placeholder="Upload file"
       input-class="inventory__field"
       :attachment-info="form.attachmentInfo"
       :filename-max-length="20"

@@ -49,6 +49,7 @@
           :outlined="borderless ? false : props.outlined"
           :accept="accept"
           :disable="disable || uploading"
+          class="tw-hidden"
           @rejected="handleRejected"
           @clear="handleClear"
         >
@@ -108,6 +109,48 @@
             </div>
           </template>
         </q-file>
+
+        <!-- CUSTOM UPLOAD BOX -->
+        <!-- UPLOAD BOX -->
+        <div
+          class="tw-w-full tw-border tw-border-gray-400 tw-border-dashed tw-rounded tw-p-3 tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer hover:tw-border-gray-300 tw-select-none"
+          @click.stop="!uploading && openFileDialog()"
+        >
+          <!-- LOADING MODE -->
+          <template v-if="uploading">
+            <q-spinner size="20px" color="gray-300" />
+            <span class="tw-text-gray-300">Uploading...</span>
+          </template>
+
+          <!-- NORMAL MODE -->
+          <template v-else>
+            <q-icon name="attach_file" class="tw-text-gray-300" />
+            <span class="tw-text-gray-400">Upload file</span>
+          </template>
+        </div>
+
+        <!-- IF FILE ALREADY UPLOADED -->
+        <div v-if="uploadedFileInfo || showAttachmentInfo" class="tw-mt-2 tw-flex tw-items-center tw-gap-2">
+          <span class="tw-text-yellow-400 tw-text-xs">
+            {{ truncate((selectedFile?.name || showAttachmentInfo?.filename)!, props.filenameMaxLength) }}
+          </span>
+
+          <span class="tw-relative tw-cursor-pointer" v-ripple @click="handleClear">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M4.5 4.5L8.5 8.5M8.5 4.5L4.5 8.5M1.83333 0.5H11.1667C11.903 0.5 12.5 1.09695 12.5 1.83333V11.1667C12.5 11.903 11.903 12.5 11.1667 12.5H1.83333C1.09695 12.5 0.5 11.903 0.5 11.1667V1.83333C0.5 1.09695 1.09695 0.5 1.83333 0.5Z"
+                stroke="#F44336"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </div>
+
+        <!-- IF UPLOAD ERROR -->
+        <div v-if="uploadError" class="tw-text-red-500 tw-text-xs tw-mt-1">
+          {{ uploadError }}
+        </div>
       </Field>
     </template>
   </k-label>
@@ -218,6 +261,8 @@ const uploading = ref(false)
 
 const downloading = ref(false)
 
+const uploadedFileInfo = ref<{ name: string } | null>(null)
+
 const showAttachmentInfo = computed(() => {
   // kalau modelValue kosong atau sudah di-clear, jangan tampilkan attachmentInfo
   if (!props.modelValue) return null
@@ -227,6 +272,8 @@ const showAttachmentInfo = computed(() => {
 watch(selectedFile, async (file) => {
   if (!file) return
   uploading.value = true
+  uploadError.value = null
+  uploadedFileInfo.value = null
 
   try {
     const maxSize = 10 * 1024 * 1024 // 10MB
@@ -254,6 +301,7 @@ watch(selectedFile, async (file) => {
     uploadError.value = message
     setFieldError(props.name || props.tLabel, message)
     emit('update:model-value', null)
+    uploadedFileInfo.value = null
     Notify.error({
       message: error as Error,
     })

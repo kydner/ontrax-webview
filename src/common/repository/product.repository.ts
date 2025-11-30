@@ -17,7 +17,7 @@ export const useProductRepository = defineRepository({
       },
       (response) => {
         return [...response]?.map((item) => {
-          return { ...item, isHasSerial: true }
+          return { ...item, isHasSN: true }
         })
       },
     ),

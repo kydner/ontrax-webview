@@ -46,7 +46,7 @@ export interface OperationalDataRequest extends OperationalResponse {}
 export interface ShipmentGoodReceiveItem {
   goodsReceiveItemId: id | null
   itemId: id | null
-  isHasSerial: boolean
+  isHasSN: boolean
   skuCode?: string
   itemName: string
   qtyOrdered: number

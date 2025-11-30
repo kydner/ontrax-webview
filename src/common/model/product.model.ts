@@ -11,7 +11,7 @@ export interface ProductResponse {
   skuCode: string
   itemName: string
   description: string
-  isHasSerial?: boolean
+  isHasSN?: boolean
   unit: string
   unitPrice: number
   isActive: boolean

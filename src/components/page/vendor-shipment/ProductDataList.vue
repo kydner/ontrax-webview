@@ -6,7 +6,7 @@
       <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-mb-1">
-            <div v-if="product.isHasSerial">SN: 99012323333</div>
+            <div v-if="product.isHasSN">SN: 99012323333</div>
             <div class="tw-flex tw-justify-between tw-space-x-2">
               <product-image :item-id="product?.itemId || ''" />
               <div class="tw-basis-auto">
@@ -18,50 +18,86 @@
             </div>
           </div>
           <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
-            <div v-if="['IN_TRANSIT'].includes(form.status)" class="tw-flex tw-items-center tw-space-x-6 tw-text-xs">
-              <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
-                <q-icon name="img:/icons/qty-order__secondary-text.svg" />
-                <div class="tw-text-secondary-text">Qty Ordered</div>
+            <template v-if="product?.isHasSN">
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Order</span>
+                </div>
+                <div>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyOrdered, { precision: 0 }) }}</span>
+                </div>
               </div>
-              <div>
-                {{ format(product.qtyOrdered, { precision: 0 }) }}
+              <div class="tw-basis-full tw-flex tw-justify-between tw-space-x-4">
+                <div class="tw-basis-auto tw-space-x-4">
+                  <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                  <span class="tw-text-secondary-text tw-text-xs">Qty Send</span>
+                </div>
+                <div>
+                  <span class="tw-text-white tw-text-xs">{{ format(product.qtyReceived, { precision: 0 }) }}</span>
+                </div>
               </div>
-            </div>
-            <span v-if="form.status === 'RECEIVED'" class="tw-text-xs">
-              Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}
-            </span>
-            <plus-minus-field
-              v-if="['IN_TRANSIT', 'RECEIVED'].includes(form.status)"
-              v-model="product.qtyReceived"
-              :allow-increase="true"
-              :max="product.qtyOrdered"
-              :disable="form.status === 'RECEIVED'"
-              @increase="handleIncrease(index)"
-              @zero:confirm="handleZeroConfirm(index)"
-              @click.stop
-            />
-            <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSerial">
-              <plus-minus-field
-                v-model="product.qtyOrdered"
-                :allow-increase="false"
-                :disable-value="true"
-                :disable-decrease="true"
-                :zero-confirm="false"
-                @increase="handlePreview(product)"
-                @zero:confirm="handleZeroConfirm(index)"
-                @click.stop
-              />
+              <div v-if="index === 0" class="tw-flex tw-items-center tw-justify-end tw-space-x-2">
+                <span class="tw-text-warning tw-text-xs">Scan Item</span>
+                <span class="tw-relative tw-cursor-pointer" v-ripple @click.stop="handleScan(product)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="#FFC107"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
             </template>
             <template v-else>
+              <div v-if="['IN_TRANSIT'].includes(form.status)" class="tw-flex tw-items-center tw-space-x-6 tw-text-xs">
+                <div class="tw-basis-auto tw-flex tw-items-center tw-space-x-2">
+                  <q-icon name="img:/icons/qty-order__secondary-text.svg" />
+                  <div class="tw-text-secondary-text">Qty Ordered</div>
+                </div>
+                <div>
+                  {{ format(product.qtyOrdered, { precision: 0 }) }}
+                </div>
+              </div>
+              <span v-if="form.status === 'RECEIVED'" class="tw-text-xs">
+                Qty Order: {{ format(product.qtyOrdered, { precision: 0 }) }}
+              </span>
               <plus-minus-field
-                v-model="product.qtyOrdered"
+                v-if="['IN_TRANSIT', 'RECEIVED'].includes(form.status)"
+                v-model="product.qtyReceived"
                 :allow-increase="true"
-                :disable="!!product.isHasSerial"
-                :zero-confirm="!product.isHasSerial"
+                :max="product.qtyOrdered"
+                :disable="form.status === 'RECEIVED'"
                 @increase="handleIncrease(index)"
                 @zero:confirm="handleZeroConfirm(index)"
                 @click.stop
               />
+              <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSN">
+                <plus-minus-field
+                  v-model="product.qtyOrdered"
+                  :allow-increase="false"
+                  :disable-value="true"
+                  :disable-decrease="true"
+                  :zero-confirm="false"
+                  @increase="handlePreview(product)"
+                  @zero:confirm="handleZeroConfirm(index)"
+                  @click.stop
+                />
+              </template>
+              <template v-else>
+                <plus-minus-field
+                  v-model="product.qtyOrdered"
+                  :allow-increase="true"
+                  :disable="!!product.isHasSN"
+                  :zero-confirm="!product.isHasSN"
+                  @increase="handleIncrease(index)"
+                  @zero:confirm="handleZeroConfirm(index)"
+                  @click.stop
+                />
+              </template>
             </template>
           </div>
         </div>
@@ -127,9 +163,12 @@
   <!-- PREVIEW DIALOG -->
   <detail-preview v-model="previewItem">
     <template #default="{ item }">
-      <div v-if="form.status === 'DRAFT' || !form.status" class="tw-grid tw-grid-cols-12 tw-gap-2">
+      <!-- MODE SCAN -->
+      <div v-if="isScanMode" class="tw-grid tw-grid-cols-12 tw-gap-2">
         <barcode-scan-list :item="item" />
       </div>
+
+      <!-- DETAIL DEFAULT -->
       <div v-else>
         <div class="tw-col-span-12 tw-flex tw-space-x-4">
           <product-image :item-id="item.itemId || ''" size="60px" />
@@ -199,6 +238,8 @@ const dialogIndex = ref<number | null>(null)
 
 const previewItem = ref<ShipmentGoodReceiveItem | null>(null)
 
+const isScanMode = ref(false)
+
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,
   set: (val: boolean) => {
@@ -237,6 +278,12 @@ const handleZeroConfirm = (index: number) => {
 }
 
 const handlePreview = (item: ShipmentGoodReceiveItem) => {
+  isScanMode.value = false
   previewItem.value = item
+}
+
+const handleScan = (product: ShipmentGoodReceiveItem) => {
+  isScanMode.value = true
+  previewItem.value = product
 }
 </script>

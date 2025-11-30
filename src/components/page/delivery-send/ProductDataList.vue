@@ -6,7 +6,7 @@
       <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
         <div class="tw-flex tw-items-center tw-justify-between">
           <div class="tw-flex tw-flex-col tw-space-y-1 tw-mb-1">
-            <div v-if="product.isHasSerial">SN: 99012323333</div>
+            <div v-if="product.isHasSN">SN: 99012323333</div>
             <div class="tw-flex tw-justify-between tw-space-x-2">
               <product-image :item-id="product?.itemId || ''" />
               <div class="tw-basis-auto">
@@ -40,7 +40,7 @@
               @zero:confirm="handleZeroConfirm(index)"
               @click.stop
             />
-            <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSerial">
+            <template v-if="(['DRAFT'].includes(form.status) || !form.status) && product.isHasSN">
               <plus-minus-field
                 v-model="product.qtyOrdered"
                 :allow-increase="false"
@@ -56,8 +56,8 @@
               <plus-minus-field
                 v-model="product.qtyOrdered"
                 :allow-increase="true"
-                :disable="!!product.isHasSerial"
-                :zero-confirm="!product.isHasSerial"
+                :disable="!!product.isHasSN"
+                :zero-confirm="!product.isHasSN"
                 @increase="handleIncrease(index)"
                 @zero:confirm="handleZeroConfirm(index)"
                 @click.stop
