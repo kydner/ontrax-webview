@@ -20,4 +20,5 @@ export enum AccessCode {
   TransferItemQc = '211200000',
   ReceiveItemReceive = '311100000',
   ReceiveItemQc = '311200000',
+  DeliverySend = '311200001',
 }

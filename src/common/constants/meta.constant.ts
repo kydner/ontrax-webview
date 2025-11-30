@@ -27,6 +27,36 @@ export const ReceiveItem: IMetaListModule<ReceiveItemResponsePage> = {
   items: [],
 }
 
+export const DeliverySend: IMetaListModule<ReceiveItemResponsePage> = {
+  title: 'Delivery Send',
+  name: 'delivery-send',
+  items: [],
+}
+
+export const DeliveryRequest: IMetaListModule<ReceiveItemResponsePage> = {
+  title: 'Delivery Request',
+  name: 'delivery-request',
+  items: [],
+}
+
+export const ReturSend: IMetaListModule<ReceiveItemResponsePage> = {
+  title: 'Retur Send',
+  name: 'retur-send',
+  items: [],
+}
+
+export const ReturReceive: IMetaListModule<ReceiveItemResponsePage> = {
+  title: 'Retur Receive',
+  name: 'retur-receive',
+  items: [],
+}
+
+export const MaintenanceStatus: IMetaListModule<ReceiveItemResponsePage> = {
+  title: 'Maintenance Status',
+  name: 'maintenance-status',
+  items: [],
+}
+
 export const InventoryStock: IMetaListModule<InventoryStockResponsePage> = {
   title: 'Inventory Stock',
   name: 'inventory-stock',

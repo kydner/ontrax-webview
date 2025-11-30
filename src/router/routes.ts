@@ -206,6 +206,32 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: Meta.DeliverySend.name,
+        meta: {
+          middlewares: [auth],
+          t: 'list',
+        },
+        children: [
+          {
+            path: '',
+            component: () => import('pages/delivery-send/ListPage.vue'),
+            name: `${Meta.DeliverySend.name}-filter`,
+            meta: {
+              middlewares: [auth],
+            },
+          },
+          {
+            path: 'delivery-send/form/:id',
+            component: () => import('pages/delivery-send/FormPage.vue'),
+            name: `${Meta.DeliverySend.name}-delivery-send-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+        ],
+      },
     ],
   },
 

@@ -9,52 +9,17 @@
 
       <slot>
         <q-card flat dark class="tw-bg-transparent">
-          <q-tabs
-            v-model="tab"
-            dense
-            class="logistic-tab-list text-grey"
-            active-color="grey-5"
-            indicator-color="grey-5"
-            align="justify"
-            no-caps
-            narrow-indicator
-          >
-            <q-tab
-              :name="TAB_RECEIVE"
-              :label="meta.name === 'receive-item' ? t('receive') : t('send')"
-              class="tw-flex-1"
-            />
-            <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
-          </q-tabs>
-          <q-tab-panels v-model="tab" keep-alive animated class="tw-bg-transparent">
-            <q-tab-panel :name="TAB_RECEIVE" class="tw-px-0">
-              <component
-                v-if="allowSend"
-                :is="ReceiveListPage"
-                :meta="props.meta"
-                :suffix-scroll="props.meta.name"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'receive')"
-              />
-              <access-denied v-else>
-                <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
-                <p>Sorry, you are not allowed to access this page</p>
-              </access-denied>
-            </q-tab-panel>
-
-            <q-tab-panel :name="TAB_QUALITY_CONTROL" class="tw-px-0">
-              <component
-                v-if="allowQC"
-                :is="QualityControlListPage"
-                :meta="props.meta"
-                :suffix-scroll="props.meta.name"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'quality-control')"
-              />
-              <access-denied v-else>
-                <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
-                <p>Sorry, you are not allowed to access this page</p>
-              </access-denied>
-            </q-tab-panel>
-          </q-tab-panels>
+          <component
+            v-if="allowAccess"
+            :is="ListPage"
+            :meta="props.meta"
+            :suffix-scroll="props.meta.name"
+            @click:item="(data: ListContentEvent) => handleUpdate(data)"
+          />
+          <access-denied v-else>
+            <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
+            <p>Sorry, you are not allowed to access this page</p>
+          </access-denied>
         </q-card>
       </slot>
 
@@ -69,8 +34,6 @@ import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import MetaListPage from './MetaListPage.vue'
 import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
 import { findMenuByKey, Notify } from 'src/common/utils/plugin.utils'
 import { OperationalResponse } from 'src/common/model/operational.model'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
@@ -80,17 +43,9 @@ import { Loading } from 'quasar'
 import { useAppStore } from 'src/stores/app.store'
 import { AccessCode } from 'src/common/enum/operational.enum'
 
-const TAB_RECEIVE = 'receive'
-
-const TAB_QUALITY_CONTROL = 'quality-control'
-
 interface ListContentEvent {
   item: T
 }
-
-const { t } = useI18n()
-
-const tab = ref(TAB_RECEIVE)
 
 interface Props {
   meta: IMetaListModule<T>
@@ -113,21 +68,14 @@ const profile = computed(() => appStore.$state.profile)
 
 const menus = computed(() => profile.value?.menus || [])
 
-const ReceiveListPage = computed(() =>
+const ListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/receive/ListPage.vue`),
+    loader: () => import(`src/components/page/${props.meta.name}/ListPage.vue`),
     errorComponent: ErrorNotFound,
   }),
 )
 
-const QualityControlListPage = computed(() =>
-  defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/quality-control/ListPage.vue`),
-    errorComponent: ErrorNotFound,
-  }),
-)
-
-const allowSend = computed(() => {
+const allowAccess = computed(() => {
   const accessCodeMap: Record<string, string> = {
     'vendor-shipment': AccessCode.VendorShipmentSend,
     'transfer-item': AccessCode.TransferItemSend,
@@ -139,23 +87,8 @@ const allowSend = computed(() => {
   return code ? !!findMenuByKey(menus.value, 'code', code) : false
 })
 
-const allowQC = computed(() => {
-  const accessCodeMap: Record<string, string> = {
-    'vendor-shipment': AccessCode.VendorShipmentQc,
-    'transfer-item': AccessCode.TransferItemQc,
-    'receive-item': AccessCode.ReceiveItemQc,
-    'delivery-send': AccessCode.DeliverySend,
-  }
-
-  const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByKey(menus.value, 'code', code) : false
-})
-
 const allowCreate = computed(() => {
-  const isReceiveTab = tab.value === TAB_RECEIVE
-  const notReceiveItem = props.meta.name !== 'receive-item'
-
-  return notReceiveItem && isReceiveTab && (allowQC.value || allowSend.value)
+  return false
 })
 
 const props = withDefaults(defineProps<Props>(), {
@@ -184,11 +117,11 @@ const handleCreate = async () => {
   }
 }
 
-const handleUpdate = async (data: ListContentEvent, routePath: 'receive' | 'quality-control') => {
+const handleUpdate = async (data: ListContentEvent) => {
   try {
     const { item } = data
     const keyName = item[props.keyName]
-    const routeName = `${props.meta.name}-${routePath}-form-update`
+    const routeName = `${props.meta.name}-form-update`
     Loading.show()
     await router.push({
       name: routeName,
