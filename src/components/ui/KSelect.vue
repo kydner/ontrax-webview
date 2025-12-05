@@ -57,7 +57,9 @@
           <!-- end-prettier-ignore -->
 
           <template #prepend>
-            <q-icon name="img:/icons/chevron-down.svg" />
+            <slot name="prepend">
+              <q-icon name="img:/icons/chevron-down.svg" />
+            </slot>
           </template>
 
           <template #before-options>

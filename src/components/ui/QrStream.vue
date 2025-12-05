@@ -21,7 +21,7 @@
       <div v-else class="qr-wrapper">
         <QrStream
           class="qr-stream tw-object-cover"
-          :paused="props.loading"
+          :paused="props.pause || props.loading"
           @detect="onDecode"
           @camera-on="onCameraOn"
           @error="onError"
@@ -62,6 +62,7 @@ import { QrStream } from 'vue3-qr-reader'
 
 interface Props {
   loading?: boolean
+  pause?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   loading: false,

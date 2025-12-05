@@ -241,11 +241,11 @@
 .preview-check-card {
   width: $max-page-width;
   max-width: 100vw;
-  @apply tw-bg-dark tw-rounded-2xl tw-h-[75vh] bg-body-base tw-mx-auto;
+  @apply tw-bg-dark tw-rounded-2xl tw-min-h-[80vh] tw-max-h-[95vh] tw-mx-auto;
 }
 
 .barcode-scan-card {
   width: $max-page-width;
   max-width: 100vw;
-  @apply tw-bg-dark tw-rounded-2xl tw-h-[90vh] bg-body-base tw-mx-auto;
+  @apply tw-bg-dark tw-rounded-2xl tw-h-[90vh] tw-mx-auto;
 }

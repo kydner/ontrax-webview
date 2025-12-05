@@ -22,6 +22,7 @@
     --color-secondary-text: 176, 176, 181; /* #B0B0B5 */
     --color-disable-text: 102, 102, 107; /* #66666B */
     --color-line: 57, 57, 68; /* #393944 */
+    --color-brand-primary: 255, 111, 79; /* #FF6F4F */
   }
 
   [data-theme='other'] {

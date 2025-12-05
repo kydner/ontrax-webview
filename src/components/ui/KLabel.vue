@@ -2,7 +2,7 @@
   <label :for="currentFor" class="">
     <div
       :class="`label-wrapper padding-${labelPadding} ${horizontalLabel ? 'horizontal' : ''} ${
-        dark ? 'tw-text-white' : ''
+        dark ? 'tw-text-secondary-text' : ''
       } ${labelClass}`"
     >
       <div
@@ -11,7 +11,7 @@
         :style="`width: ${horizontalLabel ? labelWidth : 'auto'}; max-width: 40vw;`"
       >
         <div :class="`title-wrapper label-size ${labelWeight} size-${labelSize}`">
-          <span :class="`tw-text-[0.85rem] ${dark ? 'tw-text-white' : ''}`">
+          <span :class="`tw-text-[0.85rem] ${dark ? 'tw-text-secondary-text' : ''}`">
             <slot name="additional:prefix-label" />
             <slot name="label" :label="currentLabel">{{ currentLabel }}</slot>
             <slot name="additional:suffix-label" />

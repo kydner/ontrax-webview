@@ -30,6 +30,7 @@ module.exports = {
         white: '#ffffff',
         'secondary-text': withOpacityValue('--color-secondary-text'),
         'disable-text': withOpacityValue('--color-disable-text'),
+        'brand-primary': withOpacityValue('--color-brand-primary'),
         base: withOpacityValue('--color-base'),
         surface: withOpacityValue('--color-surface'),
         overlay: withOpacityValue('--color-overlay'),
