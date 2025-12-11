@@ -42,6 +42,81 @@
         </template>
       </k-popup-edit>
     </div>
+
+    <k-select-module
+      v-model="form.warehouseId"
+      t-label="Project"
+      :meta="metaLocationWarehouse"
+      borderless
+      horizontal-align="base"
+      horizontal-label
+      required
+      behavior="menu"
+      :disable="isDisable"
+      :outlined="false"
+      option-label="warehouseName"
+      option-value="locationWarehouseId"
+      :placeholder="t('empty')"
+      input-class="inventory__field"
+    >
+      <template #additional:prefix-label>
+        <q-icon name="img:/icons/home.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+      </template>
+
+      <template #label="{ label }">
+        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
+      </template>
+    </k-select-module>
+
+    <k-select-module
+      v-model="form.vendorId"
+      t-label="vendor"
+      :meta="metaVendor"
+      borderless
+      :outline="false"
+      horizontal-align="base"
+      option-label="vendorName"
+      behavior="menu"
+      required
+      :disable="isDisable"
+      option-value="vendorId"
+      horizontal-label
+      :placeholder="t('empty')"
+      input-class="inventory__field"
+    >
+      <template #additional:prefix-label>
+        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+      </template>
+
+      <template #label="{ label }">
+        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
+      </template>
+    </k-select-module>
+    <k-select-module
+      v-model="form.vendorId"
+      t-label="Contract"
+      :meta="metaVendor"
+      borderless
+      :outline="false"
+      horizontal-align="base"
+      option-label="vendorName"
+      behavior="menu"
+      required
+      :disable="isDisable"
+      option-value="vendorId"
+      horizontal-label
+      :placeholder="t('empty')"
+      input-class="inventory__field"
+    >
+      <template #additional:prefix-label>
+        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+      </template>
+
+      <template #label="{ label }">
+        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
+      </template>
+    </k-select-module>
+
     <k-date
       v-model="form.shippingDate"
       t-label="shippingDate"
@@ -104,31 +179,6 @@
         <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
       </template>
     </k-date>
-
-    <k-select-module
-      v-model="form.vendorId"
-      t-label="vendor"
-      :meta="metaVendor"
-      borderless
-      :outline="false"
-      horizontal-align="base"
-      option-label="vendorName"
-      behavior="menu"
-      required
-      :disable="isDisable"
-      option-value="vendorId"
-      horizontal-label
-      :placeholder="t('empty')"
-      input-class="inventory__field"
-    >
-      <template #additional:prefix-label>
-        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
-      </template>
-
-      <template #label="{ label }">
-        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
-      </template>
-    </k-select-module>
 
     <k-select-module
       v-model="form.warehouseId"

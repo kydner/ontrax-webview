@@ -14,17 +14,17 @@ import {
 import { useAuthenticationStore } from 'src/stores/authentication.store'
 
 export const useAuthenticationEndpoint = defineEndpoint({
-  login: (data: LoginDataRequest) => Post<LoginDataResponse, LoginDataRequest>('auth/login', data),
+  login: (data: LoginDataRequest) => Post<LoginDataResponse, LoginDataRequest>('v1/auth/login', data),
 
   // login: (data: LoginDataRequest) => Post<LoginDataResponse, LoginDataRequest>('v3/auth/login', data),
 
-  profile: () => Get<ProfileResponse>('user/profile'),
+  profile: () => Get<ProfileResponse>('v1/user/profile'),
   // profile: () => Get<ProfileResponse>('v3/auth/profile'),
 
   logout: () => {
     const authStore = useAuthenticationStore()
     const refreshToken = authStore.$state?.refreshToken
-    return Delete<unknown>('auth/logout', {
+    return Delete<unknown>('v1/auth/logout', {
       headers: {
         'X-Refresh-Token': refreshToken,
       },
@@ -34,5 +34,5 @@ export const useAuthenticationEndpoint = defineEndpoint({
   changeRole: (data: ChangeRoleRequest) => Post<ChangeRoleResponse>('auth/change-role', data),
 
   refreshToken: (data: AuthenticationRefreshTokenDataRequest) =>
-    Post<AuthenticationRefreshTokenResponse>('auth/refresh', data),
+    Post<AuthenticationRefreshTokenResponse>('v1/auth/refresh', data),
 })
