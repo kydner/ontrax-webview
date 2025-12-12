@@ -1,6 +1,11 @@
 <template>
-  <scrollable-container :suffix-event="props.meta.name">
-    <meta-list-page v-bind="{ ...props }" :allow-access="allowAccessPage" class="tw-relative tw-h-screen">
+  <scrollable-container :suffix-event="metaVendorShipment.name">
+    <meta-list-page
+      v-bind="{ ...props }"
+      :meta="metaVendorShipment"
+      :allow-access="allowAccessPage"
+      class="tw-relative tw-h-screen"
+    >
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
       <slot :name="slotName" v-bind="(data as any)" />
@@ -19,21 +24,17 @@
             no-caps
             narrow-indicator
           >
-            <q-tab
-              :name="TAB_RECEIVE"
-              :label="meta.name === 'receive-item' ? t('receive') : t('send')"
-              class="tw-flex-1"
-            />
+            <q-tab :name="TAB_SEND" :label="t('send')" class="tw-flex-1" />
             <q-tab :name="TAB_QUALITY_CONTROL" :label="t('qualityControl')" class="tw-flex-1" />
           </q-tabs>
           <q-tab-panels v-model="tab" keep-alive animated class="tw-bg-transparent">
-            <q-tab-panel :name="TAB_RECEIVE" class="tw-px-0">
+            <q-tab-panel :name="TAB_SEND" class="tw-px-0">
               <component
                 v-if="allowSend"
                 :is="ReceiveListPage"
-                :meta="props.meta"
-                :suffix-scroll="props.meta.name"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'receive')"
+                :meta="metaVendorShipment"
+                :suffix-scroll="metaVendorShipment.name"
+                @click:item="(data: any) => handleUpdate(data, 'receive')"
               />
               <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
@@ -45,9 +46,9 @@
               <component
                 v-if="allowQC"
                 :is="QualityControlListPage"
-                :meta="props.meta"
-                :suffix-scroll="props.meta.name"
-                @click:item="(data: ListContentEvent) => handleUpdate(data, 'quality-control')"
+                :meta="metaVendorShipment"
+                :suffix-scroll="metaVendorShipment.name"
+                @click:item="(data: any) => handleUpdate(data, 'quality-control')"
               />
               <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
@@ -64,37 +65,38 @@
     </meta-list-page>
   </scrollable-container>
 </template>
-<script setup lang="ts" generic="T extends OperationalResponse">
+<script setup lang="ts">
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import MetaListPage from './MetaListPage.vue'
+import MetaListPage from 'src/components/lib/MetaListPage.vue'
 import { computed, defineAsyncComponent, nextTick, VNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { findMenuByKey, Notify } from 'src/common/utils/plugin.utils'
-import { OperationalResponse } from 'src/common/model/operational.model'
+import { Notify } from 'src/common/utils/plugin.utils'
 import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
-import ScrollableContainer from '../ui/ScrollableContainer.vue'
-import AccessDenied from '../images/AccessDenied.vue'
+import ScrollableContainer from 'src/components/ui/ScrollableContainer.vue'
+import AccessDenied from 'src/components/images/AccessDenied.vue'
 import { Loading } from 'quasar'
-import { useAppStore } from 'src/stores/app.store'
-import { AccessCode } from 'src/common/enum/operational.enum'
+// import { useAppStore } from 'src/stores/app.store'
+import { VendorShipmentV1ResponsePage } from 'src/common/model/vendor-shipment-v1.model'
+import { VendorShipmentV1 } from 'src/common/constants/meta.constant'
 
-const TAB_RECEIVE = 'receive'
+const TAB_SEND = 'send'
 
 const TAB_QUALITY_CONTROL = 'quality-control'
 
+const metaVendorShipment: IMetaListModule<VendorShipmentV1ResponsePage> = VendorShipmentV1
+
 interface ListContentEvent {
-  item: T
+  item: VendorShipmentV1ResponsePage
 }
 
 const { t } = useI18n()
 
-const tab = ref(TAB_RECEIVE)
+const tab = ref(TAB_SEND)
 
 interface Props {
-  meta: IMetaListModule<T>
-  keyName?: keyof T
+  keyName?: keyof VendorShipmentV1ResponsePage
 }
 
 interface Slots<T> {
@@ -107,54 +109,37 @@ interface Slots<T> {
   list: (props: { items: T[] }) => VNode
 }
 
-const appStore = useAppStore()
+// const appStore = useAppStore()
 
-const profile = computed(() => appStore.$state.profile)
+// const profile = computed(() => appStore.$state.profile)
 
-const menus = computed(() => profile.value?.menus || [])
+// const menus = computed(() => profile.value?.menus || [])
 
 const ReceiveListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/receive/ListPage.vue`),
+    loader: () => import('./send/ListPage.vue'),
     errorComponent: ErrorNotFound,
   }),
 )
 
 const QualityControlListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import(`src/components/page/${props.meta.name}/quality-control/ListPage.vue`),
+    loader: () => import('./quality-control/ListPage.vue'),
     errorComponent: ErrorNotFound,
   }),
 )
 
 const allowSend = computed(() => {
-  const accessCodeMap: Record<string, string> = {
-    'vendor-shipment': AccessCode.VendorShipmentSend,
-    'vendor-shipment-v1': AccessCode.VendorShipmentSend,
-    'transfer-item': AccessCode.TransferItemSend,
-    'receive-item': AccessCode.ReceiveItemReceive,
-    'delivery-send': AccessCode.DeliverySend,
-  }
-
-  const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByKey(menus.value, 'code', code) : false
+  return true
 })
 
 const allowQC = computed(() => {
-  const accessCodeMap: Record<string, string> = {
-    'vendor-shipment': AccessCode.VendorShipmentQc,
-    'transfer-item': AccessCode.TransferItemQc,
-    'receive-item': AccessCode.ReceiveItemQc,
-    'delivery-send': AccessCode.DeliverySend,
-  }
-
-  const code = accessCodeMap[props.meta.name]
-  return code ? !!findMenuByKey(menus.value, 'code', code) : false
+  return true
 })
 
 const allowCreate = computed(() => {
-  const isReceiveTab = tab.value === TAB_RECEIVE
-  const notReceiveItem = props.meta.name !== 'receive-item'
+  const isReceiveTab = tab.value === TAB_SEND
+  const notReceiveItem = metaVendorShipment.name !== 'receive-item'
 
   return notReceiveItem && isReceiveTab && (allowQC.value || allowSend.value)
 })
@@ -163,7 +148,7 @@ const props = withDefaults(defineProps<Props>(), {
   keyName: 'id',
 })
 
-defineSlots<Slots<T>>()
+defineSlots<Slots<VendorShipmentV1ResponsePage>>()
 
 const router = useRouter()
 
@@ -173,7 +158,7 @@ const handleCreate = async () => {
   try {
     Loading.show()
     await router.push({
-      name: `${props.meta.name}-form-create`,
+      name: `${metaVendorShipment.name}-form-create`,
     })
   } catch (error) {
     Notify.error({
@@ -189,7 +174,7 @@ const handleUpdate = async (data: ListContentEvent, routePath: 'receive' | 'qual
   try {
     const { item } = data
     const keyName = item[props.keyName]
-    const routeName = `${props.meta.name}-${routePath}-form-update`
+    const routeName = `${metaVendorShipment.name}-${routePath}-form-update`
     Loading.show()
     await router.push({
       name: routeName,

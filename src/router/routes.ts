@@ -57,42 +57,42 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/vendor-shipment/ListPage.vue'),
+            component: () => import('pages/v1/vendor-shipment/ListPage.vue'),
             name: `${Meta.VendorShipment.name}-list`,
             meta: {
               middlewares: [auth],
             },
           },
-          {
-            path: 'receive/form',
-            component: () => import('pages/vendor-shipment/FormPage.vue'),
-            name: `${Meta.VendorShipment.name}-form-create`,
-            meta: {
-              middlewares: [auth],
-              t: 'form',
-              routePath: 'receive',
-            },
-          },
-          {
-            path: 'receive/form/:id',
-            component: () => import('pages/vendor-shipment/FormPage.vue'),
-            name: `${Meta.VendorShipment.name}-receive-form-update`,
-            meta: {
-              middlewares: [auth],
-              t: 'form',
-              routePath: 'receive',
-            },
-          },
-          {
-            path: 'quality-control/form/:id',
-            component: () => import('pages/vendor-shipment/FormPage.vue'),
-            name: `${Meta.VendorShipment.name}-quality-control-form-update`,
-            meta: {
-              middlewares: [auth],
-              t: 'form',
-              routePath: 'quality-control',
-            },
-          },
+          // {
+          //   path: 'receive/form',
+          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+          //   name: `${Meta.VendorShipment.name}-form-create`,
+          //   meta: {
+          //     middlewares: [auth],
+          //     t: 'form',
+          //     routePath: 'receive',
+          //   },
+          // },
+          // {
+          //   path: 'receive/form/:id',
+          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+          //   name: `${Meta.VendorShipment.name}-receive-form-update`,
+          //   meta: {
+          //     middlewares: [auth],
+          //     t: 'form',
+          //     routePath: 'receive',
+          //   },
+          // },
+          // {
+          //   path: 'quality-control/form/:id',
+          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+          //   name: `${Meta.VendorShipment.name}-quality-control-form-update`,
+          //   meta: {
+          //     middlewares: [auth],
+          //     t: 'form',
+          //     routePath: 'quality-control',
+          //   },
+          // },
         ],
       },
       {

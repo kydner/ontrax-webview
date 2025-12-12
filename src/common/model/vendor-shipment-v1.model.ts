@@ -1,6 +1,7 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 import { VendorShipmentDetailV1Response } from './vendor-shipment-detail-v1.model'
 import { VendorShipmentAttachmentV1Response } from './vendor-shipment-attachment-v1.model'
+import { TStatus } from '../enum/operational.enum'
 
 export interface VendorShipmentV1Request extends IListSortingRequest {}
 
@@ -20,7 +21,9 @@ export interface VendorShipmentV1Response {
   warehouseName: string
   referenceNumber: string
   vendorShipmentCode: string
-  status: string
+  status: TStatus
+  totalItems: number
+  createdDate: isoDate
   details: VendorShipmentDetailV1Response[]
   attachments: VendorShipmentAttachmentV1Response[]
 }
