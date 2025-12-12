@@ -1413,6 +1413,9 @@ export default {
   boqReff: 'BOQ Reff',
   origin: 'Origin',
   sampleNumber: 'Sample No',
+  project: 'Project',
+  contract: 'Contract',
+  targetShipmentDate: 'Target Shipment Date',
   title: {
     selectCustomerType: 'Pilih Tipe Nasabah',
     selectProduct: 'Pilih Product',

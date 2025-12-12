@@ -63,36 +63,36 @@ const routes: RouteRecordRaw[] = [
               middlewares: [auth],
             },
           },
-          // {
-          //   path: 'receive/form',
-          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
-          //   name: `${Meta.VendorShipment.name}-form-create`,
-          //   meta: {
-          //     middlewares: [auth],
-          //     t: 'form',
-          //     routePath: 'receive',
-          //   },
-          // },
-          // {
-          //   path: 'receive/form/:id',
-          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
-          //   name: `${Meta.VendorShipment.name}-receive-form-update`,
-          //   meta: {
-          //     middlewares: [auth],
-          //     t: 'form',
-          //     routePath: 'receive',
-          //   },
-          // },
-          // {
-          //   path: 'quality-control/form/:id',
-          //   component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
-          //   name: `${Meta.VendorShipment.name}-quality-control-form-update`,
-          //   meta: {
-          //     middlewares: [auth],
-          //     t: 'form',
-          //     routePath: 'quality-control',
-          //   },
-          // },
+          {
+            path: 'send/form',
+            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            name: `${Meta.VendorShipment.name}-form-create`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+              routePath: 'send',
+            },
+          },
+          {
+            path: 'send/form/:id',
+            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            name: `${Meta.VendorShipment.name}-send-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+              routePath: 'send',
+            },
+          },
+          {
+            path: 'quality-control/form/:id',
+            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            name: `${Meta.VendorShipment.name}-quality-control-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+              routePath: 'quality-control',
+            },
+          },
         ],
       },
       {

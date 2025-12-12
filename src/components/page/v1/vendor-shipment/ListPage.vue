@@ -8,7 +8,7 @@
     >
       <!-- prettier-ignore -->
       <template v-for="(_, slotName) in ($slots as unknown)" #[slotName]="data" :key="slotName">
-      <slot :name="slotName" v-bind="(data as any)" />
+      <slot :name="slotName" v-bind="(data as VendorShipmentV1ResponsePage)" />
     </template>
       <!-- end-prettier-ignore -->
 
@@ -34,7 +34,7 @@
                 :is="ReceiveListPage"
                 :meta="metaVendorShipment"
                 :suffix-scroll="metaVendorShipment.name"
-                @click:item="(data: any) => handleUpdate(data, 'receive')"
+                @click:item="(data: any) => handleUpdate(data, 'send')"
               />
               <access-denied v-else>
                 <h3 class="tw-text-2xl tw-font-semibold">Access Denied</h3>
@@ -79,7 +79,7 @@ import AccessDenied from 'src/components/images/AccessDenied.vue'
 import { Loading } from 'quasar'
 // import { useAppStore } from 'src/stores/app.store'
 import { VendorShipmentV1ResponsePage } from 'src/common/model/vendor-shipment-v1.model'
-import { VendorShipmentV1 } from 'src/common/constants/meta.constant'
+import { VendorShipment, VendorShipmentV1 } from 'src/common/constants/meta.constant'
 
 const TAB_SEND = 'send'
 
@@ -105,7 +105,7 @@ interface Slots<T> {
   filter: () => VNode
   'filter:left': () => VNode
   'filter:right': () => VNode
-  'list:content': (props: { item: T }) => VNode
+  'list:content': (props: { item: VendorShipmentV1ResponsePage }) => VNode
   list: (props: { items: T[] }) => VNode
 }
 
@@ -158,7 +158,7 @@ const handleCreate = async () => {
   try {
     Loading.show()
     await router.push({
-      name: `${metaVendorShipment.name}-form-create`,
+      name: `${VendorShipment.name}-form-create`,
     })
   } catch (error) {
     Notify.error({
@@ -170,11 +170,11 @@ const handleCreate = async () => {
   }
 }
 
-const handleUpdate = async (data: ListContentEvent, routePath: 'receive' | 'quality-control') => {
+const handleUpdate = async (data: ListContentEvent, routePath: 'send' | 'quality-control') => {
   try {
     const { item } = data
     const keyName = item[props.keyName]
-    const routeName = `${metaVendorShipment.name}-${routePath}-form-update`
+    const routeName = `${VendorShipment.name}-${routePath}-form-update`
     Loading.show()
     await router.push({
       name: routeName,
