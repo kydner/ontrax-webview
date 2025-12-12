@@ -50,7 +50,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/file-text__grey.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">
@@ -74,7 +74,7 @@
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
-        <q-icon name="img:/icons/user.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
+        <q-icon name="img:/icons/file-text__grey.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
       </template>
 
       <template #label="{ label }">

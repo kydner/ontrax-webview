@@ -45,7 +45,7 @@
 
     <k-select-module
       v-model="form.warehouseId"
-      t-label="Project"
+      t-label="project"
       :meta="metaLocationWarehouse"
       borderless
       horizontal-align="base"
@@ -94,7 +94,7 @@
     </k-select-module>
     <k-select-module
       v-model="form.vendorId"
-      t-label="Contract"
+      t-label="contract"
       :meta="metaVendor"
       borderless
       :outline="false"
