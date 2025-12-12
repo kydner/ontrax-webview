@@ -232,6 +232,84 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: Meta.DeliveryRequest.name,
+        meta: {
+          middlewares: [auth],
+          t: 'list',
+        },
+        children: [
+          {
+            path: '',
+            component: () => import('pages/delivery-send/ListPage.vue'),
+            name: `${Meta.DeliveryRequest.name}-filter`,
+            meta: {
+              middlewares: [auth],
+            },
+          },
+          {
+            path: 'form/:id',
+            component: () => import('pages/delivery-send/FormPage.vue'),
+            name: `${Meta.DeliveryRequest.name}-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+        ],
+      },
+      {
+        path: Meta.ReturSend.name,
+        meta: {
+          middlewares: [auth],
+          t: 'list',
+        },
+        children: [
+          {
+            path: '',
+            component: () => import('pages/delivery-send/ListPage.vue'),
+            name: `${Meta.ReturSend.name}-filter`,
+            meta: {
+              middlewares: [auth],
+            },
+          },
+          {
+            path: 'form/:id',
+            component: () => import('pages/delivery-send/FormPage.vue'),
+            name: `${Meta.ReturSend.name}-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+        ],
+      },
+      {
+        path: Meta.ReturReceive.name,
+        meta: {
+          middlewares: [auth],
+          t: 'list',
+        },
+        children: [
+          {
+            path: '',
+            component: () => import('pages/delivery-send/ListPage.vue'),
+            name: `${Meta.ReturReceive.name}-filter`,
+            meta: {
+              middlewares: [auth],
+            },
+          },
+          {
+            path: 'form/:id',
+            component: () => import('pages/delivery-send/FormPage.vue'),
+            name: `${Meta.ReturReceive.name}-form-update`,
+            meta: {
+              middlewares: [auth],
+              t: 'form',
+            },
+          },
+        ],
+      },
     ],
   },
 
