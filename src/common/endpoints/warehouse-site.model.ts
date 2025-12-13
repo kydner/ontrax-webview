@@ -11,20 +11,20 @@ import { defineEndpoint } from '../utils/plugin.utils'
 
 export const useWarehouseSiteEndpoint = defineEndpoint({
   getPage: (params?: WarehouseSiteRequestPage) =>
-    GetPage<WarehouseSiteResponsePage>('v1/warehouse-site/page', {
+    GetPage<WarehouseSiteResponsePage>('v1/warehouse-site/page-site', {
       params,
     }),
 
   getAll: (params?: WarehouseSiteRequest) =>
-    Get<WarehouseSiteResponse[]>('v1/warehouse-site/find-all/list', {
+    Get<WarehouseSiteResponse[]>('v1/warehouse-site/site', {
       params,
     }),
 
-  getOne: (id: id) => Get<WarehouseSiteResponse>(`v1/warehouse-site/${id}`),
+  getOne: (id: id) => Get<WarehouseSiteResponse>(`v1/warehouse-site/site/${id}`),
 
-  create: (data: WarehouseSiteDataRequest) => Post('v1/warehouse-site', data),
+  create: (data: WarehouseSiteDataRequest) => Post('v1/warehouse-site/site', data),
 
-  update: (id: id, data: WarehouseSiteDataRequest) => Post(`v1/warehouse-site/${id}`, data),
+  update: (id: id, data: WarehouseSiteDataRequest) => Post(`v1/warehouse-site/${id}/site`, data),
 
   delete: (id: id) => Delete(`v1/warehouse-site/${id}`),
 })

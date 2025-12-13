@@ -12,9 +12,9 @@
     <template v-if="!form.status || form.status === 'DRAFT'">
       <product-data-list-draft v-model="form" @preview="handlePreview" />
     </template>
-    <template v-else-if="form.status === 'IN_TRANSIT'">
-      <product-data-list-in-transit v-model="form" @preview="handlePreview" />
-    </template>
+    <!-- <template v-else-if="form.status === 'IN_TRANSIT'"> -->
+    <product-data-list-in-transit v-model="form" @preview="handlePreview" />
+    <!-- </template> -->
     <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
   </div>
 

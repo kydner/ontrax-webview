@@ -30,15 +30,15 @@
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
-          <component :is="ProductPickPage" v-model="form" :warehouse-id="fromWarehouseId" @back="panel = PANEL_FORM" />
+          <component :is="ProductDataPickPage" v-model="form" @back="panel = PANEL_FORM" />
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT_SCAN" class="tw-p-0 tw-overflow-hidden">
-          <product-scan @back="panel = PANEL_FORM" />
+          <component :is="ProductDataScanPage" v-model="form" @back="panel = PANEL_FORM" />
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT_NEW" class="tw-p-0 tw-overflow-hidden">
-          <product-new @back="panel = PANEL_PRODUCT_SCAN" />
+          <component :is="ProductDataNewPage" @back="panel = PANEL_PRODUCT_SCAN" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -84,13 +84,10 @@ import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import InternalError from 'src/components/images/InternalError.vue'
-import { id } from 'src/common/interfaces/response.interface'
 import { useAppStore } from 'src/stores/app.store'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentV1DataRequest, VendorShipmentV1ResponsePage } from 'src/common/model/vendor-shipment-v1.model'
 import { VendorShipment, VendorShipmentV1 } from 'src/common/constants/meta.constant'
-import ProductScan from './shared/ProductScan.vue'
-import ProductNew from './shared/ProductNew.vue'
 import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
 
 const PANEL_FORM = 'panel-form'
@@ -124,9 +121,21 @@ const FormData = computed(() => {
   })
 })
 
-const ProductPickPage = computed(() => {
+const ProductDataPickPage = computed(() => {
   return defineAsyncComponent({
-    loader: () => import('src/components/page/v1/vendor-shipment/shared/ProductPickPage.vue'),
+    loader: () => import('src/components/page/v1/vendor-shipment/shared/ProductDataPick.vue'),
+  })
+})
+
+const ProductDataNewPage = computed(() => {
+  return defineAsyncComponent({
+    loader: () => import('src/components/page/v1/vendor-shipment/shared/ProductDataNew.vue'),
+  })
+})
+
+const ProductDataScanPage = computed(() => {
+  return defineAsyncComponent({
+    loader: () => import('src/components/page/v1/vendor-shipment/shared/ProductDataScan.vue'),
   })
 })
 
@@ -147,8 +156,6 @@ const appStore = useAppStore()
 const globalLoading = computed(() => appStore.$state?.loading)
 
 const formId = computed(() => route.params?.id)
-
-const fromWarehouseId = computed(() => (form.value as unknown as { fromWarehouseId: id }).fromWarehouseId)
 
 const loadingPage = ref(false)
 

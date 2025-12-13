@@ -13,6 +13,8 @@ import { VendorShipmentV1ResponsePage } from '../model/vendor-shipment-v1.model'
 import { VendorShipmentResponsePage } from '../model/vendor-shipment.model'
 import { VendorResponsePage } from '../model/vendor.model'
 import { WarehouseSiteResponsePage } from '../model/warehouse-site.model'
+import { WarehouseResponsePage } from '../model/warehouse.model'
+import { WorkPackageResponsePage } from '../model/work-package.model'
 
 export const VendorShipment: IMetaListModule<VendorShipmentResponsePage> = {
   title: 'Vendor Shipment',
@@ -86,6 +88,12 @@ export const LocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> =
   items: [],
 }
 
+export const Warehouse: IMetaListModule<WarehouseResponsePage> = {
+  title: 'Warehouse',
+  name: 'warehouse',
+  items: [],
+}
+
 export const WarehouseSite: IMetaListModule<WarehouseSiteResponsePage> = {
   title: 'Warehouse Site',
   name: 'warehouse-site',
@@ -125,5 +133,11 @@ export const Project: IMetaListModule<ProjectResponsePage> = {
 export const Contract: IMetaListModule<ContractResponsePage> = {
   title: 'Contract',
   name: 'contract',
+  items: [],
+}
+
+export const WorkPackage: IMetaListModule<WorkPackageResponsePage> = {
+  title: 'Work Package',
+  name: 'work-package',
   items: [],
 }

@@ -113,7 +113,7 @@
         <!-- CUSTOM UPLOAD BOX -->
         <!-- UPLOAD BOX -->
         <div
-          class="tw-w-full tw-border tw-border-gray-400 tw-border-dashed tw-rounded tw-p-3 tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer hover:tw-border-gray-300 tw-select-none"
+          class="tw-w-full tw-border tw-border-disable-text tw-border-dashed tw-rounded tw-p-3 tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer hover:tw-border-gray-300 tw-select-none"
           @click.stop="!uploading && openFileDialog()"
         >
           <!-- LOADING MODE -->

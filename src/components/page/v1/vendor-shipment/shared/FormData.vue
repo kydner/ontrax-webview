@@ -70,7 +70,7 @@
       required
       :disable="isDisable"
       horizontal-label
-      :placeholder="t('empty')"
+      :placeholder="t('select')"
       input-class="inventory__field"
     >
       <template #additional:prefix-label>
@@ -88,6 +88,7 @@
       horizontal-align="base"
       horizontal-label
       required
+      :default-value="new Date().toISOString()"
       borderless
       :disable="isDisable"
       :placeholder="t('select')"
@@ -108,6 +109,7 @@
       horizontal-align="base"
       :options="(date: string) => date >= formatDate(new Date().toISOString(), { format: DATE_VALUE })"
       horizontal-label
+      :default-value="new Date().toISOString()"
       borderless
       required
       :disable="isDisable"
@@ -126,7 +128,7 @@
     <k-select-module
       v-model="form.warehouseId"
       t-label="warehouse"
-      :meta="WarehouseSite"
+      :meta="Warehouse"
       borderless
       :outline="false"
       horizontal-align="base"
@@ -167,27 +169,22 @@
       </template>
     </k-input>
 
-    <!-- <k-file-upload
-      v-model="form.attachmentId"
-      t-label="attachFile"
-      borderless
-      horizontal-align="base"
-      :payload="{ module: 'SHIPMENT' }"
-      :horizontal-label="false"
-      :disable="isDisable"
-      placeholder="Upload file"
-      input-class="inventory__field"
-      :attachment-info="form.attachmentInfo"
-      :filename-max-length="20"
-    >
-      <template #additional:prefix-label>
-        <q-icon name="img:/icons/upload.svg" size="0.85rem" class="tw-pb-1 tw-pr-2" />
-      </template>
-
-      <template #label="{ label }">
-        <span class="tw-text-secondary-text tw-text-xs">{{ label }}</span>
-      </template>
-    </k-file-upload> -->
+    <div class="tw-my-4">
+      <k-file-upload
+        model-value=""
+        t-label="attachFile"
+        borderless
+        horizontal-align="base"
+        :payload="{ module: 'SHIPMENT' }"
+        :horizontal-label="false"
+        :disable="isDisable"
+        placeholder="Upload file"
+        :show-label="false"
+        input-class="inventory__field"
+        :filename-max-length="20"
+      >
+      </k-file-upload>
+    </div>
 
     <product-data-list v-model="form" :show-create-button="!!form.contractId" />
   </div>
@@ -200,10 +197,12 @@ import { useRoute } from 'vue-router'
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
-import { Contract, Project, Vendor, WarehouseSite } from 'src/common/constants/meta.constant'
+import { Contract, Project, Vendor, Warehouse } from 'src/common/constants/meta.constant'
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1.model'
+import KFileUpload from 'src/components/ui/KFileUpload.vue'
+
 interface Props {
   modelValue: VendorShipmentV1DataRequest
 }

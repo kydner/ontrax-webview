@@ -1,10 +1,10 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 
-export interface ProjectRequest extends IListSortingRequest {}
+export interface WorkPackageRequest extends IListSortingRequest {}
 
-export type ProjectRequestPage = IPaginationRequest & ProjectRequest
+export type WorkPackageRequestPage = IPaginationRequest & WorkPackageRequest
 
-export interface ProjectResponse {
+export interface WorkPackageResponse {
   id: id
   name: string
   type: 'MAIN'
@@ -18,6 +18,6 @@ export interface ProjectResponse {
   projectName: string
 }
 
-export interface ProjectResponsePage extends ProjectResponse {}
+export interface WorkPackageResponsePage extends WorkPackageResponse {}
 
-export interface ProjectDataRequest extends ProjectResponse {}
+export interface WorkPackageDataRequest extends WorkPackageResponse {}

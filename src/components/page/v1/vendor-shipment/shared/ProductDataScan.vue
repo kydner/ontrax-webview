@@ -40,17 +40,31 @@
 <script setup lang="ts">
 import { Loading } from 'quasar'
 import { bus } from 'src/common/event-bus'
+import { VendorShipmentV1Response } from 'src/common/model/vendor-shipment-v1.model'
 import { getErrorMessage } from 'src/common/utils/error.utils'
 import { $confirm, Notify } from 'src/common/utils/plugin.utils'
 import KToolbar from 'src/components/ui/KToolbar.vue'
 import QrStream from 'src/components/ui/QrStream.vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+interface Props {
+  modelValue: VendorShipmentV1Response
+}
 
 interface Emits {
   (event: 'back'): void
+  (event: 'update:modelValue', value: VendorShipmentV1Response): void
 }
 
 const emit = defineEmits<Emits>()
+
+const props = withDefaults(defineProps<Props>(), {})
+
+const form = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+})
 
 const { t } = useI18n()
 
@@ -89,7 +103,7 @@ const fetchValidateSn = async (serialNumber: string) => {
 }
 
 const onLoaded = (value: boolean) => {
-  console.log('loaded', value)
+  console.log('loaded', form.value, value)
 }
 
 const onError = (error: string) => {

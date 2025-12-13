@@ -14,36 +14,15 @@
 
       <div class="tw-col-span-12">
         <k-select-module
-          v-model="form.productName"
-          t-label="product"
-          :meta="metaProduct"
-          required
-          :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
-        >
-          <template #prepend>
-            <span></span>
-          </template>
-          <template #append>
-            <q-icon name="img:/icons/chevron-down.svg" />
-          </template>
-        </k-select-module>
-      </div>
-
-      <div class="tw-col-span-12">
-        <k-select-module
-          v-model="form.productName"
+          v-model="form.workPackageId"
           t-label="workPackage"
-          :meta="metaProduct"
+          :meta="WorkPackage"
           required
           :outlined="true"
           behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          option-label="name"
+          option-value="id"
+          :placeholder="t('select')"
         >
           <template #prepend>
             <span></span>
@@ -56,15 +35,15 @@
 
       <div class="tw-col-span-12">
         <k-select-module
-          v-model="form.productName"
+          v-model="form.subWorkPackageId"
           t-label="subWorkPackage"
-          :meta="metaProduct"
+          :meta="WorkPackage"
           required
           :outlined="true"
           behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          option-label="name"
+          option-value="id"
+          :placeholder="t('select')"
         >
           <template #prepend>
             <span></span>
@@ -77,14 +56,14 @@
 
       <div class="tw-col-span-12">
         <k-select-module
-          v-model="form.productName"
+          v-model="form.siteId"
           t-label="siteLocation"
-          :meta="metaProduct"
+          :meta="WarehouseSite"
           required
           :outlined="true"
           behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
+          option-label="locationName"
+          option-value="id"
           :placeholder="t('empty')"
         >
           <template #prepend>
@@ -98,29 +77,21 @@
 
       <div class="tw-col-span-6">
         <k-input
-          v-model="form.productName"
+          v-model="form.srtPartNumber"
           t-label="srtPartNumber"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('srtPartNumber')"
         >
         </k-input>
       </div>
       <div class="tw-col-span-6">
         <k-input
-          v-model="form.productName"
+          v-model="form.srtSerialNumber"
           t-label="srtSerialNumber"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('srtSerialNumber')"
         >
         </k-input>
       </div>
@@ -128,13 +99,9 @@
         <k-input
           v-model="form.productName"
           t-label="manufacture"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('manufacture')"
         >
         </k-input>
       </div>
@@ -142,69 +109,36 @@
         <k-input
           v-model="form.productName"
           t-label="manufacturePartNumber"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('manufacturePartNumber')"
         >
         </k-input>
       </div>
       <div class="tw-col-span-6">
         <k-input
-          v-model="form.productName"
+          v-model="form.palletNumber"
           t-label="palletNumber"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('palletNumber')"
         >
         </k-input>
       </div>
       <div class="tw-col-span-6">
-        <k-input
-          v-model="form.productName"
-          t-label="boqReff"
-          :meta="metaProduct"
-          required
-          :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
-        >
+        <k-input v-model="form.boqPackage" t-label="boqReff" required :outlined="true" :placeholder="t('boqReff')">
         </k-input>
       </div>
       <div class="tw-col-span-6">
-        <k-input
-          v-model="form.productName"
-          t-label="origin"
-          :meta="metaProduct"
-          required
-          :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
-        >
-        </k-input>
+        <k-input v-model="form.origin" t-label="origin" required :outlined="true" :placeholder="t('origin')"> </k-input>
       </div>
       <div class="tw-col-span-6">
         <k-input
-          v-model="form.productName"
+          v-model="form.sampleNumber"
           t-label="sampleNumber"
-          :meta="metaProduct"
           required
           :outlined="true"
-          behavior="menu"
-          option-label="warehouseName"
-          option-value="locationWarehouseId"
-          :placeholder="t('empty')"
+          :placeholder="t('sampleNumber')"
         >
         </k-input>
       </div>
@@ -216,13 +150,12 @@
   </swipe-wrapper>
 </template>
 <script setup lang="ts">
-import { ProductV1 } from 'src/common/constants/meta.constant'
-import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { ProductV1DataRequest, ProductV1ResponsePage } from 'src/common/model/product-v1.model'
+import { WarehouseSite, WorkPackage } from 'src/common/constants/meta.constant'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import KToolbar from 'src/components/ui/KToolbar.vue'
+import { ContractProductDataRequest } from 'src/common/model/contract-product.model'
 
 interface Props {}
 
@@ -236,9 +169,7 @@ const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
 
-const metaProduct: IMetaListModule<ProductV1ResponsePage> = ProductV1
-
-const form = ref({} as ProductV1DataRequest)
+const form = ref({} as ContractProductDataRequest)
 
 const handleBack = () => emit('back')
 </script>
