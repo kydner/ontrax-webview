@@ -16,7 +16,7 @@ export const useWarehouseSiteEndpoint = defineEndpoint({
     }),
 
   getAll: (params?: WarehouseSiteRequest) =>
-    Get<WarehouseSiteResponse[]>('v1/warehouse-site', {
+    Get<WarehouseSiteResponse[]>('v1/warehouse-site/find-all/list', {
       params,
     }),
 

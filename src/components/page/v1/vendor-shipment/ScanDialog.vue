@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
-import BarcodeScanList from './BarcodeScanList.vue'
+import BarcodeScanList from './shared/BarcodeScanList.vue'
 
 interface Props {
   modelValue: boolean

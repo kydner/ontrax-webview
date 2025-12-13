@@ -19,7 +19,19 @@ export const useVendorShipmentV1Repository = defineRepository({
       },
     ),
 
-  create: (data: VendorShipmentV1DataRequest) => withRepository(() => shipmentEndpoint.create(data)),
+  create: (data: VendorShipmentV1DataRequest) =>
+    withRepository(() => {
+      const details = [...(data?.details ?? [])]
+      const items = details?.map((item) => {
+        return { notes: item.notes, productId: item.productId, qtyOrder: item.qtyOrder }
+      })
+
+      delete data.details
+      return shipmentEndpoint.create({
+        ...data,
+        items,
+      })
+    }),
 
   update: (id: id, data: VendorShipmentV1DataRequest) => withRepository(() => shipmentEndpoint.update(id, data)),
 

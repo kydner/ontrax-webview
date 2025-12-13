@@ -11,7 +11,7 @@
     <k-select-module
       v-model="form.projectId"
       t-label="project"
-      :meta="metaLocationWarehouse"
+      :meta="Project"
       borderless
       horizontal-align="base"
       horizontal-label
@@ -19,8 +19,8 @@
       behavior="menu"
       :disable="isDisable"
       :outlined="false"
-      option-label="warehouseName"
-      option-value="locationWarehouseId"
+      option-label="projectName"
+      option-value="id"
       :placeholder="t('select')"
       input-class="inventory__field"
     >
@@ -36,15 +36,15 @@
     <k-select-module
       v-model="form.vendorId"
       t-label="vendor"
-      :meta="metaVendor"
+      :meta="Vendor"
       borderless
       :outline="false"
       horizontal-align="base"
-      option-label="vendorName"
+      option-label="vendorClientName"
+      option-value="id"
       behavior="menu"
       required
       :disable="isDisable"
-      option-value="vendorId"
       horizontal-label
       :placeholder="t('select')"
       input-class="inventory__field"
@@ -60,15 +60,15 @@
     <k-select-module
       v-model="form.contractId"
       t-label="contract"
-      :meta="metaVendor"
+      :meta="Contract"
       borderless
       :outline="false"
       horizontal-align="base"
-      option-label="vendorName"
+      option-label="contractNumber"
+      option-value="id"
       behavior="menu"
       required
       :disable="isDisable"
-      option-value="vendorId"
       horizontal-label
       :placeholder="t('empty')"
       input-class="inventory__field"
@@ -126,15 +126,15 @@
     <k-select-module
       v-model="form.warehouseId"
       t-label="warehouse"
-      :meta="metaVendor"
+      :meta="WarehouseSite"
       borderless
       :outline="false"
       horizontal-align="base"
-      option-label="vendorName"
+      option-label="locationName"
+      option-value="id"
       behavior="menu"
       required
       :disable="isDisable"
-      option-value="vendorId"
       horizontal-label
       :placeholder="t('select')"
       input-class="inventory__field"
@@ -189,7 +189,7 @@
       </template>
     </k-file-upload> -->
 
-    <product-data-list v-model="form" />
+    <product-data-list v-model="form" :show-create-button="!!form.contractId" />
   </div>
 </template>
 <script setup lang="ts">
@@ -200,10 +200,7 @@ import { useRoute } from 'vue-router'
 import { startCase } from 'lodash'
 import { TStatus } from 'src/common/enum/operational.enum'
 import { Colors } from 'src/components/ui/KStatusBadge.vue'
-import { VendorResponsePage } from 'src/common/model/vendor.model'
-import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { LocationWarehouse, Vendor } from 'src/common/constants/meta.constant'
-import { LocationWarehouseResponsePage } from 'src/common/model/location-warehouse.model'
+import { Contract, Project, Vendor, WarehouseSite } from 'src/common/constants/meta.constant'
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1.model'
@@ -220,10 +217,6 @@ const props = withDefaults(defineProps<Props>(), {})
 const emit = defineEmits<Emits>()
 
 const route = useRoute()
-
-const metaVendor: IMetaListModule<VendorResponsePage> = Vendor
-
-const metaLocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> = LocationWarehouse
 
 const formId = computed(() => route.params?.id)
 

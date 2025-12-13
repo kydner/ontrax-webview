@@ -5,14 +5,13 @@ export interface VendorRequest extends IListSortingRequest {}
 export type VendorRequestPage = IPaginationRequest & VendorRequest
 
 export interface VendorResponse {
-  vendorId: id
-  vendorName: string
-  contactPerson: string
-  phone: string
+  id: id
+  vendorClientName: string
+  phoneNumber: string
   email: string
+  contactPerson: string
   address: string
-  VendorId: string
-  VendorName: string
+  type: string
 }
 
 export interface VendorResponsePage extends VendorResponse {}

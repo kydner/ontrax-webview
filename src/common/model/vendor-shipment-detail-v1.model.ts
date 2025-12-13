@@ -5,16 +5,20 @@ export interface VendorShipmentDetailV1Request extends IListSortingRequest {}
 export type VendorShipmentDetailV1RequestPage = IPaginationRequest & VendorShipmentDetailV1Request
 
 export interface VendorShipmentDetailV1Response {
-  id: id
+  id?: id
   vendorShipmentId: id
   productId: id
   productName: string
   productCode: string
-  manufacturer: string
+  manufacturer?: string
   notes: string
   qtyOrder: number
-  filename: string
-  fileUrl: string
+  filename?: string
+  fileUrl?: string
+  isUniqueSerialNumber: boolean
+  qtyOrdered: number
+  qtyReceived: number
+  qtyRejected: number
 }
 
 export interface VendorShipmentDetailV1ResponsePage extends VendorShipmentDetailV1Response {}

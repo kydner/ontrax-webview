@@ -11,20 +11,20 @@ import { defineEndpoint } from '../utils/plugin.utils'
 
 export const useVendorEndpoint = defineEndpoint({
   getPage: (params?: VendorRequestPage) =>
-    GetPage<VendorResponsePage>('vendors/page', {
+    GetPage<VendorResponsePage>('v1/vendors/page', {
       params,
     }),
 
   getAll: (params?: VendorRequest) =>
-    Get<VendorResponse[]>('vendors', {
+    Get<VendorResponse[]>('v1/vendors', {
       params,
     }),
 
-  getOne: (id: id) => Get<VendorResponse>(`vendors/${id}`),
+  getOne: (id: id) => Get<VendorResponse>(`v1/vendors/${id}`),
 
-  create: (data: VendorDataRequest) => Post('vendors', data),
+  create: (data: VendorDataRequest) => Post('v1/vendors', data),
 
-  update: (id: id, data: VendorDataRequest) => Put(`vendors/${id}`, data),
+  update: (id: id, data: VendorDataRequest) => Put(`v1/vendors/${id}`, data),
 
-  delete: (id: id) => Delete(`vendors/${id}`),
+  delete: (id: id) => Delete(`v1/vendors/${id}`),
 })

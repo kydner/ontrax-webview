@@ -1,15 +1,15 @@
-import { useProductEndpoint } from '../endpoints/product.endpoint'
-import { ProductDataRequest, ProductRequest, ProductRequestPage } from '../model/product.model'
 import { defineRepository } from '../utils/plugin.utils'
 import { withRepository } from '../utils/converter.utils'
 import { id } from '../interfaces/response.interface'
+import { useProductV1Endpoint } from '../endpoints/product-v1.model'
+import { ProductV1DataRequest, ProductV1Request, ProductV1RequestPage } from '../model/product-v1.model'
 
-const productEndpoint = useProductEndpoint()
+const productEndpoint = useProductV1Endpoint()
 
 export const useProductRepository = defineRepository({
-  getPage: (params?: ProductRequestPage) => withRepository(() => productEndpoint.getPage(params)),
+  getPage: (params?: ProductV1RequestPage) => withRepository(() => productEndpoint.getPage(params)),
 
-  getAll: (params: ProductRequest) =>
+  getAll: (params: ProductV1Request) =>
     withRepository(
       () => {
         const { isActive = true } = params
@@ -17,18 +17,16 @@ export const useProductRepository = defineRepository({
       },
       (response) => {
         return [...response]?.map((item) => {
-          return { ...item, isHasSN: true }
+          return { ...item }
         })
       },
     ),
 
   getOne: (id: id) => withRepository(() => productEndpoint.getOne(id)),
 
-  create: (data: ProductDataRequest) => withRepository(() => productEndpoint.create(data)),
+  create: (data: ProductV1DataRequest) => withRepository(() => productEndpoint.create(data)),
 
-  update: (id: id, data: ProductDataRequest) => withRepository(() => productEndpoint.update(id, data)),
+  update: (id: id, data: ProductV1DataRequest) => withRepository(() => productEndpoint.update(id, data)),
 
   delete: (id: id) => productEndpoint.delete(id),
-
-  availableItem: (warehouseId: id) => withRepository(() => productEndpoint.availableItem(warehouseId)),
 })

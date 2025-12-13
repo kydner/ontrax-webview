@@ -4,6 +4,7 @@ import { ContractResponsePage } from '../model/contract.model'
 import { InventoryStockResponsePage } from '../model/inventory-stock.model'
 import { LocationSiteResponsePage } from '../model/location-site.model'
 import { LocationWarehouseResponsePage } from '../model/location-warehouse.model'
+import { ProductV1ResponsePage } from '../model/product-v1.model'
 import { ProductResponsePage } from '../model/product.model'
 import { ProjectResponsePage } from '../model/project.model'
 import { ReceiveItemResponsePage } from '../model/receive-item.model'
@@ -11,6 +12,7 @@ import { TransferItemResponsePage } from '../model/transfer-item.model'
 import { VendorShipmentV1ResponsePage } from '../model/vendor-shipment-v1.model'
 import { VendorShipmentResponsePage } from '../model/vendor-shipment.model'
 import { VendorResponsePage } from '../model/vendor.model'
+import { WarehouseSiteResponsePage } from '../model/warehouse-site.model'
 
 export const VendorShipment: IMetaListModule<VendorShipmentResponsePage> = {
   title: 'Vendor Shipment',
@@ -84,6 +86,12 @@ export const LocationWarehouse: IMetaListModule<LocationWarehouseResponsePage> =
   items: [],
 }
 
+export const WarehouseSite: IMetaListModule<WarehouseSiteResponsePage> = {
+  title: 'Warehouse Site',
+  name: 'warehouse-site',
+  items: [],
+}
+
 export const Client: IMetaListModule<ClientResponsePage> = {
   title: 'Client',
   name: 'client',
@@ -99,6 +107,12 @@ export const Vendor: IMetaListModule<VendorResponsePage> = {
 export const Product: IMetaListModule<ProductResponsePage> = {
   title: 'Product',
   name: 'product',
+  items: [],
+}
+
+export const ProductV1: IMetaListModule<ProductV1ResponsePage> = {
+  title: 'Product',
+  name: 'product-v1',
   items: [],
 }
 

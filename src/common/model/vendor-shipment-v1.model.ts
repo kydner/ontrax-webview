@@ -2,6 +2,7 @@ import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common
 import { VendorShipmentDetailV1Response } from './vendor-shipment-detail-v1.model'
 import { VendorShipmentAttachmentV1Response } from './vendor-shipment-attachment-v1.model'
 import { TStatus } from '../enum/operational.enum'
+import { VendorShipmentItemV1Response } from './vendor-shipment-item-v1.model'
 
 export interface VendorShipmentV1Request extends IListSortingRequest {}
 
@@ -24,8 +25,9 @@ export interface VendorShipmentV1Response {
   status: TStatus
   totalItems: number
   createdDate: isoDate
-  details: VendorShipmentDetailV1Response[]
+  details?: VendorShipmentDetailV1Response[]
   attachments: VendorShipmentAttachmentV1Response[]
+  items?: VendorShipmentItemV1Response[]
 }
 
 export interface VendorShipmentV1ResponsePage extends VendorShipmentV1Response {}

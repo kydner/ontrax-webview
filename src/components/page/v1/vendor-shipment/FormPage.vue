@@ -14,7 +14,7 @@
       </internal-error>
     </div>
     <div v-else class="tw-flex tw-flex-1 tw-flex-col tw-overflow-hidden">
-      <q-tab-panels v-model="panel" keep-alive animated class="tw-bg-transparent">
+      <q-tab-panels v-model="panel" animated class="tw-bg-transparent">
         <q-tab-panel :name="PANEL_FORM" class="tw-p-0 tw-overflow-hidden">
           <k-toolbar :header-title="currentTitle" :loading="loadingPage" @back="handleBack">
             <template v-if="form.status === 'DRAFT'" #title:right>
@@ -22,11 +22,23 @@
             </template>
           </k-toolbar>
           <operational-form-skeleton v-if="loadingPage" />
-          <component v-else :is="FormData" v-model="form"></component>
+          <template v-else>
+            <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
+              <component :is="FormData" v-model="form"></component>
+            </Form>
+          </template>
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
           <component :is="ProductPickPage" v-model="form" :warehouse-id="fromWarehouseId" @back="panel = PANEL_FORM" />
+        </q-tab-panel>
+
+        <q-tab-panel :name="PANEL_PRODUCT_SCAN" class="tw-p-0 tw-overflow-hidden">
+          <product-scan @back="panel = PANEL_FORM" />
+        </q-tab-panel>
+
+        <q-tab-panel :name="PANEL_PRODUCT_NEW" class="tw-p-0 tw-overflow-hidden">
+          <product-new @back="panel = PANEL_PRODUCT_SCAN" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -77,9 +89,14 @@ import { useAppStore } from 'src/stores/app.store'
 import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentV1DataRequest, VendorShipmentV1ResponsePage } from 'src/common/model/vendor-shipment-v1.model'
 import { VendorShipment, VendorShipmentV1 } from 'src/common/constants/meta.constant'
+import ProductScan from './shared/ProductScan.vue'
+import ProductNew from './shared/ProductNew.vue'
+import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT = 'panel-product'
+const PANEL_PRODUCT_SCAN = 'panel-product-scan'
+const PANEL_PRODUCT_NEW = 'panel-product-new'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest
@@ -87,6 +104,7 @@ interface Props {
 
 interface Emits<T> {
   (e: 'update:modelValue', value: T): void
+  (e: 'form:submit'): void
 }
 
 type MetaFormPageExposed = {
@@ -101,14 +119,14 @@ const router = useRouter()
 
 const FormData = computed(() => {
   return defineAsyncComponent({
-    loader: () => import('./FormData.vue'),
+    loader: () => import('./shared/FormData.vue'),
     errorComponent: ErrorNotFound,
   })
 })
 
 const ProductPickPage = computed(() => {
   return defineAsyncComponent({
-    loader: () => import(`src/components/page/${metaVendorShipment.name}/ProductPickPage.vue`),
+    loader: () => import('src/components/page/v1/vendor-shipment/shared/ProductPickPage.vue'),
   })
 })
 
@@ -151,6 +169,8 @@ const panel = ref(PANEL_FORM)
 
 const metaFormPageRef = ref<ComponentPublicInstance<MetaFormPageExposed> | null>(null)
 
+const observerRef = ref<InstanceType<typeof Form>>()
+
 const form = computed({
   get: () => props?.modelValue,
   set: (value) => {
@@ -158,8 +178,20 @@ const form = computed({
   },
 })
 
-const validate = (): Promise<boolean> => {
-  return metaFormPageRef.value?.validate() ?? Promise.resolve(false)
+const validate = async () => {
+  const promises = [observerRef.value?.validate()]
+  for (const promise of promises) {
+    const result = await promise
+    if (result?.valid !== true) {
+      Notify.create({
+        message: Object.values(result?.errors as Record<string, string>)?.[0],
+        type: 'negative',
+        icon: 'warning',
+      })
+      return false
+    }
+  }
+  return true
 }
 
 const fetchSingle = async () => {
@@ -255,8 +287,8 @@ const handleDelete = () => {
 }
 
 const handleSubmitDraft = async () => {
-  const validate = await metaFormPageRef.value?.validate()
-  if (validate) {
+  const isValid = await validate()
+  if (isValid) {
     if (formId.value) handleUpdate()
     else handleCreate()
   }
@@ -274,7 +306,28 @@ onMounted(() => {
   bus.on('product:pick', () => {
     panel.value = PANEL_PRODUCT
   })
+
+  bus.on('product:scan', () => {
+    panel.value = PANEL_PRODUCT_SCAN
+  })
+
+  bus.on('product:new', () => {
+    panel.value = PANEL_PRODUCT_NEW
+  })
 })
+
+const invalidSubmit = (
+  event:
+    | InvalidSubmissionContext<GenericObject>
+    | FormValidationResult<Record<string, unknown>, Record<string, unknown>>,
+) => {
+  const { errors } = event
+  Notify.create({
+    message: Object.values(errors)?.[0],
+    type: 'negative',
+    icon: 'warning',
+  })
+}
 
 defineExpose({
   validate,

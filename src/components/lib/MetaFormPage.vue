@@ -7,9 +7,7 @@
       </slot>
 
       <!-- Bagian Form -->
-      <Form as="form" ref="observerRef" @invalid-submit="invalidSubmit" @submit="emit('form:submit')">
-        <slot />
-      </Form>
+      <slot />
     </div>
 
     <!-- Bagian Footer -->
@@ -22,9 +20,7 @@ import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import KPage from './KPage.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ref, VNode } from 'vue'
-import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
-import { Notify } from 'src/common/utils/plugin.utils'
+import { VNode } from 'vue'
 import KToolbar from '../ui/KToolbar.vue'
 
 interface Props<T> {
@@ -52,7 +48,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
   allowAccess: false,
 })
 
-const emit = defineEmits<Emits>()
+defineEmits<Emits>()
 
 defineSlots<Slots>()
 
@@ -60,44 +56,11 @@ const router = useRouter()
 
 const { t } = useI18n()
 
-const observerRef = ref<InstanceType<typeof Form>>()
-
 const handleBack = () => {
   router.push({
     name: `${props.meta.name}-list`,
   })
 }
 
-const invalidSubmit = (
-  event:
-    | InvalidSubmissionContext<GenericObject>
-    | FormValidationResult<Record<string, unknown>, Record<string, unknown>>,
-) => {
-  const { errors } = event
-  Notify.create({
-    message: Object.values(errors)?.[0],
-    type: 'negative',
-    icon: 'warning',
-  })
-}
-
-const validate = async () => {
-  const promises = [observerRef.value?.validate()]
-  for (const promise of promises) {
-    const result = await promise
-    if (result?.valid !== true) {
-      Notify.create({
-        message: Object.values(result?.errors as Record<string, string>)?.[0],
-        type: 'negative',
-        icon: 'warning',
-      })
-      return false
-    }
-  }
-  return true
-}
-
-defineExpose({
-  validate,
-})
+defineExpose({})
 </script>
