@@ -87,8 +87,6 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-  <scan-dialog v-model="showScanDialog" />
 </template>
 <script setup lang="ts">
 import { VendorShipmentDetailV1Response } from 'src/common/model/vendor-shipment-detail-v1.model'
@@ -98,7 +96,6 @@ import ProductImage from 'src/components/images/Product.vue'
 import KCard from 'src/components/ui/KCard.vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
-import ScanDialog from '../ScanDialog.vue'
 import { bus } from 'src/common/event-bus'
 
 interface Props {
@@ -130,8 +127,6 @@ const details = computed({
 })
 
 const dialogIndex = ref<number | null>(null)
-
-const showScanDialog = ref(false)
 
 const isDialogOpen = computed({
   get: () => dialogIndex.value !== null,

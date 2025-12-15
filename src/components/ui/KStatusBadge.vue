@@ -27,7 +27,7 @@ const currentColor = computed(() => {
     negative: 'tw-bg-negative tw-text-white',
     info: 'tw-bg-info tw-text-white',
     disable: 'tw-bg-disable-text',
-    mute: 'tw-bg-secondary-text',
+    mute: 'tw-bg-secondary-text tw-text-white',
   }
 
   return colors[props.color || 'positive']

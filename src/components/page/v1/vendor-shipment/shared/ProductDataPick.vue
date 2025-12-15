@@ -164,7 +164,7 @@ const fetchData = async () => {
       const existing = details.value.find((item) => item.productId === product.id)
 
       return {
-        productId: product.id,
+        productId: product.productId,
         productName: product.productName,
         productCode: product.productCode,
         isUniqueSerialNumber: product?.isUniqueSerialNumber,

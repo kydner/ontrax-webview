@@ -202,6 +202,7 @@ import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1.model'
 import KFileUpload from 'src/components/ui/KFileUpload.vue'
+import KStatusBadge from 'src/components/ui/KStatusBadge.vue'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest
