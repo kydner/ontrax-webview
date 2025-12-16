@@ -40,6 +40,14 @@
         <q-tab-panel :name="PANEL_PRODUCT_NEW" class="tw-p-0 tw-overflow-hidden">
           <component :is="ProductDataNewPage" v-model="form" @back="panel = PANEL_PRODUCT_SCAN" />
         </q-tab-panel>
+
+        <q-tab-panel :name="PANEL_QUALITY_CONTROL_DETAIL" class="tw-p-0 tw-overflow-hidden">
+          <component :is="QualityControlDetail" v-model="form" @back="panel = PANEL_FORM" />
+        </q-tab-panel>
+
+        <q-tab-panel :name="PANEL_QUALITY_CONTROL_DETAIL_ITEM" class="tw-p-0 tw-overflow-hidden">
+          <component :is="QualityControlDetailItem" v-model="form" @back="panel = PANEL_QUALITY_CONTROL_DETAIL" />
+        </q-tab-panel>
       </q-tab-panels>
     </div>
 
@@ -89,11 +97,15 @@ import { IMetaListModule } from 'src/common/interfaces/meta.interface'
 import { VendorShipmentV1DataRequest, VendorShipmentV1ResponsePage } from 'src/common/model/vendor-shipment-v1.model'
 import { VendorShipment, VendorShipmentV1 } from 'src/common/constants/meta.constant'
 import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
+import QualityControlDetailItem from './shared/quality-control/QualityControlDetailItem.vue'
+import QualityControlDetail from './shared/quality-control/QualityControlDetail.vue'
 
 const PANEL_FORM = 'panel-form'
 const PANEL_PRODUCT_PICK = 'panel-product-pick'
 const PANEL_PRODUCT_SCAN = 'panel-product-scan'
 const PANEL_PRODUCT_NEW = 'panel-product-new'
+const PANEL_QUALITY_CONTROL_DETAIL = 'panel-quality-control-detail'
+const PANEL_QUALITY_CONTROL_DETAIL_ITEM = 'panel-quality-control-detail-item'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest
@@ -320,6 +332,10 @@ onMounted(() => {
 
   bus.on('shipment:contract-product:create', () => {
     panel.value = PANEL_PRODUCT_NEW
+  })
+
+  bus.on('shipment:quality-control:detail', () => {
+    panel.value = PANEL_QUALITY_CONTROL_DETAIL
   })
 })
 

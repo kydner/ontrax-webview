@@ -203,3 +203,9 @@ const debounceDetailQty = debounce(async (detailId: id, quantity: number) => {
   await handleAdjustment(detailId, quantity)
 }, 500)
 </script>
+
+<style scoped lang="scss">
+:deep(.q-field--dark .q-field__control:before) {
+  border-bottom-color: var(--q-line);
+}
+</style>

@@ -236,3 +236,9 @@ const handleProductScan = () => {
   bus.emit('shipment:product:scan')
 }
 </script>
+
+<style scoped lang="scss">
+:deep(.q-field--dark .q-field__control:before) {
+  border-bottom-color: var(--q-line);
+}
+</style>
