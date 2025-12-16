@@ -16,6 +16,10 @@
     <template v-else-if="form.status === 'IN_TRANSIT'">
       <product-data-list-in-transit v-model="form" @preview="handlePreview" />
     </template>
+    <template v-else-if="form.status === 'RECEIVED'">
+      <product-data-list-received v-model="form" @preview="handlePreview" />
+    </template>
+
     <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">
       <k-lottie
         animation-link="/lotties/no_data.json"
@@ -75,6 +79,7 @@ import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1
 import { VendorShipmentDetailV1Response } from 'src/common/model/vendor-shipment-detail-v1.model'
 import ProductDataListDraft from './ProductDataListDraft.vue'
 import ProductDataListInTransit from './ProductDataListInTransit.vue'
+import ProductDataListReceived from './ProductDataListReceived.vue'
 import KLottie from 'src/components/ui/KLottie.vue'
 
 interface Props {
