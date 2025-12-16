@@ -2,15 +2,15 @@
   <div class="tw-my-4 tw-min-h-[60vh]">
     <slot name="header"></slot>
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
-    <q-card flat class="tw-my-4">
-      <q-input v-if="details.length > 0" model-value="" color="secondary" dense placeholder="Search Part Number">
-        <template #prepend>
-          <q-icon name="img:/icons/search.svg" />
-        </template>
-      </q-input>
-    </q-card>
 
-    <template v-if="routePath === 'quality-control'"> </template>
+    <template v-if="routePath === 'quality-control'">
+      <template v-if="form.status === 'RECEIVED'">
+        <product-data-list-received-qc v-model="form" @preview="handlePreview" />
+      </template>
+      <template v-else-if="form.status === 'QC_PASSED'">
+        <product-data-list-qc-passed v-model="form" @preview="handlePreview" />
+      </template>
+    </template>
     <template v-else>
       <template v-if="!form.status || form.status === 'DRAFT'">
         <product-data-list-draft v-model="form" @preview="handlePreview" />
@@ -80,9 +80,11 @@ import ProductImage from 'src/components/images/Product.vue'
 import DetailPreview from 'src/components/page/operational/DetailPreview.vue'
 import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1.model'
 import { VendorShipmentDetailV1Response } from 'src/common/model/vendor-shipment-detail-v1.model'
-import ProductDataListDraft from './ProductDataListDraft.vue'
-import ProductDataListInTransit from './ProductDataListInTransit.vue'
-import ProductDataListReceived from './ProductDataListReceived.vue'
+import ProductDataListDraft from './send/ProductDataListDraft.vue'
+import ProductDataListInTransit from './send/ProductDataListInTransit.vue'
+import ProductDataListReceived from './send/ProductDataListReceived.vue'
+import ProductDataListReceivedQc from './quality-control/ProductDataListReceived.vue'
+import ProductDataListQcPassed from './quality-control/ProductDataListQcPassed.vue'
 import KLottie from 'src/components/ui/KLottie.vue'
 import { useRoute } from 'vue-router'
 

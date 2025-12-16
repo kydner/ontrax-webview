@@ -117,14 +117,14 @@ interface Slots<T> {
 
 const ReceiveListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import('./send/ListPage.vue'),
+    loader: () => import('./shared/send/ListPage.vue'),
     errorComponent: ErrorNotFound,
   }),
 )
 
 const QualityControlListPage = computed(() =>
   defineAsyncComponent({
-    loader: () => import('./quality-control/ListPage.vue'),
+    loader: () => import('./shared/quality-control/ListPage.vue'),
     errorComponent: ErrorNotFound,
   }),
 )

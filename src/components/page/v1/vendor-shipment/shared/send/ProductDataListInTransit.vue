@@ -1,5 +1,19 @@
 <template>
-  <k-card v-for="(product, index) in details" :key="index" class="gradient-card tw-my-2">
+  <q-card flat class="tw-my-4">
+    <q-input
+      v-if="details.length > 0"
+      v-model="searchPartNumber"
+      color="secondary"
+      dense
+      placeholder="Search Part Number"
+    >
+      <template #prepend>
+        <q-icon name="img:/icons/search.svg" />
+      </template>
+    </q-input>
+  </q-card>
+
+  <k-card v-for="(product, index) in filteredDetails" :key="index" class="gradient-card tw-my-2">
     <q-card-section class="tw-p-2" v-ripple @click="emit('preview', product)">
       <div class="tw-flex tw-items-center tw-justify-between">
         <div class="tw-flex tw-flex-col tw-space-y-1 tw-mb-1">
@@ -161,6 +175,8 @@ const shipmentRepository = useVendorShipmentV1Repository()
 
 const loadingMap = reactive<Record<id, boolean>>({})
 
+const searchPartNumber = ref('')
+
 const form = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:model-value', value),
@@ -172,6 +188,14 @@ const details = computed({
     form.value.details = value
     emit('update:model-value', form.value)
   },
+})
+
+const filteredDetails = computed(() => {
+  const keyword = searchPartNumber.value.trim().toLowerCase()
+
+  if (!keyword) return details.value
+
+  return details.value.filter((item) => item.srtPartNumber?.toLowerCase().includes(keyword))
 })
 
 const dialogIndex = ref<number | null>(null)
