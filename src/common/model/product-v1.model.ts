@@ -12,7 +12,6 @@ export interface ProductV1Response {
   manufacturerDescription: string
   manufacturerPartNumber: string
   productName: string
-  productCode: string
   manufacturer: string
   srtPartNumber: string
   productCategory: string

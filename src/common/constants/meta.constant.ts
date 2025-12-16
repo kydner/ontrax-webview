@@ -141,3 +141,9 @@ export const WorkPackage: IMetaListModule<WorkPackageResponsePage> = {
   name: 'work-package',
   items: [],
 }
+
+export const ContractProduct: IMetaListModule<WorkPackageResponsePage> = {
+  title: 'Contract Product',
+  name: 'contract-product',
+  items: [],
+}

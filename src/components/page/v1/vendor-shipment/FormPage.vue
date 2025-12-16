@@ -38,7 +38,7 @@
         </q-tab-panel>
 
         <q-tab-panel :name="PANEL_PRODUCT_NEW" class="tw-p-0 tw-overflow-hidden">
-          <component :is="ProductDataNewPage" @back="panel = PANEL_PRODUCT_SCAN" />
+          <component :is="ProductDataNewPage" v-model="form" @back="panel = PANEL_PRODUCT_SCAN" />
         </q-tab-panel>
       </q-tab-panels>
     </div>

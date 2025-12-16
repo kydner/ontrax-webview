@@ -2,6 +2,7 @@ import { useVendorShipmentV1Endpoint } from '../endpoints/vendor-shipment-v1.end
 import { id } from '../interfaces/response.interface'
 import { VendorShipmentAdjustmentQuantityDetailRequest } from '../model/vendor-shipment-adjustment-quantity-detail.model'
 import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
+import { VendorShipmentSaveSerialNumberDataRequest } from '../model/vendor-shipment-save-serial-number.model'
 // import { VendorShipmentV1QualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 // import { VendorShipmentV1ReceiveDataRequest, VendorShipmentV1ReceiveRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentV1DataRequest, VendorShipmentV1Request } from '../model/vendor-shipment-v1.model'
@@ -56,4 +57,6 @@ export const useVendorShipmentV1Repository = defineRepository({
 
   adjustmentDetail: (detailId: id, params: VendorShipmentAdjustmentQuantityDetailRequest) =>
     withRepository(() => shipmentEndpoint.adjustmentDetail(detailId, params)),
+
+  saveSerialNumber: (data: VendorShipmentSaveSerialNumberDataRequest) => shipmentEndpoint.saveSerialNumber(data),
 })

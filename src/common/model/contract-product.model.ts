@@ -1,4 +1,5 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { ProductV1Response } from './product-v1.model'
 
 export interface ContractProductRequest extends IListSortingRequest {
   contractId: id
@@ -6,11 +7,9 @@ export interface ContractProductRequest extends IListSortingRequest {
 
 export type ContractProductRequestPage = IPaginationRequest & ContractProductRequest
 
-export interface ContractProductResponse {
+export interface ContractProductResponse extends ProductV1Response {
   id: id
   productId: id
-  productName: string
-  isUniqueSerialNumber: boolean
   contractId: id
   contractNumber: string
   workPackageId: id

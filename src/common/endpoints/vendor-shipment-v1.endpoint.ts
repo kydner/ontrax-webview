@@ -4,6 +4,7 @@ import {
   VendorShipmentAdjustmentQuantityDetailResponse,
 } from '../model/vendor-shipment-adjustment-quantity-detail.model'
 import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
+import { VendorShipmentSaveSerialNumberDataRequest } from '../model/vendor-shipment-save-serial-number.model'
 // import { VendorShipmentV1QualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 // import { VendorShipmentV1ReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import {
@@ -39,4 +40,7 @@ export const useVendorShipmentV1Endpoint = defineEndpoint({
     Patch<VendorShipmentAdjustmentQuantityDetailResponse>(`v1/vendor-shipments/detail/${detailId}/quantity`, null, {
       params,
     }),
+
+  saveSerialNumber: (data: VendorShipmentSaveSerialNumberDataRequest) =>
+    Post('v1/vendor-shipments/serial-number', data),
 })

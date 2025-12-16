@@ -1,6 +1,10 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
 
-export interface WorkPackageRequest extends IListSortingRequest {}
+export interface WorkPackageRequest extends IListSortingRequest {
+  name: string
+  projectId: id
+  type: 'MAIN' | 'SUB'
+}
 
 export type WorkPackageRequestPage = IPaginationRequest & WorkPackageRequest
 

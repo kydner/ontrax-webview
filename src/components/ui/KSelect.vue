@@ -86,7 +86,7 @@
             >
               <q-item v-bind="itemProps" dark class="tw-bg-overlay">
                 <q-item-section>
-                  <q-item-label>{{ opt?.[props.optionLabel] || opt }}</q-item-label>
+                  <q-item-label>{{ opt?.[props.optionLabel] || '-' }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <q-checkbox
@@ -111,7 +111,7 @@
             >
               <q-item v-bind="itemProps" dark class="tw-bg-overlay">
                 <q-item-section>
-                  <q-item-label class="tw-text-white">{{ opt?.[props.optionLabel] || opt }}</q-item-label>
+                  <q-item-label class="tw-text-white">{{ opt?.[props.optionLabel] || '-' }}</q-item-label>
                 </q-item-section>
               </q-item>
             </slot>
