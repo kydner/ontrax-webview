@@ -17,7 +17,7 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable || (form.details && form.details?.length > 0)"
+      :disable="isDisable"
       :outlined="false"
       option-label="projectName"
       option-value="id"
@@ -68,7 +68,7 @@
       option-value="id"
       behavior="menu"
       required
-      :disable="isDisable"
+      :disable="isDisable || (form.details && form.details?.length > 0)"
       horizontal-label
       :placeholder="t('select')"
       input-class="inventory__field"

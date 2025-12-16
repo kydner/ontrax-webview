@@ -7,7 +7,7 @@
             <product-image :item-id="product?.productId || ''" />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product?.productCode || '-' }}</span>
+                <span class="tw-text-secondary-text">{{ product?.srtPartNumber || '-' }}</span>
                 <span>{{ product.productName || '-' }}</span>
               </div>
             </div>
@@ -30,6 +30,7 @@
             </div>
           </div>
           <div class="tw-basis-auto">
+            <!-- UNIQUE PRODUCT -->
             <template v-if="product.isUniqueSerialNumber">
               <div class="tw-flex tw-justify-between tw-space-x-2 md:tw-space-x-4">
                 <div class="tw-flex tw-items-center tw-space-x-2">
@@ -45,8 +46,17 @@
                 <span>{{ format(product.qtyReceived, { precision: 0 }) }}</span>
               </div>
             </template>
+            <!-- NOT UNIQUE -->
             <template v-else>
-              <plus-minus-field v-model="product.qtyReceived" @click.stop />
+              <plus-minus-field
+                v-model="product.qtyReceived"
+                :disable="loadingMap[product.id ?? '']"
+                :max="product.qtyOrdered"
+                allow-increase
+                allow-decrease
+                @click.stop
+                @update:model-value="debounceDetailQty(product.id ?? '', product.qtyReceived)"
+              />
             </template>
           </div>
         </div>
@@ -96,7 +106,7 @@
                 <product-image :item-id="details[dialogIndex]?.productId || ''" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ details[dialogIndex]?.productCode }}</span>
+                    <span class="tw-text-secondary-text">{{ details[dialogIndex]?.srtPartNumber }}</span>
                     <span>{{ details[dialogIndex]?.productName }}</span>
                   </div>
                 </div>
@@ -119,13 +129,18 @@
 <script setup lang="ts">
 import { VendorShipmentDetailV1Response } from 'src/common/model/vendor-shipment-detail-v1.model'
 import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1.model'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import ProductImage from 'src/components/images/Product.vue'
 import KCard from 'src/components/ui/KCard.vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
 import { bus } from 'src/common/event-bus'
 import { format } from 'src/common/utils/converter.utils'
+import { id, ResponseState } from 'src/common/interfaces/response.interface'
+import { VendorShipmentAdjustmentQuantityDetailResponse } from 'src/common/model/vendor-shipment-adjustment-quantity-detail.model'
+import { useVendorShipmentV1Repository } from 'src/common/repository/vendor-shipment-v1.repository'
+import { Notify } from 'src/common/utils/plugin.utils'
+import { debounce } from 'lodash'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest
@@ -141,6 +156,10 @@ const props = withDefaults(defineProps<Props>(), {})
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
+
+const shipmentRepository = useVendorShipmentV1Repository()
+
+const loadingMap = reactive<Record<id, boolean>>({})
 
 const form = computed({
   get: () => props.modelValue,
@@ -164,14 +183,30 @@ const isDialogOpen = computed({
   },
 })
 
-const handleIncrease = (index: number) => {
-  dialogIndex.value = index
+reactive<ResponseState<VendorShipmentAdjustmentQuantityDetailResponse>>({
+  isLoading: false,
+  data: null,
+  errorMessage: null,
+})
+
+const handleAdjustment = async (detailId: id, quantity: number) => {
+  try {
+    if (!detailId) throw new Error('Invalid detail ID')
+    loadingMap[detailId] = true
+
+    await shipmentRepository.adjustmentDetail(detailId, {
+      quantity,
+    })
+  } catch (error) {
+    Notify.error({ message: error as Error })
+  } finally {
+    loadingMap[detailId] = false
+  }
 }
 
-const handleZeroConfirm = (index: number) => {
-  details.value?.splice(index, 1)
-  dialogIndex.value = null
-}
+const debounceDetailQty = debounce(async (detailId: id, quantity: number) => {
+  await handleAdjustment(detailId, quantity)
+}, 500)
 
 const handleProductScan = () => {
   bus.emit('shipment:product:scan')
