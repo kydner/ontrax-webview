@@ -1,8 +1,9 @@
 <template>
   <div class="tw-my-4 tw-min-h-[60vh]">
+    <slot name="header"></slot>
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
     <q-card flat class="tw-my-4">
-      <q-input model-value="" color="secondary" dense placeholder="Search Part Number">
+      <q-input v-if="details.length > 0" model-value="" color="secondary" dense placeholder="Search Part Number">
         <template #prepend>
           <q-icon name="img:/icons/search.svg" />
         </template>
@@ -15,7 +16,15 @@
     <template v-else-if="form.status === 'IN_TRANSIT'">
       <product-data-list-in-transit v-model="form" @preview="handlePreview" />
     </template>
-    <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">{{ t('noData') }}</div>
+    <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">
+      <k-lottie
+        animation-link="/lotties/no_data.json"
+        auto-play
+        loop
+        renderer="svg"
+        class="tw-w-52 tw-h-5tw-w-52 tw-overflow-hidden tw-block"
+      />
+    </div>
   </div>
 
   <!-- PREVIEW DIALOG -->
@@ -66,6 +75,7 @@ import { VendorShipmentV1DataRequest } from 'src/common/model/vendor-shipment-v1
 import { VendorShipmentDetailV1Response } from 'src/common/model/vendor-shipment-detail-v1.model'
 import ProductDataListDraft from './ProductDataListDraft.vue'
 import ProductDataListInTransit from './ProductDataListInTransit.vue'
+import KLottie from 'src/components/ui/KLottie.vue'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest

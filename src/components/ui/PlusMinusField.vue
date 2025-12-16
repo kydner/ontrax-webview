@@ -59,6 +59,7 @@ interface Props extends Omit<QInputProps, 'modelValue'> {
 interface Emits {
   (event: 'update:modelValue', value: Props['modelValue']): void
   (event: 'increase', currentValue: Props['modelValue']): void
+  (event: 'decrease', currentValue: Props['modelValue']): void
   (event: 'zero:confirm'): void
 }
 
@@ -81,6 +82,7 @@ const decrease = () => {
   if (props.min) {
     if (currentValue.value <= Number(props.min)) return
   }
+  emit('decrease', currentValue.value)
   if (!props.allowDecrease) return
   if (currentValue.value <= 1) {
     if (props.zeroConfirm) {

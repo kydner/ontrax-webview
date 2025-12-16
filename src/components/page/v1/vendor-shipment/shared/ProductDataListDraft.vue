@@ -16,7 +16,9 @@
         <div class="tw-flex tw-flex-col tw-space-y-2 tw-basis-auto tw-text-right">
           <plus-minus-field
             v-model="product.qtyOrder"
-            :allow-increase="true"
+            :allow-increase="false"
+            :allow-decrease="true"
+            zero-confirm
             @increase="handleIncrease(index)"
             @zero:confirm="handleZeroConfirm(index)"
             @click.stop
@@ -46,7 +48,13 @@
                 </div>
               </div>
               <div class="tw-basis-auto tw-text-right">
-                <plus-minus-field v-model="details[dialogIndex].qtyOrder" :allow-increase="true" @click.stop />
+                <plus-minus-field
+                  v-model="details[dialogIndex].qtyOrder"
+                  allow-decrease
+                  allow-increase
+                  @click.stop
+                  @zero:confirm="handleZeroConfirm(dialogIndex)"
+                />
               </div>
             </div>
           </q-card-section>

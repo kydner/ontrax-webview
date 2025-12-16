@@ -17,7 +17,7 @@
       horizontal-label
       required
       behavior="menu"
-      :disable="isDisable"
+      :disable="isDisable || (form.details && form.details?.length > 0)"
       :outlined="false"
       option-label="projectName"
       option-value="id"
@@ -186,7 +186,11 @@
       </k-file-upload>
     </div>
 
-    <product-data-list v-model="form" :show-create-button="!!form.contractId" />
+    <product-data-list v-model="form" :show-create-button="showCreateButton">
+      <template v-if="!form.contractId" #header>
+        <q-banner inline-actions class="text-white tw-bg-negative"> Fill contract field for insert product </q-banner>
+      </template>
+    </product-data-list>
   </div>
 </template>
 <script setup lang="ts">
@@ -219,6 +223,10 @@ const emit = defineEmits<Emits>()
 const route = useRoute()
 
 const formId = computed(() => route.params?.id)
+
+const showCreateButton = computed(() => {
+  return !!form.value.contractId && form.value.status !== 'IN_TRANSIT'
+})
 
 const isDisable = computed(() => {
   return (['IN_TRANSIT', 'RECEIVED', 'PARTIAL_PASSED', 'QC_PASSED'] as TStatus[]).includes(form.value.status)
