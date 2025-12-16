@@ -140,7 +140,7 @@ const handleInputChange = (value: number | string) => {
   @apply tw-border tw-border-disable-text tw-rounded tw-flex tw-items-center tw-h-8;
 
   .btn {
-    @apply tw-h-8 tw-min-h-0 tw-px-3 tw-text-xs tw-py-0;
+    @apply tw-h-8 tw-min-h-0 tw-px-3 tw-py-0 tw-text-lg;
 
     :deep(button),
     :deep(.q-btn__content) {

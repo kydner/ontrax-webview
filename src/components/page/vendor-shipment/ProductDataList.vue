@@ -285,7 +285,7 @@ const showCreateButton = computed(() => {
 })
 
 const handleProductPick = () => {
-  bus.emit('product:pick')
+  bus.emit('shipment:product:pick')
 }
 
 const handleIncrease = (index: number) => {

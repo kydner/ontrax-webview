@@ -10,7 +10,6 @@ export interface ContractProductResponse {
   id: id
   productId: id
   productName: string
-  productCode: string
   isUniqueSerialNumber: boolean
   contractId: id
   contractNumber: string

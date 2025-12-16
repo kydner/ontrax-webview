@@ -8,7 +8,7 @@
       <div class="tw-col-span-12">
         <div class="tw-grid tw-grid-cols-12">
           <div class="tw-col-span-12 tw-text-secondary-text">Serial Number</div>
-          <div class="tw-col-span-12">5S2340T65748</div>
+          <div class="tw-col-span-12">{{ form.serialNumber ?? '-' }}</div>
         </div>
       </div>
 
@@ -152,10 +152,11 @@
 <script setup lang="ts">
 import { WarehouseSite, WorkPackage } from 'src/common/constants/meta.constant'
 import SwipeWrapper from 'src/components/ui/SwipeWrapper.vue'
-import { ref } from 'vue'
+import { onActivated, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import KToolbar from 'src/components/ui/KToolbar.vue'
 import { ContractProductDataRequest } from 'src/common/model/contract-product.model'
+import { bus } from 'src/common/event-bus'
 
 interface Props {}
 
@@ -172,4 +173,18 @@ const { t } = useI18n()
 const form = ref({} as ContractProductDataRequest)
 
 const handleBack = () => emit('back')
+
+onActivated(() => {
+  bus.on('shipment:contract-product:create', (serialNumber: string) => {
+    console.log(serialNumber, 'activeted sn')
+    form.value.serialNumber = serialNumber
+  })
+})
+
+onMounted(() => {
+  bus.on('shipment:contract-product:create', (serialNumber: string) => {
+    console.log(serialNumber, 'mounted sn')
+    form.value.serialNumber = serialNumber
+  })
+})
 </script>

@@ -1,4 +1,5 @@
 import { id } from '../interfaces/response.interface'
+import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 // import { VendorShipmentV1QualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 // import { VendorShipmentV1ReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import {
@@ -24,10 +25,7 @@ export const useVendorShipmentV1Endpoint = defineEndpoint({
 
   delete: (id: id) => Delete(`v1/vendor-shipments/${id}`),
 
-  // received: (id: id, data: VendorShipmentV1ReceiveDataRequest, params: VendorShipmentV1Request) =>
-  //   Patch(`v1/vendor-shipments/${id}/received`, data, {
-  //     params,
-  //   }),
+  received: (id: id, data: VendorShipmentReceiveDataRequest) => Patch(`v1/vendor-shipments/${id}/received`, data),
 
   // qualityCheck: (id: id, data: VendorShipmentV1QualityCheckDataRequest) => Patch(`v1/vendor-shipments/${id}/quality-check`, data),
 

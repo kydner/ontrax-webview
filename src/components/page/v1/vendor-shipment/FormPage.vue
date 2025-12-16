@@ -29,7 +29,7 @@
           </template>
         </q-tab-panel>
 
-        <q-tab-panel :name="PANEL_PRODUCT" class="tw-p-0 tw-overflow-hidden">
+        <q-tab-panel :name="PANEL_PRODUCT_PICK" class="tw-p-0 tw-overflow-hidden">
           <component :is="ProductDataPickPage" v-model="form" @back="panel = PANEL_FORM" />
         </q-tab-panel>
 
@@ -91,7 +91,7 @@ import { VendorShipment, VendorShipmentV1 } from 'src/common/constants/meta.cons
 import { Form, FormValidationResult, GenericObject, InvalidSubmissionContext } from 'vee-validate'
 
 const PANEL_FORM = 'panel-form'
-const PANEL_PRODUCT = 'panel-product'
+const PANEL_PRODUCT_PICK = 'panel-product-pick'
 const PANEL_PRODUCT_SCAN = 'panel-product-scan'
 const PANEL_PRODUCT_NEW = 'panel-product-new'
 
@@ -310,15 +310,15 @@ const handleBack = () => {
 onMounted(() => {
   if (formId.value) fetchSingle()
 
-  bus.on('product:pick', () => {
-    panel.value = PANEL_PRODUCT
+  bus.on('shipment:product:pick', () => {
+    panel.value = PANEL_PRODUCT_PICK
   })
 
-  bus.on('product:scan', () => {
+  bus.on('shipment:product:scan', () => {
     panel.value = PANEL_PRODUCT_SCAN
   })
 
-  bus.on('product:new', () => {
+  bus.on('shipment:contract-product:create', () => {
     panel.value = PANEL_PRODUCT_NEW
   })
 })

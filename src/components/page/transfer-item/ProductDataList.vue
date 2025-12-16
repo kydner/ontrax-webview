@@ -207,7 +207,7 @@ const handleProductPick = () => {
       message: 'Please select a warehouse first.',
       type: 'negative',
     })
-  bus.emit('product:pick')
+  bus.emit('shipment:product:pick')
 }
 
 const handleIncrease = (index: number) => {

@@ -275,7 +275,7 @@ const handleBack = () => {
 onMounted(() => {
   if (formId.value) fetchSingle()
 
-  bus.on('product:pick', () => {
+  bus.on('shipment:product:pick', () => {
     panel.value = PANEL_PRODUCT
   })
 })

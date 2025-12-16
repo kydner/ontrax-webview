@@ -7,7 +7,7 @@
             <product-image :item-id="product?.productId || ''" />
             <div class="tw-basis-auto">
               <div class="tw-flex tw-flex-col">
-                <span class="tw-text-secondary-text">{{ product?.productCode || '-' }}</span>
+                <span class="tw-text-secondary-text">{{ product?.srtPartNumber || '-' }}</span>
                 <span>{{ product.productName || '-' }}</span>
               </div>
             </div>
@@ -40,7 +40,7 @@
                 <product-image :item-id="details[dialogIndex]?.productId || ''" />
                 <div class="tw-basis-auto">
                   <div class="tw-flex tw-flex-col">
-                    <span class="tw-text-secondary-text">{{ details[dialogIndex]?.productCode }}</span>
+                    <span class="tw-text-secondary-text">{{ details[dialogIndex]?.srtPartNumber }}</span>
                     <span>{{ details[dialogIndex]?.productName }}</span>
                   </div>
                 </div>

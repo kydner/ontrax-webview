@@ -11,7 +11,7 @@ export const useFileUploadEndpoint = defineEndpoint({
   ...fileDownloadEndpoint,
 
   get: (fileId: id) =>
-    api.get<Blob>('files/get/file', {
+    api.get<Blob>('v1/files/get/file', {
       params: {
         id: fileId,
       },
@@ -29,7 +29,7 @@ export const useFileUploadEndpoint = defineEndpoint({
       formData.append('file', files)
     }
 
-    return Post<FileUploadResponse>('files/upload/public', formData, {
+    return Post<FileUploadResponse>('v1/files/upload/public', formData, {
       params,
       headers: {
         'Content-Type': 'multipart/form-data',

@@ -27,4 +27,7 @@ export const useContractProductEndpoint = defineEndpoint({
   update: (id: id, data: ContractProductDataRequest) => Post(`v1/contract-products/${id}`, data),
 
   delete: (id: id) => Delete(`v1/contract-products/${id}`),
+
+  serialNumber: (serialNumber: string) =>
+    Get<ContractProductResponse>(`v1/contract-products/serial-number/${serialNumber}`),
 })

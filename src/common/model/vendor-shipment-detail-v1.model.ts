@@ -9,7 +9,7 @@ export interface VendorShipmentDetailV1Response {
   vendorShipmentId: id
   productId: id
   productName: string
-  productCode: string
+  srtPartNumber: string
   manufacturer?: string
   notes: string
   qtyOrder: number

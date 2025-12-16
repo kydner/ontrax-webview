@@ -3,6 +3,7 @@ import { VendorShipmentDetailV1Response } from './vendor-shipment-detail-v1.mode
 import { VendorShipmentAttachmentV1Response } from './vendor-shipment-attachment-v1.model'
 import { TStatus } from '../enum/operational.enum'
 import { VendorShipmentItemV1Response } from './vendor-shipment-item-v1.model'
+import { ContractProductResponse } from './contract-product.model'
 
 export interface VendorShipmentV1Request extends IListSortingRequest {}
 
@@ -28,6 +29,8 @@ export interface VendorShipmentV1Response {
   details?: VendorShipmentDetailV1Response[]
   attachments: VendorShipmentAttachmentV1Response[]
   items?: VendorShipmentItemV1Response[]
+  // TEMP FOR SCANNED ITEM
+  receiveItems?: ContractProductResponse[]
 }
 
 export interface VendorShipmentV1ResponsePage extends VendorShipmentV1Response {}

@@ -32,4 +32,6 @@ export const useContractProductRepository = defineRepository({
   update: (id: id, data: ContractProductDataRequest) => withRepository(() => contractProductEndpoint.update(id, data)),
 
   delete: (id: id) => contractProductEndpoint.delete(id),
+
+  serialNumber: (serialNumber: string) => withRepository(() => contractProductEndpoint.serialNumber(serialNumber)),
 })

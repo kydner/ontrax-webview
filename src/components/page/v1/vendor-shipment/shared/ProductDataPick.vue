@@ -28,7 +28,7 @@
           </k-card>
         </div>
         <div v-else>
-          <k-card v-for="product in filteredProducts" :key="product.productId" class="tw-my-2">
+          <k-card v-for="product in filteredProducts" :key="getProductId(product)" class="tw-my-2">
             <q-card-section class="tw-p-2 tw-py-0">
               <div class="tw-flex tw-items-center tw-justify-between">
                 <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -45,7 +45,7 @@
                   <product-image :item-id="product?.productId || ''" />
                   <div class="tw-basis-auto">
                     <div class="tw-flex tw-flex-col">
-                      <span class="tw-text-secondary-text">{{ product?.productCode }}</span>
+                      <span class="tw-text-secondary-text">{{ product?.srtPartNumber }}</span>
                       <span>{{ product?.productName }}</span>
                     </div>
                   </div>
@@ -54,7 +54,7 @@
                   <plus-minus-field
                     v-model="product.qtyOrder"
                     :allow-increase="true"
-                    :disable="!isChecked(product.productId)"
+                    :disable="!isChecked(getProductId(product))"
                     @update:model-value="(val) => updateQty(product, val as number)"
                   />
                 </div>
@@ -80,7 +80,7 @@
 import { id, ResponseState } from 'src/common/interfaces/response.interface'
 import { Notify } from 'src/common/utils/plugin.utils'
 import KToolbar from 'src/components/ui/KToolbar.vue'
-import { onMounted, reactive, ref } from 'vue'
+import { onActivated, onMounted, reactive, ref } from 'vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -161,12 +161,13 @@ const fetchData = async () => {
     })
 
     state.data = response.map((product) => {
-      const existing = details.value.find((item) => item.productId === product.id)
+      // GET EXISTING CONTRACT PRODUCT
+      const existing = details.value.find((item) => item.productId === product.productId)
 
       return {
         productId: product.productId,
         productName: product.productName,
-        productCode: product.productCode,
+        srtPartNumber: product.srtPartNumber,
         isUniqueSerialNumber: product?.isUniqueSerialNumber,
         notes: existing?.notes ?? '',
         qtyOrder: existing?.qtyOrder ?? 1,
@@ -185,15 +186,21 @@ const fetchData = async () => {
 }
 
 const isChecked = (productId: id | null) => {
+  if (!productId) return false
   return details.value.some((item) => item.productId === productId)
 }
 
+const getProductId = (product: VendorShipmentDetailV1Response) => product.productId
+
 const updateQty = (product: VendorShipmentDetailV1Response, qty: number) => {
-  const current = details.value.slice()
-  const index = current?.findIndex((item) => item.productId === product.id)
+  const current = [...details.value]
+  const index = current.findIndex((item) => item.productId === product.productId)
 
   if (index > -1) {
-    current[index].qtyOrder = qty ?? 1
+    current[index] = {
+      ...current[index],
+      qtyOrder: qty ?? 1,
+    }
   }
 
   details.value = current
@@ -201,22 +208,24 @@ const updateQty = (product: VendorShipmentDetailV1Response, qty: number) => {
 
 const toggleItem = (product: VendorShipmentDetailV1Response, checked: boolean) => {
   const current = [...details.value]
-  const index = current?.findIndex((item) => item.productId === product.id)
+  const productId = product.productId
+
+  const index = current.findIndex((item) => item.productId === productId)
 
   if (checked) {
     if (index === -1) {
       current.push({
         productId: product.productId,
         productName: product.productName,
-        productCode: product.productCode,
-        qtyOrder: 1,
+        srtPartNumber: product.srtPartNumber,
+        qtyOrder: product?.qtyOrder,
         notes: '',
-        isUniqueSerialNumber: product?.isUniqueSerialNumber,
-        filename: product?.filename,
+        isUniqueSerialNumber: product.isUniqueSerialNumber,
+        filename: product.filename,
         vendorShipmentId: product.vendorShipmentId,
-        qtyOrdered: product?.qtyOrdered,
-        qtyReceived: product?.qtyReceived,
-        qtyRejected: product?.qtyRejected,
+        qtyOrdered: product.qtyOrdered,
+        qtyReceived: product.qtyReceived,
+        qtyRejected: product.qtyRejected,
       })
     }
   } else {
@@ -229,6 +238,10 @@ const toggleItem = (product: VendorShipmentDetailV1Response, checked: boolean) =
 }
 
 onMounted(() => {
+  fetchData()
+})
+
+onActivated(() => {
   fetchData()
 })
 </script>
