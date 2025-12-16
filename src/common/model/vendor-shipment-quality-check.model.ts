@@ -12,14 +12,18 @@ export interface VendorShipmentQualityCheckResponse {}
 export interface VendorShipmentQualityCheckResponsePage extends VendorShipmentQualityCheckResponse {}
 
 export interface VendorShipmentQualityCheckDataRequest extends VendorShipmentQualityCheckResponse {
-  qcGoodsReceiveId: id | null
-  qcItems: QcItemDetail[]
+  qcDetails: QcItemDetail[]
 }
 
 export interface QcItemDetail {
-  qcGoodsReceiveItemId: id | null
-  qtyReject: number
-  note: string | null
-  attachmentUrl?: string
-  fileId?: id
+  vendorShipmentDetailId: id
+  rejectedItems: QcRejectedItem[]
+}
+
+export interface QcRejectedItem {
+  vendorShipmentSerialNumberId: id
+  serialNumber: string
+  rejectedQuantity: number
+  qcNote: string
+  qcAttachmentIds?: string[]
 }

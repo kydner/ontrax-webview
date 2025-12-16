@@ -10,14 +10,17 @@
       </q-input>
     </q-card>
 
-    <template v-if="!form.status || form.status === 'DRAFT'">
-      <product-data-list-draft v-model="form" @preview="handlePreview" />
-    </template>
-    <template v-else-if="form.status === 'IN_TRANSIT'">
-      <product-data-list-in-transit v-model="form" @preview="handlePreview" />
-    </template>
-    <template v-else-if="form.status === 'RECEIVED'">
-      <product-data-list-received v-model="form" @preview="handlePreview" />
+    <template v-if="routePath === 'quality-control'"> </template>
+    <template v-else>
+      <template v-if="!form.status || form.status === 'DRAFT'">
+        <product-data-list-draft v-model="form" @preview="handlePreview" />
+      </template>
+      <template v-else-if="form.status === 'IN_TRANSIT'">
+        <product-data-list-in-transit v-model="form" @preview="handlePreview" />
+      </template>
+      <template v-else-if="form.status === 'RECEIVED'">
+        <product-data-list-received v-model="form" @preview="handlePreview" />
+      </template>
     </template>
 
     <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">
@@ -81,6 +84,7 @@ import ProductDataListDraft from './ProductDataListDraft.vue'
 import ProductDataListInTransit from './ProductDataListInTransit.vue'
 import ProductDataListReceived from './ProductDataListReceived.vue'
 import KLottie from 'src/components/ui/KLottie.vue'
+import { useRoute } from 'vue-router'
 
 interface Props {
   modelValue: VendorShipmentV1DataRequest
@@ -100,6 +104,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
+
+const route = useRoute()
+
+const routePath = computed(() => route?.meta?.routePath)
 
 const previewItem = ref<VendorShipmentDetailV1Response | null>(null)
 

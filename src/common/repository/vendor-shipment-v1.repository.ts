@@ -1,6 +1,7 @@
 import { useVendorShipmentV1Endpoint } from '../endpoints/vendor-shipment-v1.endpoint'
 import { id } from '../interfaces/response.interface'
 import { VendorShipmentAdjustmentQuantityDetailRequest } from '../model/vendor-shipment-adjustment-quantity-detail.model'
+import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentSaveSerialNumberDataRequest } from '../model/vendor-shipment-save-serial-number.model'
 // import { VendorShipmentV1QualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
@@ -51,7 +52,7 @@ export const useVendorShipmentV1Repository = defineRepository({
 
   received: (id: id, data: VendorShipmentReceiveDataRequest) => shipmentEndpoint.received(id, data),
 
-  // qualityCheck: (id: id, data: VendorShipmentV1QualityCheckDataRequest) => shipmentEndpoint.qualityCheck(id, data),
+  qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => shipmentEndpoint.qualityCheck(id, data),
 
   inTransit: (id: id) => shipmentEndpoint.inTransit(id),
 

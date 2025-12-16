@@ -225,7 +225,7 @@ const route = useRoute()
 const formId = computed(() => route.params?.id)
 
 const showCreateButton = computed(() => {
-  return !!form.value.contractId && form.value.status !== 'IN_TRANSIT'
+  return !!form.value.contractId && !form.value.status && form.value.status === 'IN_TRANSIT'
 })
 
 const isDisable = computed(() => {
@@ -240,17 +240,20 @@ const form = computed({
 })
 
 const getColor = (status: TStatus): Colors => {
-  switch (status) {
-    case 'RECEIVED':
-      return 'positive'
-    case 'QC_PASSED':
-      return 'positive'
-    case 'IN_TRANSIT':
-      return 'secondary'
-    case 'DRAFT':
-      return 'mute'
-    default:
-      return 'disable'
+  const qcColorMap: Partial<Record<TStatus, Colors>> = {
+    RECEIVED: 'secondary',
+    PARTIAL_PASSED: 'positive',
+    QC_PASSED: 'positive',
   }
+
+  const defaultColorMap: Partial<Record<TStatus, Colors>> = {
+    RECEIVED: 'positive',
+    IN_TRANSIT: 'secondary',
+    DRAFT: 'mute',
+  }
+  const isQc = route.meta?.routePath === 'quality-control'
+  return (isQc ? qcColorMap[status] : defaultColorMap[status]) ?? 'disable'
 }
+
+console.log(route)
 </script>

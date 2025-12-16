@@ -3,6 +3,7 @@ import {
   VendorShipmentAdjustmentQuantityDetailRequest,
   VendorShipmentAdjustmentQuantityDetailResponse,
 } from '../model/vendor-shipment-adjustment-quantity-detail.model'
+import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentSaveSerialNumberDataRequest } from '../model/vendor-shipment-save-serial-number.model'
 // import { VendorShipmentV1QualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
@@ -32,7 +33,7 @@ export const useVendorShipmentV1Endpoint = defineEndpoint({
 
   received: (id: id, data: VendorShipmentReceiveDataRequest) => Patch(`v1/vendor-shipments/${id}/received`, data),
 
-  // qualityCheck: (id: id, data: VendorShipmentV1QualityCheckDataRequest) => Patch(`v1/vendor-shipments/${id}/quality-check`, data),
+  qualityCheck: (id: id, data: VendorShipmentQualityCheckDataRequest) => Post(`v1/vendor-shipments/${id}/qc`, data),
 
   inTransit: (id: id) => Patch(`v1/vendor-shipments/${id}/in-transit`),
 
