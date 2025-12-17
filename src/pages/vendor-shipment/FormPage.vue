@@ -1,6 +1,15 @@
 <template>
-  <operational-form-page ref="operationalFormPageRef" v-model="form" :meta="metaVendorShipment">
-    <template #footer:button="{ loading, errorMessage }">
+  <FormPage ref="formPageRef" v-model="form">
+    <template #footer:button="{ errorMessage, loading }">
+      <k-btn
+        v-if="form.status === 'DRAFT'"
+        :label="t('saveToInTransit')"
+        color="secondary"
+        class="fit"
+        :disable="loading || !!errorMessage"
+        @click="handleSubmitInTransit"
+      />
+
       <k-btn
         v-if="form.status === 'IN_TRANSIT'"
         :label="t('receive')"
@@ -18,46 +27,27 @@
         :disable="loading || !!errorMessage"
         @click="handleSubmitQcPass"
       />
-
-      <k-btn
-        v-if="form.status === 'DRAFT'"
-        :label="t('saveToInTransit')"
-        color="secondary"
-        class="fit"
-        :disable="loading || !!errorMessage"
-        @click="handleSubmitInTransit"
-      />
     </template>
-  </operational-form-page>
+  </FormPage>
 </template>
 <script setup lang="ts">
 import { Loading } from 'quasar'
-import { VendorShipment } from 'src/common/constants/meta.constant'
-import { OperationalRoutePath } from 'src/common/enum/operational.enum'
 import { ErrorId } from 'src/common/exceptions/error-id'
-import { IMetaListModule } from 'src/common/interfaces/meta.interface'
-import { id, isoDate } from 'src/common/interfaces/response.interface'
+import { id } from 'src/common/interfaces/response.interface'
 import { VendorShipmentQualityCheckDataRequest } from 'src/common/model/vendor-shipment-quality-check.model'
-import {
-  VendorShipmentReceiveDataRequest,
-  VendorShipmentReceiveRequest,
-} from 'src/common/model/vendor-shipment-receive.model'
+import { VendorShipmentReceiveDataRequest } from 'src/common/model/vendor-shipment-receive.model'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
-import { VendorShipmentResponsePage } from 'src/common/model/vendor-shipment.model'
 import { useVendorShipmentRepository } from 'src/common/repository/vendor-shipment.repository'
 import { $confirm, Notify } from 'src/common/utils/plugin.utils'
-import OperationalFormPage from 'src/components/lib/OperationalFormPage.vue'
-import { ComponentPublicInstance, computed, ref } from 'vue'
+import FormPage from 'src/components/page/vendor-shipment/FormPage.vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute, useRouter } from 'vue-router'
-
-type MetaFormPageExposed = {
-  validate: () => Promise<boolean>
-}
-
-const metaVendorShipment: IMetaListModule<VendorShipmentResponsePage> = VendorShipment
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+
+const repository = useVendorShipmentRepository()
 
 const router = useRouter()
 
@@ -65,16 +55,18 @@ const route = useRoute()
 
 const form = ref({} as VendorShipmentDataRequest)
 
-const operationalFormPageRef = ref<ComponentPublicInstance<MetaFormPageExposed> | null>(null)
+const formId = computed(() => form.value?.id as id)
 
-const repository = useVendorShipmentRepository()
+const formPageRef = ref<InstanceType<typeof FormPage>>()
 
-const formId = computed(() => form.value?.goodsReceiveId as id)
+const routePath = computed(() => route?.meta?.routePath)
 
-const routePath = computed<OperationalRoutePath>(() => route?.meta?.routePath as OperationalRoutePath)
+const handleBack = () => {
+  router.back()
+}
 
 const handleSubmitInTransit = async () => {
-  const validate = await operationalFormPageRef.value?.validate()
+  const validate = await formPageRef.value?.validate()
   if (!validate) return
   $confirm({
     message: `${t('saveToInTransit')}?`,
@@ -85,12 +77,12 @@ const handleSubmitInTransit = async () => {
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
 
-          await repository.update(formId.value, { ...form.value })
+          await repository.update(shipmentId, { ...form.value })
           await repository.inTransit(shipmentId)
           Notify.success({
             message: t('success'),
           })
-          router.back()
+          handleBack()
         } catch (error) {
           Notify.error({
             message: error as Error,
@@ -112,26 +104,17 @@ const handleSubmitReceive = () => {
           const shipmentId = formId.value as id
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-          const receiveItems = form.value?.receiveItems || []
 
           const data: VendorShipmentReceiveDataRequest = {
-            receivedItems: [...receiveItems]?.map((item) => {
-              return {
-                goodsReceiveItemId: item.goodsReceiveItemId ?? null,
-                qtyReceived: item.qtyReceived ?? 0,
-              }
-            }),
+            actualReceivedDate: form.value?.targetShipmentDate,
           }
 
-          const params: VendorShipmentReceiveRequest = {
-            receiveDate: form.value?.receiveDate as isoDate,
-          }
-          await repository.received(shipmentId, data, params)
+          await repository.received(shipmentId, data)
 
           Notify.success({
             message: t('success'),
           })
-          router.back()
+          handleBack()
         } catch (error) {
           Notify.error({
             message: error as Error,
@@ -153,19 +136,8 @@ const handleSubmitQcPass = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
-
-          const qcGoodsReceive = form.value?.qcGoodsReceive
-
           const data: VendorShipmentQualityCheckDataRequest = {
-            qcGoodsReceiveId: qcGoodsReceive.qcGoodsReceiveId,
-            qcItems: qcGoodsReceive.qcGoodsReceiveItems.map((item) => {
-              return {
-                qcGoodsReceiveItemId: item.qcGoodsReceiveItemId || null,
-                qtyReject: item.qtyReject,
-                note: item.notes,
-                fileId: item.fileId,
-              }
-            }),
+            qcDetails: [],
           }
           await repository.qualityCheck(shipmentId, data)
           Notify.success({

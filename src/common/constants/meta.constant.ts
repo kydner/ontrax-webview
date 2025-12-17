@@ -9,7 +9,6 @@ import { ProductResponsePage } from '../model/product.model'
 import { ProjectResponsePage } from '../model/project.model'
 import { ReceiveItemResponsePage } from '../model/receive-item.model'
 import { TransferItemResponsePage } from '../model/transfer-item.model'
-import { VendorShipmentV1ResponsePage } from '../model/vendor-shipment-v1.model'
 import { VendorShipmentResponsePage } from '../model/vendor-shipment.model'
 import { VendorResponsePage } from '../model/vendor.model'
 import { WarehouseSiteResponsePage } from '../model/warehouse-site.model'
@@ -19,12 +18,6 @@ import { WorkPackageResponsePage } from '../model/work-package.model'
 export const VendorShipment: IMetaListModule<VendorShipmentResponsePage> = {
   title: 'Vendor Shipment',
   name: 'vendor-shipment',
-  items: [],
-}
-
-export const VendorShipmentV1: IMetaListModule<VendorShipmentV1ResponsePage> = {
-  title: 'Vendor Shipment',
-  name: 'vendor-shipment-v1',
   items: [],
 }
 

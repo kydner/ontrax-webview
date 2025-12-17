@@ -57,7 +57,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/v1/vendor-shipment/ListPage.vue'),
+            component: () => import('pages/vendor-shipment/ListPage.vue'),
             name: `${Meta.VendorShipment.name}-list`,
             meta: {
               middlewares: [auth],
@@ -65,7 +65,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'send/form',
-            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-form-create`,
             meta: {
               middlewares: [auth],
@@ -75,7 +75,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'send/form/:id',
-            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-send-form-update`,
             meta: {
               middlewares: [auth],
@@ -85,7 +85,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'quality-control/form/:id',
-            component: () => import('pages/v1/vendor-shipment/FormPage.vue'),
+            component: () => import('pages/vendor-shipment/FormPage.vue'),
             name: `${Meta.VendorShipment.name}-quality-control-form-update`,
             meta: {
               middlewares: [auth],

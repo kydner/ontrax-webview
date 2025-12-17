@@ -1,34 +1,38 @@
 import { id, IListSortingRequest, IPaginationRequest, isoDate } from 'src/common/interfaces/response.interface'
-import {
-  ShipmentGoodReceiveItem,
-  OperationalRequest,
-  OperationalResponse,
-  OperationalResponsePage,
-  ShipmentQcGoodReceive,
-} from './operational.model'
-import { FileUploadResponse } from './file-upload.model'
+import { ContractProductResponse } from './contract-product.model'
+import { VendorShipmentItemResponse } from './vendor-shipment-item.model'
+import { VendorShipmentAttachmentResponse } from './vendor-shipment-attachment.model'
+import { VendorShipmentDetailResponse } from './vendor-shipment-detail.model'
+import { TStatus } from '../enum/vendor-shipment.enum'
 
-export interface VendorShipmentRequest extends IListSortingRequest, OperationalRequest {}
+export interface VendorShipmentRequest extends IListSortingRequest {}
 
 export type VendorShipmentRequestPage = IPaginationRequest & VendorShipmentRequest
 
-export interface VendorShipmentResponse extends OperationalResponse {
-  /**
-   * used for request Post & Put
-   */
-  receiveItems?: ShipmentGoodReceiveItem[]
-
-  goodsReceiveItems: ShipmentGoodReceiveItem[]
-
-  receiveDate?: isoDate
-
-  qcGoodsReceive: ShipmentQcGoodReceive
-
-  attachmentId: id
-
-  attachmentInfo?: FileUploadResponse
+export interface VendorShipmentResponse {
+  id: id
+  vendorId: id
+  vendorName: string
+  projectId: id
+  projectName: string
+  contractId: id
+  contractNumber: string
+  shippingDate: isoDate
+  targetShipmentDate: isoDate
+  warehouseId: id
+  warehouseName: string
+  referenceNumber: string
+  vendorShipmentCode: string
+  status: TStatus
+  totalItems: number
+  createdDate: isoDate
+  details?: VendorShipmentDetailResponse[]
+  attachments: VendorShipmentAttachmentResponse[]
+  items?: VendorShipmentItemResponse[]
+  // TEMP FOR SCANNED ITEM
+  receiveItems?: ContractProductResponse[]
 }
 
-export interface VendorShipmentResponsePage extends OperationalResponsePage {}
+export interface VendorShipmentResponsePage extends VendorShipmentResponse {}
 
 export interface VendorShipmentDataRequest extends VendorShipmentResponse {}
