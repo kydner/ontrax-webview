@@ -1,3 +1,4 @@
+import { api } from 'src/boot/axios'
 import { id } from '../interfaces/response.interface'
 import {
   VendorShipmentAdjustmentQuantityDetailRequest,
@@ -6,6 +7,7 @@ import {
 import { VendorShipmentQualityCheckDataRequest } from '../model/vendor-shipment-quality-check.model'
 import { VendorShipmentReceiveDataRequest } from '../model/vendor-shipment-receive.model'
 import { VendorShipmentSaveSerialNumberDataRequest } from '../model/vendor-shipment-save-serial-number.model'
+import { VendorShipmentUploadResponse } from '../model/vendor-shipment-upload.model'
 import {
   VendorShipmentDataRequest,
   VendorShipmentRequest,
@@ -43,4 +45,26 @@ export const useVendorShipmentEndpoint = defineEndpoint({
 
   saveSerialNumber: (data: VendorShipmentSaveSerialNumberDataRequest) =>
     Post('v1/vendor-shipments/serial-number', data),
+
+  upload: (files: File[] | File) => {
+    const formData = new FormData()
+
+    if (Array.isArray(files)) {
+      files.forEach((file) => {
+        formData.append('file', file)
+      })
+    } else {
+      formData.append('file', files)
+    }
+
+    return Post<VendorShipmentUploadResponse>('v1/vendor-shipments/attachments/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      timeout: 0,
+    })
+  },
+
+  download: (fileId: id) =>
+    api.get<Blob>(`v1/vendor-shipments/attachments/download/${fileId}`, { responseType: 'blob' }),
 })

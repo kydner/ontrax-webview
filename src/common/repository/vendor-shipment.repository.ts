@@ -17,7 +17,10 @@ export const useVendorShipmentRepository = defineRepository({
     withRepository(
       () => shipmentEndpoint.getOne(id),
       (response) => {
-        return { ...response }
+        const attachmentIds = response?.attachmentIds
+          ? response.attachmentIds
+          : response.attachments?.map((item) => item.id)
+        return { ...response, attachmentIds }
       },
     ),
 
@@ -58,4 +61,8 @@ export const useVendorShipmentRepository = defineRepository({
     withRepository(() => shipmentEndpoint.adjustmentDetail(detailId, params)),
 
   saveSerialNumber: (data: VendorShipmentSaveSerialNumberDataRequest) => shipmentEndpoint.saveSerialNumber(data),
+
+  upload: (files: File[] | File) => withRepository(() => shipmentEndpoint.upload(files)),
+
+  download: (fileId: id) => withRepository(() => shipmentEndpoint.download(fileId)),
 })

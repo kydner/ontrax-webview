@@ -27,6 +27,7 @@ export interface VendorShipmentResponse {
   totalItems: number
   createdDate: isoDate
   details?: VendorShipmentDetailResponse[]
+  attachmentIds: id[]
   attachments: VendorShipmentAttachmentResponse[]
   items?: VendorShipmentItemResponse[]
   // TEMP FOR SCANNED ITEM

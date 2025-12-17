@@ -170,8 +170,8 @@
     </k-input>
 
     <div class="tw-my-4">
-      <k-file-upload
-        model-value=""
+      <upload
+        v-model="form.attachmentIds"
         t-label="attachFile"
         borderless
         horizontal-align="base"
@@ -182,8 +182,9 @@
         :show-label="false"
         input-class="inventory__field"
         :filename-max-length="20"
+        :attachment-info="form.attachments"
       >
-      </k-file-upload>
+      </upload>
     </div>
 
     <product-data-list v-model="form" :show-create-button="showCreateButton">
@@ -205,8 +206,8 @@ import { Contract, Project, Vendor, Warehouse } from 'src/common/constants/meta.
 import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
-import KFileUpload from 'src/components/ui/KFileUpload.vue'
 import KStatusBadge from 'src/components/ui/KStatusBadge.vue'
+import Upload from './Upload.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
@@ -226,7 +227,7 @@ const formId = computed(() => route.params?.id)
 
 const showCreateButton = computed(() => {
   const contractIdExists = !!form.value.contractId
-  const statusIsAcceptable = !form.value.status || form.value.status === 'IN_TRANSIT'
+  const statusIsAcceptable = !form.value.status || form.value.status === 'DRAFT'
 
   return contractIdExists && statusIsAcceptable
 })
