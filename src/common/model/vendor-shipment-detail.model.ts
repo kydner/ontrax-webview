@@ -1,4 +1,5 @@
 import { id, IListSortingRequest, IPaginationRequest } from 'src/common/interfaces/response.interface'
+import { VendorShipmentUploadResponse } from './vendor-shipment-upload.model'
 
 export interface VendorShipmentDetailRequest extends IListSortingRequest {}
 
@@ -19,6 +20,8 @@ export interface VendorShipmentDetailResponse {
   qtyOrdered: number
   qtyReceived: number
   qtyRejected: number
+  attachmentIds: id[]
+  attachments: VendorShipmentUploadResponse[]
 }
 
 export interface VendorShipmentDetailResponsePage extends VendorShipmentDetailResponse {}

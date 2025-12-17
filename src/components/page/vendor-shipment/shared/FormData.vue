@@ -170,21 +170,20 @@
     </k-input>
 
     <div class="tw-my-4">
-      <upload
+      <upload-multiple
         v-model="form.attachmentIds"
         t-label="attachFile"
         borderless
         horizontal-align="base"
-        :payload="{ module: 'SHIPMENT' }"
         :horizontal-label="false"
         :disable="isDisable"
         placeholder="Upload file"
         :show-label="false"
         input-class="inventory__field"
-        :filename-max-length="20"
-        :attachment-info="form.attachments"
+        :filename-max-length="30"
+        :attachments="form.attachments"
       >
-      </upload>
+      </upload-multiple>
     </div>
 
     <product-data-list v-model="form" :show-create-button="showCreateButton">
@@ -207,7 +206,7 @@ import { formatDate } from 'src/common/utils/converter.utils'
 import { DATE_VALUE } from 'src/common/constants/date.constant'
 import { VendorShipmentDataRequest } from 'src/common/model/vendor-shipment.model'
 import KStatusBadge from 'src/components/ui/KStatusBadge.vue'
-import Upload from './Upload.vue'
+import UploadMultiple from './UploadMultiple.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest

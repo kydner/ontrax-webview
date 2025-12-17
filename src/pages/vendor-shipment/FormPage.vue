@@ -136,8 +136,23 @@ const handleSubmitQcPass = () => {
           const shipmentId = formId.value as string
           if (!shipmentId) throw new ErrorId('ShipmentId')
           Loading.show()
+          const details = [...(form.value?.details ?? [])]
+
           const data: VendorShipmentQualityCheckDataRequest = {
-            qcDetails: [],
+            qcDetails: details.map((item) => {
+              return {
+                vendorShipmentDetailId: item.id as id,
+                rejectedItems: details.map((rejectItem) => {
+                  return {
+                    vendorShipmentSerialNumberId: rejectItem.id ?? '',
+                    serialNumber: rejectItem.srtPartNumber ?? '',
+                    rejectedQuantity: rejectItem.qtyRejected ?? 0,
+                    qcNote: rejectItem.notes ?? '',
+                    qcAttachmentIds: (rejectItem.attachmentIds ?? []) as string[],
+                  }
+                }),
+              }
+            }),
           }
           await repository.qualityCheck(shipmentId, data)
           Notify.success({

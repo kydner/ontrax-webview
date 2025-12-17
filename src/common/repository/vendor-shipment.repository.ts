@@ -20,7 +20,12 @@ export const useVendorShipmentRepository = defineRepository({
         const attachmentIds = response?.attachmentIds
           ? response.attachmentIds
           : response.attachments?.map((item) => item.id)
-        return { ...response, attachmentIds }
+
+        const details = response.details?.map((item) => {
+          const attachments = item.attachments ? item.attachmentIds : []
+          return { ...item, attachments }
+        })
+        return { ...response, attachmentIds, details }
       },
     ),
 

@@ -1,6 +1,6 @@
 <template>
   <k-card v-for="(product, index) in details" :key="index" class="gradient-card tw-my-2">
-    <q-card-section class="tw-p-2" v-ripple @click="emit('preview', product)">
+    <q-card-section class="tw-p-2" v-ripple @click="handlePreview(product)">
       <div class="tw-flex tw-items-center tw-justify-between">
         <div class="tw-flex tw-flex-col tw-space-y-1 tw-mb-1">
           <div class="tw-flex tw-justify-between tw-space-x-2">
@@ -67,6 +67,43 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <detail-preview v-model="previewItem">
+    <template #default="{ item }">
+      <!-- DETAIL DEFAULT -->
+      <div>
+        <div class="tw-col-span-12 tw-flex tw-space-x-4">
+          <product-image :item-id="item.productId || ''" size="60px" />
+          <div class="tw-flex tw-flex-col">
+            <span class="tw-font-semibold tw-text-lg">{{ item.productName || '-' }}</span>
+            <span>{{ item.srtPartNumber || '-' }}</span>
+          </div>
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtyOrder') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          {{ format(item.qtyOrdered, { precision: 0 }) || '-' }}
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('qtySend') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          {{ format(item.qtyReceived, { precision: 0 }) || '-' }}
+        </div>
+
+        <div class="tw-col-span-4 tw-text-secondary-text tw-text-xs">{{ t('attachFile') }}</div>
+        <div class="tw-col-span-8 tw-text-xs">
+          <attachment-file-preview :attachment-info="{ fileId: item.filename, fileUrl: item.fileUrl }" />
+        </div>
+
+        <div class="tw-col-span-12 tw-py-2">
+          <div class="tw-text-secondary-text tw-text-xs">Notes</div>
+          <div>
+            {{ item.notes || '-' }}
+          </div>
+        </div>
+      </div>
+    </template>
+  </detail-preview>
 </template>
 <script setup lang="ts">
 import { VendorShipmentDetailResponse } from 'src/common/model/vendor-shipment-detail.model'
@@ -76,6 +113,8 @@ import ProductImage from 'src/components/images/Product.vue'
 import KCard from 'src/components/ui/KCard.vue'
 import PlusMinusField from 'src/components/ui/PlusMinusField.vue'
 import { useI18n } from 'vue-i18n'
+import { format } from 'src/common/utils/converter.utils'
+import DetailPreview from 'src/components/page/operational/DetailPreview.vue'
 
 interface Props {
   modelValue: VendorShipmentDataRequest
@@ -104,6 +143,12 @@ const details = computed({
     emit('update:model-value', form.value)
   },
 })
+
+const previewItem = ref<VendorShipmentDetailResponse | null>(null)
+
+const handlePreview = (item: VendorShipmentDetailResponse) => {
+  previewItem.value = item
+}
 
 const dialogIndex = ref<number | null>(null)
 
