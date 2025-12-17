@@ -226,6 +226,8 @@ const toggleItem = (product: VendorShipmentDetailResponse, checked: boolean) => 
         qtyOrdered: product.qtyOrdered,
         qtyReceived: product.qtyReceived,
         qtyRejected: product.qtyRejected,
+        attachmentIds: product.attachmentIds ?? [],
+        attachments: product?.attachments ?? [],
       })
     }
   } else {

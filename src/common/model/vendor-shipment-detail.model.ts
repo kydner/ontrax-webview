@@ -20,8 +20,8 @@ export interface VendorShipmentDetailResponse {
   qtyOrdered: number
   qtyReceived: number
   qtyRejected: number
-  attachmentIds?: id[]
-  attachments?: VendorShipmentUploadResponse[]
+  attachmentIds: id[]
+  attachments: VendorShipmentUploadResponse[]
 }
 
 export interface VendorShipmentDetailResponsePage extends VendorShipmentDetailResponse {}
