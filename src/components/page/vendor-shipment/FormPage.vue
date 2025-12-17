@@ -5,7 +5,7 @@
     :meta="VendorShipment"
     :show-toolbar="false"
     :allow-access="allowAccessPage"
-    class=""
+    class="vendor-shipment-form"
   >
     <div v-if="!!errorMessage" class="tw-min-h-[80vh] tw-flex tw-items-center tw-justify-center">
       <internal-error>
@@ -76,13 +76,13 @@
 </template>
 <script setup lang="ts">
 import MetaFormPage from 'src/components/lib/MetaFormPage.vue'
-import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ComponentPublicInstance } from 'vue'
 import KToolbar from 'src/components/ui/KToolbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MetaService } from 'src/common/services/meta.service'
-import { $confirm, Notify } from 'src/common/utils/plugin.utils'
+import { $confirm, Notify, scrollToClass } from 'src/common/utils/plugin.utils'
 import { ErrorId } from 'src/common/exceptions/error-id'
 import { ERROR_ENDPOINT_NOT_DEFINED } from 'src/common/constants/error.constant'
 import { Loading } from 'quasar'
@@ -336,6 +336,16 @@ const invalidSubmit = (
     icon: 'warning',
   })
 }
+
+watch(
+  () => panel.value,
+  () => {
+    scrollToClass('vendor-shipment-form')
+  },
+  {
+    immediate: true,
+  },
+)
 
 defineExpose({
   validate,

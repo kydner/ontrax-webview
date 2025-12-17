@@ -225,7 +225,10 @@ const route = useRoute()
 const formId = computed(() => route.params?.id)
 
 const showCreateButton = computed(() => {
-  return !!form.value.contractId && !form.value.status && form.value.status === 'IN_TRANSIT'
+  const contractIdExists = !!form.value.contractId
+  const statusIsAcceptable = !form.value.status || form.value.status === 'IN_TRANSIT'
+
+  return contractIdExists && statusIsAcceptable
 })
 
 const isDisable = computed(() => {

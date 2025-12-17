@@ -4,26 +4,16 @@
     <k-btn v-if="showCreateButton" color="secondary" label="Add Product" @click="handleProductPick" />
 
     <template v-if="routePath === 'quality-control'">
-      <template v-if="form.status === 'RECEIVED'">
-        <product-data-list-received-qc v-model="form" @preview="handlePreview" />
-      </template>
-      <template v-else-if="form.status === 'QC_PASSED'">
-        <product-data-list-qc-passed v-model="form" @preview="handlePreview" />
-      </template>
+      <product-data-list-received-qc v-if="form.status === 'RECEIVED'" v-model="form" @preview="handlePreview" />
+      <product-data-list-qc-passed v-else-if="form.status === 'QC_PASSED'" v-model="form" @preview="handlePreview" />
     </template>
     <template v-else>
-      <template v-if="!form.status || form.status === 'DRAFT'">
-        <product-data-list-draft v-model="form" @preview="handlePreview" />
-      </template>
-      <template v-else-if="form.status === 'IN_TRANSIT'">
-        <product-data-list-in-transit v-model="form" @preview="handlePreview" />
-      </template>
-      <template v-else-if="form.status === 'RECEIVED'">
-        <product-data-list-received v-model="form" @preview="handlePreview" />
-      </template>
+      <product-data-list-draft v-if="!form.status || form.status === 'DRAFT'" v-model="form" @preview="handlePreview" />
+      <product-data-list-in-transit v-else-if="form.status === 'IN_TRANSIT'" v-model="form" @preview="handlePreview" />
+      <product-data-list-received v-else-if="form.status === 'RECEIVED'" v-model="form" @preview="handlePreview" />
     </template>
 
-    <div v-if="details?.length === 0" class="tw-my-4 tw-text-disable-text">
+    <div v-if="details?.length === 0" class="tw-my-8 tw-text-disable-text">
       <k-lottie
         animation-link="/lotties/no_data.json"
         auto-play
